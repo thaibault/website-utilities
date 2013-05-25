@@ -1,4 +1,0 @@
-jquery-website
-==============
-
-jquery-website
