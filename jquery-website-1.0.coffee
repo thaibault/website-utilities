@@ -65,7 +65,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
 
     # endregion
 
-    # region protected properties 
+    # region protected properties
 
         ###*
             Saves default options for manipulating the default behaviour.
@@ -278,9 +278,9 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             jQuery.each(
                 this._options.mediaQueryCssIndicator,
                 (mode, cssValue) =>
-                    if (this._domNodes.parent.css(this._options.mediaQueryCssIndicatorStyleType) is cssValue and
-                        mode isnt this._currentMediaQueryMode
-                    )
+                    if (this._domNodes.parent.css(
+                        this._options.mediaQueryCssIndicatorStyleType
+                    ) is cssValue and mode isnt this._currentMediaQueryMode)
                         this._currentMediaQueryMode = mode
                         this.fireEvent.apply(
                             this, [
@@ -345,18 +345,19 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             this._domNodes.windowLoadingSpinner.spin false
             if not jQuery.isNumeric elementNumber
                 elementNumber = 1
-            window.setTimeout =>
-                    jQuery(
-                        this._options.domNodes.startUpAnimationClassPrefix +
-                        elementNumber
-                    ).fadeIn this._options.startUpFadeInOptions
-                    if (jQuery(
-                            this._options.domNodes.startUpAnimationClassPrefix +
-                            (elementNumber + 1)).length)
-                        this._handleStartUpEffects elementNumber + 1
-                    else if window.location.href.indexOf('#') != -1
-                        this.fireEvent 'startUpAnimationComplete'
-                ,this._options.startUpAnimationElementDelayInMiliseconds
+            window.setTimeout((=>
+                jQuery(
+                    this._options.domNodes.startUpAnimationClassPrefix +
+                    elementNumber
+                ).fadeIn this._options.startUpFadeInOptions
+                if (jQuery(
+                    this._options.domNodes.startUpAnimationClassPrefix +
+                    (elementNumber + 1)
+                ).length)
+                    this._handleStartUpEffects elementNumber + 1
+                else if window.location.href.indexOf('#') != -1
+                    this.fireEvent 'startUpAnimationComplete'),
+                this._options.startUpAnimationElementDelayInMiliseconds)
             this
         ###*
             @description This method adds triggers to switch section.
@@ -426,7 +427,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
 
     # endregion
 
-    # region handle jQuery extending 
+    # region handle jQuery extending
 
     ###* @ignore ###
     jQuery.Website = ->
