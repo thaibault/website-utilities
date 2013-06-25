@@ -419,8 +419,13 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @returns {jQuery.Tools} Returns the current instance.
         ###
         _handleGoogleAnalytics: (trackingCode) ->
-            window.eval this.stringFormat(
-                this.__googleAnalyticsCode, trackingCode)
+            try
+                window.eval this.stringFormat(
+                    this.__googleAnalyticsCode, trackingCode)
+            catch exception
+                this.warn(
+                    'Problem in google analytics code snippet: {1}',
+                    exception)
             this
 
         # endregion
