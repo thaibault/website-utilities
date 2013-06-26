@@ -25,7 +25,8 @@ detection or triggering media-query change events.
 Examples:
 --------
 
-    #!JavaScript
+    #!/usr/bin/env javaScript
+
     jQuery.Website();
 
     jQuery.Website('logging': true);
