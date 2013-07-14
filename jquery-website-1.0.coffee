@@ -45,7 +45,7 @@ this.window.require([
 
 # endregion
 
-# region plugins
+# region plugins/classes
 
     ###*
         @memberOf jQuery
