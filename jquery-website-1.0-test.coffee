@@ -1,5 +1,3 @@
-# region header
-
 # region vim modline
 
 # vim: set tabstop=4 shiftwidth=4 expandtab:
@@ -20,5 +18,9 @@ module 'Incrementer'
 
 # endregion
 
+# region tests
+
 test 'dummy', ->
     equal 'a', 'a', "That's cool"
+
+# endregion
