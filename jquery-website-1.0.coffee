@@ -40,7 +40,7 @@ this.window.require([
     ['jQuery.fn.spin', 'jquery-spin-1.2.8'],
 
     ['jQuery.fn.hashchange', 'jquery-observeHashChange-1.0']],
-(less, jQuery, Tools) ->
+(less, jQuery) ->
 ##
 
 # endregion
@@ -51,7 +51,7 @@ this.window.require([
         @memberOf jQuery
         @class
     ###
-    class Website extends Tools.class
+    class Website extends jQuery.Tools.class
 
     # region private properties
 
@@ -90,7 +90,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             onStartUpAnimationComplete: jQuery.noop()
             addtionalPageLoadingTimeInMilliseconds: 0
             mediaQueryCssIndicatorStyleType: 'border-left-style'
-            trackingCode: 'UA-0-0'
+            googleTrackingCode: 'UA-0-0'
             scrollInLinearTime: false
             mediaQueryCssIndicator:
                 desktop: 'dashed'
