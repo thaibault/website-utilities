@@ -1,4 +1,4 @@
-#!/usr/bin/env coffee
+#!/usr/bin/env require
 
 # region vim modline
 
@@ -29,7 +29,7 @@
 ## standalone
 ## do (jQuery) ->
 this.window.require([
-    ['less', 'less-1.3.3'],
+    ['less.Parser', 'less-1.4.1'],
 
     ['jQuery.Tools', 'jquery-tools-1.0.coffee'],
 
@@ -40,7 +40,7 @@ this.window.require([
     ['jQuery.fn.spin', 'jquery-spin-1.2.8'],
 
     ['jQuery.fn.hashchange', 'jquery-observeHashChange-1.0']],
-(less, jQuery) ->
+(less, lessParser, jQuery) ->
 ##
 
 # endregion
