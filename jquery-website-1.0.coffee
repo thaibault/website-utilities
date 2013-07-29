@@ -33,7 +33,7 @@ this.window.require([
 
     ['jQuery.Tools', 'jquery-tools-1.0.coffee'],
 
-    ['jQuery.fn.carousel', 'bootstrap-2.3.1'],
+    ['jQuery.fn.carousel', 'bootstrap-3.0.0'],
 
     ['jQuery.scrollTo', 'jquery-scrollTo-1.4.3.1'],
 
