@@ -10,8 +10,6 @@
 # region header
 
 ###!
-    jQuery plugin for "jquery-1.9.1".
-
     Copyright see require on https://github.com/thaibault/require
 
     Conventions see require on https://github.com/thaibault/require
