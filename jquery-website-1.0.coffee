@@ -22,7 +22,7 @@
 
 ## standalone
 ## do ($=this.jQuery) ->
-this.window.require([
+this.require([
     ['less.Parser', 'less-1.4.1'],
 
     ['jQuery.Tools', 'jquery-tools-1.0.coffee'],
