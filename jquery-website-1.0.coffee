@@ -141,7 +141,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
         # region special
 
         ###*
-            @description Initializes the interactive webapp.
+            @description Initializes the interactive web app.
 
             @param {Object} options An options object.
 
