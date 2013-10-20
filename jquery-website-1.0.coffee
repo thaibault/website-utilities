@@ -21,7 +21,7 @@
 ###
 
 ## standalone
-## do ($=jQuery) ->
+## do ($=this.jQuery) ->
 this.window.require([
     ['less.Parser', 'less-1.4.1'],
 
