@@ -17,23 +17,22 @@
     @author t.sickert@gmail.com (Torben Sickert)
     @version 1.0 stable
     @fileOverview
-    This module provides common logic for the whole webpage.
+    This module provides common logic for the whole web page.
 ###
 
 ## standalone
 ## do ($=this.jQuery) ->
 this.require([
-    ['less.Parser', 'less-1.4.1'],
+    ['less.Parser', 'less-1.5.0']
 
-    ['jQuery.Tools', 'jquery-tools-1.0.coffee'],
+    ['jQuery', 'jquery-2.0.3']
+    ['jQuery.fn.carousel', 'bootstrap-3.0.0']
+    ['jQuery.scrollTo', 'jquery-scrollTo-1.4.3.1']
+    ['jQuery.fn.spin', 'jquery-spin-1.2.8']
+    ['jQuery.fn.hashchange', 'jquery-observeHashChange-1.0']
 
-    ['jQuery.fn.carousel', 'bootstrap-3.0.0'],
-
-    ['jQuery.scrollTo', 'jquery-scrollTo-1.4.3.1'],
-
-    ['jQuery.fn.spin', 'jquery-spin-1.2.8'],
-
-    ['jQuery.fn.hashchange', 'jquery-observeHashChange-1.0']],
+    ['jQuery.Tools', 'jquery-tools-1.0.coffee']
+    ['jQuery.Lang', 'jquery-lang-1.0.coffee']],
 (less, lessParser, $) ->
 ##
 
@@ -108,12 +107,7 @@ this.require([
                 zIndex: 2e9 # The z-index (defaults to 2000000000)
                 top: 'auto' # Top position relative to parent in px
                 left: 'auto' # Left position relative to parent in px
-        ###*
-            Holds all needed dom nodes.
-
-            @property {Object}
-        ###
-        _domNodes: {}
+            language: {}
         ###*
             Determines weather the view port is on top of the page.
 
@@ -145,7 +139,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
 
             @param {Object} options An options object.
 
-            @returns {$.Tools} Returns the current instance.
+            @returns {$.Website} Returns the current instance.
         ###
         initialize: (options) ->
             this._options = $.extend(
@@ -162,6 +156,9 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             this._addNavigationEvents()._addMediaQueryChangeEvents(
             )._triggerWindowResizeEvents()._handleGoogleAnalytics(
                 this._options.trackingCode)
+            if not this._options.language.logging?
+                this._options.language.logging = this._options.logging
+            $.Lang this._options.language
 
         # endregion
 
@@ -174,7 +171,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
         ###*
             @description This method triggers if the vieport moves to top.
 
-            @returns {$.Tools} Returns the current instance.
+            @returns {$.Website} Returns the current instance.
         ###
         _onVieportMovesToTop: ->
             this._domNodes.scrollToTopButtons.animate(
@@ -189,7 +186,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @description This method triggers if the vieport moves away from
                          top.
 
-            @returns {$.Tools} Returns the current instance.
+            @returns {$.Website} Returns the current instance.
         ###
         _onVieportMovesAwayFromTop: ->
             this._domNodes.scrollToTopButtons.css(
@@ -207,7 +204,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @description This method triggers if the responsive design
                          switches to desktop mode.
 
-            @returns {$.Tools} Returns the current instance.
+            @returns {$.Website} Returns the current instance.
         ###
         _onChangeToDesktopMode: ->
             this
@@ -215,7 +212,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @description This method triggers if the responsive design
                          switches to tablet mode.
 
-            @returns {$.Tools} Returns the current instance.
+            @returns {$.Website} Returns the current instance.
         ###
         _onChangeToTabletMode: ->
             this
@@ -223,14 +220,14 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @description This method triggers if the responsive design
                          switches to smart phone mode.
 
-            @returns {$.Tools} Returns the current instance.
+            @returns {$.Website} Returns the current instance.
         ###
         _onChangeToSmartphoneMode: ->
             this
         ###*
             @description This method triggers if we change the current section.
 
-            @returns {$.Tools} Returns the current instance.
+            @returns {$.Website} Returns the current instance.
         ###
         _onSwitchSection: ->
             this
@@ -238,7 +235,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @description This method is complete if last startup animation
                          was initialized.
 
-            @returns {$.Tools} Returns the current instance.
+            @returns {$.Website} Returns the current instance.
         ###
         _onStartUpAnimationComplete: ->
             this
@@ -251,7 +248,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @description This method adds triggers for responsive design
                          switches.
 
-            @returns {$.Tools} Returns the current instance.
+            @returns {$.Website} Returns the current instance.
         ###
         _addMediaQueryChangeEvents: ->
             this.on this._domNodes.window, 'resize', this.getMethod(
@@ -261,7 +258,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @description This method triggers if the responsive design
                          switches its mode.
 
-            @returns {$.Tools} Returns the current instance.
+            @returns {$.Website} Returns the current instance.
         ###
         _triggerWindowResizeEvents: ->
             $.each(
@@ -280,10 +277,10 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
                             ].concat this.argumentsObjectToArray arguments))
             this
         ###*
-            @description This method triggers if viewport arrives at special
+            @description This method triggers if view port arrives at special
                          areas.
 
-            @returns {$.Tools} Returns the current instance.
+            @returns {$.Website} Returns the current instance.
         ###
         _bindScrollEvents: ->
             this.on window, 'scroll', =>
@@ -302,7 +299,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
         ###*
             @description This method triggers after window is loaded.
 
-            @returns {$.Tools} Returns the current instance.
+            @returns {$.Website} Returns the current instance.
         ###
         _removeLoadingCover: ->
             window.setTimeout(
@@ -327,7 +324,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
 
             @param {Number} elementNumber The current start up step.
 
-            @returns {$.Tools} Returns the current instance.
+            @returns {$.Website} Returns the current instance.
         ###
         _handleStartUpEffects: (elementNumber) ->
             # Stop and delete spinner instance.
@@ -351,7 +348,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
         ###*
             @description This method adds triggers to switch section.
 
-            @returns {$.Tools} Returns the current instance.
+            @returns {$.Website} Returns the current instance.
         ###
         _addNavigationEvents: ->
             this._domNodes.window.hashchange(=>
@@ -361,7 +358,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
         ###*
             @description Adds trigger to scroll top buttons.
 
-            @returns {$.Tools} Returns the current instance.
+            @returns {$.Website} Returns the current instance.
         ###
         _handleScrollToTopButton: ->
             this.on(
@@ -377,7 +374,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @param {Function} onAfter Callback to call after effect has
                                       finished.
 
-            @returns {$.Tools} Returns the current instance.
+            @returns {$.Website} Returns the current instance.
         ###
         _scrollToTop: (onAfter=$.noop()) ->
             if this._options.scrollInLinearTime
@@ -405,7 +402,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @param {String} trackingCode Google's javaScript embedding code
                                          snippet.
 
-            @returns {$.Tools} Returns the current instance.
+            @returns {$.Website} Returns the current instance.
         ###
         _handleGoogleAnalytics: (trackingCode) ->
             try
