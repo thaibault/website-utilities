@@ -16,18 +16,17 @@ License
 
 endregion -->
 
-jQuery-incrementer
-==================
+jQuery-website
+==============
 
-This plugin extends an html input field which serves a number to be given.
-Handling validation and easy incrementing or decrementing of given value is
-provided.
+This plugin provides reusable website features, like scroll events, position
+detection or triggering media-query change events.
 
 Examples:
---------
+---------
 
     #!/usr/bin/env javaScript
 
-    jQuery('body form input.number').incrementer();
+    jQuery.Website();
 
-    jQuery('body form input.number').incrementer('logging': true);
+    jQuery.Website('logging': true);
