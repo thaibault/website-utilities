@@ -67,6 +67,7 @@ this.require([
             onChangeToDesktopMode: $.noop()
             onChangeToTabletMode: $.noop()
             onChangeToSmartphoneMode: $.noop()
+            onChangeMediaQueryMode: $.noop()
             onSwitchSection: $.noop()
             onStartUpAnimationComplete: $.noop()
             addtionalPageLoadingTimeInMilliseconds: 0
@@ -79,7 +80,6 @@ this.require([
                 smartphone: 'dotted'
             domNodes:
                 topDomNode: 'div.navigation-bar'
-                navigationOnTopIndicatorClass: 'on-top'
                 scrollToTopButtons: 'a[href="#top"]'
                 startUpAnimationClassPrefix: '.start-up-animation-number-'
                 windowLoadingCover: 'div.window-loading-cover'
@@ -127,7 +127,18 @@ this.require([
             @property {$.Lang}
         ###
         _languageHandler: null
+        ###*
+            Saves the class name for introspection.
+
+            @property {String}
+        ###
         __name__: 'Website'
+        ###*
+            Saves the generic javaScript code snippet to use google analytics
+            statistics.
+
+            @property {String}
+        ###
         __googleAnalyticsCode: "
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -149,6 +160,11 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @returns {$.Website} Returns the current instance.
         ###
         initialize: (options) ->
+            # Wrap event methods with debouncing handler.
+            this._onViewportMovesToTop = this.debounce(
+                this.getMethod(this._onViewportMovesToTop))
+            this._onViewportMovesAwayFromTop = this.debounce(
+                this.getMethod(this._onViewportMovesAwayFromTop))
             this._options = $.extend(
                 true, this._parentOptions, this._options)
             super options
@@ -181,13 +197,14 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @returns {$.Website} Returns the current instance.
         ###
         _onViewportMovesToTop: ->
-            this._domNodes.scrollToTopButtons.animate(
-                bottom: '+=30'
-                opacity: 0
-            ,
-                duration: 'normal'
-                always: =>
-                    this._domNodes.scrollToTopButtons.css 'bottom', '-=30')
+            if this._domNodes.scrollToTopButtons.css(
+                'visibility'
+            ) isnt 'hidden'
+                this._domNodes.scrollToTopButtons.animate(
+                    {bottom: '+=30', opacity: 0},
+                    {duration: 'normal', always: =>
+                        this._domNodes.scrollToTopButtons.css(
+                            'bottom', '-=30')})
             this
         ###*
             @description This method triggers if the viewport moves away from
@@ -196,47 +213,67 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @returns {$.Website} Returns the current instance.
         ###
         _onViewportMovesAwayFromTop: ->
-            this._domNodes.scrollToTopButtons.css(
-                bottom: '+=30'
-                display: 'block'
-                opacity: 0
-            ).animate(
-                bottom: '-=30'
-                queue: false
-                opacity: 1
-            ,
-                duration: 'normal')
+            if this._domNodes.scrollToTopButtons.css(
+                'visibility'
+            ) isnt 'hidden'
+                this._domNodes.scrollToTopButtons.css(
+                    bottom: '+=30', display: 'block', opacity: 0
+                ).animate(
+                    {bottom: '-=30', queue: false, opacity: 1},
+                    {duration: 'normal'})
+            this
+        ###*
+            @description This method triggers if the responsive design
+                         switches to another mode.
+
+            @param {String} oldMode Saves the previous mode.
+            @param {String} newMode Saves the new mode.
+
+            @returns {$.Website} Returns the current instance.
+        ###
+        _onChangeMediaQueryMode: (oldMode, newMode) ->
             this
         ###*
             @description This method triggers if the responsive design
                          switches to desktop mode.
 
+            @param {String} oldMode Saves the previous mode.
+            @param {String} newMode Saves the new mode.
+
             @returns {$.Website} Returns the current instance.
         ###
-        _onChangeToDesktopMode: ->
+        _onChangeToDesktopMode: (oldMode, newMode) ->
             this
         ###*
             @description This method triggers if the responsive design
                          switches to tablet mode.
 
-            @returns {$.Website} Returns the current instance.
-        ###
-        _onChangeToTabletMode: ->
-            this
-        ###*
-            @description This method triggers if the responsive design
-                         switches to smart phone mode.
+            @param {String} oldMode Saves the previous mode.
+            @param {String} newMode Saves the new mode.
 
             @returns {$.Website} Returns the current instance.
         ###
-        _onChangeToSmartphoneMode: ->
+        _onChangeToTabletMode: (oldMode, newMode) ->
+            this
+        ###*
+            @description This method triggers if the responsive design
+                         switches to smartphone mode.
+
+            @param {String} oldMode Saves the previous mode.
+            @param {String} newMode Saves the new mode.
+
+            @returns {$.Website} Returns the current instance.
+        ###
+        _onChangeToSmartphoneMode: (oldMode, newMode) ->
             this
         ###*
             @description This method triggers if we change the current section.
 
+            @param {String} sectionName Contains the new section name.
+
             @returns {$.Website} Returns the current instance.
         ###
-        _onSwitchSection: ->
+        _onSwitchSection: (sectionName) ->
             this
         ###*
             @description This method is complete if last startup animation
@@ -274,15 +311,23 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
                     if (this._domNodes.parent.css(
                         this._options.mediaQueryCssIndicatorStyleType
                     ) is cssValue and mode isnt this._currentMediaQueryMode)
-                        this._currentMediaQueryMode = mode
+                        this.fireEvent.apply(
+                            this, [
+                                this.stringFormat('changeMediaQueryMode',
+                                mode.substr(0, 1).toUpperCase() +
+                                    mode.substr 1),
+                                false, this, this._currentMediaQueryMode, mode
+                            ].concat this.argumentsObjectToArray arguments
+                        )
                         this.fireEvent.apply(
                             this, [
                                 this.stringFormat('changeTo{1}Mode',
                                 mode.substr(0, 1).toUpperCase() +
                                     mode.substr 1),
-                                false, this
+                                false, this, this._currentMediaQueryMode, mode
                             ].concat this.argumentsObjectToArray arguments
                         )
+                        this._currentMediaQueryMode = mode
             )
             this
         ###*
@@ -396,7 +441,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
                     distanceToScroll = distanceToScroll + menuHeight -
                         distanceToTop
                 $.scrollTo(
-                    {top: "-=#{distanceToScroll}px", left: '-=0'},
+                    {top: "-=#{distanceToScroll}px", left: '+=0'},
                     # Scroll as fast as we have distance to top.
                     {duration: distanceToScroll, onAfter: onAfter})
             else
