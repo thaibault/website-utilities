@@ -62,8 +62,8 @@ this.require([
         _parentOptions:
             logging: false
             domNodeSelectorPrefix: 'body.{1}'
-            onVieportMovesToTop: $.noop()
-            onVieportMovesAwayFromTop: $.noop()
+            onViewportMovesToTop: $.noop()
+            onViewportMovesAwayFromTop: $.noop()
             onChangeToDesktopMode: $.noop()
             onChangeToTabletMode: $.noop()
             onChangeToSmartphoneMode: $.noop()
@@ -87,6 +87,7 @@ this.require([
             startUpFadeInOptions:
                 easing: 'swing'
                 duration: 'slow'
+                always: -> $(this).removeAttr 'style'
             windowLoadingCoverFadeOutOptions:
                 easing: 'swing'
                 duration: 'slow'
@@ -113,13 +114,19 @@ this.require([
 
             @property {Boolean}
         ###
-        _vieportIsOnTop: true
+        _viewportIsOnTop: true
         ###*
             Describes the current mode defined by the css media queries.
 
             @property {String}
         ###
         _currentMediaQueryMode: ''
+        ###*
+            Saves the language handler instance.
+
+            @property {$.Lang}
+        ###
+        _languageHandler: null
         __name__: 'Website'
         __googleAnalyticsCode: "
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -158,7 +165,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
                 this._options.trackingCode)
             if not this._options.language.logging?
                 this._options.language.logging = this._options.logging
-            $.Lang this._options.language
+            this._languageHandler = $.Lang this._options.language
 
         # endregion
 
@@ -169,11 +176,11 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
         # region event
 
         ###*
-            @description This method triggers if the vieport moves to top.
+            @description This method triggers if the viewport moves to top.
 
             @returns {$.Website} Returns the current instance.
         ###
-        _onVieportMovesToTop: ->
+        _onViewportMovesToTop: ->
             this._domNodes.scrollToTopButtons.animate(
                 bottom: '+=30'
                 opacity: 0
@@ -183,12 +190,12 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
                     this._domNodes.scrollToTopButtons.css 'bottom', '-=30')
             this
         ###*
-            @description This method triggers if the vieport moves away from
+            @description This method triggers if the viewport moves away from
                          top.
 
             @returns {$.Website} Returns the current instance.
         ###
-        _onVieportMovesAwayFromTop: ->
+        _onViewportMovesAwayFromTop: ->
             this._domNodes.scrollToTopButtons.css(
                 bottom: '+=30'
                 display: 'block'
@@ -274,7 +281,9 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
                                 mode.substr(0, 1).toUpperCase() +
                                     mode.substr 1),
                                 false, this
-                            ].concat this.argumentsObjectToArray arguments))
+                            ].concat this.argumentsObjectToArray arguments
+                        )
+            )
             this
         ###*
             @description This method triggers if view port arrives at special
@@ -285,15 +294,15 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
         _bindScrollEvents: ->
             this.on window, 'scroll', =>
                 if this._domNodes.window.scrollTop()
-                    if this._vieportIsOnTop
-                        this._vieportIsOnTop = false
+                    if this._viewportIsOnTop
+                        this._viewportIsOnTop = false
                         this.fireEvent.apply this, [
-                            'vieportMovesAwayFromTop', false, this
+                            'viewportMovesAwayFromTop', false, this
                         ].concat this.argumentsObjectToArray arguments
-                else if not this._vieportIsOnTop
-                    this._vieportIsOnTop = true
+                else if not this._viewportIsOnTop
+                    this._viewportIsOnTop = true
                     this.fireEvent.apply this, [
-                        'vieportMovesToTop', false, this
+                        'viewportMovesToTop', false, this
                     ].concat this.argumentsObjectToArray arguments
             this
         ###*
@@ -342,8 +351,8 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
                 ).length)
                     this._handleStartUpEffects elementNumber + 1
                 else if window.location.href.indexOf('#') != -1
-                    this.fireEvent 'startUpAnimationComplete'),
-                this._options.startUpAnimationElementDelayInMiliseconds)
+                    this.fireEvent 'startUpAnimationComplete'
+            ), this._options.startUpAnimationElementDelayInMiliseconds)
             this
         ###*
             @description This method adds triggers to switch section.
@@ -397,7 +406,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             this
         ###*
             @description Scrolls to top of page. Runs the given function
-                         after vieport arrives.
+                         after viewport arrives.
 
             @param {String} trackingCode Google's javaScript embedding code
                                          snippet.
