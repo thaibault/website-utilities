@@ -26,7 +26,6 @@ this.require([
     ['less.Parser', 'less-1.5.0']
 
     ['jQuery', 'jquery-2.0.3']
-    ['jQuery.fn.carousel', 'bootstrap-3.0.0']
     ['jQuery.scrollTo', 'jquery-scrollTo-1.4.3.1']
     ['jQuery.fn.spin', 'jquery-spin-1.2.8']
     ['jQuery.fn.hashchange', 'jquery-observeHashChange-1.0']
@@ -70,7 +69,7 @@ this.require([
             onChangeMediaQueryMode: $.noop()
             onSwitchSection: $.noop()
             onStartUpAnimationComplete: $.noop()
-            addtionalPageLoadingTimeInMilliseconds: 0
+            additionalPageLoadingTimeInMilliseconds: 0
             mediaQueryCssIndicatorStyleType: 'border-left-style'
             googleTrackingCode: 'UA-0-0'
             scrollInLinearTime: false
@@ -87,7 +86,6 @@ this.require([
             startUpFadeInOptions:
                 easing: 'swing'
                 duration: 'slow'
-                always: -> $(this).removeAttr 'style'
             windowLoadingCoverFadeOutOptions:
                 easing: 'swing'
                 duration: 'slow'
@@ -371,7 +369,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
                     ).hide()
                     this._domNodes.windowLoadingCover.fadeOut(
                         this._options.windowLoadingCoverFadeOutOptions)
-                , this._options.addtionalPageLoadingTimeInMilliseconds)
+                , this._options.additionalPageLoadingTimeInMilliseconds)
             this
         ###*
             @description This method handles the given start up effect step.
