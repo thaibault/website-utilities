@@ -393,7 +393,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
                     (elementNumber + 1)
                 ).length)
                     this._handleStartUpEffects elementNumber + 1
-                else if window.location.href.indexOf('#') != -1
+                else
                     this.fireEvent 'startUpAnimationComplete'
             ), this._options.startUpAnimationElementDelayInMiliseconds)
             this
