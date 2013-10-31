@@ -77,8 +77,8 @@ this.require([
                 desktop: 'dashed'
                 tablet: 'solid'
                 smartphone: 'dotted'
-            domNodes:
-                topDomNode: 'div.navigation-bar'
+            domNode:
+                top: 'div.navigation-bar'
                 scrollToTopButtons: 'a[href="#top"]'
                 startUpAnimationClassPrefix: '.start-up-animation-number-'
                 windowLoadingCover: 'div.window-loading-cover'
@@ -166,13 +166,13 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             this._options = $.extend(
                 true, this._parentOptions, this._options)
             super options
-            this._domNodes = this.grabDomNodes this._options.domNodes
+            this.$domNode = this.grabDomNode this._options.domNode
             this._options.windowLoadingCoverFadeOutOptions.always =
                 this.getMethod this._handleStartUpEffects
-            this._domNodes.windowLoadingSpinner.spin(
+            this.$domNode.windowLoadingSpinner.spin(
                 this._options.windowLoadingSpinnerOptions)
-            this._bindScrollEvents()._domNodes.parent.show()
-            this._domNodes.window.ready this.getMethod(
+            this._bindScrollEvents().$domNode.parent.show()
+            this.$domNode.window.ready this.getMethod(
                 this._removeLoadingCover)
             this._addNavigationEvents()._addMediaQueryChangeEvents(
             )._triggerWindowResizeEvents()._handleGoogleAnalytics(
@@ -195,13 +195,13 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @returns {$.Website} Returns the current instance.
         ###
         _onViewportMovesToTop: ->
-            if this._domNodes.scrollToTopButtons.css(
+            if this.$domNode.scrollToTopButtons.css(
                 'visibility'
             ) isnt 'hidden'
-                this._domNodes.scrollToTopButtons.animate(
+                this.$domNode.scrollToTopButtons.animate(
                     {bottom: '+=30', opacity: 0},
                     {duration: 'normal', always: =>
-                        this._domNodes.scrollToTopButtons.css(
+                        this.$domNode.scrollToTopButtons.css(
                             'bottom', '-=30')})
             this
         ###*
@@ -211,10 +211,10 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @returns {$.Website} Returns the current instance.
         ###
         _onViewportMovesAwayFromTop: ->
-            if this._domNodes.scrollToTopButtons.css(
+            if this.$domNode.scrollToTopButtons.css(
                 'visibility'
             ) isnt 'hidden'
-                this._domNodes.scrollToTopButtons.css(
+                this.$domNode.scrollToTopButtons.css(
                     bottom: '+=30', display: 'block', opacity: 0
                 ).animate(
                     {bottom: '-=30', queue: false, opacity: 1},
@@ -293,7 +293,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @returns {$.Website} Returns the current instance.
         ###
         _addMediaQueryChangeEvents: ->
-            this.on this._domNodes.window, 'resize', this.getMethod(
+            this.on this.$domNode.window, 'resize', this.getMethod(
                 this._triggerWindowResizeEvents)
             this
         ###*
@@ -306,7 +306,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             $.each(
                 this._options.mediaQueryCssIndicator,
                 (mode, cssValue) =>
-                    if (this._domNodes.parent.css(
+                    if (this.$domNode.parent.css(
                         this._options.mediaQueryCssIndicatorStyleType
                     ) is cssValue and mode isnt this._currentMediaQueryMode)
                         this.fireEvent.apply(
@@ -336,7 +336,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
         ###
         _bindScrollEvents: ->
             this.on window, 'scroll', =>
-                if this._domNodes.window.scrollTop()
+                if this.$domNode.window.scrollTop()
                     if this._viewportIsOnTop
                         this._viewportIsOnTop = false
                         this.fireEvent.apply this, [
@@ -363,11 +363,11 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
                     $(
                         '[class^="' +
                         this.sliceDomNodeSelectorPrefix(
-                            this._options.domNodes
+                            this._options.domNode
                                 .startUpAnimationClassPrefix
                         ).substr(1) + '"]'
                     ).hide()
-                    this._domNodes.windowLoadingCover.fadeOut(
+                    this.$domNode.windowLoadingCover.fadeOut(
                         this._options.windowLoadingCoverFadeOutOptions)
                 , this._options.additionalPageLoadingTimeInMilliseconds)
             this
@@ -380,16 +380,16 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
         ###
         _handleStartUpEffects: (elementNumber) ->
             # Stop and delete spinner instance.
-            this._domNodes.windowLoadingSpinner.spin false
+            this.$domNode.windowLoadingSpinner.spin false
             if not $.isNumeric elementNumber
                 elementNumber = 1
             window.setTimeout((=>
                 $(
-                    this._options.domNodes.startUpAnimationClassPrefix +
+                    this._options.domNode.startUpAnimationClassPrefix +
                     elementNumber
                 ).fadeIn this._options.startUpFadeInOptions
                 if ($(
-                    this._options.domNodes.startUpAnimationClassPrefix +
+                    this._options.domNode.startUpAnimationClassPrefix +
                     (elementNumber + 1)
                 ).length)
                     this._handleStartUpEffects elementNumber + 1
@@ -403,7 +403,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @returns {$.Website} Returns the current instance.
         ###
         _addNavigationEvents: ->
-            this._domNodes.window.hashchange(=>
+            this.$domNode.window.hashchange(=>
                 this.fireEvent 'switchSection', false,
                 this, window.location.hash)
             this._handleScrollToTopButton()
@@ -414,10 +414,11 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
         ###
         _handleScrollToTopButton: ->
             this.on(
-                this._domNodes.scrollToTopButtons, 'click', (event) =>
+                this.$domNode.scrollToTopButtons, 'click', (event) =>
                     event.preventDefault()
-                    this._scrollToTop())
-            this._domNodes.scrollToTopButtons.hide()
+                    this._scrollToTop()
+            )
+            this.$domNode.scrollToTopButtons.hide()
             this
         ###*
             @description Scrolls to top of page. Runs the given function
@@ -430,10 +431,8 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
         ###
         _scrollToTop: (onAfter=$.noop()) ->
             if this._options.scrollInLinearTime
-                distanceToTop = this._domNodes.window.scrollTop()
-                menuHeight = this._domNodes.topDomNode.find(
-                    'div.navbar'
-                ).outerHeight()
+                distanceToTop = this.$domNode.window.scrollTop()
+                menuHeight = this.$domNode.top.find('div.navbar').outerHeight()
                 distanceToScroll = distanceToTop + menuHeight
                 if distanceToTop < menuHeight
                     distanceToScroll = distanceToScroll + menuHeight -
@@ -474,9 +473,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
     # region handle $ extending
 
     ###* @ignore ###
-    $.Website = ->
-        self = new Website
-        self._controller.apply self, arguments
+    $.Website = -> $.Tools().controller Website, arguments
     ###* @ignore ###
     $.Website.class = Website
 
