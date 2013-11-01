@@ -25,12 +25,10 @@
 this.require([
     ['less.Parser', 'less-1.5.0']
 
-    ['jQuery', 'jquery-2.0.3']
+    ['jQuery.Tools', 'jquery-tools-1.0.coffee']
     ['jQuery.scrollTo', 'jquery-scrollTo-1.4.3.1']
     ['jQuery.fn.spin', 'jquery-spin-1.2.8']
     ['jQuery.fn.hashchange', 'jquery-observeHashChange-1.0']
-
-    ['jQuery.Tools', 'jquery-tools-1.0.coffee']
     ['jQuery.Lang', 'jquery-lang-1.0.coffee']],
 (less, lessParser, $) ->
 ##
@@ -152,7 +150,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
         # region special
 
         ###*
-            @description Initializes the interactive web app.
+            @description Initializes the interactive web application.
 
             @param {Object} options An options object.
 
