@@ -72,7 +72,6 @@ this.require([
             additionalPageLoadingTimeInMilliseconds: 0
             mediaQueryCssIndicatorStyleType: 'border-left-style'
             googleTrackingCode: 'UA-0-0'
-            scrollInLinearTime: false
             mediaQueryCssIndicator:
                 desktop: 'dashed'
                 tablet: 'solid'
@@ -107,6 +106,8 @@ this.require([
                 top: 'auto' # Top position relative to parent in px
                 left: 'auto' # Left position relative to parent in px
             language: {}
+            scrollInLinearTime: false
+            scrollToTop: duration: 'slow'
         ###*
             Determines weather the view port is on top of the page.
 
@@ -430,6 +431,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @returns {$.Website} Returns the current instance.
         ###
         _scrollToTop: (onAfter=$.noop()) ->
+            this._options.scrollToTop.onAfter = onAfter
             if this._options.scrollInLinearTime
                 distanceToTop = this.$domNode.window.scrollTop()
                 menuHeight = this.$domNode.top.find('div.navbar').outerHeight()
@@ -437,14 +439,13 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
                 if distanceToTop < menuHeight
                     distanceToScroll = distanceToScroll + menuHeight -
                         distanceToTop
+                # Scroll as fast as we have distance to top.
+                this._options.scrollToTop.duration = distanceToScroll
                 $.scrollTo(
                     {top: "-=#{distanceToScroll}px", left: '+=0'},
-                    # Scroll as fast as we have distance to top.
-                    {duration: distanceToScroll, onAfter: onAfter})
+                    this._options.scrollToTop)
             else
-                $.scrollTo(
-                    {top: 0, left: 0},
-                    {duration: 'slow', onAfter: onAfter})
+                $.scrollTo {top: 0, left: 0}, this._options.scrollToTop
             this
         ###*
             @description Scrolls to top of page. Runs the given function
