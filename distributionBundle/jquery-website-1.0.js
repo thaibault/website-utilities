@@ -165,11 +165,11 @@
         this._onViewportMovesAwayFromTop = this.debounce(this.getMethod(this._onViewportMovesAwayFromTop));
         this._options = $.extend(true, this._parentOptions, this._options);
         Website.__super__.initialize.call(this, options);
-        this.$domNode = this.grabDomNode(this._options.domNode);
+        this.$domNodes = this.grabDomNode(this._options.domNode);
         this._options.windowLoadingCoverFadeOutOptions.always = this.getMethod(this._handleStartUpEffects);
-        this.$domNode.windowLoadingSpinner.spin(this._options.windowLoadingSpinnerOptions);
-        this._bindScrollEvents().$domNode.parent.show();
-        this.$domNode.window.ready(this.getMethod(this._removeLoadingCover));
+        this.$domNodes.windowLoadingSpinner.spin(this._options.windowLoadingSpinnerOptions);
+        this._bindScrollEvents().$domNodes.parent.show();
+        this.$domNodes.window.ready(this.getMethod(this._removeLoadingCover));
         this._addNavigationEvents()._addMediaQueryChangeEvents()._triggerWindowResizeEvents()._handleGoogleAnalytics(this._options.trackingCode);
         if (this._options.language.logging == null) {
           this._options.language.logging = this._options.logging;
@@ -186,14 +186,14 @@
 
       Website.prototype._onViewportMovesToTop = function() {
         var _this = this;
-        if (this.$domNode.scrollToTopButtons.css('visibility') !== 'hidden') {
-          this.$domNode.scrollToTopButtons.animate({
+        if (this.$domNodes.scrollToTopButtons.css('visibility') !== 'hidden') {
+          this.$domNodes.scrollToTopButtons.animate({
             bottom: '+=30',
             opacity: 0
           }, {
             duration: 'normal',
             always: function() {
-              return _this.$domNode.scrollToTopButtons.css('bottom', '-=30');
+              return _this.$domNodes.scrollToTopButtons.css('bottom', '-=30');
             }
           });
         }
@@ -209,8 +209,8 @@
 
 
       Website.prototype._onViewportMovesAwayFromTop = function() {
-        if (this.$domNode.scrollToTopButtons.css('visibility') !== 'hidden') {
-          this.$domNode.scrollToTopButtons.css({
+        if (this.$domNodes.scrollToTopButtons.css('visibility') !== 'hidden') {
+          this.$domNodes.scrollToTopButtons.css({
             bottom: '+=30',
             display: 'block',
             opacity: 0
@@ -319,7 +319,7 @@
 
 
       Website.prototype._addMediaQueryChangeEvents = function() {
-        this.on(this.$domNode.window, 'resize', this.getMethod(this._triggerWindowResizeEvents));
+        this.on(this.$domNodes.window, 'resize', this.getMethod(this._triggerWindowResizeEvents));
         return this;
       };
 
@@ -334,7 +334,7 @@
       Website.prototype._triggerWindowResizeEvents = function() {
         var _this = this;
         $.each(this._options.mediaQueryCssIndicator, function(mode, cssValue) {
-          if (_this.$domNode.parent.css(_this._options.mediaQueryCssIndicatorStyleType) === cssValue && mode !== _this._currentMediaQueryMode) {
+          if (_this.$domNodes.parent.css(_this._options.mediaQueryCssIndicatorStyleType) === cssValue && mode !== _this._currentMediaQueryMode) {
             _this.fireEvent.apply(_this, [_this.stringFormat('changeMediaQueryMode', mode.substr(0, 1).toUpperCase() + mode.substr(1)), false, _this, _this._currentMediaQueryMode, mode].concat(_this.argumentsObjectToArray(arguments)));
             _this.fireEvent.apply(_this, [_this.stringFormat('changeTo{1}Mode', mode.substr(0, 1).toUpperCase() + mode.substr(1)), false, _this, _this._currentMediaQueryMode, mode].concat(_this.argumentsObjectToArray(arguments)));
             return _this._currentMediaQueryMode = mode;
@@ -354,7 +354,7 @@
       Website.prototype._bindScrollEvents = function() {
         var _this = this;
         this.on(window, 'scroll', function() {
-          if (_this.$domNode.window.scrollTop()) {
+          if (_this.$domNodes.window.scrollTop()) {
             if (_this._viewportIsOnTop) {
               _this._viewportIsOnTop = false;
               return _this.fireEvent.apply(_this, ['viewportMovesAwayFromTop', false, _this].concat(_this.argumentsObjectToArray(arguments)));
@@ -383,7 +383,7 @@
           */
 
           $('[class^="' + _this.sliceDomNodeSelectorPrefix(_this._options.domNode.startUpAnimationClassPrefix).substr(1) + '"]').hide();
-          return _this.$domNode.windowLoadingCover.fadeOut(_this._options.windowLoadingCoverFadeOutOptions);
+          return _this.$domNodes.windowLoadingCover.fadeOut(_this._options.windowLoadingCoverFadeOutOptions);
         }, this._options.additionalPageLoadingTimeInMilliseconds);
         return this;
       };
@@ -399,7 +399,7 @@
 
       Website.prototype._handleStartUpEffects = function(elementNumber) {
         var _this = this;
-        this.$domNode.windowLoadingSpinner.spin(false);
+        this.$domNodes.windowLoadingSpinner.spin(false);
         if (!$.isNumeric(elementNumber)) {
           elementNumber = 1;
         }
@@ -423,7 +423,7 @@
 
       Website.prototype._addNavigationEvents = function() {
         var _this = this;
-        this.$domNode.window.hashchange(function() {
+        this.$domNodes.window.hashchange(function() {
           return _this.fireEvent('switchSection', false, _this, window.location.hash);
         });
         return this._handleScrollToTopButton();
@@ -438,11 +438,11 @@
 
       Website.prototype._handleScrollToTopButton = function() {
         var _this = this;
-        this.on(this.$domNode.scrollToTopButtons, 'click', function(event) {
+        this.on(this.$domNodes.scrollToTopButtons, 'click', function(event) {
           event.preventDefault();
           return _this._scrollToTop();
         });
-        this.$domNode.scrollToTopButtons.hide();
+        this.$domNodes.scrollToTopButtons.hide();
         return this;
       };
 
@@ -464,8 +464,8 @@
         }
         this._options.scrollToTop.onAfter = onAfter;
         if (this._options.scrollInLinearTime) {
-          distanceToTop = this.$domNode.window.scrollTop();
-          menuHeight = this.$domNode.top.find('div.navbar').outerHeight();
+          distanceToTop = this.$domNodes.window.scrollTop();
+          menuHeight = this.$domNodes.top.find('div.navbar').outerHeight();
           distanceToScroll = distanceToTop + menuHeight;
           if (distanceToTop < menuHeight) {
             distanceToScroll = distanceToScroll + menuHeight - distanceToTop;
