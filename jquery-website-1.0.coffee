@@ -165,13 +165,13 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             this._options = $.extend(
                 true, this._parentOptions, this._options)
             super options
-            this.$domNode = this.grabDomNode this._options.domNode
+            this.$domNodes = this.grabDomNode this._options.domNode
             this._options.windowLoadingCoverFadeOutOptions.always =
                 this.getMethod this._handleStartUpEffects
-            this.$domNode.windowLoadingSpinner.spin(
+            this.$domNodes.windowLoadingSpinner.spin(
                 this._options.windowLoadingSpinnerOptions)
-            this._bindScrollEvents().$domNode.parent.show()
-            this.$domNode.window.ready this.getMethod(
+            this._bindScrollEvents().$domNodes.parent.show()
+            this.$domNodes.window.ready this.getMethod(
                 this._removeLoadingCover)
             this._addNavigationEvents()._addMediaQueryChangeEvents(
             )._triggerWindowResizeEvents()._handleGoogleAnalytics(
@@ -194,13 +194,13 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @returns {$.Website} Returns the current instance.
         ###
         _onViewportMovesToTop: ->
-            if this.$domNode.scrollToTopButtons.css(
+            if this.$domNodes.scrollToTopButtons.css(
                 'visibility'
             ) isnt 'hidden'
-                this.$domNode.scrollToTopButtons.animate(
+                this.$domNodes.scrollToTopButtons.animate(
                     {bottom: '+=30', opacity: 0},
                     {duration: 'normal', always: =>
-                        this.$domNode.scrollToTopButtons.css(
+                        this.$domNodes.scrollToTopButtons.css(
                             'bottom', '-=30')})
             this
         ###*
@@ -210,10 +210,10 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @returns {$.Website} Returns the current instance.
         ###
         _onViewportMovesAwayFromTop: ->
-            if this.$domNode.scrollToTopButtons.css(
+            if this.$domNodes.scrollToTopButtons.css(
                 'visibility'
             ) isnt 'hidden'
-                this.$domNode.scrollToTopButtons.css(
+                this.$domNodes.scrollToTopButtons.css(
                     bottom: '+=30', display: 'block', opacity: 0
                 ).animate(
                     {bottom: '-=30', queue: false, opacity: 1},
@@ -292,7 +292,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @returns {$.Website} Returns the current instance.
         ###
         _addMediaQueryChangeEvents: ->
-            this.on this.$domNode.window, 'resize', this.getMethod(
+            this.on this.$domNodes.window, 'resize', this.getMethod(
                 this._triggerWindowResizeEvents)
             this
         ###*
@@ -305,7 +305,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             $.each(
                 this._options.mediaQueryCssIndicator,
                 (mode, cssValue) =>
-                    if (this.$domNode.parent.css(
+                    if (this.$domNodes.parent.css(
                         this._options.mediaQueryCssIndicatorStyleType
                     ) is cssValue and mode isnt this._currentMediaQueryMode)
                         this.fireEvent.apply(
@@ -335,7 +335,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
         ###
         _bindScrollEvents: ->
             this.on window, 'scroll', =>
-                if this.$domNode.window.scrollTop()
+                if this.$domNodes.window.scrollTop()
                     if this._viewportIsOnTop
                         this._viewportIsOnTop = false
                         this.fireEvent.apply this, [
@@ -366,7 +366,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
                                 .startUpAnimationClassPrefix
                         ).substr(1) + '"]'
                     ).hide()
-                    this.$domNode.windowLoadingCover.fadeOut(
+                    this.$domNodes.windowLoadingCover.fadeOut(
                         this._options.windowLoadingCoverFadeOutOptions)
                 , this._options.additionalPageLoadingTimeInMilliseconds)
             this
@@ -379,7 +379,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
         ###
         _handleStartUpEffects: (elementNumber) ->
             # Stop and delete spinner instance.
-            this.$domNode.windowLoadingSpinner.spin false
+            this.$domNodes.windowLoadingSpinner.spin false
             if not $.isNumeric elementNumber
                 elementNumber = 1
             window.setTimeout((=>
@@ -402,7 +402,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @returns {$.Website} Returns the current instance.
         ###
         _addNavigationEvents: ->
-            this.$domNode.window.hashchange(=>
+            this.$domNodes.window.hashchange(=>
                 this.fireEvent 'switchSection', false,
                 this, window.location.hash)
             this._handleScrollToTopButton()
@@ -413,11 +413,11 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
         ###
         _handleScrollToTopButton: ->
             this.on(
-                this.$domNode.scrollToTopButtons, 'click', (event) =>
+                this.$domNodes.scrollToTopButtons, 'click', (event) =>
                     event.preventDefault()
                     this._scrollToTop()
             )
-            this.$domNode.scrollToTopButtons.hide()
+            this.$domNodes.scrollToTopButtons.hide()
             this
         ###*
             @description Scrolls to top of page. Runs the given function
@@ -431,8 +431,8 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
         _scrollToTop: (onAfter=$.noop()) ->
             this._options.scrollToTop.onAfter = onAfter
             if this._options.scrollInLinearTime
-                distanceToTop = this.$domNode.window.scrollTop()
-                menuHeight = this.$domNode.top.find('div.navbar').outerHeight()
+                distanceToTop = this.$domNodes.window.scrollTop()
+                menuHeight = this.$domNodes.top.find('div.navbar').outerHeight()
                 distanceToScroll = distanceToTop + menuHeight
                 if distanceToTop < menuHeight
                     distanceToScroll = distanceToScroll + menuHeight -
