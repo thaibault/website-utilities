@@ -427,16 +427,11 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
         _scrollToTop: (onAfter=$.noop()) ->
             this._options.scrollToTop.onAfter = onAfter
             if this._options.scrollInLinearTime
-                distanceToTop = this.$domNodes.window.scrollTop()
-                menuHeight = this.$domNodes.top.find('div.navbar').outerHeight()
-                distanceToScroll = distanceToTop + menuHeight
-                if distanceToTop < menuHeight
-                    distanceToScroll = distanceToScroll + menuHeight -
-                        distanceToTop
+                distanceToTopInPixel = this.$domNodes.window.scrollTop()
                 # Scroll as fast as we have distance to top.
-                this._options.scrollToTop.duration = distanceToScroll
+                this._options.scrollToTop.duration = distanceToTopInPixel
                 $.scrollTo(
-                    {top: "-=#{distanceToScroll}px", left: '+=0'},
+                    {top: "-=#{distanceToTopInPixel}", left: '+=0'},
                     this._options.scrollToTop)
             else
                 $.scrollTo {top: 0, left: 0}, this._options.scrollToTop
