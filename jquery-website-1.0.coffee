@@ -353,22 +353,18 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @returns {$.Website} Returns the current instance.
         ###
         _removeLoadingCover: ->
-            window.setTimeout(
-                =>
-                    ###
-                        Hide startup animation dom nodes to show them step
-                        by step.
-                    ###
-                    $(
-                        '[class^="' +
-                        this.sliceDomNodeSelectorPrefix(
-                            this._options.domNode
-                                .startUpAnimationClassPrefix
-                        ).substr(1) + '"]'
-                    ).hide()
-                    this.$domNodes.windowLoadingCover.fadeOut(
-                        this._options.windowLoadingCoverFadeOutOptions)
-                , this._options.additionalPageLoadingTimeInMilliseconds)
+            window.setTimeout(=>
+                # Hide startup animation dom nodes to show them step by step.
+                $(
+                    '[class^="' +
+                    this.sliceDomNodeSelectorPrefix(
+                        this._options.domNode
+                            .startUpAnimationClassPrefix
+                    ).substr(1) + '"]'
+                ).hide()
+                this.$domNodes.windowLoadingCover.fadeOut(
+                    this._options.windowLoadingCoverFadeOutOptions)
+            , this._options.additionalPageLoadingTimeInMilliseconds)
             this
         ###*
             @description This method handles the given start up effect step.
