@@ -377,11 +377,6 @@
       Website.prototype._removeLoadingCover = function() {
         var _this = this;
         window.setTimeout(function() {
-          /*
-              Hide startup animation dom nodes to show them step
-              by step.
-          */
-
           $('[class^="' + _this.sliceDomNodeSelectorPrefix(_this._options.domNode.startUpAnimationClassPrefix).substr(1) + '"]').hide();
           return _this.$domNodes.windowLoadingCover.fadeOut(_this._options.windowLoadingCoverFadeOutOptions);
         }, this._options.additionalPageLoadingTimeInMilliseconds);
