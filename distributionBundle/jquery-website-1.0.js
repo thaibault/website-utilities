@@ -453,21 +453,16 @@
 
 
       Website.prototype._scrollToTop = function(onAfter) {
-        var distanceToScroll, distanceToTop, menuHeight;
+        var distanceToTopInPixel;
         if (onAfter == null) {
           onAfter = $.noop();
         }
         this._options.scrollToTop.onAfter = onAfter;
         if (this._options.scrollInLinearTime) {
-          distanceToTop = this.$domNodes.window.scrollTop();
-          menuHeight = this.$domNodes.top.find('div.navbar').outerHeight();
-          distanceToScroll = distanceToTop + menuHeight;
-          if (distanceToTop < menuHeight) {
-            distanceToScroll = distanceToScroll + menuHeight - distanceToTop;
-          }
-          this._options.scrollToTop.duration = distanceToScroll;
+          distanceToTopInPixel = this.$domNodes.window.scrollTop();
+          this._options.scrollToTop.duration = distanceToTopInPixel;
           $.scrollTo({
-            top: "-=" + distanceToScroll + "px",
+            top: "-=" + distanceToTopInPixel,
             left: '+=0'
           }, this._options.scrollToTop);
         } else {
