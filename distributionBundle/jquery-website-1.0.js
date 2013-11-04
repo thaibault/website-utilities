@@ -400,7 +400,7 @@
         }
         window.setTimeout((function() {
           $(_this._options.domNode.startUpAnimationClassPrefix + elementNumber).fadeIn(_this._options.startUpFadeInOptions);
-          if (($(_this._options.domNode.startUpAnimationClassPrefix + (elementNumber + 1)).length)) {
+          if ($(_this._options.domNode.startUpAnimationClassPrefix + (elementNumber + 1)).length) {
             return _this._handleStartUpEffects(elementNumber + 1);
           } else {
             return _this.fireEvent('startUpAnimationComplete');
@@ -442,8 +442,8 @@
       };
 
       /**
-          @description Scrolls to top of page. Runs the given function
-                       after viewport arrives.
+          @description Scrolls to top of page. Runs the given function after
+                       viewport arrives.
       
           @param {Function} onAfter Callback to call after effect has
                                     finished.
@@ -475,8 +475,8 @@
       };
 
       /**
-          @description Scrolls to top of page. Runs the given function
-                       after viewport arrives.
+          @description Scrolls to top of page. Runs the given function after
+                       viewport arrives.
       
           @param {String} trackingCode Google's javaScript embedding code
                                        snippet.
