@@ -302,30 +302,27 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @returns {$.Website} Returns the current instance.
         ###
         _triggerWindowResizeEvents: ->
-            $.each(
-                this._options.mediaQueryCssIndicator,
-                (mode, cssValue) =>
-                    if (this.$domNodes.parent.css(
-                        this._options.mediaQueryCssIndicatorStyleType
-                    ) is cssValue and mode isnt this._currentMediaQueryMode)
-                        this.fireEvent.apply(
-                            this, [
-                                this.stringFormat('changeMediaQueryMode',
-                                mode.substr(0, 1).toUpperCase() +
-                                    mode.substr 1),
-                                false, this, this._currentMediaQueryMode, mode
-                            ].concat this.argumentsObjectToArray arguments
-                        )
-                        this.fireEvent.apply(
-                            this, [
-                                this.stringFormat('changeTo{1}Mode',
-                                mode.substr(0, 1).toUpperCase() +
-                                    mode.substr 1),
-                                false, this, this._currentMediaQueryMode, mode
-                            ].concat this.argumentsObjectToArray arguments
-                        )
-                        this._currentMediaQueryMode = mode
-            )
+            $.each this._options.mediaQueryCssIndicator, (mode, cssValue) =>
+                if this.$domNodes.parent.css(
+                    this._options.mediaQueryCssIndicatorStyleType
+                ) is cssValue and mode isnt this._currentMediaQueryMode
+                    this.fireEvent.apply(
+                        this, [
+                            this.stringFormat('changeMediaQueryMode',
+                            mode.substr(0, 1).toUpperCase() +
+                                mode.substr 1),
+                            false, this, this._currentMediaQueryMode, mode
+                        ].concat this.argumentsObjectToArray arguments
+                    )
+                    this.fireEvent.apply(
+                        this, [
+                            this.stringFormat('changeTo{1}Mode',
+                            mode.substr(0, 1).toUpperCase() +
+                                mode.substr 1),
+                            false, this, this._currentMediaQueryMode, mode
+                        ].concat this.argumentsObjectToArray arguments
+                    )
+                    this._currentMediaQueryMode = mode
             this
         ###*
             @description This method triggers if view port arrives at special
@@ -376,17 +373,16 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
         _handleStartUpEffects: (elementNumber) ->
             # Stop and delete spinner instance.
             this.$domNodes.windowLoadingSpinner.spin false
-            if not $.isNumeric elementNumber
-                elementNumber = 1
+            elementNumber = 1 if not $.isNumeric elementNumber
             window.setTimeout((=>
                 $(
                     this._options.domNode.startUpAnimationClassPrefix +
                     elementNumber
                 ).fadeIn this._options.startUpFadeInOptions
-                if ($(
+                if $(
                     this._options.domNode.startUpAnimationClassPrefix +
                     (elementNumber + 1)
-                ).length)
+                ).length
                     this._handleStartUpEffects elementNumber + 1
                 else
                     this.fireEvent 'startUpAnimationComplete'
@@ -416,8 +412,8 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             this.$domNodes.scrollToTopButtons.hide()
             this
         ###*
-            @description Scrolls to top of page. Runs the given function
-                         after viewport arrives.
+            @description Scrolls to top of page. Runs the given function after
+                         viewport arrives.
 
             @param {Function} onAfter Callback to call after effect has
                                       finished.
@@ -437,8 +433,8 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
                 $.scrollTo {top: 0, left: 0}, this._options.scrollToTop
             this
         ###*
-            @description Scrolls to top of page. Runs the given function
-                         after viewport arrives.
+            @description Scrolls to top of page. Runs the given function after
+                         viewport arrives.
 
             @param {String} trackingCode Google's javaScript embedding code
                                          snippet.
