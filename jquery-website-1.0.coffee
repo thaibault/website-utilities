@@ -103,6 +103,7 @@ this.require([
                 zIndex: 2e9 # The z-index (defaults to 2000000000)
                 top: 'auto' # Top position relative to parent in px
                 left: 'auto' # Left position relative to parent in px
+            activateLanguageSupport: true
             language: {}
             scrollInLinearTime: false
             scrollToTop: duration: 'slow'
@@ -178,7 +179,9 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
                 this._options.trackingCode)
             if not this._options.language.logging?
                 this._options.language.logging = this._options.logging
-            this._languageHandler = $.Lang this._options.language
+            if this._options.activateLanguageSupport
+                this._languageHandler = $.Lang this._options.language
+            this
 
         # endregion
 
