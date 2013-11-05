@@ -98,6 +98,7 @@
           top: 'auto',
           left: 'auto'
         },
+        activateLanguageSupport: true,
         language: {},
         scrollInLinearTime: false,
         scrollToTop: {
@@ -174,7 +175,10 @@
         if (this._options.language.logging == null) {
           this._options.language.logging = this._options.logging;
         }
-        return this._languageHandler = $.Lang(this._options.language);
+        if (this._options.activateLanguageSupport) {
+          this._languageHandler = $.Lang(this._options.language);
+        }
+        return this;
       };
 
       /**
