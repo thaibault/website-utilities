@@ -68,12 +68,9 @@ this.require([
             onSwitchSection: $.noop()
             onStartUpAnimationComplete: $.noop()
             additionalPageLoadingTimeInMilliseconds: 0
-            mediaQueryCssIndicatorStyleType: 'border-left-style'
             googleTrackingCode: 'UA-0-0'
             mediaQueryCssIndicator:
-                desktop: 'dashed'
-                tablet: 'solid'
-                smartphone: 'dotted'
+                extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg'
             domNode:
                 top: 'div.navigation-bar'
                 scrollToTopButtons: 'a[href="#top"]'
@@ -231,41 +228,47 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
 
             @returns {$.Website} Returns the current instance.
         ###
-        _onChangeMediaQueryMode: (oldMode, newMode) ->
-            this
+        _onChangeMediaQueryMode: (oldMode, newMode) -> this
         ###*
             @description This method triggers if the responsive design
-                         switches to desktop mode.
+                         switches to large mode.
 
             @param {String} oldMode Saves the previous mode.
             @param {String} newMode Saves the new mode.
 
             @returns {$.Website} Returns the current instance.
         ###
-        _onChangeToDesktopMode: (oldMode, newMode) ->
-            this
+        _onChangeToLargeMode: (oldMode, newMode) -> this
         ###*
             @description This method triggers if the responsive design
-                         switches to tablet mode.
+                         switches to medium mode.
 
             @param {String} oldMode Saves the previous mode.
             @param {String} newMode Saves the new mode.
 
             @returns {$.Website} Returns the current instance.
         ###
-        _onChangeToTabletMode: (oldMode, newMode) ->
-            this
+        _onChangeToMediumMode: (oldMode, newMode) -> this
         ###*
             @description This method triggers if the responsive design
-                         switches to smartphone mode.
+                         switches to small mode.
 
             @param {String} oldMode Saves the previous mode.
             @param {String} newMode Saves the new mode.
 
             @returns {$.Website} Returns the current instance.
         ###
-        _onChangeToSmartphoneMode: (oldMode, newMode) ->
-            this
+        _onChangeToSmallMode: (oldMode, newMode) -> this
+        ###*
+            @description This method triggers if the responsive design
+                         switches to extra small mode.
+
+            @param {String} oldMode Saves the previous mode.
+            @param {String} newMode Saves the new mode.
+
+            @returns {$.Website} Returns the current instance.
+        ###
+        _onChangeToExtraSmallMode: (oldMode, newMode) -> this
         ###*
             @description This method triggers if we change the current section.
 
@@ -273,16 +276,14 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
 
             @returns {$.Website} Returns the current instance.
         ###
-        _onSwitchSection: (sectionName) ->
-            this
+        _onSwitchSection: (sectionName) -> this
         ###*
             @description This method is complete if last startup animation
                          was initialized.
 
             @returns {$.Website} Returns the current instance.
         ###
-        _onStartUpAnimationComplete: ->
-            this
+        _onStartUpAnimationComplete: -> this
 
         # endregion
 
@@ -305,27 +306,26 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
             @returns {$.Website} Returns the current instance.
         ###
         _triggerWindowResizeEvents: ->
-            $.each this._options.mediaQueryCssIndicator, (mode, cssValue) =>
-                if this.$domNodes.parent.css(
-                    this._options.mediaQueryCssIndicatorStyleType
-                ) is cssValue and mode isnt this._currentMediaQueryMode
+            $.each this._options.mediaQueryCssIndicator, (name, value) =>
+                this.$domNodes.parent.addClass "hidden-#{value}"
+                if(this.$domNodes.parent.is(':hidden') and
+                   name isnt this._currentMediaQueryMode)
                     this.fireEvent.apply(
                         this, [
                             this.stringFormat('changeMediaQueryMode',
-                            mode.substr(0, 1).toUpperCase() +
-                                mode.substr 1),
-                            false, this, this._currentMediaQueryMode, mode
+                            name.substr(0, 1).toUpperCase() + name.substr 1),
+                            false, this, this._currentMediaQueryMode, name
                         ].concat this.argumentsObjectToArray arguments
                     )
                     this.fireEvent.apply(
                         this, [
                             this.stringFormat('changeTo{1}Mode',
-                            mode.substr(0, 1).toUpperCase() +
-                                mode.substr 1),
-                            false, this, this._currentMediaQueryMode, mode
+                            name.substr(0, 1).toUpperCase() + name.substr 1),
+                            false, this, this._currentMediaQueryMode, name
                         ].concat this.argumentsObjectToArray arguments
                     )
-                    this._currentMediaQueryMode = mode
+                    this._currentMediaQueryMode = name
+                this.$domNodes.parent.removeClass "hidden-#{value}"
             this
         ###*
             @description This method triggers if view port arrives at special
@@ -382,11 +382,9 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
                     this._options.domNode.startUpAnimationClassPrefix +
                     elementNumber
                 ).fadeIn this._options.startUpFadeInOptions
-                if $(
-                    this._options.domNode.startUpAnimationClassPrefix +
-                    (elementNumber + 1)
-                ).length
-                    this._handleStartUpEffects elementNumber + 1
+                if $(this._options.domNode.startUpAnimationClassPrefix +
+                     (elementNumber + 1)).length
+                        this._handleStartUpEffects elementNumber + 1
                 else
                     this.fireEvent 'startUpAnimationComplete'
             ), this._options.startUpAnimationElementDelayInMiliseconds)
