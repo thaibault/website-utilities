@@ -58,12 +58,12 @@
         onSwitchSection: $.noop(),
         onStartUpAnimationComplete: $.noop(),
         additionalPageLoadingTimeInMilliseconds: 0,
-        mediaQueryCssIndicatorStyleType: 'border-left-style',
         googleTrackingCode: 'UA-0-0',
         mediaQueryCssIndicator: {
-          desktop: 'dashed',
-          tablet: 'solid',
-          smartphone: 'dotted'
+          extraSmall: 'xs',
+          small: 'sm',
+          medium: 'md',
+          large: 'lg'
         },
         domNode: {
           top: 'div.navigation-bar',
@@ -246,7 +246,7 @@
 
       /**
           @description This method triggers if the responsive design
-                       switches to desktop mode.
+                       switches to large mode.
       
           @param {String} oldMode Saves the previous mode.
           @param {String} newMode Saves the new mode.
@@ -255,13 +255,13 @@
       */
 
 
-      Website.prototype._onChangeToDesktopMode = function(oldMode, newMode) {
+      Website.prototype._onChangeToLargeMode = function(oldMode, newMode) {
         return this;
       };
 
       /**
           @description This method triggers if the responsive design
-                       switches to tablet mode.
+                       switches to medium mode.
       
           @param {String} oldMode Saves the previous mode.
           @param {String} newMode Saves the new mode.
@@ -270,13 +270,13 @@
       */
 
 
-      Website.prototype._onChangeToTabletMode = function(oldMode, newMode) {
+      Website.prototype._onChangeToMediumMode = function(oldMode, newMode) {
         return this;
       };
 
       /**
           @description This method triggers if the responsive design
-                       switches to smartphone mode.
+                       switches to small mode.
       
           @param {String} oldMode Saves the previous mode.
           @param {String} newMode Saves the new mode.
@@ -285,7 +285,22 @@
       */
 
 
-      Website.prototype._onChangeToSmartphoneMode = function(oldMode, newMode) {
+      Website.prototype._onChangeToSmallMode = function(oldMode, newMode) {
+        return this;
+      };
+
+      /**
+          @description This method triggers if the responsive design
+                       switches to extra small mode.
+      
+          @param {String} oldMode Saves the previous mode.
+          @param {String} newMode Saves the new mode.
+      
+          @returns {$.Website} Returns the current instance.
+      */
+
+
+      Website.prototype._onChangeToExtraSmallMode = function(oldMode, newMode) {
         return this;
       };
 
@@ -337,12 +352,14 @@
 
       Website.prototype._triggerWindowResizeEvents = function() {
         var _this = this;
-        $.each(this._options.mediaQueryCssIndicator, function(mode, cssValue) {
-          if (_this.$domNodes.parent.css(_this._options.mediaQueryCssIndicatorStyleType) === cssValue && mode !== _this._currentMediaQueryMode) {
-            _this.fireEvent.apply(_this, [_this.stringFormat('changeMediaQueryMode', mode.substr(0, 1).toUpperCase() + mode.substr(1)), false, _this, _this._currentMediaQueryMode, mode].concat(_this.argumentsObjectToArray(arguments)));
-            _this.fireEvent.apply(_this, [_this.stringFormat('changeTo{1}Mode', mode.substr(0, 1).toUpperCase() + mode.substr(1)), false, _this, _this._currentMediaQueryMode, mode].concat(_this.argumentsObjectToArray(arguments)));
-            return _this._currentMediaQueryMode = mode;
+        $.each(this._options.mediaQueryCssIndicator, function(name, value) {
+          _this.$domNodes.parent.addClass("hidden-" + value);
+          if (_this.$domNodes.parent.is(':hidden') && name !== _this._currentMediaQueryMode) {
+            _this.fireEvent.apply(_this, [_this.stringFormat('changeMediaQueryMode', name.substr(0, 1).toUpperCase() + name.substr(1)), false, _this, _this._currentMediaQueryMode, name].concat(_this.argumentsObjectToArray(arguments)));
+            _this.fireEvent.apply(_this, [_this.stringFormat('changeTo{1}Mode', name.substr(0, 1).toUpperCase() + name.substr(1)), false, _this, _this._currentMediaQueryMode, name].concat(_this.argumentsObjectToArray(arguments)));
+            _this._currentMediaQueryMode = name;
           }
+          return _this.$domNodes.parent.removeClass("hidden-" + value);
         });
         return this;
       };
