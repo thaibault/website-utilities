@@ -384,7 +384,7 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
                 ).fadeIn this._options.startUpFadeInOptions
                 if $(this._options.domNode.startUpAnimationClassPrefix +
                      (elementNumber + 1)).length
-                        this._handleStartUpEffects elementNumber + 1
+                    this._handleStartUpEffects elementNumber + 1
                 else
                     this.fireEvent 'startUpAnimationComplete'
             ), this._options.startUpAnimationElementDelayInMiliseconds)
