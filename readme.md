@@ -16,8 +16,8 @@ License
 
 endregion -->
 
-jQuery-website
-==============
+Use case
+--------
 
 This plugin provides reusable website features, like scroll events, position
 detection or triggering media-query change events.
