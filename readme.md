@@ -16,14 +16,14 @@ License
 
 endregion -->
 
-Use case
---------
+Use case<!--deDE:Einsatz--><!--frFR:Utilisier-->
+------------------------------------------------
 
 This plugin provides reusable website features, like scroll events, position
 detection or triggering media-query change events.
 
-Examples:
----------
+Examples
+--------
 
     #!/usr/bin/env javaScript
 
