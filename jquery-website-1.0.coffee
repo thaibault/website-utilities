@@ -43,6 +43,17 @@ this.require([
     ###
     class Website extends $.Tools.class
 
+    # region properties
+
+        ###*
+            Holds the class name to provide inspection features.
+
+            @property {String}
+        ###
+        __name__: 'Website'
+
+    # endregion
+
     # region public methods
 
         # region special
@@ -55,7 +66,7 @@ this.require([
             @returns {$.Website} Returns the current instance.
         ###
         initialize: (
-            @_options={}, @_parentOptions={
+            options={}, @_parentOptions={
                 logging: false
                 domNodeSelectorPrefix: 'body.{1}'
                 onViewportMovesToTop: $.noop()
@@ -74,8 +85,8 @@ this.require([
                     top: 'div.navigation-bar'
                     scrollToTopButtons: 'a[href="#top"]'
                     startUpAnimationClassPrefix: '.start-up-animation-number-'
-                    windowLoadingCover: 'div.window-loading-cover'
-                    windowLoadingSpinner: 'div.window-loading-cover div'
+                    windowLoadingCover: '> div.window-loading-cover'
+                    windowLoadingSpinner: '> div.window-loading-cover > div'
                 startUpFadeInOptions:
                     easing: 'swing'
                     duration: 'slow'
@@ -104,21 +115,30 @@ this.require([
                 scrollInLinearTime: false
                 scrollToTop: duration: 'slow'
             }, @_viewportIsOnTop=true, @_currentMediaQueryMode='',
-            @languageHandler=null, @__name__='Website',
-            @__googleAnalyticsCode='''
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', '{1}', 'github.io');ga('send', 'pageview');"
-''') ->
+            @languageHandler=null, @__googleAnalyticsCode='''
+                var _gaq = _gaq || [];
+                  _gaq.push(['_setAccount', '{1}']);
+                  _gaq.push(['_trackPageview']);
+
+                  (function() {
+                    var ga = document.createElement('script');
+                    ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' === document.location.protocol ?
+                              'https://ssl' : 'http://www') +
+                              '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(ga, s);
+                  })();
+            '''
+        ) ->
             # Wrap event methods with debouncing handler.
             this._onViewportMovesToTop = this.debounce(
                 this.getMethod this._onViewportMovesToTop)
             this._onViewportMovesAwayFromTop = this.debounce(
                 this.getMethod this._onViewportMovesAwayFromTop)
-            $.extend true, this._options, this._parentOptions
-            super this._options
+            this._options = $.extend(
+                true, {}, this._parentOptions, this._options)
+            super options
             this.$domNodes = this.grabDomNode this._options.domNode
             this._options.windowLoadingCoverFadeOutOptions.always =
                 this.getMethod this._handleStartUpEffects
