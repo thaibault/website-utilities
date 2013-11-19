@@ -31,128 +31,6 @@
       }
 
       /**
-          Saves default options for manipulating the default behaviour.
-      
-          @property {Object}
-      */
-
-
-      Website.prototype._options = {};
-
-      /**
-          Saves default options for manipulating the default behaviour.
-      
-          @property {Object}
-      */
-
-
-      Website.prototype._parentOptions = {
-        logging: false,
-        domNodeSelectorPrefix: 'body.{1}',
-        onViewportMovesToTop: $.noop(),
-        onViewportMovesAwayFromTop: $.noop(),
-        onChangeToDesktopMode: $.noop(),
-        onChangeToTabletMode: $.noop(),
-        onChangeToSmartphoneMode: $.noop(),
-        onChangeMediaQueryMode: $.noop(),
-        onSwitchSection: $.noop(),
-        onStartUpAnimationComplete: $.noop(),
-        additionalPageLoadingTimeInMilliseconds: 0,
-        googleTrackingCode: 'UA-0-0',
-        mediaQueryCssIndicator: {
-          extraSmall: 'xs',
-          small: 'sm',
-          medium: 'md',
-          large: 'lg'
-        },
-        domNode: {
-          top: 'div.navigation-bar',
-          scrollToTopButtons: 'a[href="#top"]',
-          startUpAnimationClassPrefix: '.start-up-animation-number-',
-          windowLoadingCover: 'div.window-loading-cover',
-          windowLoadingSpinner: 'div.window-loading-cover div'
-        },
-        startUpFadeInOptions: {
-          easing: 'swing',
-          duration: 'slow'
-        },
-        windowLoadingCoverFadeOutOptions: {
-          easing: 'swing',
-          duration: 'slow'
-        },
-        startUpAnimationElementDelayInMiliseconds: 100,
-        windowLoadingSpinnerOptions: {
-          lines: 9,
-          length: 23,
-          width: 11,
-          radius: 40,
-          corners: 1,
-          rotate: 75,
-          color: '#000',
-          speed: 1.1,
-          trail: 58,
-          shadow: false,
-          hwaccel: false,
-          className: 'spinner',
-          zIndex: 2e9,
-          top: 'auto',
-          left: 'auto'
-        },
-        activateLanguageSupport: true,
-        language: {},
-        scrollInLinearTime: false,
-        scrollToTop: {
-          duration: 'slow'
-        }
-      };
-
-      /**
-          Determines weather the view port is on top of the page.
-      
-          @property {Boolean}
-      */
-
-
-      Website.prototype._viewportIsOnTop = true;
-
-      /**
-          Describes the current mode defined by the css media queries.
-      
-          @property {String}
-      */
-
-
-      Website.prototype._currentMediaQueryMode = '';
-
-      /**
-          Saves the language handler instance.
-      
-          @property {$.Lang}
-      */
-
-
-      Website.prototype._languageHandler = null;
-
-      /**
-          Saves the class name for introspection.
-      
-          @property {String}
-      */
-
-
-      Website.prototype.__name__ = 'Website';
-
-      /**
-          Saves the generic javaScript code snippet to use google analytics
-          statistics.
-      
-          @property {String}
-      */
-
-
-      Website.prototype.__googleAnalyticsCode = "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', '{1}', 'github.io');ga('send', 'pageview');";
-
-      /**
           @description Initializes the interactive web application.
       
           @param {Object} options An options object.
@@ -161,11 +39,76 @@
       */
 
 
-      Website.prototype.initialize = function(options) {
+      Website.prototype.initialize = function(_options, _parentOptions, _viewportIsOnTop, _currentMediaQueryMode, languageHandler, __name__, __googleAnalyticsCode) {
+        this._options = _options != null ? _options : {};
+        this._parentOptions = _parentOptions != null ? _parentOptions : {
+          logging: false,
+          domNodeSelectorPrefix: 'body.{1}',
+          onViewportMovesToTop: $.noop(),
+          onViewportMovesAwayFromTop: $.noop(),
+          onChangeToDesktopMode: $.noop(),
+          onChangeToTabletMode: $.noop(),
+          onChangeToSmartphoneMode: $.noop(),
+          onChangeMediaQueryMode: $.noop(),
+          onSwitchSection: $.noop(),
+          onStartUpAnimationComplete: $.noop(),
+          additionalPageLoadingTimeInMilliseconds: 0,
+          googleTrackingCode: 'UA-0-0',
+          mediaQueryCssIndicator: {
+            extraSmall: 'xs',
+            small: 'sm',
+            medium: 'md',
+            large: 'lg'
+          },
+          domNode: {
+            top: 'div.navigation-bar',
+            scrollToTopButtons: 'a[href="#top"]',
+            startUpAnimationClassPrefix: '.start-up-animation-number-',
+            windowLoadingCover: 'div.window-loading-cover',
+            windowLoadingSpinner: 'div.window-loading-cover div'
+          },
+          startUpFadeInOptions: {
+            easing: 'swing',
+            duration: 'slow'
+          },
+          windowLoadingCoverFadeOutOptions: {
+            easing: 'swing',
+            duration: 'slow'
+          },
+          startUpAnimationElementDelayInMiliseconds: 100,
+          windowLoadingSpinnerOptions: {
+            lines: 9,
+            length: 23,
+            width: 11,
+            radius: 40,
+            corners: 1,
+            rotate: 75,
+            color: '#000',
+            speed: 1.1,
+            trail: 58,
+            shadow: false,
+            hwaccel: false,
+            className: 'spinner',
+            zIndex: 2e9,
+            top: 'auto',
+            left: 'auto'
+          },
+          activateLanguageSupport: true,
+          language: {},
+          scrollInLinearTime: false,
+          scrollToTop: {
+            duration: 'slow'
+          }
+        };
+        this._viewportIsOnTop = _viewportIsOnTop != null ? _viewportIsOnTop : true;
+        this._currentMediaQueryMode = _currentMediaQueryMode != null ? _currentMediaQueryMode : '';
+        this.languageHandler = languageHandler != null ? languageHandler : null;
+        this.__name__ = __name__ != null ? __name__ : 'Website';
+        this.__googleAnalyticsCode = __googleAnalyticsCode != null ? __googleAnalyticsCode : '(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\n(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\nm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n})(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');\nga(\'create\', \'{1}\', \'github.io\');ga(\'send\', \'pageview\');"';
         this._onViewportMovesToTop = this.debounce(this.getMethod(this._onViewportMovesToTop));
         this._onViewportMovesAwayFromTop = this.debounce(this.getMethod(this._onViewportMovesAwayFromTop));
-        this._options = $.extend(true, this._parentOptions, this._options);
-        Website.__super__.initialize.call(this, options);
+        $.extend(true, this._options, this._parentOptions);
+        Website.__super__.initialize.call(this, this._options);
         this.$domNodes = this.grabDomNode(this._options.domNode);
         this._options.windowLoadingCoverFadeOutOptions.always = this.getMethod(this._handleStartUpEffects);
         this.$domNodes.windowLoadingSpinner.spin(this._options.windowLoadingSpinnerOptions);
