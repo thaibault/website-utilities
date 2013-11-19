@@ -31,6 +31,15 @@
       }
 
       /**
+          Holds the class name to provide inspection features.
+      
+          @property {String}
+      */
+
+
+      Website.prototype.__name__ = 'Website';
+
+      /**
           @description Initializes the interactive web application.
       
           @param {Object} options An options object.
@@ -39,8 +48,10 @@
       */
 
 
-      Website.prototype.initialize = function(_options, _parentOptions, _viewportIsOnTop, _currentMediaQueryMode, languageHandler, __name__, __googleAnalyticsCode) {
-        this._options = _options != null ? _options : {};
+      Website.prototype.initialize = function(options, _parentOptions, _viewportIsOnTop, _currentMediaQueryMode, languageHandler, __googleAnalyticsCode) {
+        if (options == null) {
+          options = {};
+        }
         this._parentOptions = _parentOptions != null ? _parentOptions : {
           logging: false,
           domNodeSelectorPrefix: 'body.{1}',
@@ -64,8 +75,8 @@
             top: 'div.navigation-bar',
             scrollToTopButtons: 'a[href="#top"]',
             startUpAnimationClassPrefix: '.start-up-animation-number-',
-            windowLoadingCover: 'div.window-loading-cover',
-            windowLoadingSpinner: 'div.window-loading-cover div'
+            windowLoadingCover: '> div.window-loading-cover',
+            windowLoadingSpinner: '> div.window-loading-cover > div'
           },
           startUpFadeInOptions: {
             easing: 'swing',
@@ -103,12 +114,11 @@
         this._viewportIsOnTop = _viewportIsOnTop != null ? _viewportIsOnTop : true;
         this._currentMediaQueryMode = _currentMediaQueryMode != null ? _currentMediaQueryMode : '';
         this.languageHandler = languageHandler != null ? languageHandler : null;
-        this.__name__ = __name__ != null ? __name__ : 'Website';
-        this.__googleAnalyticsCode = __googleAnalyticsCode != null ? __googleAnalyticsCode : '(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\n(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\nm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n})(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');\nga(\'create\', \'{1}\', \'github.io\');ga(\'send\', \'pageview\');"';
+        this.__googleAnalyticsCode = __googleAnalyticsCode != null ? __googleAnalyticsCode : 'var _gaq = _gaq || [];\n  _gaq.push([\'_setAccount\', \'{1}\']);\n  _gaq.push([\'_trackPageview\']);\n\n  (function() {\n    var ga = document.createElement(\'script\');\n    ga.type = \'text/javascript\'; ga.async = true;\n    ga.src = (\'https:\' === document.location.protocol ?\n              \'https://ssl\' : \'http://www\') +\n              \'.google-analytics.com/ga.js\';\n    var s = document.getElementsByTagName(\'script\')[0];\n    s.parentNode.insertBefore(ga, s);\n  })();';
         this._onViewportMovesToTop = this.debounce(this.getMethod(this._onViewportMovesToTop));
         this._onViewportMovesAwayFromTop = this.debounce(this.getMethod(this._onViewportMovesAwayFromTop));
-        $.extend(true, this._options, this._parentOptions);
-        Website.__super__.initialize.call(this, this._options);
+        this._options = $.extend(true, {}, this._parentOptions, this._options);
+        Website.__super__.initialize.call(this, options);
         this.$domNodes = this.grabDomNode(this._options.domNode);
         this._options.windowLoadingCoverFadeOutOptions.always = this.getMethod(this._handleStartUpEffects);
         this.$domNodes.windowLoadingSpinner.spin(this._options.windowLoadingSpinnerOptions);
