@@ -43,106 +43,6 @@ this.require([
     ###
     class Website extends $.Tools.class
 
-    # region properties
-
-        ###*
-            Saves default options for manipulating the default behaviour.
-
-            @property {Object}
-        ###
-        _options: {}
-        ###*
-            Saves default options for manipulating the default behaviour.
-
-            @property {Object}
-        ###
-        _parentOptions:
-            logging: false
-            domNodeSelectorPrefix: 'body.{1}'
-            onViewportMovesToTop: $.noop()
-            onViewportMovesAwayFromTop: $.noop()
-            onChangeToDesktopMode: $.noop()
-            onChangeToTabletMode: $.noop()
-            onChangeToSmartphoneMode: $.noop()
-            onChangeMediaQueryMode: $.noop()
-            onSwitchSection: $.noop()
-            onStartUpAnimationComplete: $.noop()
-            additionalPageLoadingTimeInMilliseconds: 0
-            googleTrackingCode: 'UA-0-0'
-            mediaQueryCssIndicator:
-                extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg'
-            domNode:
-                top: 'div.navigation-bar'
-                scrollToTopButtons: 'a[href="#top"]'
-                startUpAnimationClassPrefix: '.start-up-animation-number-'
-                windowLoadingCover: 'div.window-loading-cover'
-                windowLoadingSpinner: 'div.window-loading-cover div'
-            startUpFadeInOptions:
-                easing: 'swing'
-                duration: 'slow'
-            windowLoadingCoverFadeOutOptions:
-                easing: 'swing'
-                duration: 'slow'
-            startUpAnimationElementDelayInMiliseconds: 100
-            windowLoadingSpinnerOptions:
-                lines: 9 # The number of lines to draw
-                length: 23 # The length of each line
-                width: 11 # The line thickness
-                radius: 40 # The radius of the inner circle
-                corners: 1 # Corner roundness (0..1)
-                rotate: 75 # The rotation offset
-                color: '#000' # #rgb or #rrggbb
-                speed: 1.1 # Rounds per second
-                trail: 58 # Afterglow percentage
-                shadow: false # Whether to render a shadow
-                hwaccel: false # Whether to use hardware acceleration
-                className: 'spinner' # CSS class to assign to the spinner
-                zIndex: 2e9 # The z-index (defaults to 2000000000)
-                top: 'auto' # Top position relative to parent in px
-                left: 'auto' # Left position relative to parent in px
-            activateLanguageSupport: true
-            language: {}
-            scrollInLinearTime: false
-            scrollToTop: duration: 'slow'
-        ###*
-            Determines weather the view port is on top of the page.
-
-            @property {Boolean}
-        ###
-        _viewportIsOnTop: true
-        ###*
-            Describes the current mode defined by the css media queries.
-
-            @property {String}
-        ###
-        _currentMediaQueryMode: ''
-        ###*
-            Saves the language handler instance.
-
-            @property {$.Lang}
-        ###
-        _languageHandler: null
-        ###*
-            Saves the class name for introspection.
-
-            @property {String}
-        ###
-        __name__: 'Website'
-        ###*
-            Saves the generic javaScript code snippet to use google analytics
-            statistics.
-
-            @property {String}
-        ###
-        __googleAnalyticsCode: "
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', '{1}', 'github.io');ga('send', 'pageview');"
-
-    # endregion
-
     # region public methods
 
         # region special
@@ -154,15 +54,71 @@ ga('create', '{1}', 'github.io');ga('send', 'pageview');"
 
             @returns {$.Website} Returns the current instance.
         ###
-        initialize: (options) ->
+        initialize: (
+            @_options={}, @_parentOptions={
+                logging: false
+                domNodeSelectorPrefix: 'body.{1}'
+                onViewportMovesToTop: $.noop()
+                onViewportMovesAwayFromTop: $.noop()
+                onChangeToDesktopMode: $.noop()
+                onChangeToTabletMode: $.noop()
+                onChangeToSmartphoneMode: $.noop()
+                onChangeMediaQueryMode: $.noop()
+                onSwitchSection: $.noop()
+                onStartUpAnimationComplete: $.noop()
+                additionalPageLoadingTimeInMilliseconds: 0
+                googleTrackingCode: 'UA-0-0'
+                mediaQueryCssIndicator:
+                    extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg'
+                domNode:
+                    top: 'div.navigation-bar'
+                    scrollToTopButtons: 'a[href="#top"]'
+                    startUpAnimationClassPrefix: '.start-up-animation-number-'
+                    windowLoadingCover: 'div.window-loading-cover'
+                    windowLoadingSpinner: 'div.window-loading-cover div'
+                startUpFadeInOptions:
+                    easing: 'swing'
+                    duration: 'slow'
+                windowLoadingCoverFadeOutOptions:
+                    easing: 'swing'
+                    duration: 'slow'
+                startUpAnimationElementDelayInMiliseconds: 100
+                windowLoadingSpinnerOptions:
+                    lines: 9 # The number of lines to draw
+                    length: 23 # The length of each line
+                    width: 11 # The line thickness
+                    radius: 40 # The radius of the inner circle
+                    corners: 1 # Corner roundness (0..1)
+                    rotate: 75 # The rotation offset
+                    color: '#000' # #rgb or #rrggbb
+                    speed: 1.1 # Rounds per second
+                    trail: 58 # Afterglow percentage
+                    shadow: false # Whether to render a shadow
+                    hwaccel: false # Whether to use hardware acceleration
+                    className: 'spinner' # CSS class to assign to the spinner
+                    zIndex: 2e9 # The z-index (defaults to 2000000000)
+                    top: 'auto' # Top position relative to parent in px
+                    left: 'auto' # Left position relative to parent in px
+                activateLanguageSupport: true
+                language: {}
+                scrollInLinearTime: false
+                scrollToTop: duration: 'slow'
+            }, @_viewportIsOnTop=true, @_currentMediaQueryMode='',
+            @languageHandler=null, @__name__='Website',
+            @__googleAnalyticsCode='''
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', '{1}', 'github.io');ga('send', 'pageview');"
+''') ->
             # Wrap event methods with debouncing handler.
             this._onViewportMovesToTop = this.debounce(
-                this.getMethod(this._onViewportMovesToTop))
+                this.getMethod this._onViewportMovesToTop)
             this._onViewportMovesAwayFromTop = this.debounce(
-                this.getMethod(this._onViewportMovesAwayFromTop))
-            this._options = $.extend(
-                true, this._parentOptions, this._options)
-            super options
+                this.getMethod this._onViewportMovesAwayFromTop)
+            $.extend true, this._options, this._parentOptions
+            super this._options
             this.$domNodes = this.grabDomNode this._options.domNode
             this._options.windowLoadingCoverFadeOutOptions.always =
                 this.getMethod this._handleStartUpEffects
