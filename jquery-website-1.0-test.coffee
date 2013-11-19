@@ -20,7 +20,46 @@ module 'Incrementer'
 
 # region tests
 
-test 'dummy', ->
-    equal 'a', 'a', "That's cool"
+    # region public methods
+
+        # region special
+
+test 'initialize', ->
+
+        # endregion
+
+    # endregion
+
+    # region protected methods
+
+        # region event
+
+test '_onViewportMovesToTop', ->
+test '_onViewportMovesAwayFromTop', ->
+test '_onChangeMediaQueryMode', ->
+test '_onChangeToLargeMode', ->
+test '_onChangeToMediumMode', ->
+test '_onChangeToSmallMode', ->
+test '_onChangeToExtraSmallMode', ->
+test '_onSwitchSection', ->
+test '_onStartUpAnimationComplete', ->
+
+        # endregion
+
+        # region helper
+
+test '_addMediaQueryChangeEvents', ->
+test '_triggerWindowResizeEvents', ->
+test '_bindScrollEvents', ->
+test '_removeLoadingCover', ->
+test '_handleStartUpEffects', ->
+test '_addNavigationEvents', ->
+test '_handleScrollToTopButton', ->
+test '_scrollToTop', ->
+test '_handleGoogleAnalytics', ->
+
+        # endregion
+
+    # endregion
 
 # endregion
