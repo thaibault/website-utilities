@@ -20,12 +20,17 @@ module 'website'
 
 # region tests
 
+    # region mock-up
+
+website = $.Website()
+
+    # endregion
+
     # region public methods
 
         # region special
 
-# TODO
-test 'initialize', ->
+test 'initialize', -> ok website
 
         # endregion
 
@@ -36,28 +41,47 @@ test 'initialize', ->
         # region event
 
 test '_onViewportMovesToTop', ->
+    strictEqual website._onViewportMovesToTop(), website
+    # NOTE: Returns the time to next function call.
+    ok $.isNumeric website._onViewportMovesToTop()
 test '_onViewportMovesAwayFromTop', ->
+    strictEqual website._onViewportMovesAwayFromTop(), website
+    # NOTE: Returns the time to next function call.
+    ok $.isNumeric website._onViewportMovesAwayFromTop()
 test '_onChangeMediaQueryMode', ->
+    strictEqual website._onChangeMediaQueryMode(), website
 test '_onChangeToLargeMode', ->
+    strictEqual website._onChangeToLargeMode(), website
 test '_onChangeToMediumMode', ->
+    strictEqual website._onChangeToMediumMode(), website
 test '_onChangeToSmallMode', ->
+    strictEqual website._onChangeToSmallMode(), website
 test '_onChangeToExtraSmallMode', ->
-test '_onSwitchSection', ->
+    strictEqual website._onChangeToExtraSmallMode(), website
+test '_onSwitchSection', -> strictEqual website._onSwitchSection(), website
 test '_onStartUpAnimationComplete', ->
+    strictEqual website._onStartUpAnimationComplete(), website
 
         # endregion
 
         # region helper
 
 test '_addMediaQueryChangeEvents', ->
+    strictEqual website._addMediaQueryChangeEvents(), website
 test '_triggerWindowResizeEvents', ->
-test '_bindScrollEvents', ->
+    strictEqual website._triggerWindowResizeEvents(), website
+test '_bindScrollEvents', -> strictEqual website._bindScrollEvents(), website
 test '_removeLoadingCover', ->
+    strictEqual website._removeLoadingCover(), website
 test '_handleStartUpEffects', ->
+    strictEqual website._handleStartUpEffects(), website
 test '_addNavigationEvents', ->
+    strictEqual website._addNavigationEvents(), website
 test '_handleScrollToTopButton', ->
-test '_scrollToTop', ->
+    strictEqual website._handleScrollToTopButton(), website
+test '_scrollToTop', -> strictEqual website._scrollToTop(), website
 test '_handleGoogleAnalytics', ->
+    strictEqual website._handleGoogleAnalytics(), website
 
         # endregion
 
