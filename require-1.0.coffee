@@ -229,7 +229,7 @@ class Require
 
         @property {Mixed}
     ###
-    this.referenceSafe
+    this.referenceBackup
     ###*
         Describes all supported scripts with their needed properties to
         load them. A Mapping from file endings to their script node types.
@@ -326,14 +326,14 @@ class Require
         @param {Object} onLoadedArguments A various number of arguments given
                                           to the "onLoaded" callback function.
 
-        @returns {require} Returns the current instance.
+        @returns {Require} Returns the current function (class).
     ###
     constructor: (modules, onLoaded, onLoadedArguments) ->
         # Set class property default values.
         if not self.context?
             self.context = this
-        if not self.referenceSafe?
-            self.referenceSafe = this.require
+        if not self.referenceBackup?
+            self.referenceBackup = Require
         if not self.basePath?
             self.basePath = {}
             for scriptNode in document.getElementsByTagName 'script'
@@ -369,7 +369,8 @@ class Require
                 self.asyncronModulePatternHandling[pattern] = handler
         if not self._callQueue?
             self._callQueue = []
-        self::_load.apply require, arguments
+        # NOTE: A constructor doesn't return last statement by default.
+        return self::_load.apply Require, arguments
 
         # endregion
 
@@ -380,9 +381,9 @@ class Require
     ###*
         @description Loads needed modules and run the "onLoaded" callback
                      function. This methods gets the same arguments as the
-                     global "require" constructor.
+                     global "Require" constructor.
 
-        @returns {require} Returns the current instance.
+        @returns {Require} Returns the current function (class).
     ###
     _load: (parameter...) ->
         ###
@@ -409,11 +410,11 @@ class Require
             Make sure that we have a copy of given array containing needed
             dependencies.
         ###
-        if parameter[parameter.length - 1] isnt require
+        if parameter[parameter.length - 1] isnt Require
             # Save a copy if initially given dependencies.
             parameter.push parameter[0].slice 0
             # Mark array as initialized.
-            parameter.push require
+            parameter.push Require
         if parameter[0].length
             # Grab first needed dependency from given queue.
             module = parameter[0].shift()
@@ -423,7 +424,7 @@ class Require
                     If module is already there make a recursive call with
                     one module dependency less.
                 ###
-                self::_load.apply require, parameter
+                self::_load.apply Require, parameter
             else if (
                 typeof(module) is 'string' or
                 not self::_isLoadingInitialized module[0], parameter
@@ -455,10 +456,8 @@ class Require
             if(self._callQueue.length and self::_isModuleLoaded(
                 self._callQueue[self._callQueue.length - 1])
             )
-                self::_load.apply require, self._callQueue.pop()[1]
-        if require and self._handleNoConflict
-            return self::_handleNoConflict()
-        self
+                self::_load.apply Require, self._callQueue.pop()[1]
+        self::_handleNoConflict()
     ###*
         @description Initialize loading of needed resources.
 
@@ -468,7 +467,7 @@ class Require
         @param {Object[]} parameters Saves arguments indented to be given
                                      to the on load function.
 
-        @returns {require} Returns the current instance.
+        @returns {Require} Returns the current function (class).
     ###
     _initializeResourceLoading: (module, parameter) ->
         isAsyncronRequest = false
@@ -546,7 +545,7 @@ class Require
         @param {Object[]} parameters Saves arguments indented to be given
                                      to the on load function.
 
-        @returns {require} Returns the current instance.
+        @returns {Require} Returns the current function (class).
     ###
     _appendResourceDomNode: (scriptNode, module, parameters) ->
         ###
@@ -617,7 +616,7 @@ class Require
         @param {Object[]} parameters Saves arguments indented to be given
                                      to the on load function.
 
-        @returns {require} Returns the current instance.
+        @returns {Require} Returns the current function (class).
     ###
     _scriptLoaded: (module, parameters) ->
         for key, value in self.initializedLoadings
@@ -631,28 +630,28 @@ class Require
         self
     ###*
         @description If "noConflict" property is set it will be handled
-                     by this method. It clear the called scope from the
-                     "require" name and optionally runs a callback
+                     by this method. It clears the called scope from the
+                     "Require" name and optionally runs a callback
                      function given by the "noConflict" property after all
-                     dependencies are solved.
+                     dependencies are resolved.
 
-        @returns {require} Returns the current instance.
+        @returns {Require} Returns the current function (class).
     ###
     _handleNoConflict: ->
         if self._callQueue.length is 0 and self.initializedLoadings.length is 0
             self::_log 'All resources are loaded so far.'
-            if require and self.noConflict
+            # TODO
+            if Require and self.noConflict
                 if self.noConflict is true
                     ###
-                        Restore previous setted value to the "require"
+                        Restore previous setted value to the "Require"
                         reference.
                     ###
-                    require = self.referenceSafe
+                    Require = self.referenceSafe
                 else
-                    # Workaround to not copy not only the reference.
-                    callback = self.noConflict.slice()
-                    require = undefined
-                    callback[0].apply self.context, callback.slice 1
+                    callback = self.noConflict
+                    Require = require = window.require = undefined
+                    callback[0].apply self.context, callback
         self
     ###*
         @description Determines if the given "moduleObject" is currently
