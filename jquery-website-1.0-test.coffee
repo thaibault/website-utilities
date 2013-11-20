@@ -14,7 +14,7 @@
 #    naming 3.0 unported license.
 #    see http://creativecommons.org/licenses/by/3.0/deed.de
 
-module 'Website'
+module 'website'
 
 # endregion
 
@@ -24,6 +24,7 @@ module 'Website'
 
         # region special
 
+# TODO
 test 'initialize', ->
 
         # endregion
