@@ -78,16 +78,16 @@
             windowLoadingCover: '> div.window-loading-cover',
             windowLoadingSpinner: '> div.window-loading-cover > div'
           },
-          startUpFadeInOptions: {
+          startUpFadeIn: {
             easing: 'swing',
             duration: 'slow'
           },
-          windowLoadingCoverFadeOutOptions: {
+          windowLoadingCoverFadeOut: {
             easing: 'swing',
             duration: 'slow'
           },
           startUpAnimationElementDelayInMiliseconds: 100,
-          windowLoadingSpinnerOptions: {
+          windowLoadingSpinner: {
             lines: 9,
             length: 23,
             width: 11,
@@ -120,8 +120,8 @@
         this._options = $.extend(true, {}, this._parentOptions, this._options);
         Website.__super__.initialize.call(this, options);
         this.$domNodes = this.grabDomNode(this._options.domNode);
-        this._options.windowLoadingCoverFadeOutOptions.always = this.getMethod(this._handleStartUpEffects);
-        this.$domNodes.windowLoadingSpinner.spin(this._options.windowLoadingSpinnerOptions);
+        this._options.windowLoadingCoverFadeOut.always = this.getMethod(this._handleStartUpEffects);
+        this.$domNodes.windowLoadingSpinner.spin(this._options.windowLoadingSpinner);
         this._bindScrollEvents().$domNodes.parent.show();
         this.$domNodes.window.ready(this.getMethod(this._removeLoadingCover));
         this._addNavigationEvents()._addMediaQueryChangeEvents()._triggerWindowResizeEvents()._handleGoogleAnalytics(this._options.trackingCode);
@@ -352,7 +352,7 @@
         var _this = this;
         window.setTimeout(function() {
           $('[class^="' + _this.sliceDomNodeSelectorPrefix(_this._options.domNode.startUpAnimationClassPrefix).substr(1) + '"]').hide();
-          return _this.$domNodes.windowLoadingCover.fadeOut(_this._options.windowLoadingCoverFadeOutOptions);
+          return _this.$domNodes.windowLoadingCover.fadeOut(_this._options.windowLoadingCoverFadeOut);
         }, this._options.additionalPageLoadingTimeInMilliseconds);
         return this;
       };
@@ -373,7 +373,7 @@
           elementNumber = 1;
         }
         window.setTimeout((function() {
-          $(_this._options.domNode.startUpAnimationClassPrefix + elementNumber).fadeIn(_this._options.startUpFadeInOptions);
+          $(_this._options.domNode.startUpAnimationClassPrefix + elementNumber).fadeIn(_this._options.startUpFadeIn);
           if ($(_this._options.domNode.startUpAnimationClassPrefix + (elementNumber + 1)).length) {
             return _this._handleStartUpEffects(elementNumber + 1);
           } else {
