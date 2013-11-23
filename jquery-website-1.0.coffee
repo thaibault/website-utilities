@@ -87,14 +87,14 @@ this.require([
                     startUpAnimationClassPrefix: '.start-up-animation-number-'
                     windowLoadingCover: '> div.window-loading-cover'
                     windowLoadingSpinner: '> div.window-loading-cover > div'
-                startUpFadeInOptions:
+                startUpFadeIn:
                     easing: 'swing'
                     duration: 'slow'
-                windowLoadingCoverFadeOutOptions:
+                windowLoadingCoverFadeOut:
                     easing: 'swing'
                     duration: 'slow'
                 startUpAnimationElementDelayInMiliseconds: 100
-                windowLoadingSpinnerOptions:
+                windowLoadingSpinner:
                     lines: 9 # The number of lines to draw
                     length: 23 # The length of each line
                     width: 11 # The line thickness
@@ -140,10 +140,10 @@ this.require([
                 true, {}, this._parentOptions, this._options)
             super options
             this.$domNodes = this.grabDomNode this._options.domNode
-            this._options.windowLoadingCoverFadeOutOptions.always =
+            this._options.windowLoadingCoverFadeOut.always =
                 this.getMethod this._handleStartUpEffects
             this.$domNodes.windowLoadingSpinner.spin(
-                this._options.windowLoadingSpinnerOptions)
+                this._options.windowLoadingSpinner)
             this._bindScrollEvents().$domNodes.parent.show()
             this.$domNodes.window.ready this.getMethod(
                 this._removeLoadingCover)
@@ -339,7 +339,7 @@ this.require([
                     ).substr(1) + '"]'
                 ).hide()
                 this.$domNodes.windowLoadingCover.fadeOut(
-                    this._options.windowLoadingCoverFadeOutOptions)
+                    this._options.windowLoadingCoverFadeOut)
             , this._options.additionalPageLoadingTimeInMilliseconds)
             this
         ###*
@@ -357,7 +357,7 @@ this.require([
                 $(
                     this._options.domNode.startUpAnimationClassPrefix +
                     elementNumber
-                ).fadeIn this._options.startUpFadeInOptions
+                ).fadeIn this._options.startUpFadeIn
                 if $(this._options.domNode.startUpAnimationClassPrefix +
                      (elementNumber + 1)).length
                     this._handleStartUpEffects elementNumber + 1

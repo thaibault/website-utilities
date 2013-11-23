@@ -48,6 +48,7 @@ This plugin provides reusable web application features, like:
     <!--deDE:Animationen zum Übergang einzelner Sektionen-->
 *   Simple section detection via url hashes
     <!--deDE:Erkennung der aktuellen Sektion anhand url Hashes-->
+*   Handle google tracking.<!--deDE:Verbindung zu google tracking.-->
 
 Usage<!--deDE:Verwendung-->
 ---------------------------
@@ -62,7 +63,7 @@ Here you can see all available plugin options:
 
     $.Website({
         logging: false,
-        domNodeSelectorPrefix: 'body.{1}',
+        domNodeSelectorPrefix: 'body.{1}', // Only manipulate dom nodes here
         onViewportMovesToTop: $.noop(),
         onViewportMovesAwayFromTop: $.noop(),
         onChangeToDesktopMode: $.noop(),
@@ -83,34 +84,36 @@ Here you can see all available plugin options:
             windowLoadingCover: '> div.window-loading-cover',
             windowLoadingSpinner: '> div.window-loading-cover > div'
         },
-        startUpFadeInOptions: {
+        startUpFadeIn: {
             easing: 'swing',
             duration: 'slow'
         },
-        windowLoadingCoverFadeOutOptions: {
+        windowLoadingCoverFadeOut: {
             easing: 'swing',
             duration: 'slow'
         },
         startUpAnimationElementDelayInMiliseconds: 100,
-        windowLoadingSpinnerOptions: {
-            lines: 9, # The number of lines to draw
-            length: 23, # The length of each line
-            width: 11, # The line thickness
-            radius: 40, # The radius of the inner circle
-            corners: 1, # Corner roundness (0..1)
-            rotate: 75, # The rotation offset
-            color: '#000', # #rgb or #rrggbb
-            speed: 1.1, # Rounds per second
-            trail: 58, # Afterglow percentage
-            shadow: false, # Whether to render a shadow
-            hwaccel: false, # Whether to use hardware acceleration
-            className: 'spinner', # CSS class to assign to the spinner
-            zIndex: 2e9, # The z-index (defaults to 2000000000)
-            top: 'auto', # Top position relative to parent in px
-            left: 'auto' # Left position relative to parent in px
+        windowLoadingSpinner: {
+            lines: 9, // The number of lines to draw
+            length: 23, // The length of each line
+            width: 11, // The line thickness
+            radius: 40, // The radius of the inner circle
+            corners: 1, // Corner roundness (0..1)
+            rotate: 75, // The rotation offset
+            color: '#000', // #rgb or #rrggbb
+            speed: 1.1, // Rounds per second
+            trail: 58, // Afterglow percentage
+            shadow: false, // Whether to render a shadow
+            hwaccel: false, // Whether to use hardware acceleration
+            className: 'spinner', // CSS class to assign to the spinner
+            zIndex: 2e9, // The z-index (defaults to 2000000000)
+            top: 'auto', // Top position relative to parent in px
+            left: 'auto' // Left position relative to parent in px
         },
         activateLanguageSupport: true,
-        language: {},
+        language: {}, // Options forwarded to the "$.Lang" plugin.
         scrollInLinearTime: false,
-        scrollToTop: duration: 'slow'
+        scrollToTop: { // Options forwarded to the "$.scrollTo" plugin.
+            duration: 'slow'
+        }
     });
