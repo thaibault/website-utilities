@@ -215,6 +215,7 @@ this.require([
                 another mode.
 
                 **oldMode {String}**    - Saves the previous mode.
+
                 **newMode {String}**    - Saves the new mode.
 
                 **returns {$.Website}** - Returns the current instance.
@@ -226,6 +227,7 @@ this.require([
                 mode.
 
                 **oldMode {String}**    - Saves the previous mode.
+
                 **newMode {String}**    - Saves the new mode.
 
                 **returns {$.Website}** - Returns the current instance.
@@ -237,6 +239,7 @@ this.require([
                 mode.
 
                 **oldMode {String}**    - Saves the previous mode.
+
                 **newMode {String}**    - Saves the new mode.
 
                 **returns {$.Website}** - Returns the current instance.
@@ -248,6 +251,7 @@ this.require([
                 mode.
 
                 **oldMode {String}**    - Saves the previous mode.
+
                 **newMode {String}**    - Saves the new mode.
 
                 **returns {$.Website}** - Returns the current instance.
@@ -259,6 +263,7 @@ this.require([
                 small mode.
 
                 **oldMode {String}**    - Saves the previous mode.
+
                 **newMode {String}**    - Saves the new mode.
 
                 **returns {$.Website}** - Returns the current instance.
