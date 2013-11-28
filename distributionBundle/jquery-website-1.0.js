@@ -200,6 +200,7 @@ Version
             another mode.
         
             **oldMode {String}**    - Saves the previous mode.
+        
             **newMode {String}**    - Saves the new mode.
         
             **returns {$.Website}** - Returns the current instance.
@@ -214,6 +215,7 @@ Version
             mode.
         
             **oldMode {String}**    - Saves the previous mode.
+        
             **newMode {String}**    - Saves the new mode.
         
             **returns {$.Website}** - Returns the current instance.
@@ -228,6 +230,7 @@ Version
             mode.
         
             **oldMode {String}**    - Saves the previous mode.
+        
             **newMode {String}**    - Saves the new mode.
         
             **returns {$.Website}** - Returns the current instance.
@@ -242,6 +245,7 @@ Version
             mode.
         
             **oldMode {String}**    - Saves the previous mode.
+        
             **newMode {String}**    - Saves the new mode.
         
             **returns {$.Website}** - Returns the current instance.
@@ -256,6 +260,7 @@ Version
             small mode.
         
             **oldMode {String}**    - Saves the previous mode.
+        
             **newMode {String}**    - Saves the new mode.
         
             **returns {$.Website}** - Returns the current instance.
