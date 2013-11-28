@@ -42,7 +42,7 @@ Version
 ## standalone
 ## do ($=this.jQuery) ->
 this.require.scopeIndicator = 'jQuery.Website'
-this.require([
+this.require [
     ['less.Parser', 'less-1.5.0']
 
     'jquery-tools-1.0.coffee', ['jQuery.scrollTo', 'jquery-scrollTo-1.4.3.1']
@@ -465,6 +465,3 @@ this.require([
     # endregion
 
 # endregion
-
-## standalone
-)
