@@ -9,15 +9,35 @@
 
 # region header
 
-###!
-    Copyright see require on https://github.com/thaibault/require
-
-    Conventions see require on https://github.com/thaibault/require
-
-    @author t.sickert@gmail.com (Torben Sickert)
-    @version 1.0 stable
-    @fileOverview
+###
     This module provides common logic for the whole web page.
+
+    Copyright
+    ---------
+
+    Torben Sickert 16.12.2012
+
+    License
+    -------
+
+    This library written by Torben Sickert stand under a creative commons
+    naming 3.0 unported license.
+    see http://creativecommons.org/licenses/by/3.0/deed.de
+
+    Extending this module
+    ---------------------
+
+    For conventions see require on https://github.com/thaibault/require
+
+    Author
+    ------
+
+    t.sickert@gmail.com (Torben Sickert)
+
+    Version
+    -------
+
+    1.0 stable
 ###
 
 ## standalone
@@ -37,18 +57,14 @@ this.require([
 
 # region plugins/classes
 
-    ###*
-        @memberOf $
-        @class
-    ###
     class Website extends $.Tools.class
+        ###This plugin holds all needed methods to extend a whole website.###
 
     # region properties
 
-        ###*
+        ###
+            **__name__ {String}**
             Holds the class name to provide inspection features.
-
-            @property {String}
         ###
         __name__: 'Website'
 
@@ -58,13 +74,6 @@ this.require([
 
         # region special
 
-        ###*
-            @description Initializes the interactive web application.
-
-            @param {Object} options An options object.
-
-            @returns {$.Website} Returns the current instance.
-        ###
         initialize: (
             options={}, @_parentOptions={
                 logging: false
@@ -131,6 +140,13 @@ this.require([
                   })();
             '''
         ) ->
+            ###
+                Initializes the interactive web application.
+
+                **options {Object}**    - An options object.
+
+                **returns {$.Website}** - Returns the current instance.
+            ###
             # Wrap event methods with debouncing handler.
             this._onViewportMovesToTop = this.debounce(
                 this.getMethod this._onViewportMovesToTop)
@@ -164,12 +180,12 @@ this.require([
 
         # region event
 
-        ###*
-            @description This method triggers if the viewport moves to top.
-
-            @returns {$.Website} Returns the current instance.
-        ###
         _onViewportMovesToTop: ->
+            ###
+                This method triggers if the viewport moves to top.
+
+                **returns {$.Website}** - Returns the current instance.
+            ###
             if this.$domNodes.scrollToTopButtons.css(
                 'visibility'
             ) isnt 'hidden'
@@ -179,13 +195,12 @@ this.require([
                         this.$domNodes.scrollToTopButtons.css(
                             'bottom', '-=30')})
             this
-        ###*
-            @description This method triggers if the viewport moves away from
-                         top.
-
-            @returns {$.Website} Returns the current instance.
-        ###
         _onViewportMovesAwayFromTop: ->
+            ###
+                This method triggers if the viewport moves away from top.
+
+                **returns {$.Website}** - Returns the current instance.
+            ###
             if this.$domNodes.scrollToTopButtons.css(
                 'visibility'
             ) isnt 'hidden'
@@ -195,93 +210,99 @@ this.require([
                     {bottom: '-=30', queue: false, opacity: 1},
                     {duration: 'normal'})
             this
-        ###*
-            @description This method triggers if the responsive design
-                         switches to another mode.
+        _onChangeMediaQueryMode: (oldMode, newMode) ->
+            ###
+                This method triggers if the responsive design switches to
+                another mode.
 
-            @param {String} oldMode Saves the previous mode.
-            @param {String} newMode Saves the new mode.
+                **oldMode {String}**    - Saves the previous mode.
+                **newMode {String}**    - Saves the new mode.
 
-            @returns {$.Website} Returns the current instance.
-        ###
-        _onChangeMediaQueryMode: (oldMode, newMode) -> this
-        ###*
-            @description This method triggers if the responsive design
-                         switches to large mode.
+                **returns {$.Website}** - Returns the current instance.
+            ###
+            this
+        _onChangeToLargeMode: (oldMode, newMode) ->
+            ###
+                This method triggers if the responsive design switches to large
+                mode.
 
-            @param {String} oldMode Saves the previous mode.
-            @param {String} newMode Saves the new mode.
+                **oldMode {String}**    - Saves the previous mode.
+                **newMode {String}**    - Saves the new mode.
 
-            @returns {$.Website} Returns the current instance.
-        ###
-        _onChangeToLargeMode: (oldMode, newMode) -> this
-        ###*
-            @description This method triggers if the responsive design
-                         switches to medium mode.
+                **returns {$.Website}** - Returns the current instance.
+            ###
+            this
+        _onChangeToMediumMode: (oldMode, newMode) ->
+            ###
+                This method triggers if the responsive design switches to medium
+                mode.
 
-            @param {String} oldMode Saves the previous mode.
-            @param {String} newMode Saves the new mode.
+                **oldMode {String}**    - Saves the previous mode.
+                **newMode {String}**    - Saves the new mode.
 
-            @returns {$.Website} Returns the current instance.
-        ###
-        _onChangeToMediumMode: (oldMode, newMode) -> this
-        ###*
-            @description This method triggers if the responsive design
-                         switches to small mode.
+                **returns {$.Website}** - Returns the current instance.
+            ###
+            this
+        _onChangeToSmallMode: (oldMode, newMode) ->
+            ###
+                This method triggers if the responsive design switches to small
+                mode.
 
-            @param {String} oldMode Saves the previous mode.
-            @param {String} newMode Saves the new mode.
+                **oldMode {String}**    - Saves the previous mode.
+                **newMode {String}**    - Saves the new mode.
 
-            @returns {$.Website} Returns the current instance.
-        ###
-        _onChangeToSmallMode: (oldMode, newMode) -> this
-        ###*
-            @description This method triggers if the responsive design
-                         switches to extra small mode.
+                **returns {$.Website}** - Returns the current instance.
+            ###
+            this
+        _onChangeToExtraSmallMode: (oldMode, newMode) ->
+            ###
+                This method triggers if the responsive design switches to extra
+                small mode.
 
-            @param {String} oldMode Saves the previous mode.
-            @param {String} newMode Saves the new mode.
+                **oldMode {String}**    - Saves the previous mode.
+                **newMode {String}**    - Saves the new mode.
 
-            @returns {$.Website} Returns the current instance.
-        ###
-        _onChangeToExtraSmallMode: (oldMode, newMode) -> this
-        ###*
-            @description This method triggers if we change the current section.
+                **returns {$.Website}** - Returns the current instance.
+            ###
+            this
+        _onSwitchSection: (sectionName) ->
+            ###
+                This method triggers if we change the current section.
 
-            @param {String} sectionName Contains the new section name.
+                **sectionName {String}** - Contains the new section name.
 
-            @returns {$.Website} Returns the current instance.
-        ###
-        _onSwitchSection: (sectionName) -> this
-        ###*
-            @description This method is complete if last startup animation
-                         was initialized.
+                **returns {$.Website}**  - Returns the current instance.
+            ###
+            this
+        _onStartUpAnimationComplete: ->
+            ###
+                This method is complete if last startup animation was
+                initialized.
 
-            @returns {$.Website} Returns the current instance.
-        ###
-        _onStartUpAnimationComplete: -> this
+                **returns {$.Website}** - Returns the current instance.
+            ###
+            this
 
         # endregion
 
         # region helper
 
-        ###*
-            @description This method adds triggers for responsive design
-                         switches.
-
-            @returns {$.Website} Returns the current instance.
-        ###
         _addMediaQueryChangeEvents: ->
+            ###
+                This method adds triggers for responsive design switches.
+
+                **returns {$.Website}** - Returns the current instance.
+            ###
             this.on this.$domNodes.window, 'resize', this.getMethod(
                 this._triggerWindowResizeEvents)
             this
-        ###*
-            @description This method triggers if the responsive design
-                         switches its mode.
-
-            @returns {$.Website} Returns the current instance.
-        ###
         _triggerWindowResizeEvents: ->
+            ###
+                This method triggers if the responsive design switches its
+                mode.
+
+                **returns {$.Website}** - Returns the current instance.
+            ###
             $.each this._options.mediaQueryCssIndicator, (name, value) =>
                 this.$domNodes.parent.addClass "hidden-#{value}"
                 if(this.$domNodes.parent.is(':hidden') and
@@ -303,13 +324,12 @@ this.require([
                     this._currentMediaQueryMode = name
                 this.$domNodes.parent.removeClass "hidden-#{value}"
             this
-        ###*
-            @description This method triggers if view port arrives at special
-                         areas.
-
-            @returns {$.Website} Returns the current instance.
-        ###
         _bindScrollEvents: ->
+            ###
+                This method triggers if view port arrives at special areas.
+
+                **returns {$.Website}** - Returns the current instance.
+            ###
             this.on window, 'scroll', =>
                 if this.$domNodes.window.scrollTop()
                     if this._viewportIsOnTop
@@ -323,12 +343,12 @@ this.require([
                         'viewportMovesToTop', false, this
                     ].concat this.argumentsObjectToArray arguments
             this
-        ###*
-            @description This method triggers after window is loaded.
-
-            @returns {$.Website} Returns the current instance.
-        ###
         _removeLoadingCover: ->
+            ###
+                This method triggers after window is loaded.
+
+                **returns {$.Website}** - Returns the current instance.
+            ###
             window.setTimeout(=>
                 # Hide startup animation dom nodes to show them step by step.
                 $(
@@ -342,14 +362,14 @@ this.require([
                     this._options.windowLoadingCoverFadeOut)
             , this._options.additionalPageLoadingTimeInMilliseconds)
             this
-        ###*
-            @description This method handles the given start up effect step.
-
-            @param {Number} elementNumber The current start up step.
-
-            @returns {$.Website} Returns the current instance.
-        ###
         _handleStartUpEffects: (elementNumber) ->
+            ###
+                This method handles the given start up effect step.
+
+                **elementNumber {Number}** - The current start up step.
+
+                **returns {$.Website}**    - Returns the current instance.
+            ###
             # Stop and delete spinner instance.
             this.$domNodes.windowLoadingSpinner.spin false
             elementNumber = 1 if not $.isNumeric elementNumber
@@ -365,22 +385,22 @@ this.require([
                     this.fireEvent 'startUpAnimationComplete'
             ), this._options.startUpAnimationElementDelayInMiliseconds)
             this
-        ###*
-            @description This method adds triggers to switch section.
-
-            @returns {$.Website} Returns the current instance.
-        ###
         _addNavigationEvents: ->
+            ###
+                This method adds triggers to switch section.
+
+                **returns {$.Website}** - Returns the current instance.
+            ###
             this.$domNodes.window.hashchange(=>
                 this.fireEvent 'switchSection', false,
                 this, window.location.hash)
             this._handleScrollToTopButton()
-        ###*
-            @description Adds trigger to scroll top buttons.
-
-            @returns {$.Website} Returns the current instance.
-        ###
         _handleScrollToTopButton: ->
+            ###
+                Adds trigger to scroll top buttons.
+
+                **returns {$.Website}** - Returns the current instance.
+            ###
             this.on(
                 this.$domNodes.scrollToTopButtons, 'click', (event) =>
                     event.preventDefault()
@@ -388,16 +408,16 @@ this.require([
             )
             this.$domNodes.scrollToTopButtons.hide()
             this
-        ###*
-            @description Scrolls to top of page. Runs the given function after
-                         viewport arrives.
-
-            @param {Function} onAfter Callback to call after effect has
-                                      finished.
-
-            @returns {$.Website} Returns the current instance.
-        ###
         _scrollToTop: (onAfter=$.noop()) ->
+            ###
+                Scrolls to top of page. Runs the given function after viewport
+                arrives.
+
+                **onAfter {Function}**  - Callback to call after effect has
+                                          finished.
+
+                **returns {$.Website}** - Returns the current instance.
+            ###
             this._options.scrollToTop.onAfter = onAfter
             if this._options.scrollInLinearTime
                 distanceToTopInPixel = this.$domNodes.window.scrollTop()
@@ -409,16 +429,16 @@ this.require([
             else
                 $.scrollTo {top: 0, left: 0}, this._options.scrollToTop
             this
-        ###*
-            @description Scrolls to top of page. Runs the given function after
-                         viewport arrives.
-
-            @param {String} trackingCode Google's javaScript embedding code
-                                         snippet.
-
-            @returns {$.Website} Returns the current instance.
-        ###
         _handleGoogleAnalytics: (trackingCode) ->
+            ###
+                Scrolls to top of page. Runs the given function after viewport
+                arrives.
+
+                **trackingCode {String}** - Google's javaScript embedding code
+                                            snippet.
+
+                **returns {$.Website}**   - Returns the current instance.
+            ###
             try
                 (new Function(this.stringFormat(
                     this.__googleAnalyticsCode, trackingCode
@@ -435,9 +455,7 @@ this.require([
 
     # region handle $ extending
 
-    ###* @ignore ###
     $.Website = -> $.Tools().controller Website, arguments
-    ###* @ignore ###
     $.Website.class = Website
 
     # endregion
