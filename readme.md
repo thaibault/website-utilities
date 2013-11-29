@@ -16,14 +16,8 @@ License
 
 endregion -->
 
-Use case<!--deDE:Einsatz--><!--frFR:Utilisier-->
-------------------------------------------------
-
-This plugin provides reusable web application features, like:
-<!--deDE:
-    Diese Pluhin bietet eine Reihe von wiederverwendbaren
-    Webanwendungs-Features:
--->
+Use cases<!--deDE:Einsatzmöglichkeiten--><!--frFR:But-->
+--------------------------------------------------------
 
 *   Predefined scroll events
     <!--deDE:Vordefinierte Scroll-Events-->
@@ -53,7 +47,7 @@ This plugin provides reusable web application features, like:
 Usage<!--deDE:Verwendung-->
 ---------------------------
 
-Here you can see all available plugin options:
+Here you can see the initialisation with all available plugin options:
 <!--deDE:
     Hier werden alle möglichen Optionen die beim Initialisieren des Plugins
     gesetzt werden können angegeben:

@@ -355,12 +355,11 @@ this.require [
             ###
             window.setTimeout(=>
                 # Hide startup animation dom nodes to show them step by step.
-                $(
-                    '[class^="' +
+                $(this.stringFormat(
+                    '[class^="{1}"], [class*=" {1}"]',
                     this.sliceDomNodeSelectorPrefix(
-                        this._options.domNode
-                            .startUpAnimationClassPrefix
-                    ).substr(1) + '"]'
+                        this._options.domNode.startUpAnimationClassPrefix
+                    ).substr(1))
                 ).hide()
                 this.$domNodes.windowLoadingCover.fadeOut(
                     this._options.windowLoadingCoverFadeOut)
