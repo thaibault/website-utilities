@@ -355,7 +355,7 @@ Version
 
         var _this = this;
         window.setTimeout(function() {
-          $('[class^="' + _this.sliceDomNodeSelectorPrefix(_this._options.domNode.startUpAnimationClassPrefix).substr(1) + '"]').hide();
+          $(_this.stringFormat('[class^="{1}"], [class*=" {1}"]', _this.sliceDomNodeSelectorPrefix(_this._options.domNode.startUpAnimationClassPrefix).substr(1))).hide();
           return _this.$domNodes.windowLoadingCover.fadeOut(_this._options.windowLoadingCoverFadeOut);
         }, this._options.additionalPageLoadingTimeInMilliseconds);
         return this;
