@@ -10,7 +10,7 @@
 # region header
 
 ###
-[Project page](https://github.com/thaibault/jQuery-website)
+[Project page](https://thaibault.github.com/jQuery-website)
 
 This module provides common logic for the whole web page.
 
