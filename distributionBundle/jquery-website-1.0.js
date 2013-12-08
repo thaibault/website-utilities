@@ -123,7 +123,7 @@ Version
         this._viewportIsOnTop = _viewportIsOnTop != null ? _viewportIsOnTop : true;
         this._currentMediaQueryMode = _currentMediaQueryMode != null ? _currentMediaQueryMode : '';
         this.languageHandler = languageHandler != null ? languageHandler : null;
-        this.__googleAnalyticsCode = __googleAnalyticsCode != null ? __googleAnalyticsCode : 'var _gaq = _gaq || [];\n  _gaq.push([\'_setAccount\', \'{1}\']);\n  _gaq.push([\'_trackPageview\']);\n\n  (function() {\n    var ga = document.createElement(\'script\');\n    ga.type = \'text/javascript\'; ga.async = true;\n    ga.src = (\'https:\' === document.location.protocol ?\n              \'https://ssl\' : \'http://www\') +\n              \'.google-analytics.com/ga.js\';\n    var s = document.getElementsByTagName(\'script\')[0];\n    s.parentNode.insertBefore(ga, s);\n  })();';
+        this.__googleAnalyticsCode = __googleAnalyticsCode != null ? __googleAnalyticsCode : '(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\n(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\nm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n})(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');\n\nga(\'create\', \'{1}\', \'archinstall.github.io\');\nga(\'send\', \'pageview\');';
         /*
             Initializes the interactive web application.
         
@@ -228,8 +228,8 @@ Version
 
       Website.prototype._onChangeToMediumMode = function(oldMode, newMode) {
         /*
-            This method triggers if the responsive design switches to medium
-            mode.
+            This method triggers if the responsive design switches to
+            medium mode.
         
             **oldMode {String}**    - Saves the previous mode.
         
