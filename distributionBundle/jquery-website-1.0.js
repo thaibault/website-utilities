@@ -462,7 +462,6 @@ Version
         */
 
         var exception;
-        alert('A');
         this.debug("Run analytics code: \"" + this.__googleAnalyticsCode + "\"", trackingCode);
         try {
           (new Function(this.stringFormat(this.__googleAnalyticsCode, trackingCode)))();
