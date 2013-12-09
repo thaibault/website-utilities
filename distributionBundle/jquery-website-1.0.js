@@ -73,7 +73,7 @@ Version
           onSwitchSection: $.noop(),
           onStartUpAnimationComplete: $.noop(),
           additionalPageLoadingTimeInMilliseconds: 0,
-          googleTrackingCode: 'UA-0-0',
+          trackingCode: 'UA-0-0',
           mediaQueryCssIndicator: {
             extraSmall: 'xs',
             small: 'sm',
