@@ -437,13 +437,13 @@ ga('send', 'pageview');'''
 
                 **returns {$.Website}**   - Returns the current instance.
             ###
+            this.debug(
+                "Run analytics code: \"#{this.__googleAnalyticsCode}\"",
+                trackingCode)
             try
                 (new Function(this.stringFormat(
                     this.__googleAnalyticsCode, trackingCode
                 )))()
-                this.debug(
-                    "Run analytics code: \"#{this.__googleAnalyticsCode}\"",
-                    trackingCode)
             catch exception
                 this.warn(
                     'Problem in google analytics code snippet: {1}',
