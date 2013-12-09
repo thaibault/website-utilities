@@ -437,7 +437,6 @@ ga('send', 'pageview');'''
 
                 **returns {$.Website}**   - Returns the current instance.
             ###
-            alert('A')
             this.debug(
                 "Run analytics code: \"#{this.__googleAnalyticsCode}\"",
                 trackingCode)
