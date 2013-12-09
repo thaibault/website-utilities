@@ -67,7 +67,7 @@ Here you can see the initialisation with all available plugin options:
         onSwitchSection: $.noop(),
         onStartUpAnimationComplete: $.noop(),
         additionalPageLoadingTimeInMilliseconds: 0,
-        googleTrackingCode: 'UA-0-0',
+        trackingCode: 'UA-0-0',
         mediaQueryCssIndicator: {
             extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg'
         },
