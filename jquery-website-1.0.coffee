@@ -441,6 +441,9 @@ ga('send', 'pageview');'''
                 (new Function(this.stringFormat(
                     this.__googleAnalyticsCode, trackingCode
                 )))()
+                this.debug(
+                    "Run analytics code: \"#{this.__googleAnalyticsCode}\"",
+                    trackingCode)
             catch exception
                 this.warn(
                     'Problem in google analytics code snippet: {1}',
