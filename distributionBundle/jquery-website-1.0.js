@@ -118,12 +118,13 @@ Version
           scrollInLinearTime: false,
           scrollToTop: {
             duration: 'slow'
-          }
+          },
+          domain: 'auto'
         };
         this._viewportIsOnTop = _viewportIsOnTop != null ? _viewportIsOnTop : true;
         this._currentMediaQueryMode = _currentMediaQueryMode != null ? _currentMediaQueryMode : '';
         this.languageHandler = languageHandler != null ? languageHandler : null;
-        this.__googleAnalyticsCode = __googleAnalyticsCode != null ? __googleAnalyticsCode : '(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\n(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\nm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n})(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');\n\nga(\'create\', \'{1}\', \'archinstall.github.io\');\nga(\'send\', \'pageview\');';
+        this.__googleAnalyticsCode = __googleAnalyticsCode != null ? __googleAnalyticsCode : '(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\n(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\nm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n})(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');\n\nga(\'create\', \'{1}\', \'{2}\');\nga(\'send\', \'pageview\');';
         /*
             Initializes the interactive web application.
         
@@ -141,7 +142,7 @@ Version
         this.$domNodes.windowLoadingSpinner.spin(this._options.windowLoadingSpinner);
         this._bindScrollEvents().$domNodes.parent.show();
         this.$domNodes.window.ready(this.getMethod(this._removeLoadingCover));
-        this._addNavigationEvents()._addMediaQueryChangeEvents()._triggerWindowResizeEvents()._handleGoogleAnalytics(this._options.trackingCode);
+        this._addNavigationEvents()._addMediaQueryChangeEvents()._triggerWindowResizeEvents()._handleGoogleAnalytics();
         if (this._options.language.logging == null) {
           this._options.language.logging = this._options.logging;
         }
@@ -450,21 +451,17 @@ Version
         return this;
       };
 
-      Website.prototype._handleGoogleAnalytics = function(trackingCode) {
+      Website.prototype._handleGoogleAnalytics = function() {
         /*
-            Scrolls to top of page. Runs the given function after viewport
-            arrives.
-        
-            **trackingCode {String}** - Google's javaScript embedding code
-                                        snippet.
+            Executes the page tracking code.
         
             **returns {$.Website}**   - Returns the current instance.
         */
 
         var exception;
-        this.debug("Run analytics code: \"" + this.__googleAnalyticsCode + "\"", trackingCode);
+        this.debug("Run analytics code: \"" + this.__googleAnalyticsCode + "\"", this._options.trackingCode, this._options.domain);
         try {
-          (new Function(this.stringFormat(this.__googleAnalyticsCode, trackingCode)))();
+          (new Function(this.stringFormat(this.__googleAnalyticsCode, this._options.trackingCode, this._options.domain)))();
         } catch (_error) {
           exception = _error;
           this.warn('Problem in google analytics code snippet: {1}', exception);
