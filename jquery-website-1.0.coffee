@@ -124,6 +124,7 @@ this.require [
                 language: {}
                 scrollInLinearTime: false
                 scrollToTop: duration: 'slow'
+                domain: 'auto'
             }, @_viewportIsOnTop=true, @_currentMediaQueryMode='',
             @languageHandler=null, @__googleAnalyticsCode='''
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -131,7 +132,7 @@ this.require [
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-ga('create', '{1}', 'archinstall.github.io');
+ga('create', '{1}', '{2}');
 ga('send', 'pageview');'''
         ) ->
             ###
@@ -158,8 +159,7 @@ ga('send', 'pageview');'''
             this.$domNodes.window.ready this.getMethod(
                 this._removeLoadingCover)
             this._addNavigationEvents()._addMediaQueryChangeEvents(
-            )._triggerWindowResizeEvents()._handleGoogleAnalytics(
-                this._options.trackingCode)
+            )._triggerWindowResizeEvents()._handleGoogleAnalytics()
             if not this._options.language.logging?
                 this._options.language.logging = this._options.logging
             if this._options.activateLanguageSupport
@@ -427,22 +427,19 @@ ga('send', 'pageview');'''
             else
                 $.scrollTo {top: 0, left: 0}, this._options.scrollToTop
             this
-        _handleGoogleAnalytics: (trackingCode) ->
+        _handleGoogleAnalytics: () ->
             ###
-                Scrolls to top of page. Runs the given function after viewport
-                arrives.
-
-                **trackingCode {String}** - Google's javaScript embedding code
-                                            snippet.
+                Executes the page tracking code.
 
                 **returns {$.Website}**   - Returns the current instance.
             ###
             this.debug(
                 "Run analytics code: \"#{this.__googleAnalyticsCode}\"",
-                trackingCode)
+                this._options.trackingCode, this._options.domain)
             try
                 (new Function(this.stringFormat(
-                    this.__googleAnalyticsCode, trackingCode
+                    this.__googleAnalyticsCode, this._options.trackingCode,
+                    this._options.domain
                 )))()
             catch exception
                 this.warn(
