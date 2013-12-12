@@ -81,9 +81,10 @@ this.require [
                 domNodeSelectorPrefix: 'body.{1}'
                 onViewportMovesToTop: $.noop()
                 onViewportMovesAwayFromTop: $.noop()
-                onChangeToDesktopMode: $.noop()
-                onChangeToTabletMode: $.noop()
-                onChangeToSmartphoneMode: $.noop()
+                onChangeToLargeMode: $.noop()
+                onChangeToMediumMode: $.noop()
+                onChangeToSmallMode: $.noop()
+                onChangeToExtraSmallMode: $.noop()
                 onChangeMediaQueryMode: $.noop()
                 onSwitchSection: $.noop()
                 onStartUpAnimationComplete: $.noop()
