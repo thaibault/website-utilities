@@ -89,8 +89,10 @@ this.require [
                 onStartUpAnimationComplete: $.noop()
                 additionalPageLoadingTimeInMilliseconds: 0
                 trackingCode: 'UA-0-0'
-                mediaQueryCssIndicator:
-                    extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg'
+                mediaQueryCssIndicator: [
+                    ['extraSmall', 'xs'], ['small', 'sm'], ['medium', 'md']
+                    ['large', 'lg']
+                ],
                 domNode:
                     top: 'div.navigation-bar'
                     scrollToTopButtons: 'a[href="#top"]'
@@ -302,26 +304,28 @@ ga('send', 'pageview');'''
 
                 **returns {$.Website}** - Returns the current instance.
             ###
-            $.each this._options.mediaQueryCssIndicator, (name, value) =>
-                this.$domNodes.parent.addClass "hidden-#{value}"
+            $.each this._options.mediaQueryCssIndicator, (key, value) =>
+                this.$domNodes.parent.addClass "hidden-#{value[1]}"
                 if(this.$domNodes.parent.is(':hidden') and
-                   name isnt this._currentMediaQueryMode)
+                   value[0] isnt this._currentMediaQueryMode)
                     this.fireEvent.apply(
                         this, [
-                            this.stringFormat('changeMediaQueryMode',
-                            name.substr(0, 1).toUpperCase() + name.substr 1),
-                            false, this, this._currentMediaQueryMode, name
+                            'changeMediaQueryMode', false, this,
+                            this._currentMediaQueryMode, value[0]
                         ].concat this.argumentsObjectToArray arguments
                     )
                     this.fireEvent.apply(
                         this, [
-                            this.stringFormat('changeTo{1}Mode',
-                            name.substr(0, 1).toUpperCase() + name.substr 1),
-                            false, this, this._currentMediaQueryMode, name
+                            this.stringFormat(
+                                'changeTo{1}Mode',
+                                value[0].substr(0, 1).toUpperCase() +
+                                value[0].substr 1
+                            ), false, this, this._currentMediaQueryMode,
+                            value[0]
                         ].concat this.argumentsObjectToArray arguments
                     )
-                    this._currentMediaQueryMode = name
-                this.$domNodes.parent.removeClass "hidden-#{value}"
+                    this._currentMediaQueryMode = value[0]
+                this.$domNodes.parent.removeClass "hidden-#{value[1]}"
             this
         _bindScrollEvents: ->
             ###
