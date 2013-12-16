@@ -128,8 +128,9 @@ this.require [
                 scrollInLinearTime: false
                 scrollToTop: duration: 'slow'
                 domain: 'auto'
-            }, @_viewportIsOnTop=true, @_currentMediaQueryMode='',
-            @languageHandler=null, @__googleAnalyticsCode='''
+            }, @startUpAnimationIsComplete=false, @_viewportIsOnTop=true,
+            @_currentMediaQueryMode='', @languageHandler=null,
+            @__googleAnalyticsCode='''
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -283,6 +284,7 @@ ga('send', 'pageview');'''
 
                 **returns {$.Website}** - Returns the current instance.
             ###
+            this.startUpAnimationIsComplete = true
             this
 
         # endregion
@@ -377,6 +379,10 @@ ga('send', 'pageview');'''
             this.$domNodes.windowLoadingSpinner.spin false
             elementNumber = 1 if not $.isNumeric elementNumber
             window.setTimeout((=>
+                lastElementTriggered = false
+                this._options.startUpFadeIn.always = =>
+                    if lastElementTriggered
+                        this.fireEvent 'startUpAnimationComplete'
                 $(
                     this._options.domNode.startUpAnimationClassPrefix +
                     elementNumber
@@ -385,7 +391,7 @@ ga('send', 'pageview');'''
                      (elementNumber + 1)).length
                     this._handleStartUpEffects elementNumber + 1
                 else
-                    this.fireEvent 'startUpAnimationComplete'
+                    lastElementTriggered = true
             ), this._options.startUpAnimationElementDelayInMiliseconds)
             this
         _addNavigationEvents: ->
