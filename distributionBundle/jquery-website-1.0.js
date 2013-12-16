@@ -57,7 +57,7 @@ Version
 
       Website.prototype.__name__ = 'Website';
 
-      Website.prototype.initialize = function(options, _parentOptions, _viewportIsOnTop, _currentMediaQueryMode, languageHandler, __googleAnalyticsCode) {
+      Website.prototype.initialize = function(options, _parentOptions, startUpAnimationIsComplete, _viewportIsOnTop, _currentMediaQueryMode, languageHandler, __googleAnalyticsCode) {
         if (options == null) {
           options = {};
         }
@@ -117,6 +117,7 @@ Version
           },
           domain: 'auto'
         };
+        this.startUpAnimationIsComplete = startUpAnimationIsComplete != null ? startUpAnimationIsComplete : false;
         this._viewportIsOnTop = _viewportIsOnTop != null ? _viewportIsOnTop : true;
         this._currentMediaQueryMode = _currentMediaQueryMode != null ? _currentMediaQueryMode : '';
         this.languageHandler = languageHandler != null ? languageHandler : null;
@@ -288,6 +289,7 @@ Version
             **returns {$.Website}** - Returns the current instance.
         */
 
+        this.startUpAnimationIsComplete = true;
         return this;
       };
 
@@ -375,11 +377,18 @@ Version
           elementNumber = 1;
         }
         window.setTimeout((function() {
+          var lastElementTriggered;
+          lastElementTriggered = false;
+          _this._options.startUpFadeIn.always = function() {
+            if (lastElementTriggered) {
+              return _this.fireEvent('startUpAnimationComplete');
+            }
+          };
           $(_this._options.domNode.startUpAnimationClassPrefix + elementNumber).fadeIn(_this._options.startUpFadeIn);
           if ($(_this._options.domNode.startUpAnimationClassPrefix + (elementNumber + 1)).length) {
             return _this._handleStartUpEffects(elementNumber + 1);
           } else {
-            return _this.fireEvent('startUpAnimationComplete');
+            return lastElementTriggered = true;
           }
         }), this._options.startUpAnimationElementDelayInMiliseconds);
         return this;
