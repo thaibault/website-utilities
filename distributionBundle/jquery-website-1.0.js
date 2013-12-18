@@ -443,7 +443,7 @@ Version
         this._options.scrollToTop.onAfter = onAfter;
         if (this._options.scrollInLinearTime) {
           distanceToTopInPixel = this.$domNodes.window.scrollTop();
-          this._options.scrollToTop.duration = distanceToTopInPixel;
+          this._options.scrollToTop.duration = distanceToTopInPixel / 2;
           $.scrollTo({
             top: "-=" + distanceToTopInPixel,
             left: '+=0'
