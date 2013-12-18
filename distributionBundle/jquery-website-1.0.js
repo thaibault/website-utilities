@@ -77,6 +77,7 @@ Version
           trackingCode: 'UA-0-0',
           mediaQueryCssIndicator: [['extraSmall', 'xs'], ['small', 'sm'], ['medium', 'md'], ['large', 'lg']],
           domNode: {
+            mediaQueryIndicator: '<div class="media-query-indicator">',
             top: 'div.navigation-bar',
             scrollToTopButtons: 'a[href="#top"]',
             startUpAnimationClassPrefix: '.start-up-animation-number-',
@@ -314,13 +315,13 @@ Version
 
         var _this = this;
         $.each(this._options.mediaQueryCssIndicator, function(key, value) {
-          _this.$domNodes.parent.addClass("hidden-" + value[1]);
-          if (_this.$domNodes.parent.is(':hidden') && value[0] !== _this._currentMediaQueryMode) {
+          _this.$domNodes.mediaQueryIndicator.prependTo(_this.$domNodes.parent).addClass("hidden-" + value[1]);
+          if (_this.$domNodes.mediaQueryIndicator.is(':hidden') && value[0] !== _this._currentMediaQueryMode) {
             _this.fireEvent.apply(_this, ['changeMediaQueryMode', false, _this, _this._currentMediaQueryMode, value[0]].concat(_this.argumentsObjectToArray(arguments)));
             _this.fireEvent.apply(_this, [_this.stringFormat('changeTo{1}Mode', value[0].substr(0, 1).toUpperCase() + value[0].substr(1)), false, _this, _this._currentMediaQueryMode, value[0]].concat(_this.argumentsObjectToArray(arguments)));
             _this._currentMediaQueryMode = value[0];
           }
-          return _this.$domNodes.parent.removeClass("hidden-" + value[1]);
+          return _this.$domNodes.mediaQueryIndicator.removeClass("hidden-" + value[1]);
         });
         return this;
       };
