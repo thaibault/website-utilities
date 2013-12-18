@@ -95,6 +95,7 @@ this.require [
                     ['large', 'lg']
                 ],
                 domNode:
+                    mediaQueryIndicator: '<div class="media-query-indicator">'
                     top: 'div.navigation-bar'
                     scrollToTopButtons: 'a[href="#top"]'
                     startUpAnimationClassPrefix: '.start-up-animation-number-'
@@ -308,8 +309,11 @@ ga('send', 'pageview');'''
                 **returns {$.Website}** - Returns the current instance.
             ###
             $.each this._options.mediaQueryCssIndicator, (key, value) =>
-                this.$domNodes.parent.addClass "hidden-#{value[1]}"
-                if(this.$domNodes.parent.is(':hidden') and
+                this.$domNodes.mediaQueryIndicator.prependTo(
+                    this.$domNodes.parent
+                ).addClass(
+                    "hidden-#{value[1]}")
+                if(this.$domNodes.mediaQueryIndicator.is(':hidden') and
                    value[0] isnt this._currentMediaQueryMode)
                     this.fireEvent.apply(
                         this, [
@@ -328,7 +332,8 @@ ga('send', 'pageview');'''
                         ].concat this.argumentsObjectToArray arguments
                     )
                     this._currentMediaQueryMode = value[0]
-                this.$domNodes.parent.removeClass "hidden-#{value[1]}"
+                this.$domNodes.mediaQueryIndicator.removeClass(
+                    "hidden-#{value[1]}")
             this
         _bindScrollEvents: ->
             ###
