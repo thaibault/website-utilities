@@ -43,8 +43,7 @@ endregion -->
     <!--deDE:Erkennung der aktuellen Sektion anhand url Hashes-->
 *   Handle google tracking.<!--deDE:Verbindung zu google tracking.-->
 
-Usage<!--deDE:Verwendung-->
----------------------------
+<h2>Usage<!--deDE:Verwendung--></h2>
 
 Here you can see the initialisation with all available plugin options:
 <!--deDE:
