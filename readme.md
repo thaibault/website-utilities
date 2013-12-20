@@ -16,12 +16,7 @@ License
 
 endregion -->
 
-<langReplace>
-Use cases
----------
-<langReplace>
-
-<!--deDE:<h2>Einsatzmöglichkeiten</h2>--><!--frFR:<h2>But</h2>-->
+<h2>Use cases<!--deDE:Einsatzmöglichkeiten--><!--frFR:But--></h2>
 
 *   Predefined scroll events
     <!--deDE:Vordefinierte Scroll-Events-->
