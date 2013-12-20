@@ -18,31 +18,43 @@ endregion -->
 
 <h2>Use cases<!--deDE:Einsatzmöglichkeiten--><!--frFR:But--></h2>
 
-*   <span>
-        Predefined scroll events<!--deDE:Vordefinierte Scroll-Events-->
-    </span>
-*   Client side internationalization support
-    <!--deDE:Klientseitiger Internationalisierungs-Support-->
-*   Viewport is on top position detection
-    <!--deDE:
-        Erkennung wenn der sichbare Bereich der Website am obigen Rand ist und
-        setzten entsprechender Events
-    -->
-*   Triggering media-query change events
-    <!--deDE:
-        Auslösen von definierten Events wenn media-querys im responsive Design
-        gewechselt werden.
-    -->
-*   Handling page load animation
-    <!--deDE:
-        Ermöglichen von Animationen während die Webanwendung im Hintergrund
-        geladen wird.
-    -->
-*   Section switching transitions
-    <!--deDE:Animationen zum Übergang einzelner Sektionen-->
-*   Simple section detection via url hashes
-    <!--deDE:Erkennung der aktuellen Sektion anhand url Hashes-->
-*   Handle google tracking.<!--deDE:Verbindung zu google tracking.-->
+<ul>
+    <li>Predefined scroll events<!--deDE:Vordefinierte Scroll-Events--></li>
+    <li>
+        Client side internationalization support
+        <!--deDE:Klientseitiger Internationalisierungs-Support-->
+    </li>
+    <li>
+        Viewport is on top position detection
+        <!--deDE:
+            Erkennung wenn der sichbare Bereich der Website am obigen Rand ist
+            und setzten entsprechender Events
+        -->
+    </li>
+    <li>
+        Triggering media-query change events
+        <!--deDE:
+            Auslösen von definierten Events wenn media-querys im responsive
+             Design gewechselt werden.
+        -->
+    </li>
+    <li>
+        Handling page load animation
+        <!--deDE:
+            Ermöglichen von Animationen während die Webanwendung im Hintergrund
+            geladen wird.
+        -->
+    </li>
+    <li>
+        Section switching transitions
+        <!--deDE:Animationen zum Übergang einzelner Sektionen-->
+    </li>
+    <li>
+        Simple section detection via url hashes
+        <!--deDE:Erkennung der aktuellen Sektion anhand url Hashes-->
+    </li>
+    <li>Handle google tracking.<!--deDE:Verbindung zu google tracking.--></li>
+</ul>
 
 <h2>Usage<!--deDE:Verwendung--></h2>
 
