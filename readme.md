@@ -18,8 +18,9 @@ endregion -->
 
 <h2>Use cases<!--deDE:Einsatzmöglichkeiten--><!--frFR:But--></h2>
 
-*   Predefined scroll events
-    <!--deDE:Vordefinierte Scroll-Events-->
+*   <span>
+        Predefined scroll events<!--deDE:Vordefinierte Scroll-Events-->
+    </span>
 *   Client side internationalization support
     <!--deDE:Klientseitiger Internationalisierungs-Support-->
 *   Viewport is on top position detection
