@@ -16,7 +16,9 @@ License
 
 endregion -->
 
-<h2>Use cases<!--deDE:Einsatzmöglichkeiten--><!--frFR:But--></h2>
+<!--|deDE:Einsatzmöglichkeiten-->
+Use cases
+---------
 
 <ul>
     <li>Predefined scroll events<!--deDE:Vordefinierte Scroll-Events--></li>
@@ -56,7 +58,9 @@ endregion -->
     <li>Handle google tracking.<!--deDE:Verbindung zu google tracking.--></li>
 </ul>
 
-<h2>Usage<!--deDE:Verwendung--></h2>
+<!--deDE:Verwendung-->
+Usage
+-----
 
 Here you can see the initialisation with all available plugin options:
 <!--deDE:
