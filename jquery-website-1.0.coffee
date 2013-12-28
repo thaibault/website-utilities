@@ -126,10 +126,13 @@ this.require [
                     left: 'auto' # Left position relative to parent in px
                 activateLanguageSupport: true
                 language: {}
-                scrollInLinearTime: false
-                scrollToTop: duration: 'slow'
+                scrollInLinearTime: true
+                scrollToTop: duration: 'normal'
+                scrollToTopSlideDistanceInPixel: 30
+                scrollToTopShowAnimation: duration: 'normal'
+                scrollToTopHideAnimation: duration: 'normal'
                 domain: 'auto'
-            }, @startUpAnimationIsComplete=false, @_viewportIsOnTop=true,
+            }, @startUpAnimationIsComplete=false, @_viewportIsOnTop=false,
             @_currentMediaQueryMode='', @languageHandler=null,
             @__googleAnalyticsCode='''
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -188,11 +191,14 @@ ga('send', 'pageview');'''
             if this.$domNodes.scrollToTopButtons.css(
                 'visibility'
             ) isnt 'hidden'
-                this.$domNodes.scrollToTopButtons.animate(
-                    {bottom: '+=30', opacity: 0},
-                    {duration: 'normal', always: =>
-                        this.$domNodes.scrollToTopButtons.css(
-                            'bottom', '-=30')})
+                this._options.scrollToTopHideAnimation.always = =>
+                    this.$domNodes.scrollToTopButtons.css
+                        bottom: '-=' +
+                        this._options.scrollToTopSlideDistanceInPixel
+                this.$domNodes.scrollToTopButtons.finish().animate({
+                    bottom: '+=' +
+                    this._options.scrollToTopSlideDistanceInPixel, opacity: 0
+                }, this._options.scrollToTopHideAnimation)
             this
         _onViewportMovesAwayFromTop: ->
             ###
@@ -203,11 +209,15 @@ ga('send', 'pageview');'''
             if this.$domNodes.scrollToTopButtons.css(
                 'visibility'
             ) isnt 'hidden'
-                this.$domNodes.scrollToTopButtons.css(
-                    bottom: '+=30', display: 'block', opacity: 0
-                ).animate(
-                    {bottom: '-=30', queue: false, opacity: 1},
-                    {duration: 'normal'})
+                this.$domNodes.scrollToTopButtons.finish().css(
+                    bottom: '+=' +
+                    this._options.scrollToTopSlideDistanceInPixel
+                    display: 'block', opacity: 0
+                ).animate({
+                    bottom: '-=' +
+                    this._options.scrollToTopSlideDistanceInPixel
+                    queue: false, opacity: 1
+                }, this._options.scrollToTopShowAnimation)
             this
         _onChangeMediaQueryMode: (oldMode, newMode) ->
             ###
@@ -341,7 +351,7 @@ ga('send', 'pageview');'''
 
                 **returns {$.Website}** - Returns the current instance.
             ###
-            this.on window, 'scroll', =>
+            this.on this.$domNodes.window, 'scroll', =>
                 if this.$domNodes.window.scrollTop()
                     if this._viewportIsOnTop
                         this._viewportIsOnTop = false
@@ -353,6 +363,16 @@ ga('send', 'pageview');'''
                     this.fireEvent.apply this, [
                         'viewportMovesToTop', false, this
                     ].concat this.argumentsObjectToArray arguments
+            if this.$domNodes.window.scrollTop()
+                this._viewportIsOnTop = false
+                this.fireEvent.apply this, [
+                    'viewportMovesAwayFromTop', false, this
+                ].concat this.argumentsObjectToArray arguments
+            else
+                this._viewportIsOnTop = true
+                this.fireEvent.apply this, [
+                    'viewportMovesToTop', false, this
+                ].concat this.argumentsObjectToArray arguments
             this
         _removeLoadingCover: ->
             ###
@@ -420,7 +440,6 @@ ga('send', 'pageview');'''
                     event.preventDefault()
                     this._scrollToTop()
             )
-            this.$domNodes.scrollToTopButtons.hide()
             this
         _scrollToTop: (onAfter=$.noop()) ->
             ###
@@ -435,8 +454,8 @@ ga('send', 'pageview');'''
             this._options.scrollToTop.onAfter = onAfter
             if this._options.scrollInLinearTime
                 distanceToTopInPixel = this.$domNodes.window.scrollTop()
-                # Scroll twice as fast as we have distance to top.
-                this._options.scrollToTop.duration = distanceToTopInPixel / 2
+                # Scroll four times faster as we have distance to top.
+                this._options.scrollToTop.duration = distanceToTopInPixel / 4
                 $.scrollTo(
                     {top: "-=#{distanceToTopInPixel}", left: '+=0'},
                     this._options.scrollToTop)
