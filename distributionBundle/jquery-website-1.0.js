@@ -112,14 +112,21 @@ Version
           },
           activateLanguageSupport: true,
           language: {},
-          scrollInLinearTime: false,
+          scrollInLinearTime: true,
           scrollToTop: {
-            duration: 'slow'
+            duration: 'normal'
+          },
+          scrollToTopSlideDistanceInPixel: 30,
+          scrollToTopShowAnimation: {
+            duration: 'normal'
+          },
+          scrollToTopHideAnimation: {
+            duration: 'normal'
           },
           domain: 'auto'
         };
         this.startUpAnimationIsComplete = startUpAnimationIsComplete != null ? startUpAnimationIsComplete : false;
-        this._viewportIsOnTop = _viewportIsOnTop != null ? _viewportIsOnTop : true;
+        this._viewportIsOnTop = _viewportIsOnTop != null ? _viewportIsOnTop : false;
         this._currentMediaQueryMode = _currentMediaQueryMode != null ? _currentMediaQueryMode : '';
         this.languageHandler = languageHandler != null ? languageHandler : null;
         this.__googleAnalyticsCode = __googleAnalyticsCode != null ? __googleAnalyticsCode : '(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\n(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\nm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n})(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');\n\nga(\'create\', \'{1}\', \'{2}\');\nga(\'send\', \'pageview\');';
@@ -159,15 +166,15 @@ Version
 
         var _this = this;
         if (this.$domNodes.scrollToTopButtons.css('visibility') !== 'hidden') {
-          this.$domNodes.scrollToTopButtons.animate({
-            bottom: '+=30',
+          this._options.scrollToTopHideAnimation.always = function() {
+            return _this.$domNodes.scrollToTopButtons.css({
+              bottom: '-=' + _this._options.scrollToTopSlideDistanceInPixel
+            });
+          };
+          this.$domNodes.scrollToTopButtons.finish().animate({
+            bottom: '+=' + this._options.scrollToTopSlideDistanceInPixel,
             opacity: 0
-          }, {
-            duration: 'normal',
-            always: function() {
-              return _this.$domNodes.scrollToTopButtons.css('bottom', '-=30');
-            }
-          });
+          }, this._options.scrollToTopHideAnimation);
         }
         return this;
       };
@@ -180,17 +187,15 @@ Version
         */
 
         if (this.$domNodes.scrollToTopButtons.css('visibility') !== 'hidden') {
-          this.$domNodes.scrollToTopButtons.css({
-            bottom: '+=30',
+          this.$domNodes.scrollToTopButtons.finish().css({
+            bottom: '+=' + this._options.scrollToTopSlideDistanceInPixel,
             display: 'block',
             opacity: 0
           }).animate({
-            bottom: '-=30',
+            bottom: '-=' + this._options.scrollToTopSlideDistanceInPixel,
             queue: false,
             opacity: 1
-          }, {
-            duration: 'normal'
-          });
+          }, this._options.scrollToTopShowAnimation);
         }
         return this;
       };
@@ -334,7 +339,7 @@ Version
         */
 
         var _this = this;
-        this.on(window, 'scroll', function() {
+        this.on(this.$domNodes.window, 'scroll', function() {
           if (_this.$domNodes.window.scrollTop()) {
             if (_this._viewportIsOnTop) {
               _this._viewportIsOnTop = false;
@@ -345,6 +350,13 @@ Version
             return _this.fireEvent.apply(_this, ['viewportMovesToTop', false, _this].concat(_this.argumentsObjectToArray(arguments)));
           }
         });
+        if (this.$domNodes.window.scrollTop()) {
+          this._viewportIsOnTop = false;
+          this.fireEvent.apply(this, ['viewportMovesAwayFromTop', false, this].concat(this.argumentsObjectToArray(arguments)));
+        } else {
+          this._viewportIsOnTop = true;
+          this.fireEvent.apply(this, ['viewportMovesToTop', false, this].concat(this.argumentsObjectToArray(arguments)));
+        }
         return this;
       };
 
@@ -421,7 +433,6 @@ Version
           event.preventDefault();
           return _this._scrollToTop();
         });
-        this.$domNodes.scrollToTopButtons.hide();
         return this;
       };
 
@@ -443,7 +454,7 @@ Version
         this._options.scrollToTop.onAfter = onAfter;
         if (this._options.scrollInLinearTime) {
           distanceToTopInPixel = this.$domNodes.window.scrollTop();
-          this._options.scrollToTop.duration = distanceToTopInPixel / 2;
+          this._options.scrollToTop.duration = distanceToTopInPixel / 4;
           $.scrollTo({
             top: "-=" + distanceToTopInPixel,
             left: '+=0'
