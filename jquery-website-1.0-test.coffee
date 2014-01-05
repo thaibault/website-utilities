@@ -41,13 +41,13 @@ test 'initialize', -> ok website
         # region event
 
 test '_onViewportMovesToTop', ->
-    strictEqual website._onViewportMovesToTop(), website
-    # NOTE: Returns the time to next function call.
-    ok $.isNumeric website._onViewportMovesToTop()
+    website._onViewportMovesToTop()
+    # NOTE: Returns undefined because of debouncouing.
+    strictEqual website._onViewportMovesToTop(), undefined
 test '_onViewportMovesAwayFromTop', ->
-    strictEqual website._onViewportMovesAwayFromTop(), website
-    # NOTE: Returns the time to next function call.
-    ok $.isNumeric website._onViewportMovesAwayFromTop()
+    website._onViewportMovesAwayFromTop()
+    # NOTE: Returns undefined because of debouncouing.
+    strictEqual website._onViewportMovesAwayFromTop(), undefined
 test '_onChangeMediaQueryMode', ->
     strictEqual website._onChangeMediaQueryMode(), website
 test '_onChangeToLargeMode', ->
