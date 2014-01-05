@@ -96,7 +96,7 @@ this.require [
                 ],
                 domNode:
                     mediaQueryIndicator: '<div class="media-query-indicator">'
-                    top: 'div.navigation-bar'
+                    top: '> div.navbar-wrapper'
                     scrollToTopButton: 'a[href="#top"]'
                     startUpAnimationClassPrefix: '.start-up-animation-number-'
                     windowLoadingCover: '> div.window-loading-cover'
@@ -188,9 +188,9 @@ ga('send', 'pageview');'''
 
                 **returns {$.Website}** - Returns the current instance.
             ###
-            if this.$domNodes.scrollToTopButton.css(
-                'visibility'
-            ) isnt 'hidden'
+            if this.$domNodes.scrollToTopButton.css('visibility') is 'hidden'
+                this.$domNodes.scrollToTopButton.css 'opacity', 0
+            else
                 this._options.scrollToTopHideAnimation.always = =>
                     this.$domNodes.scrollToTopButton.css
                         bottom: '-=' +
@@ -206,9 +206,9 @@ ga('send', 'pageview');'''
 
                 **returns {$.Website}** - Returns the current instance.
             ###
-            if this.$domNodes.scrollToTopButton.css(
-                'visibility'
-            ) isnt 'hidden'
+            if this.$domNodes.scrollToTopButton.css('visibility') is 'hidden'
+                this.$domNodes.scrollToTopButton.css 'opacity', 1
+            else
                 this.$domNodes.scrollToTopButton.finish().css(
                     bottom: '+=' +
                     this._options.scrollToTopSlideDistanceInPixel
