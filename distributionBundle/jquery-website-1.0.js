@@ -79,7 +79,7 @@ Version
           domNode: {
             mediaQueryIndicator: '<div class="media-query-indicator">',
             top: 'div.navigation-bar',
-            scrollToTopButtons: 'a[href="#top"]',
+            scrollToTopButton: 'a[href="#top"]',
             startUpAnimationClassPrefix: '.start-up-animation-number-',
             windowLoadingCover: '> div.window-loading-cover',
             windowLoadingSpinner: '> div.window-loading-cover > div'
@@ -165,13 +165,13 @@ Version
         */
 
         var _this = this;
-        if (this.$domNodes.scrollToTopButtons.css('visibility') !== 'hidden') {
+        if (this.$domNodes.scrollToTopButton.css('visibility') !== 'hidden') {
           this._options.scrollToTopHideAnimation.always = function() {
-            return _this.$domNodes.scrollToTopButtons.css({
+            return _this.$domNodes.scrollToTopButton.css({
               bottom: '-=' + _this._options.scrollToTopSlideDistanceInPixel
             });
           };
-          this.$domNodes.scrollToTopButtons.finish().animate({
+          this.$domNodes.scrollToTopButton.finish().animate({
             bottom: '+=' + this._options.scrollToTopSlideDistanceInPixel,
             opacity: 0
           }, this._options.scrollToTopHideAnimation);
@@ -186,8 +186,8 @@ Version
             **returns {$.Website}** - Returns the current instance.
         */
 
-        if (this.$domNodes.scrollToTopButtons.css('visibility') !== 'hidden') {
-          this.$domNodes.scrollToTopButtons.finish().css({
+        if (this.$domNodes.scrollToTopButton.css('visibility') !== 'hidden') {
+          this.$domNodes.scrollToTopButton.finish().css({
             bottom: '+=' + this._options.scrollToTopSlideDistanceInPixel,
             display: 'block',
             opacity: 0
@@ -416,7 +416,9 @@ Version
 
         var _this = this;
         this.$domNodes.window.hashchange(function() {
-          return _this.fireEvent('switchSection', false, _this, window.location.hash);
+          if (_this.startUpAnimationIsComplete) {
+            return _this.fireEvent('switchSection', false, _this, window.location.hash);
+          }
         });
         return this._handleScrollToTopButton();
       };
@@ -429,7 +431,7 @@ Version
         */
 
         var _this = this;
-        this.on(this.$domNodes.scrollToTopButtons, 'click', function(event) {
+        this.on(this.$domNodes.scrollToTopButton, 'click', function(event) {
           event.preventDefault();
           return _this._scrollToTop();
         });
