@@ -97,7 +97,7 @@ this.require [
                 domNode:
                     mediaQueryIndicator: '<div class="media-query-indicator">'
                     top: 'div.navigation-bar'
-                    scrollToTopButtons: 'a[href="#top"]'
+                    scrollToTopButton: 'a[href="#top"]'
                     startUpAnimationClassPrefix: '.start-up-animation-number-'
                     windowLoadingCover: '> div.window-loading-cover'
                     windowLoadingSpinner: '> div.window-loading-cover > div'
@@ -188,14 +188,14 @@ ga('send', 'pageview');'''
 
                 **returns {$.Website}** - Returns the current instance.
             ###
-            if this.$domNodes.scrollToTopButtons.css(
+            if this.$domNodes.scrollToTopButton.css(
                 'visibility'
             ) isnt 'hidden'
                 this._options.scrollToTopHideAnimation.always = =>
-                    this.$domNodes.scrollToTopButtons.css
+                    this.$domNodes.scrollToTopButton.css
                         bottom: '-=' +
                         this._options.scrollToTopSlideDistanceInPixel
-                this.$domNodes.scrollToTopButtons.finish().animate({
+                this.$domNodes.scrollToTopButton.finish().animate({
                     bottom: '+=' +
                     this._options.scrollToTopSlideDistanceInPixel, opacity: 0
                 }, this._options.scrollToTopHideAnimation)
@@ -206,10 +206,10 @@ ga('send', 'pageview');'''
 
                 **returns {$.Website}** - Returns the current instance.
             ###
-            if this.$domNodes.scrollToTopButtons.css(
+            if this.$domNodes.scrollToTopButton.css(
                 'visibility'
             ) isnt 'hidden'
-                this.$domNodes.scrollToTopButtons.finish().css(
+                this.$domNodes.scrollToTopButton.finish().css(
                     bottom: '+=' +
                     this._options.scrollToTopSlideDistanceInPixel
                     display: 'block', opacity: 0
@@ -426,8 +426,9 @@ ga('send', 'pageview');'''
                 **returns {$.Website}** - Returns the current instance.
             ###
             this.$domNodes.window.hashchange(=>
-                this.fireEvent 'switchSection', false,
-                this, window.location.hash)
+                if this.startUpAnimationIsComplete
+                    this.fireEvent(
+                        'switchSection', false, this, window.location.hash))
             this._handleScrollToTopButton()
         _handleScrollToTopButton: ->
             ###
@@ -436,7 +437,7 @@ ga('send', 'pageview');'''
                 **returns {$.Website}** - Returns the current instance.
             ###
             this.on(
-                this.$domNodes.scrollToTopButtons, 'click', (event) =>
+                this.$domNodes.scrollToTopButton, 'click', (event) =>
                     event.preventDefault()
                     this._scrollToTop()
             )
