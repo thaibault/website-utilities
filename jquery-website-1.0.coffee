@@ -1,4 +1,5 @@
 #!/usr/bin/env require
+# -*- coding: utf-8 -*-
 
 # region vim modline
 
@@ -14,10 +15,7 @@
 
 This module provides common logic for the whole web page.
 
-Copyright
----------
-
-Torben Sickert 16.12.2012
+Copyright Torben Sickert 16.12.2012
 
 License
 -------
