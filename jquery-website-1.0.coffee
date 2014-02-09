@@ -174,7 +174,7 @@ ga('send', 'pageview');'''
             if not this._options.language.logging?
                 this._options.language.logging = this._options.logging
             if this._options.activateLanguageSupport
-                this._languageHandler = $.Lang this._options.language
+                this.languageHandler = $.Lang this._options.language
             this
 
         # endregion
