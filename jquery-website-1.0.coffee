@@ -157,7 +157,7 @@ ga('send', 'pageview');'''
                 true, {}, this._parentOptions, this._options)
             super options
             this.$domNodes = this.grabDomNode this._options.domNode
-            this._options.windowLoadingCoverFadeOut.always =
+            this.disableScrolling()._options.windowLoadingCoverFadeOut.always =
                 this.getMethod this._handleStartUpEffects
             this.$domNodes.windowLoadingSpinner.spin(
                 this._options.windowLoadingSpinner)
@@ -178,6 +178,26 @@ ga('send', 'pageview');'''
             this
 
         # endregion
+
+        disableScrolling: ->
+            ###
+                This method disables scrolling on the given web view.
+
+                **returns {$.Website}** - Returns the current instance.
+            ###
+            this.$domNodes.parent.addClass('disable-scrolling').on(
+                'touchmove', (event) -> event.preventDefault())
+            this
+        enableScrolling: ->
+            ###
+                This method disables scrolling on the given web view.
+
+                **returns {$.Website}** - Returns the current instance.
+            ###
+            this.off(
+                this.$domNodes.parent.removeClass('disable-scrolling'),
+                'touchmove')
+            this
 
     # endregion
 
@@ -389,9 +409,9 @@ ga('send', 'pageview');'''
                     '[class^="{1}"], [class*=" {1}"]',
                     this.sliceDomNodeSelectorPrefix(
                         this._options.domNode.startUpAnimationClassPrefix
-                    ).substr(1))
+                    ).substr 1)
                 ).hide()
-                this.$domNodes.windowLoadingCover.fadeOut(
+                this.enableScrolling().$domNodes.windowLoadingCover.fadeOut(
                     this._options.windowLoadingCoverFadeOut)
             , this._options.additionalPageLoadingTimeInMilliseconds)
             this
