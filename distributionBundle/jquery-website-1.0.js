@@ -142,7 +142,7 @@ Version
         this._options = $.extend(true, {}, this._parentOptions, this._options);
         Website.__super__.initialize.call(this, options);
         this.$domNodes = this.grabDomNode(this._options.domNode);
-        this._options.windowLoadingCoverFadeOut.always = this.getMethod(this._handleStartUpEffects);
+        this.disableScrolling()._options.windowLoadingCoverFadeOut.always = this.getMethod(this._handleStartUpEffects);
         this.$domNodes.windowLoadingSpinner.spin(this._options.windowLoadingSpinner);
         this._bindScrollEvents().$domNodes.parent.show();
         onLoadedFunction = function() {
@@ -161,6 +161,30 @@ Version
         if (this._options.activateLanguageSupport) {
           this.languageHandler = $.Lang(this._options.language);
         }
+        return this;
+      };
+
+      Website.prototype.disableScrolling = function() {
+        /*
+            This method disables scrolling on the given web view.
+        
+            **returns {$.Website}** - Returns the current instance.
+        */
+
+        this.$domNodes.parent.addClass('disable-scrolling').on('touchmove', function(event) {
+          return event.preventDefault();
+        });
+        return this;
+      };
+
+      Website.prototype.enableScrolling = function() {
+        /*
+            This method disables scrolling on the given web view.
+        
+            **returns {$.Website}** - Returns the current instance.
+        */
+
+        this.off(this.$domNodes.parent.removeClass('disable-scrolling'), 'touchmove');
         return this;
       };
 
@@ -381,7 +405,7 @@ Version
         var _this = this;
         window.setTimeout(function() {
           $(_this.stringFormat('[class^="{1}"], [class*=" {1}"]', _this.sliceDomNodeSelectorPrefix(_this._options.domNode.startUpAnimationClassPrefix).substr(1))).hide();
-          return _this.$domNodes.windowLoadingCover.fadeOut(_this._options.windowLoadingCoverFadeOut);
+          return _this.enableScrolling().$domNodes.windowLoadingCover.fadeOut(_this._options.windowLoadingCoverFadeOut);
         }, this._options.additionalPageLoadingTimeInMilliseconds);
         return this;
       };
