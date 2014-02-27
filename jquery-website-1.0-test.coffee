@@ -38,6 +38,10 @@ test 'initialize', -> ok website
 
         # endregion
 
+test 'disableScrolling|enableScrolling', ->
+    strictEqual website.disableScrolling(), website
+    strictEqual website.enableScrolling(), website
+
     # endregion
 
     # region protected methods
