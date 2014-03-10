@@ -1,11 +1,7 @@
-<!-- region modline
+<!-- !/usr/bin/env markdown
+-*- coding: utf-8 -*- -->
 
-vim: set tabstop=4 shiftwidth=4 expandtab:
-vim: foldmethod=marker foldmarker=region,endregion:
-
-endregion
-
-region header
+<!-- region header
 
 Copyright Torben Sickert 16.12.2012
 
@@ -130,3 +126,10 @@ Here you can see the initialisation with all available plugin options:
         scrollToTopHideAnimation: { duration: 'normal' },
         domain: 'auto'
     });
+
+<!-- region modline
+
+vim: set tabstop=4 shiftwidth=4 expandtab:
+vim: foldmethod=marker foldmarker=region,endregion:
+
+endregion -->

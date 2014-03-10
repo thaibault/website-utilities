@@ -1,13 +1,6 @@
 #!/usr/bin/env require
 # -*- coding: utf-8 -*-
 
-# region vim modline
-
-# vim: set tabstop=4 shiftwidth=4 expandtab:
-# vim: foldmethod=marker foldmarker=region,endregion:
-
-# endregion
-
 # region header
 
 ###
@@ -516,5 +509,12 @@ ga('send', 'pageview');'''
     $.Website.class = Website
 
     # endregion
+
+# endregion
+
+# region vim modline
+
+# vim: set tabstop=4 shiftwidth=4 expandtab:
+# vim: foldmethod=marker foldmarker=region,endregion:
 
 # endregion
