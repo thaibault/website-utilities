@@ -1,21 +1,14 @@
 #!/usr/bin/env require
-
-# region vim modline
-
-# vim: set tabstop=4 shiftwidth=4 expandtab:
-# vim: foldmethod=marker foldmarker=region,endregion:
-
-# endregion
+# -*- coding: utf-8 -*-
 
 # region header
 
 ###
+[Project page](https://thaibault.github.com/jQuery-tools)
+
 This module provides common reusable logic for every non trivial jQuery plugin.
 
-Copyright
----------
-
-Torben Sickert 16.12.2012
+Copyright Torben Sickert 16.12.2012
 
 License
 -------
@@ -42,7 +35,7 @@ Version
 ## standalone
 ## do ($=this.jQuery) ->
 this.require.scopeIndicator = 'jQuery.Tools'
-this.require [['jQuery', 'jquery-2.0.3']], ($) ->
+this.require [['jQuery', 'jquery-2.1.0']], ($) ->
 ##
 
 # endregion
@@ -60,6 +53,11 @@ this.require [['jQuery', 'jquery-2.0.3']], ($) ->
 
     # region properties
 
+        ###
+            **self {Tools}**
+            Saves a reference to this class useful for introspection.
+        ###
+        self: this
         ###
             **keyCode {Object}**
             Saves a mapping from key codes to their corresponding name.
@@ -81,6 +79,11 @@ this.require [['jQuery', 'jquery-2.0.3']], ($) ->
             'markTimeline', 'profile', 'profileEnd', 'table', 'time',
             'timeEnd', 'timeStamp', 'trace', 'warn']
         ###
+            **_javaScriptDependentContentHandled {Boolean}**
+            Indicates weather javaScript dependent content where hide or shown.
+        ###
+        _javaScriptDependentContentHandled: false
+        ###
             **__tools__ {Boolean}**
             Indicates if an instance was derived from this class.
         ###
@@ -99,7 +102,10 @@ this.require [['jQuery', 'jquery-2.0.3']], ($) ->
 
         constructor: (
             @$domNode=null, @_options={}, @_defaultOptions={
-                logging: false, domNodeSelectorPrefix: 'body'
+                logging: false, domNodeSelectorPrefix: 'body',
+                domNodes:
+                    hideJavaScriptEnabled: '.hidden-on-javascript-enabled'
+                    showJavaScriptEnabled: '.visible-on-javascript-enabled'
             }, @_locks={}
         ) ->
             ###
@@ -113,6 +119,20 @@ this.require [['jQuery', 'jquery-2.0.3']], ($) ->
                 window.console = {} if not window.console?
                 # Only stub the $ empty method.
                 console[method] = $.noop() if not window.console[method]?
+            if not this.self::_javaScriptDependentContentHandled
+                this.self::_javaScriptDependentContentHandled = true
+                $(
+                    this._defaultOptions.domNodeSelectorPrefix + ' ' +
+                    this._defaultOptions.domNodes.hideJavaScriptEnabled
+                ).filter(->
+                    not $(this).data 'javaScriptDependentContentHide'
+                ).data('javaScriptDependentContentHide', true).hide()
+                $(
+                    this._defaultOptions.domNodeSelectorPrefix + ' ' +
+                    this._defaultOptions.domNodes.showJavaScriptEnabled
+                ).filter(->
+                    not $(this).data 'javaScriptDependentContentShow'
+                ).data('javaScriptDependentContentShow', true).show()
             # NOTE: A constructor doesn't return last statement by default.
             return this
         destructor: ->
@@ -136,7 +156,8 @@ this.require [['jQuery', 'jquery-2.0.3']], ($) ->
             ###
             # NOTE: We have to create a new options object instance to
             # avoid changing a static options object.
-            $.extend true, this._options, this._defaultOptions, options
+            this._options = $.extend(
+                true, {}, this._defaultOptions, this._options, options)
             # The selector prefix should be parsed after extending options
             # because the selector would be overwritten otherwise.
             this._options.domNodeSelectorPrefix = this.stringFormat(
@@ -166,7 +187,7 @@ this.require [['jQuery', 'jquery-2.0.3']], ($) ->
             if not object.__name__?
                 object = new object $domNode
                 if not object.__tools__?
-                    object = $.extend true, new Tools(), object
+                    object = $.extend true, new Tools, object
             if $domNode?
                 if $domNode.data object.__name__
                     object = $domNode.data object.__name__
@@ -219,13 +240,12 @@ this.require [['jQuery', 'jquery-2.0.3']], ($) ->
             ###
             wrappedCallbackFunction = (description) =>
                 callbackFunction(description)
-                if autoRelease
-                    this.releaseLock(description)
-            if not this._locks[description]?
+                this.releaseLock(description) if autoRelease
+            if this._locks[description]?
+                this._locks[description].push wrappedCallbackFunction
+            else
                 this._locks[description] = []
                 wrappedCallbackFunction description
-            else
-                this._locks[description].push wrappedCallbackFunction
             this
         releaseLock: (description) ->
             ###
@@ -248,7 +268,8 @@ this.require [['jQuery', 'jquery-2.0.3']], ($) ->
             if this._locks[description]?
                 if this._locks[description].length
                     this._locks[description].shift()(description)
-                    if not this._locks[description].length
+                    if(this._locks[description]? and
+                       not this._locks[description].length)
                         this._locks[description] = undefined
                 else
                     this._locks[description] = undefined
@@ -545,23 +566,32 @@ this.require [['jQuery', 'jquery-2.0.3']], ($) ->
 
         # region event handling
 
-        debounce: (eventFunction, thresholdInMilliseconds=300) ->
+        debounce: (
+            eventFunction, thresholdInMilliseconds=600, additionalArguments...
+        ) ->
             ###
                 Prevents event functions from triggering to often by defining a
-                minimal span between each function call.
+                minimal span between each function call. Additional arguments
+                given to this function will be forwarded to given event
+                function call.
 
-                **returns {Function}** - Returns the wrapped method.
+                **eventFunction** {Function}         - The function to call
+                                                       debounced
+
+                **thresholdInMilliseconds** {Number} - The minimum time span
+                                                       between each function
+                                                       call
+
+                **returns {Function}**               - Returns the wrapped
+                                                       method
             ###
-            timeoutID = null
+            lock = false
             ->
-                if timeoutID?
-                    window.clearTimeout timeoutID
+                if not lock
+                    lock = true
                     timeoutID = setTimeout(
-                        eventFunction, thresholdInMilliseconds)
-                else
-                    result = eventFunction()
-                    timeoutID = setTimeout $.noop(), thresholdInMilliseconds
-                    result
+                        (-> lock = false), thresholdInMilliseconds)
+                    eventFunction.apply this, additionalArguments
         fireEvent: (
             eventName, callOnlyOptionsMethod=false, scope=this,
             additionalArguments...
@@ -569,7 +599,8 @@ this.require [['jQuery', 'jquery-2.0.3']], ($) ->
             ###
                 Searches for internal event handler methods and runs them by
                 default. In addition this method searches for a given event
-                method by the options object.
+                method by the options object. Additional arguments are
+                forwareded to respective event functions.
 
                 **eventName {String}                - An event name.
 
@@ -688,7 +719,16 @@ this.require [['jQuery', 'jquery-2.0.3']], ($) ->
             string.replace(new RegExp('(.)([A-Z])', 'g'), ->
                 arguments[1] + delimiter + arguments[2]
             ).toLowerCase()
-        addSeperatorToPath: (path, pathSeperator='/') ->
+        capitalize: (string) ->
+            ###
+                Converts a string to its capitalize representation.
+
+                **string {String}**    - The string to format.
+
+                **returns {String}**   - The formatted string.
+            ###
+            string.substr(0, 1).toUpperCase() + string.substr 1
+        addSeparatorToPath: (path, pathSeparator='/') ->
             ###
                 Appends a path selector to the given path if there isn't one
                 yet.
@@ -718,12 +758,12 @@ this.require [['jQuery', 'jquery-2.0.3']], ($) ->
                                       exist "undefined" is returned.
             ###
             variables = []
-            $.each(window.location.href.slice(
+            $.each window.location.href.slice(
                 window.location.href.indexOf('?') + 1
             ).split('&'), (key, value) ->
                 variables.push value.split('=')[0]
-                variables[value.split('=')[0]] = value.split('=')[1])
-            if ($.type(key) is 'string')
+                variables[value.split('=')[0]] = value.split('=')[1]
+            if $.type(key) is 'string'
                 if key in variables
                     return variables[key]
                 else
@@ -787,8 +827,9 @@ this.require [['jQuery', 'jquery-2.0.3']], ($) ->
             if this._options.domNodeSelectorPrefix
                 domNodeSelectorPrefix = this._options.domNodeSelectorPrefix +
                     ' '
-            if (selector.substr(0, domNodeSelectorPrefix.length) isnt
-                    domNodeSelectorPrefix)
+            if(selector.substr(0, domNodeSelectorPrefix.length) isnt
+                   domNodeSelectorPrefix and
+               $.trim(selector).substr(0, 1) isnt '<')
                 domNodeSelectors[key] = domNodeSelectorPrefix + selector
                 return $.trim domNodeSelectors[key]
             $.trim selector
@@ -797,10 +838,17 @@ this.require [['jQuery', 'jquery-2.0.3']], ($) ->
 
     # region handle $ extending
 
-    $.fn.Tools = -> new Tools().controller Tools, arguments, this
-    $.Tools = -> new Tools().controller Tools, arguments
+    $.fn.Tools = -> (new Tools).controller Tools, arguments, this
+    $.Tools = -> (new Tools).controller Tools, arguments
     $.Tools.class = Tools
 
     # endregion
+
+# endregion
+
+# region vim modline
+
+# vim: set tabstop=4 shiftwidth=4 expandtab:
+# vim: foldmethod=marker foldmarker=region,endregion:
 
 # endregion

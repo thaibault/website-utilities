@@ -1,18 +1,15 @@
-# region vim modline
-
-# vim: set tabstop=4 shiftwidth=4 expandtab:
-# vim: foldmethod=marker foldmarker=region,endregion:
-
-# endregion
+#!/usr/bin/env require
+# -*- coding: utf-8 -*-
 
 # region header
 
 # Copyright Torben Sickert 16.12.2012
 
 # License
-#    This library written by Torben Sickert stand under a creative commons
-#    naming 3.0 unported license.
-#    see http://creativecommons.org/licenses/by/3.0/deed.de
+# -------
+
+# This library written by Torben Sickert stand under a creative commons naming
+# 3.0 unported license. see http://creativecommons.org/licenses/by/3.0/deed.de
 
 module 'website'
 
@@ -34,6 +31,10 @@ test 'initialize', -> ok website
 
         # endregion
 
+test 'disableScrolling|enableScrolling', ->
+    strictEqual website.disableScrolling(), website
+    strictEqual website.enableScrolling(), website
+
     # endregion
 
     # region protected methods
@@ -41,13 +42,13 @@ test 'initialize', -> ok website
         # region event
 
 test '_onViewportMovesToTop', ->
-    strictEqual website._onViewportMovesToTop(), website
-    # NOTE: Returns the time to next function call.
-    ok $.isNumeric website._onViewportMovesToTop()
+    website._onViewportMovesToTop()
+    # NOTE: Returns undefined because of debouncouing.
+    strictEqual website._onViewportMovesToTop(), undefined
 test '_onViewportMovesAwayFromTop', ->
-    strictEqual website._onViewportMovesAwayFromTop(), website
-    # NOTE: Returns the time to next function call.
-    ok $.isNumeric website._onViewportMovesAwayFromTop()
+    website._onViewportMovesAwayFromTop()
+    # NOTE: Returns undefined because of debouncouing.
+    strictEqual website._onViewportMovesAwayFromTop(), undefined
 test '_onChangeMediaQueryMode', ->
     strictEqual website._onChangeMediaQueryMode(), website
 test '_onChangeToLargeMode', ->
@@ -86,5 +87,12 @@ test '_handleGoogleAnalytics', ->
         # endregion
 
     # endregion
+
+# endregion
+
+# region vim modline
+
+# vim: set tabstop=4 shiftwidth=4 expandtab:
+# vim: foldmethod=marker foldmarker=region,endregion:
 
 # endregion
