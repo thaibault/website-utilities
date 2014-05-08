@@ -33,7 +33,9 @@ Version
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  (function($) {
+  this.require.scopeIndicator = 'jQuery.Website';
+
+  this.require([['less.Parser', 'less-1.6.2'], 'jquery-tools-1.0.coffee', ['jQuery.scrollTo', 'jquery-scrollTo-1.4.3.1'], ['jQuery.fn.spin', 'jquery-spin-1.2.8'], ['jQuery.fn.hashchange', 'jquery-observeHashChange-1.0'], 'jquery-lang-1.0.coffee'], function(less, lessParser, $) {
     var Website;
     Website = (function(_super) {
       __extends(Website, _super);
@@ -537,6 +539,6 @@ Version
       return $.Tools().controller(Website, arguments);
     };
     return $.Website["class"] = Website;
-  })(this.jQuery);
+  });
 
 }).call(this);
