@@ -32,8 +32,8 @@ Version
 1.0 stable
 ###
 
-## standalone
-## do ($=this.jQuery) ->
+# # standalone
+# # do ($=this.jQuery) ->
 this.require.scopeIndicator = 'jQuery.Website'
 this.require [
     ['less.Parser', 'less-1.6.2']
@@ -43,7 +43,7 @@ this.require [
     ['jQuery.fn.hashchange', 'jquery-observeHashChange-1.0']
     'jquery-lang-1.0.coffee'
 ], (less, lessParser, $) ->
-##
+# #
 
 # endregion
 
