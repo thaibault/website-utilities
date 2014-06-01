@@ -36,10 +36,10 @@ Version
 # # do ($=this.jQuery) ->
 this.require.scopeIndicator = 'jQuery.Website'
 this.require [
-    ['less.Parser', 'less-1.6.2']
+    ['less.Parser', 'less-1.7.0']
 
     'jquery-tools-1.0.coffee', ['jQuery.scrollTo', 'jquery-scrollTo-1.4.3.1']
-    ['jQuery.fn.spin', 'jquery-spin-1.2.8']
+    ['jQuery.fn.spin', 'jquery-spin-2.0.1']
     ['jQuery.fn.hashchange', 'jquery-observeHashChange-1.0']
     'jquery-lang-1.0.coffee'
 ], (less, lessParser, $) ->
