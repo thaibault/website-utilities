@@ -78,8 +78,8 @@ Version
             top: '> div.navbar-wrapper',
             scrollToTopButton: 'a[href="#top"]',
             startUpAnimationClassPrefix: '.start-up-animation-number-',
-            windowLoadingCover: '> div.window-loading-cover',
-            windowLoadingSpinner: '> div.window-loading-cover > div'
+            windowLoadingCover: 'div.window-loading-cover',
+            windowLoadingSpinner: 'div.window-loading-cover > div'
           },
           startUpFadeIn: {
             easing: 'swing',
