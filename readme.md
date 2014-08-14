@@ -13,119 +13,283 @@ This library written by Torben Sickert stand under a creative commons naming
 
 endregion -->
 
-<!--|deDE:Einsatzmöglichkeiten-->
-Use cases
----------
+<!--|deDE:Einsatz-->
+Use case
+--------
 
-<ul>
-    <li>Predefined scroll events<!--deDE:Vordefinierte Scroll-Events--></li>
-    <li>
-        Client side internationalization support
-        <!--deDE:Klientseitiger Internationalisierungs-Support-->
-    </li>
-    <li>
-        Viewport is on top position detection
-        <!--deDE:
-            Erkennung wenn der sichbare Bereich der Website am obigen Rand ist
-            und setzten entsprechender Events
-        -->
-    </li>
-    <li>
-        Triggering media-query change events
-        <!--deDE:
-            Auslösen von definierten Events wenn media-querys im responsive
-             Design gewechselt werden.
-        -->
-    </li>
-    <li>
-        Handling page load animation
-        <!--deDE:
-            Ermöglichen von Animationen während die Webanwendung im Hintergrund
-            geladen wird.
-        -->
-    </li>
-    <li>
-        Section switching transitions
-        <!--deDE:Animationen zum Übergang einzelner Sektionen-->
-    </li>
-    <li>
-        Simple section detection via url hashes
-        <!--deDE:Erkennung der aktuellen Sektion anhand url Hashes-->
-    </li>
-    <li>Handle google tracking.<!--deDE:Verbindung zu google tracking.--></li>
-</ul>
-
-<!--deDE:Verwendung-->
-Usage
------
-
-Here you can see the initialisation with all available plugin options:
+The main goal of This plugin is providing an generic interface logic like
+controller for calling instance methods or getting property values of an object
+orientated designed plugin. A set of reusable logic elements for building gui
+components is integrated as well.
 <!--deDE:
-    Hier werden alle möglichen Optionen die beim Initialisieren des Plugins
-    gesetzt werden können angegeben:
+    Hauptziel dieses Plugins ist es einen generischen Weg zu bieten indem
+    Objekt Orientierte Plugins verfasst werden können, ohne dabei gegen
+    jQuery's Vorgaben an Plugins zu verstoßen.
+    Desweiteren werden einige wiederverwendbare Logikbausteine zum Bau
+    verschiedener GUI-Komponenten mitgeliefert.
 -->
 
-    #!/usr/bin/env javaScript
+<!--|deDE:Inhalt-->
+Content
+------
 
-    $.Website({
-        logging: false,
-        domNodeSelectorPrefix: 'body.{1}',
-        onViewportMovesToTop: $.noop(),
-        onViewportMovesAwayFromTop: $.noop(),
-        onChangeToLargeMode: $.noop(),
-        onChangeToMediumMode: $.noop(),
-        onChangeToSmallMode: $.noop(),
-        onChangeToExtraSmallMode: $.noop(),
-        onChangeMediaQueryMode: $.noop(),
-        onSwitchSection: $.noop(),
-        onStartUpAnimationComplete: $.noop(),
-        additionalPageLoadingTimeInMilliseconds: 0,
-        trackingCode: 'UA-0-0',
-        mediaQueryCssIndicator: [
-            ['extraSmall', 'xs'], ['small', 'sm'], ['medium', 'md'],
-            ['large', 'lg']
-        ],
-        domNode: {
-            mediaQueryIndicator: '<div class="media-query-indicator">',
-            top: 'div.navigation-bar',
-            scrollToTopButtons: 'a[href="#top"]',
-            startUpAnimationClassPrefix: '.start-up-animation-number-',
-            windowLoadingCover: '> div.window-loading-cover',
-            windowLoadingSpinner: '> div.window-loading-cover > div'
-        },
-        startUpFadeIn: {
-            easing: 'swing', duration: 'slow'
-        },
-        windowLoadingCoverFadeOut: {
-            easing: 'swing', duration: 'slow'
-        },
-        startUpAnimationElementDelayInMiliseconds: 100,
-        windowLoadingSpinner: {
-            lines: 9, # The number of lines to draw
-            length: 23, # The length of each line
-            width: 11, # The line thickness
-            radius: 40, # The radius of the inner circle
-            corners: 1, # Corner roundness (0..1)
-            rotate: 75, # The rotation offset
-            color: '#000', # #rgb or #rrggbb
-            speed: 1.1, # Rounds per second
-            trail: 58, # Afterglow percentage
-            shadow: false, # Whether to render a shadow
-            hwaccel: false, # Whether to use hardware acceleration
-            className: 'spinner', # CSS class to assign to the spinner
-            zIndex: 2e9, # The z-index (defaults to 2000000000)
-            top: 'auto', # Top position relative to parent in px
-            left: 'auto', # Left position relative to parent in px
-        },
-        activateLanguageSupport: true,
-        language: {},
-        scrollInLinearTime: true,
-        scrollToTop: duration: 'normal',
-        scrollToTopSlideDistanceInPixel: 30,
-        scrollToTopShowAnimation: { duration: 'normal' },
-        scrollToTopHideAnimation: { duration: 'normal' },
-        domain: 'auto'
-    });
+<!--Place for automatic generated table of contents.-->
+[TOC]
+
+<!--|deDE:Merkmale-->
+Features
+--------
+
+<ul>
+    <li>
+        Mutual exclusion for depending gui elements.
+        <!--deDE:Wechselseitiger Ausschluss für abhängige GUI-Elemente-->
+    </li>
+    <li>
+        Cross browser logging with different log levels.
+        <!--deDE:
+            Browserübergreifender Log-Mechanismen mit diversen Log-Levels.
+        -->
+    </li>
+    <li>
+        Extending native JavaScript types like strings, arrays or functions.
+        <!--deDE:
+            Erweiterung der standard JavaScripttypen wie Strings, Arrays und
+            Funktionen
+        -->
+    </li>
+    <li>
+        A set of helper functions to parse option objects.
+        <!--deDE:Hilfsfunktionen um Options-Objekte intelligent zu parsen.-->
+    </li>
+    <li>
+        Extended dom tree handling.<!--deDE:Erweitertes DOM-Baum-Management-->
+    </li>
+    <li>
+        Plugin scoped event handling.
+        <!--deDE:Plugineigene Namensräume für Events-->
+    </li>
+    <li>
+        Generic none-redundant plugin pattern for JavaScript and CoffeeScript
+        <!--deDE:Generischer Plugin-Muster für JavaScript und CoffeeScript-->
+    </li>
+</ul>
+
+<!--|deDE:Einstieg-->
+Quick start
+-----------
+
+Easy access of a method in "$.Tools":
+<!--deDE:Einfacher Aufruf einer Method aus "$.Tools":-->
+
+```javaScript
+var tools = $.Tools({'logging': true});
+tools.log('test');
+```
+
+<!--|deDE:Plugin-Vorlage in JavaScript-->
+Plugin pattern in JavaScript
+----------------------------
+
+Use as extension for object orientated jQuery plugin using inheritance and dom
+node reference. This plugin pattern gives their instance back if no dom node is
+provided. Direct initializing the plugin without providing a dom node is also
+provided.
+<!--deDE:
+    Einsatz von "$.Tools" um Objekt orientierte jQuery Plugins zu verfassen,
+    indem von "$.Tools" geerbt wird und der durch jQuery erweiterte DOM-Knoten
+    referenziert wird. Sollte kein DOM-Knoten an die $-Funktion übergeben
+    worden sein, gibt dieser Pattern seine Instanz zurück.
+-->
+
+    //!/usr/bin/env javaScript
+    // -*- coding: utf-8 -*-
+
+    ;(function($) {
+        var Example = function($domNode) {
+            this.$domNode = $domNode;
+            this._options = {...};
+            this.__name__ = 'Example';
+            this.initialize = function(options) {
+                /*
+                    "this.$domNode" points to jQuery's wrapped dom node
+                                    (if provided).
+                    "this"          points to the "Example" instance extended
+                                    by "Tools".
+                */
+                if(options)
+                    // Merges given options with default options recursively.
+                    this._options = $.extend(true, {}, this._options, options);
+                return this.$domNode || this;
+            };
+            this.method = function(anArgument) {
+                ...
+                return returnValue;
+            };
+            ...
+        };
+        $.fn.Example = function() {
+            return $.Tools().controller(Example, arguments, this);
+        };
+        $.Example = function() {
+            return $.Tools().controller(Example, arguments);
+        };
+        // Allows to reference the native class, e.g. to inherit from Example.
+        $.Example.class = Example;
+    }).call(this, this.jQuery);
+
+Initialisation with given dom node and without:
+<!--deDE:Aufruf mit übergebenen DOM-Knoten und ohne:-->
+
+```javaScript
+$domNode = $('#domNode').Example({firstOption: 'value'...});
+exampleInstance = $.Example({firstOption: 'value'...});
+$domNode = exampleInstance.$domNode;
+```
+
+Function call from previous generated instance via dom node or instance
+reference:
+<!--deDE:
+    Aufruf einer Plugin-Method anhand der zuvor generierten Instanzreferenz
+    bzw. über den zurückgegebene DOM-Knoten:
+-->
+
+```javaScript
+returnValue = $('#domNode').Example({'method', 'anArgument'});
+returnValue = exampleInstance.method('anArgument');
+```
+
+Use as extension for default functional orientated jQuery plugin pattern
+using composition, dom node reference and chaining support.
+<!--deDE:
+    Sollte der standard jQuery-Pattern eingesetzt werden kann wie hier
+    beschrieben auf die Methoden von "$.Tools" zugegriffen werden.
+-->
+
+    //!/usr/bin/env javaScript
+    // -*- coding: utf-8 -*-
+
+    ;(function($) {
+        var options = {...};
+        var tools = $.Tools();
+        var example = function(options) {
+            // "this" points to dom node grabbed by jQuery.
+            if (options)
+                this._options = $.extend(true, {}, this._options, options);
+            tools.log('initialized.');
+            ...
+        };
+        $.fn.example = function() {
+            if (methods[method])
+                return methods[method].apply(
+                    this, Array.prototype.slice.call(arguments, 1));
+            else if ($.type(method) === 'object' || !method)
+                return methods.init.apply(this, arguments);
+            else
+                $.error(
+                    'Method ' + method + ' does not exist on ' +
+                    'jQuery.example');
+        };
+    }).call(this, this.jQuery);
+
+Function call:<!--deDE:Funktionsaufruf:-->
+
+```javaScript
+var $domNode = $('#domNode').example({'firstOption': 'value'...});
+```
+
+<!--|deDE:Plugin-Vorlage in CoffeeScript-->
+Plugin pattern in CoffeeScript
+------------------------------
+
+Use as extension for object orientated jQuery plugin using inheritance and dom
+node reference. This plugin pattern gives their instance back if no dom node is
+provided. Direct initializing the plugin without providing a dom node is also
+provided.
+<!--deDE:
+    Einsatz von "$.Tools" um Objekt orientierte jQuery Plugins zu verfassen,
+    indem von "$.Tools" geerbt wird und der durch jQuery erweiterte DOM-Knoten
+    referenziert wird. Sollte kein DOM-Knoten an die $-Funktion übergeben
+    worden sein, gibt dieser Pattern seine Instanz zurück.
+-->
+
+    #!/usr/bin/env coffee
+    # -*- coding: utf-8 -*-
+
+    class Example extends $.Tools.class
+        __name__: 'Example'
+        initialize: (options={}) ->
+            ###
+                "this.$domNode" points to jQuery's wrapped dom node
+                (if provided).
+                "this" points to this "Example" instance extended by "Tools".
+                Merges given options with default options recursively.
+            ###
+            this._options: {...}
+            # Merges given options with default options recursively.
+            super options
+            this.$domNode or this
+        method: (anArgument) ->
+            ...
+            returnValue
+        ...
+    $.fn.Example = -> $.Tools().controller Example, arguments, this
+    $.Example = -> $.Tools().controller Example, arguments
+    # Allows to reference the native class, e.g. to inherit from Example.
+    $.Example.class = Example
+
+Initialisation with given dom node and without:
+<!--deDE:Aufruf mit übergebenen DOM-Knoten und ohne:-->
+
+```coffee
+$domNode = $('#domNode').Example firstOption: 'value'...
+exampleInstance = $.Example firstOption: 'value'...
+$domNode = exampleInstance.$domNode
+```
+
+Function call from previous generated instance via dom node or instance
+reference:
+<!--deDE:
+    Aufruf einer Plugin-Method anhand der zuvor generierten Instanzreferenz
+    bzw. über den zurückgegebene DOM-Knoten:
+-->
+
+```coffee
+returnValue = $('#domNode').Example 'method', 'anArgument'
+returnValue = exampleInstance.method 'anArgument'
+```
+
+Use as extension for default functional orientated jQuery plugin pattern
+using composition, dom node reference and chaining support.
+<!--deDE:
+    Sollte der standard jQuery-Pattern eingesetzt werden kann wie hier
+    beschrieben auf die Methoden von "$.Tools" zugegriffen werden.
+-->
+
+    #!/usr/bin/env coffee
+    # -*- coding: utf-8 -*-
+
+    defaultOptions = {...}
+    tools = $.Tools
+    example = (options={}) ->
+        # "this" points to dom node grabbed by jQuery.
+        $.extend true, defaultOptions, options
+        tools.log 'initialized.'
+        ...
+    $.fn.example = ->
+        if methods[method]
+            methods[method].apply(
+                this, Array.prototype.slice.call arguments, 1)
+        else if $.type(method) is 'object' or not method
+            methods.init.apply this, arguments
+        else
+            $.error "Method \"#{method}\" does not exist on $.example."
+
+Function call:<!--deDE:Funktionsaufruf:-->
+
+```coffee
+$domNode = $('#domNode').example firstOption: 'value'...
+```
 
 <!-- region modline
 

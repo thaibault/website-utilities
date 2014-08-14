@@ -191,7 +191,6 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
                         language)
                     this.releaseLock this._options.toolsLockDescription
             this
-
         refresh: ->
             ###
                 Ensures current selected language.

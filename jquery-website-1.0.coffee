@@ -89,9 +89,9 @@ this.require [
                     mediaQueryIndicator: '<div class="media-query-indicator">'
                     top: '> div.navbar-wrapper'
                     scrollToTopButton: 'a[href="#top"]'
-                    startUpAnimationClassPrefix: '.start-up-animation-number-'
-                    windowLoadingCover: 'div.window-loading-cover'
-                    windowLoadingSpinner: 'div.window-loading-cover > div'
+                    startUpAnimationClassPrefix: '.website-start-up-animation-number-'
+                    windowLoadingCover: 'div.website-window-loading-cover'
+                    windowLoadingSpinner: 'div.website-window-loading-cover > div'
                 startUpFadeIn:
                     easing: 'swing'
                     duration: 'slow'
