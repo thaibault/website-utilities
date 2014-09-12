@@ -30,10 +30,11 @@ Version
  */
 
 (function() {
-  var __hasProp = {}.hasOwnProperty,
+  var main,
+    __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  (function($) {
+  main = function(less, lessParser, $) {
     var Website;
     Website = (function(_super) {
       __extends(Website, _super);
@@ -109,16 +110,20 @@ Version
           },
           activateLanguageSupport: true,
           language: {},
-          scrollInLinearTime: true,
           scrollToTop: {
-            duration: 'normal'
-          },
-          scrollToTopSlideDistanceInPixel: 30,
-          scrollToTopShowAnimation: {
-            duration: 'normal'
-          },
-          scrollToTopHideAnimation: {
-            duration: 'normal'
+            inLinearTime: true,
+            options: {
+              duration: 'normal'
+            },
+            button: {
+              slideDistanceInPixel: 30,
+              showAnimation: {
+                duration: 'normal'
+              },
+              hideAnimation: {
+                duration: 'normal'
+              }
+            }
           },
           domain: 'auto'
         };
@@ -198,17 +203,17 @@ Version
         if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden') {
           this.$domNodes.scrollToTopButton.css('opacity', 0);
         } else {
-          this._options.scrollToTopHideAnimation.always = (function(_this) {
+          this._options.scrollToTop.button.hideAnimation.always = (function(_this) {
             return function() {
               return _this.$domNodes.scrollToTopButton.css({
-                bottom: '-=' + _this._options.scrollToTopSlideDistanceInPixel
+                bottom: '-=' + _this._options.scrollToTop.button.slideDistanceInPixel
               });
             };
           })(this);
           this.$domNodes.scrollToTopButton.finish().animate({
-            bottom: '+=' + this._options.scrollToTopSlideDistanceInPixel,
+            bottom: '+=' + this._options.scrollToTop.button.slideDistanceInPixel,
             opacity: 0
-          }, this._options.scrollToTopHideAnimation);
+          }, this._options.scrollToTop.button.hideAnimation);
         }
         return this;
       };
@@ -224,14 +229,14 @@ Version
           this.$domNodes.scrollToTopButton.css('opacity', 1);
         } else {
           this.$domNodes.scrollToTopButton.finish().css({
-            bottom: '+=' + this._options.scrollToTopSlideDistanceInPixel,
+            bottom: '+=' + this._options.scrollToTop.button.slideDistanceInPixel,
             display: 'block',
             opacity: 0
           }).animate({
-            bottom: '-=' + this._options.scrollToTopSlideDistanceInPixel,
+            bottom: '-=' + this._options.scrollToTop.button.slideDistanceInPixel,
             queue: false,
             opacity: 1
-          }, this._options.scrollToTopShowAnimation);
+          }, this._options.scrollToTop.button.showAnimation);
         }
         return this;
       };
@@ -359,7 +364,7 @@ Version
             _this.$domNodes.mediaQueryIndicator.prependTo(_this.$domNodes.parent).addClass("hidden-" + value[1]);
             if (_this.$domNodes.mediaQueryIndicator.is(':hidden') && value[0] !== _this._currentMediaQueryMode) {
               _this.fireEvent.apply(_this, ['changeMediaQueryMode', false, _this, _this._currentMediaQueryMode, value[0]].concat(_this.argumentsObjectToArray(arguments)));
-              _this.fireEvent.apply(_this, [_this.stringFormat('changeTo{1}Mode', value[0].substr(0, 1).toUpperCase() + value[0].substr(1)), false, _this, _this._currentMediaQueryMode, value[0]].concat(_this.argumentsObjectToArray(arguments)));
+              _this.fireEvent.apply(_this, [_this.stringFormat('changeTo{1}Mode', _this.stringCapitalize(value[0])), false, _this, _this._currentMediaQueryMode, value[0]].concat(_this.argumentsObjectToArray(arguments)));
               _this._currentMediaQueryMode = value[0];
             }
             return _this.$domNodes.mediaQueryIndicator.removeClass("hidden-" + value[1]);
@@ -408,7 +413,11 @@ Version
         window.setTimeout((function(_this) {
           return function() {
             $(_this.stringFormat('[class^="{1}"], [class*=" {1}"]', _this.sliceDomNodeSelectorPrefix(_this._options.domNode.startUpAnimationClassPrefix).substr(1))).hide();
-            return _this.enableScrolling().$domNodes.windowLoadingCover.fadeOut(_this._options.windowLoadingCoverFadeOut);
+            if (_this.$domNodes.windowLoadingCover.length) {
+              return _this.enableScrolling().$domNodes.windowLoadingCover.fadeOut(_this._options.windowLoadingCoverFadeOut);
+            } else {
+              return _this._options.windowLoadingCoverFadeOut.always();
+            }
           };
         })(this), this._options.additionalPageLoadingTimeInMilliseconds);
         return this;
@@ -427,23 +436,27 @@ Version
         if (!$.isNumeric(elementNumber)) {
           elementNumber = 1;
         }
-        window.setTimeout(((function(_this) {
-          return function() {
-            var lastElementTriggered;
-            lastElementTriggered = false;
-            _this._options.startUpFadeIn.always = function() {
-              if (lastElementTriggered) {
-                return _this.fireEvent('startUpAnimationComplete');
+        if ($(this.stringFormat('[class^="{1}"], [class*=" {1}"]', this.sliceDomNodeSelectorPrefix(this._options.domNode.startUpAnimationClassPrefix).substr(1))).length) {
+          window.setTimeout(((function(_this) {
+            return function() {
+              var lastElementTriggered;
+              lastElementTriggered = false;
+              _this._options.startUpFadeIn.always = function() {
+                if (lastElementTriggered) {
+                  return _this.fireEvent('startUpAnimationComplete');
+                }
+              };
+              $(_this._options.domNode.startUpAnimationClassPrefix + elementNumber).fadeIn(_this._options.startUpFadeIn);
+              if ($(_this._options.domNode.startUpAnimationClassPrefix + (elementNumber + 1)).length) {
+                return _this._handleStartUpEffects(elementNumber + 1);
+              } else {
+                return lastElementTriggered = true;
               }
             };
-            $(_this._options.domNode.startUpAnimationClassPrefix + elementNumber).fadeIn(_this._options.startUpFadeIn);
-            if ($(_this._options.domNode.startUpAnimationClassPrefix + (elementNumber + 1)).length) {
-              return _this._handleStartUpEffects(elementNumber + 1);
-            } else {
-              return lastElementTriggered = true;
-            }
-          };
-        })(this)), this._options.startUpAnimationElementDelayInMiliseconds);
+          })(this)), this._options.startUpAnimationElementDelayInMiliseconds);
+        } else {
+          this.fireEvent('startUpAnimationComplete');
+        }
         return this;
       };
 
@@ -495,19 +508,19 @@ Version
         
             **returns {$.Website}** - Returns the current instance.
          */
-        this._options.scrollToTop.onAfter = onAfter;
-        if (this._options.scrollInLinearTime) {
+        this._options.scrollToTop.options.onAfter = onAfter;
+        if (this._options.scrollToTop.inLinearTime) {
           distanceToTopInPixel = this.$domNodes.window.scrollTop();
-          this._options.scrollToTop.duration = distanceToTopInPixel / 4;
+          this._options.scrollToTop.options.duration = distanceToTopInPixel / 4;
           $.scrollTo({
             top: "-=" + distanceToTopInPixel,
             left: '+=0'
-          }, this._options.scrollToTop);
+          }, this._options.scrollToTop.options);
         } else {
           $.scrollTo({
             top: 0,
             left: 0
-          }, this._options.scrollToTop);
+          }, this._options.scrollToTop.options);
         }
         return this;
       };
@@ -537,6 +550,13 @@ Version
       return $.Tools().controller(Website, arguments);
     };
     return $.Website["class"] = Website;
-  })(this.jQuery);
+  };
+
+  if (this.require != null) {
+    this.require.scopeIndicator = 'jQuery.Website';
+    this.require([['less.Parser', 'less-1.7.5'], 'jquery-tools-1.0.coffee', ['jQuery.scrollTo', 'jquery-scrollTo-1.4.3.1'], ['jQuery.fn.spin', 'jquery-spin-2.0.1'], ['jQuery.fn.hashchange', 'jquery-observeHashChange-1.0'], 'jquery-lang-1.0.coffee'], main);
+  } else {
+    main(null, null, this.jQuery);
+  }
 
 }).call(this);
