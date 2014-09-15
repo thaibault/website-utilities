@@ -5,20 +5,20 @@
 (function(root, factory) {
 
   /* CommonJS */
-  if (typeof exports == 'object')  module.exports = factory()
+  if (typeof exports == 'object')  module.exports = factory();
 
   /* AMD module */
-  else if (typeof define == 'function' && define.amd) define(factory)
+  else if (typeof define == 'function' && define.amd) define(factory);
 
   /* Browser global */
-  else root.Spinner = factory()
+  else root.Spinner = factory();
 }
 (this, function() {
   "use strict";
 
   var prefixes = ['webkit', 'Moz', 'ms', 'O'] /* Vendor prefixes */
     , animations = {} /* Animation rules keyed by their name */
-    , useCssAnimations /* Whether to use CSS animations or setTimeout */
+    , useCssAnimations; /* Whether to use CSS animations or setTimeout */
 
   /**
    * Utility function to create elements. If no tag name is given,
@@ -26,10 +26,10 @@
    */
   function createEl(tag, prop) {
     var el = document.createElement(tag || 'div')
-      , n
+      , n;
 
-    for(n in prop) el[n] = prop[n]
-    return el
+    for(n in prop) el[n] = prop[n];
+    return el;
   }
 
   /**
@@ -75,8 +75,7 @@
 
       animations[name] = 1
     }
-
-    return name
+    return name;
   }
 
   /**
@@ -85,14 +84,13 @@
   function vendor(el, prop) {
     var s = el.style
       , pp
-      , i
-
+      , i;
     prop = prop.charAt(0).toUpperCase() + prop.slice(1)
-    for(i=0; i<prefixes.length; i++) {
-      pp = prefixes[i]+prop
-      if(s[pp] !== undefined) return pp
+    for(i=0; i < prefixes.length; i++) {
+      pp = prefixes[i]+prop;
+      if(s[pp] !== undefined) return pp;
     }
-    if(s[prop] !== undefined) return prop
+    if(s[prop] !== undefined) return prop;
   }
 
   /**
@@ -184,7 +182,7 @@
         left: o.left,
         top: o.top
       })
-        
+
       if (target) {
         target.insertBefore(el, target.firstChild||null)
       }
