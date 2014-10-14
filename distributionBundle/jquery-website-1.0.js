@@ -54,7 +54,7 @@ Version
 
       Website.prototype.__name__ = 'Website';
 
-      Website.prototype.initialize = function(options, _parentOptions, startUpAnimationIsComplete, _viewportIsOnTop, _currentMediaQueryMode, languageHandler, __googleAnalyticsCode) {
+      Website.prototype.initialize = function(options, _parentOptions, startUpAnimationIsComplete, _viewportIsOnTop, _currentMediaQueryMode, languageHandler, __analyticsCode) {
         var onLoadedFunction;
         if (options == null) {
           options = {};
@@ -131,7 +131,7 @@ Version
         this._viewportIsOnTop = _viewportIsOnTop != null ? _viewportIsOnTop : false;
         this._currentMediaQueryMode = _currentMediaQueryMode != null ? _currentMediaQueryMode : '';
         this.languageHandler = languageHandler != null ? languageHandler : null;
-        this.__googleAnalyticsCode = __googleAnalyticsCode != null ? __googleAnalyticsCode : '(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\n(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\nm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n})(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');\n\nga(\'create\', \'{1}\', \'{2}\');\nga(\'send\', \'pageview\');';
+        this.__analyticsCode = __analyticsCode != null ? __analyticsCode : '(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\n(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new window.Date();\na=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;\nm.parentNode.insertBefore(a,m)})(\nwindow,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');\nga(\'create\', \'{1}\', \'{2}\');ga(\'set\',\'anonymizeIp\',true);\nga(\'send\', \'pageview\');';
 
         /*
             Initializes the interactive web application.
@@ -533,9 +533,9 @@ Version
             **returns {$.Website}**   - Returns the current instance.
          */
         var exception;
-        this.debug("Run analytics code: \"" + this.__googleAnalyticsCode + "\"", this._options.trackingCode, this._options.domain);
+        this.debug("Run analytics code: \"" + this.__analyticsCode + "\"", this._options.trackingCode, this._options.domain);
         try {
-          (new Function(this.stringFormat(this.__googleAnalyticsCode, this._options.trackingCode, this._options.domain)))();
+          (new Function(this.stringFormat(this.__analyticsCode, this._options.trackingCode, this._options.domain)))();
         } catch (_error) {
           exception = _error;
           this.warn('Problem in google analytics code snippet: {1}', exception);
