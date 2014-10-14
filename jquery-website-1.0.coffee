@@ -118,13 +118,13 @@ main = (less, lessParser, $) ->
                 domain: 'auto'
             }, @startUpAnimationIsComplete=false, @_viewportIsOnTop=false,
             @_currentMediaQueryMode='', @languageHandler=null,
-            @__googleAnalyticsCode='''
+            @__analyticsCode='''
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-ga('create', '{1}', '{2}');
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new window.Date();
+a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;
+m.parentNode.insertBefore(a,m)})(
+window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', '{1}', '{2}');ga('set','anonymizeIp',true);
 ga('send', 'pageview');'''
         ) ->
             ###
@@ -489,11 +489,11 @@ ga('send', 'pageview');'''
                 **returns {$.Website}**   - Returns the current instance.
             ###
             this.debug(
-                "Run analytics code: \"#{this.__googleAnalyticsCode}\"",
+                "Run analytics code: \"#{this.__analyticsCode}\"",
                 this._options.trackingCode, this._options.domain)
             try
                 (new Function(this.stringFormat(
-                    this.__googleAnalyticsCode, this._options.trackingCode,
+                    this.__analyticsCode, this._options.trackingCode
                     this._options.domain
                 )))()
             catch exception
