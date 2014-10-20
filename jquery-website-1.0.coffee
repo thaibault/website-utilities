@@ -475,7 +475,8 @@ ga('send', 'pageview');'''
             if this._options.scrollToTop.inLinearTime
                 distanceToTopInPixel = this.$domNodes.window.scrollTop()
                 # Scroll four times faster as we have distance to top.
-                this._options.scrollToTop.options.duration = distanceToTopInPixel / 4
+                this._options.scrollToTop.options.duration =
+                    distanceToTopInPixel / 4
                 $.scrollTo(
                     {top: "-=#{distanceToTopInPixel}", left: '+=0'},
                     this._options.scrollToTop.options)
