@@ -521,7 +521,7 @@ ga('send', 'pageview');'''
 if this.require?
     this.require.scopeIndicator = 'jQuery.Website'
     this.require [
-        ['less.Parser', 'less-1.7.5']
+        ['less.Parser', 'less-2.0.0']
 
         'jquery-tools-1.0.coffee'
         ['jQuery.scrollTo', 'jquery-scrollTo-1.4.3.1']
