@@ -148,13 +148,13 @@ ga('send', 'pageview');'''
             this.$domNodes.windowLoadingSpinner.spin(
                 this._options.windowLoadingSpinner)
             this._bindScrollEvents().$domNodes.parent.show()
-            onLoadedFunction = =>
+            onLoaded = =>
                 this.windowLoaded = true
                 this._removeLoadingCover()
             if window.less?
-                onLoadedFunction()
+                window.less.pageLoadFinished.then onLoaded
             else
-                this.on this.$domNodes.window, 'load', onLoadedFunction
+                this.on this.$domNodes.window, 'load', onLoaded
             this._addNavigationEvents()._addMediaQueryChangeEvents(
             )._triggerWindowResizeEvents()._handleGoogleAnalytics()
             if not this._options.language.logging?
