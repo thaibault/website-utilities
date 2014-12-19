@@ -55,7 +55,7 @@ Version
       Website.prototype.__name__ = 'Website';
 
       Website.prototype.initialize = function(options, _parentOptions, startUpAnimationIsComplete, _viewportIsOnTop, _currentMediaQueryMode, languageHandler, __analyticsCode) {
-        var onLoadedFunction;
+        var onLoaded;
         if (options == null) {
           options = {};
         }
@@ -148,16 +148,16 @@ Version
         this.disableScrolling()._options.windowLoadingCoverFadeOut.always = this.getMethod(this._handleStartUpEffects);
         this.$domNodes.windowLoadingSpinner.spin(this._options.windowLoadingSpinner);
         this._bindScrollEvents().$domNodes.parent.show();
-        onLoadedFunction = (function(_this) {
+        onLoaded = (function(_this) {
           return function() {
             _this.windowLoaded = true;
             return _this._removeLoadingCover();
           };
         })(this);
         if (window.less != null) {
-          onLoadedFunction();
+          window.less.pageLoadFinished.then(onLoaded);
         } else {
-          this.on(this.$domNodes.window, 'load', onLoadedFunction);
+          this.on(this.$domNodes.window, 'load', onLoaded);
         }
         this._addNavigationEvents()._addMediaQueryChangeEvents()._triggerWindowResizeEvents()._handleGoogleAnalytics();
         if (this._options.language.logging == null) {
