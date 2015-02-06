@@ -1,4 +1,4 @@
-#!/usr/bin/env require
+#!/usr/bin/env coffee
 # -*- coding: utf-8 -*-
 
 # region header
@@ -24,7 +24,7 @@ For conventions see require on https://github.com/thaibault/require
 Author
 ------
 
-t.sickert@gmail.com (Torben Sickert)
+t.sickert["~at~"]gmail.com (Torben Sickert)
 
 Version
 -------
@@ -32,11 +32,7 @@ Version
 1.0 stable
 ###
 
-## standalone
-## do ($=this.jQuery) ->
-this.require.scopeIndicator = 'jQuery.Lang'
-this.require 'jquery-tools-1.0.coffee', ($) ->
-##
+main = ($) ->
 
 # endregion
 
@@ -63,9 +59,9 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
         # region special
 
         initialize: (
-            options={}, @currentLanguage='', @knownLanguage={},
-            @_$domNodeToFade=null, @_numberOfFadedDomNodes=0,
-            @_replacements=[], @_textNodesWithKnownLanguage={}
+            options={}, @currentLanguage='', @knownLanguage={}
+            @_$domNodeToFade=null, @_replacements=[]
+            @_textNodesWithKnownLanguage={}
         ) ->
             ###
                 Initializes the plugin. Current language is set and later
@@ -82,6 +78,8 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
             this._options =
                 domNodeSelectorPrefix: 'body'
                 default: 'enUS'
+                allowedLanguages: []
+                initial: null
                 domNodeClassPrefix: ''
                 templateDelimiter:
                     pre: '{{', post: '}}'
@@ -99,10 +97,10 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
                 currentLanguageIndicatorClassName: 'current'
                 sessionDescription: '{1}'
                 languageMapping:
-                    deDE: ['de', 'de-de', 'german', 'deutsch']
-                    enUS: ['en', 'en-us']
-                    enEN: ['en-en', 'english']
-                    frFR: ['fr', 'fr-fr', 'french']
+                    deDE: ['de', 'de_de', 'de-de', 'german', 'deutsch']
+                    enUS: ['en', 'en_us', 'en-us']
+                    enEN: ['en_en', 'en-en', 'english']
+                    frFR: ['fr', 'fr_fr', 'fr-fr', 'french']
                 onSwitched: $.noop()
                 onEnsureded: $.noop()
                 onSwitch: $.noop()
@@ -130,11 +128,10 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
                 this._switchCurrentLanguageIndicator newLanguage
             else
                 this.switch newLanguage, true
-            this.on(
-                this.$domNodes.switchLanguageButtons, 'click', (event) =>
-                    event.preventDefault()
-                    this.switch $(event.target).attr('href').substr(
-                        this._options.languageHashPrefix.length + 1))
+            this.on this.$domNodes.switchLanguageButtons, 'click', (event) =>
+                event.preventDefault()
+                this.switch $(event.target).attr('href').substr(
+                    this._options.languageHashPrefix.length + 1)
             this
 
         # endregion
@@ -156,6 +153,11 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
 
                 **returns {$.Lang}**  - Returns the current instance.
             ###
+            if(language isnt true and this._options.allowedLanguages.length and
+               $.inArray(language, this._options.allowedLanguages) is -1)
+                this.debug(
+                    '"{1}" isn\'t one of the allowed languages.', language)
+                return this
             this.acquireLock this._options.toolsLockDescription, =>
                 if language is true
                     ensure = true
@@ -185,7 +187,6 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
                         language)
                     this.releaseLock this._options.toolsLockDescription
             this
-
         refresh: ->
             ###
                 Ensures current selected language.
@@ -208,20 +209,21 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
             ###
             self = this
             this.$domNodes.parent.find(':not(iframe)').contents().each ->
-                nodeName = this.nodeName.toLowerCase()
+                $this = $ this
+                nodeName = $this.prop('nodeName').toLowerCase()
                 if $.inArray(
                     nodeName, self._options.replacementDomNodeName
                 ) isnt -1
                     if $.inArray(nodeName, ['#comment', '#text']) is -1
                         # NOTE: Hide replacement dom nodes.
-                        $(this).hide()
+                        $this.hide()
                     regex = new RegExp(
                         self._options.preReplacementLanguagePattern)
-                    match = this.textContent.match regex
+                    match = $this.prop('textContent').match regex
                     if match and match[0]
-                        this.textContent = this.textContent.replace(
-                            regex, match[1])
-                        $this = $ this
+                        $this.prop 'textContent', $this.prop(
+                            'textContent'
+                        ).replace regex, match[1]
                         selfFound = false
                         $this.parent().contents().each ->
                             if selfFound and $.trim $(this).text()
@@ -233,7 +235,7 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
             this
         _collectTextNodesToReplace: (language, ensure) ->
             ###
-                Normalizes a given language string.
+                Collects all text nodes which should be replaced later.
 
                 **language {String}**   - New language.
 
@@ -253,7 +255,7 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
             self = this
             this.$domNodes.parent.find(':not(iframe)').contents().each ->
                 $currentDomNode = $ this
-                nodeName = this.nodeName.toLowerCase()
+                nodeName = $currentDomNode.prop('nodeName').toLowerCase()
                 if $.inArray(
                     nodeName.toLowerCase(), self._options.replaceDomNodeNames
                 ) isnt -1
@@ -271,7 +273,7 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
                     if $.inArray(
                         nodeName, self._options.replacementDomNodeName
                     ) isnt -1
-                        content = this.textContent
+                        content = $currentDomNode.prop 'textContent'
                         if nodeName isnt '#comment'
                             content = $currentDomNode.html()
                         match = content.match new RegExp(
@@ -290,9 +292,9 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
                             $lastLanguageDomNode = $currentLanguageDomNode
                             $currentTextNodeToTranslate = null
                             $currentLanguageDomNode = null
-                        else if this.textContent.match new RegExp(
-                            self._options.currentLanguagePattern
-                        )
+                        else if $currentDomNode.prop(
+                            'textContent'
+                        ).match new RegExp self._options.currentLanguagePattern
                             $currentLanguageDomNode = $currentDomNode
                         return true
                     $lastTextNodeToTranslate = null
@@ -317,23 +319,26 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
                 $currentDomNode = $ this
                 # NOTE: We skip empty and nested text nodes
                 if($.inArray(
-                    this.nodeName.toLowerCase(),
+                    $currentDomNode.prop('nodeName').toLowerCase(),
                     self._options.replaceDomNodeNames
                 ) isnt -1 and $.trim($currentDomNode.text()) and
                 $currentDomNode.parents(
                     self._options.replaceDomNodeNames.join()
                 ).length is 0 and self.knownLanguage[$.trim(
-                    this.textContent)]?
+                    $currentDomNode.prop 'textContent')]?
                 )
                     self._addTextNodeToFade $currentDomNode
                     if(self._textNodesWithKnownLanguage\
-                        [self.knownLanguage[$.trim(this.textContent)]]?
+                        [self.knownLanguage[$
+                        .trim($currentDomNode.prop('textContent'))]]?
                     )
-                        self._textNodesWithKnownLanguage[self.knownLanguage\
-                            [$.trim(this.textContent)]].push this
+                        self._textNodesWithKnownLanguage[self.knownLanguage[$
+                        .trim($currentDomNode.prop('textContent'))
+                        ]].push $currentDomNode
                     else
                         self._textNodesWithKnownLanguage[self.knownLanguage\
-                            [$.trim(this.textContent)]] = [this]
+                        [$.trim($currentDomNode.prop 'textContent')]] = [
+                            $currentDomNode]
             this
         _normalizeLanguage: (language) ->
             ###
@@ -348,7 +353,7 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
                 if $.inArray(key.toLowerCase(), value) is -1
                     value.push key.toLowerCase()
                 if $.inArray(language.toLowerCase(), value) isnt -1
-                    return key.substring(0, 2) + key.substring 2
+                    return key
             return this._options.default
         _determineUsefulLanguage: ->
             ###
@@ -357,7 +362,9 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
 
                 **returns {String}** - Returns the determined language.
             ###
-            if window.localStorage?[this._options.sessionDescription]?
+            if this._options.initial?
+                result = this._options.initial
+            else if window.localStorage?[this._options.sessionDescription]?
                 result = window.localStorage[this._options.sessionDescription]
                 this.debug(
                     'Determine "{1}", because of local storage information.',
@@ -371,6 +378,13 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
                 this.debug(
                     'Determine "{1}", because of default option.', result)
             result = this._normalizeLanguage result
+            if this._options.allowedLanguages.length and $.inArray(
+                result, this._options.allowedLanguages
+            ) is -1
+                this.debug(
+                    '"{1}" isn\'t one of the allowed languages. Set language' +
+                    ' to "{2}".', result, this._options.allowedLanguages[0])
+                result = this._options.allowedLanguages[0]
             if window.localStorage?
                 window.localStorage[this._options.sessionDescription] = result
             result
@@ -388,10 +402,10 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
             ###
             if(not ensure and this._options.fadeEffect and
                this._$domNodeToFade?)
-                this._options.textNodeParent.fadeOut.always = this.getMethod(
+                $.when(this._$domNodeToFade.fadeOut(
+                    this._options.textNodeParent.fadeOut
+                ).promise()).always this.getMethod(
                     this._handleLanguageSwitching, this, language, ensure)
-                this._$domNodeToFade.fadeOut(
-                    this._options.textNodeParent.fadeOut)
             else
                 this._handleLanguageSwitching(
                     this._handleLanguageSwitching, this, language, ensure)
@@ -494,27 +508,19 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
 
                 **returns {$.Lang}**        - Returns the current instance.
             ###
-            this._numberOfFadedDomNodes += 1
             oldLanguage = this.currentLanguage
             if(not ensure and this._options.fadeEffect and
                this._$domNodeToFade?)
-                if this._numberOfFadedDomNodes is this._$domNodeToFade.length
-                    this._switchLanguage language
-                    this._numberOfFadedDomNodes = 0
-                    this._options.textNodeParent.fadeIn.always = =>
-                        this._numberOfFadedDomNodes += 1
-                        if(this._numberOfFadedDomNodes is
-                           this._$domNodeToFade.length)
-                            this._numberOfFadedDomNodes = 0
-                            this.fireEvent(
-                                (if ensure then 'ensured' else 'switched'),
-                                true, this, oldLanguage, language)
-                            this.releaseLock this._options.toolsLockDescription
-                    this._$domNodeToFade.fadeIn(
-                        this._options.textNodeParent.fadeIn)
+                this._switchLanguage language
+                $.when(this._$domNodeToFade.fadeIn(
+                    this._options.textNodeParent.fadeIn
+                ).promise()).always =>
+                    this.fireEvent(
+                        (if ensure then 'ensured' else 'switched')
+                        true, this, oldLanguage, language)
+                    this.releaseLock this._options.toolsLockDescription
             else
                 this._switchLanguage language
-                this._numberOfFadedDomNodes = 0
                 this.fireEvent(
                     (if ensure then 'ensured' else 'switched'), true, this,
                     oldLanguage, language)
@@ -531,14 +537,14 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
             ###
             for replacement in this._replacements
                 currentText = replacement.$textNodeToTranslate.html()
-                if replacement.$textNodeToTranslate[0].nodeName is '#text'
-                    currentText =
-                        replacement.$textNodeToTranslate[0].textContent
+                if replacement.$textNodeToTranslate.prop('nodeName') is '#text'
+                    currentText = replacement.$textNodeToTranslate.prop(
+                        'textContent')
                 trimmedText = $.trim currentText
-                if(not this._options.templateDelimiter or trimmedText.substr(
-                    -this._options.templateDelimiter.post.length
-                ) isnt this._options.templateDelimiter.post and
-                   this._options.templateDelimiter.post)
+                if(not this._options.templateDelimiter or
+                   not this.stringEndsWith(
+                    trimmedText, this._options.templateDelimiter.post
+                  ) and this._options.templateDelimiter.post)
                     if not replacement.$currentLanguageDomNode?
                         # Language note wasn't present initially. So we have to
                         # determine it now.
@@ -551,15 +557,16 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
                             if this is replacement.$textNodeToTranslate[0]
                                 currentDomNodeFound = true
                             true
-                    currentLanguage =
-                        replacement.$currentLanguageDomNode[0].textContent
+                    currentLanguage = replacement.$currentLanguageDomNode.prop(
+                        'textContent')
                     if language is currentLanguage
-                        throw Error(
+                        this.warn(
                             "Text node \"#{replacement.textToReplace}\" is " +
                             "marked as \"#{currentLanguage}\" and has same " +
                             'translation language as it already is.')
-                    nodeName =
-                        replacement.$nodeToReplace[0].nodeName.toLowerCase()
+                    nodeName = replacement.$nodeToReplace.prop(
+                        'nodeName'
+                    ).toLowerCase()
                     if nodeName is '#comment'
                         replacement.$textNodeToTranslate.after $(
                             "<!--#{currentLanguage}:#{currentText}-->")
@@ -570,9 +577,11 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
                         ).hide()
                     replacement.$textNodeToTranslate.after(
                         $ "<!--#{language}-->")
-                    if replacement.$textNodeToTranslate[0].nodeName is '#text'
-                        replacement.$textNodeToTranslate[0].textContent =
-                            replacement.textToReplace
+                    if replacement.$textNodeToTranslate.prop(
+                        'nodeName'
+                    ) is '#text'
+                        replacement.$textNodeToTranslate.prop(
+                            'textContent', replacement.textToReplace)
                     else
                         replacement.$textNodeToTranslate.html(
                             replacement.textToReplace)
@@ -580,7 +589,7 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
                     replacement.$nodeToReplace.remove()
             # Translate registered known text nodes.
             $.each this._textNodesWithKnownLanguage, (key, value) ->
-                $.each value, (subKey, value) -> value.textContent = key
+                $.each value, (subKey, value) -> value.prop 'textContent', key
             if window.localStorage?
                 window.localStorage[this._options.sessionDescription] =
                     language
@@ -596,7 +605,7 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
                 **returns {$.Lang}**  - Returns the current instance.
             ###
             $(
-                "a[href^=\"##{this._options.languageHashPrefix}" +
+                "a[href=\"##{this._options.languageHashPrefix}" +
                 "#{this.currentLanguage}\"]." +
                 this._options.currentLanguageIndicatorClassName
             ).removeClass this._options.currentLanguageIndicatorClassName
@@ -613,6 +622,16 @@ this.require 'jquery-tools-1.0.coffee', ($) ->
     $.Lang.class = Lang
 
     # endregion
+
+# endregion
+
+# region dependencies
+
+if this.require?
+    this.require.scopeIndicator = 'jQuery.Lang'
+    this.require 'jquery-tools-1.0.coffee', main
+else
+    main this.jQuery
 
 # endregion
 

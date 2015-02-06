@@ -16,6 +16,7 @@ develop-eggs
 .installed.cfg
 lib
 lib64
+.sass-cache
 
 # Unit test / coverage reports
 .coverage
@@ -43,6 +44,9 @@ nosetests.xml
 
 # Gedit autosave backups.
 *~
+
+# Node Modules
+*node_modules/
 
 # region vim modline
 

@@ -22,74 +22,82 @@ Conventions
 
 (rcX := require convention number x)
 
-- **rc1**
-Capitalized variables are constant and shouldn't be mutable.
-- **rc2**
-Properties with preceding underscores shouldn't be accessed from the outer
-scope. They could accessed in inherited objects (protected attributes).
-- **rc3**
-Property with two preceding underscore shouldn't be accessed from any location
-then the object itself (private attributes).
-- **rc4**
-Follow the javascript OOP conventions like camel-case class-names methods and
-property names.
-- **rc5**
-Class-names have a leading upper case letter.
-- **rc6**
-Methods and functions are starting with a lower case letter.
-- **rc7**
-Do not use more chars then 79 in one line.
-- **rc8**
-Use short and/or long description doc-strings for all definitions.
-- **rc9**
-Write qunit tests for each unit it is possible and try to reach 100% path
-coverage.
-
-- **rc10** Sorting imports as following:
+- __rc1__ Only use utf-8 file encoding and unix line feeds (\n)
+    - __bad__: ```text...\r\n``` or ```text...\r```
+    - __good__: ```text...\n```
+- __rc2__ Don't use tabulators instead of whitespaces. Always indent with 4
+  whitespaces.
+- __rc3__ Capitalized variables are constant and shouldn't be mutable.
+- __rc4__ Properties with preceding underscores shouldn't be accessed from the
+  outer scope. They could accessed in inherited objects (protected attributes).
+- __rc5__ Property with two preceding underscore shouldn't be accessed from any
+  location then the object itself (private attributes).
+- __rc6__ Don't use any whitespaces between return statements and preceding
+  statements if not needed.
+    - __bad__: ```return {}```
+    - __good__: ```return{}```
+- __rc7__ Follow the javascript OOP conventions like camel-case class-names
+  methods and property names.
+- __rc8__ Class-names have a leading upper case letter.
+- __rc9__ Methods and functions are starting with a lower case letter.
+- __rc10__ Do not use more chars then 79 in one line.
+- __rc11__ Use short and/or long description doc-strings for all definitions.
+- __rc12__ Write qunit tests for each unit it is possible and try to reach 100%
+  path coverage.
+- __rc13__ Sorting imports as following:
     1. Import all standard modules and packages,
     2. then all from third party,
     3. now import your own modules or packages.
     4. Sort import names alphabetically and separate the previous defined parts
        with blank lines.
-- **rc11**
-Prefix global reference from global context with "this" and with "window" in
-none global contexts.
-- **rc12**
-Don't use any abbreviations.
-- **rc13**
-Try to use small cyclomatic complexity in all units (less then eight is a good
-measurement).
-- **rc14**
-Use one of the plugin pattern described in "jQuery.Tools".
-- **rc15**
-Use the area statement syntax to structure your code and make it possible to
-fold them in many IDE's (see Structure of meta documenting below).
-- **rc16**
-Always think that code is more read than written.
-- **rc17** By choosing witch quotes to use follow this priority.
+- __rc14__ Prefix global reference from global context with "this" and with
+  "window" in none global contexts.
+- __rc15__ Don't use any abbreviations.
+- __rc16__ Try to use small cyclomatic complexity in all units (less then eight
+  is a good measurement).
+- __rc17__ Use one of the plugin pattern described in "jQuery.Tools".
+- __rc18__ Use the area statement syntax to structure your code and make it
+  possible to fold them in many IDE's (see Structure of meta documenting
+  below).
+- __rc19__ Always think that code is more read than written.
+- __rc20__ By choosing witch quotes to use follow this priority.
     1. Single quote (')
     2. Double quote (")
-- **rc18**
-Indent function parameter which doesn't match in one line like:
+- __rc21__ Indent function parameter which doesn't match in one line like:
 
-        function(
-            parameter1, parameter2, parameter3,
-            parameter4)
+__bad__:
+```
+#!coffee
 
-        instead of:
+function(parameter1,
+         parameter2,
+         parameter3,
+         parameter4)
+```
 
-        function(parameter1,
-                 parameter2,
-                 parameter3,
-                 parameter4)
+or:
 
-        or:
+```
+#!coffeeScript
 
-        function(parameter1, parameter2, parameter3,
-                 parameter4)
+function(parameter1, parameter2, parameter3,
+         parameter4)
+```
 
-Structure of meta documenting (see rc15)
+__good__:
+```
+#!coffee
+
+function(
+    parameter1, parameter2, parameter3,
+    parameter4)
+```
+
+Structure of meta documenting (see rc18)
 ----------------------------------------
+
+```
+#!CoffeeScript
 
     // region header
 
@@ -124,6 +132,7 @@ Structure of meta documenting (see rc15)
     });
 
     // endregion
+```
 
 Structure of dependencies
 -------------------------
@@ -140,7 +149,7 @@ header in level "j" if "j < i" is valid.
 Author
 ------
 
-t.sickert@gmail.com (Torben Sickert)
+t.sickert["~at~"]gmail.com (Torben Sickert)
 
 Version
 -------
@@ -157,10 +166,11 @@ class Require
         This class can be used as function for defining dependencies for
         modules. Note that this function searches in the same resource as the
         first javaScript include tag in your markup if given dependency
-        resource doesn't start with "http://". You can manually change this
-        behavior by adding search bases via "window.require.basePath".
+        resource doesn't start with "http://" or "https://". You can manually
+        change this behavior by adding search bases via
+        "window.require.basePath".
 
-        **example**
+        __example__
 
         >>> window.require([['jQuery', 'jquery-3.0.1']], function() {
         ...     jQuery('div#id').show('slow');
@@ -193,7 +203,7 @@ class Require
     ###
     this.scopeIndicator = ''
     ###
-        **logging** {Boolean}
+        **logging {Boolean}**
         Indicates if debugging is active.
     ###
     this.logging
@@ -215,12 +225,12 @@ class Require
     ###
     this.noConflict
     ###
-        **injectingNode {DomNode}**
+        **injectingDomNode {DomNode}**
         Caches a reference to the dom node for injecting needed script tags.
         You can alter this property to specify where to inject required
         scripts. Default is the head node.
     ###
-    this.injectingNode
+    this.injectingDomNode
     ###
         **initializedLoadings {String[]}**
         Saves all loaded script resources to prevent double script
@@ -242,12 +252,88 @@ class Require
     ###
     this.includeTypes
     ###
+        **defaultType {String}**
+        Describes a default type if no type could be determined.
+    ###
+    this.defaultType
+    ###
         **asynchronModulePatternHandling {Object}**
         Defines a mapping from regular expression pattern which detects all
         modules to load via ajax to their corresponding handler functions. A
         css, JavaScript and CoffeeScript loader is included by default.
     ###
     this.asynchronModulePatternHandling
+    ###
+        **defaultAsynchronModulePatternHandler {Object}**
+        Defines all default asynchron module pattern handler.
+    ###
+    this.defaultAsynchronModulePatternHandler =
+        '^.+\.less$': (lessContent, url) ->
+            # Specify a filename, for better error messages.
+            options = filename: url
+            # Specify search paths for @import directives.
+            options.paths = []
+            if self.basePath.less? and self.basePath.less.length
+                options.paths = self.basePath.less
+            compiledCSSCode = null
+            new window.less.Parser(options).parse lessContent, (error, tree) ->
+                if error
+                    self._log error, true
+                else
+                    styleDomNode = document.createElement 'style'
+                    styleDomNode.type = 'text/css'
+                    compiledCSSCode = tree.toCSS()
+                    styleDomNode.appendChild window.document.createTextNode(
+                        compiledCSSCode)
+                    self.injectingDomNode.appendChild styleDomNode
+            return [compiledCSSCode, lessContent, null]
+        '^.+\.coffee$': (coffeeScriptCode, url, module) ->
+            sourceRootPath = url.replace(/\\/g, '/').replace(
+                /\/[^\/]*\/?$/, '/')
+            localSourceRootPath = sourceRootPath.replace(/^https?:\/\/[^/]+\//,
+                '/')
+            fileName = module[1].substr module[1].lastIndexOf('/') + 1
+            coffeeScriptCompilerOptions =
+                header: '// Generated with require.js'
+                sourceMap: false
+                dirname: localSourceRootPath
+                filename: fileName
+                modulename: fileName.substr 0, fileName.lastIndexOf '.'
+                generatedFile: fileName.substr(
+                    0, fileName.lastIndexOf('.') + 1
+                ) + 'js'
+                sourceRoot: sourceRootPath
+                sourceFiles: [fileName]
+            if window.btoa? and window.JSON? and window.unescape? and
+               window.encodeURIComponent? and self.generateSourceMaps
+                coffeeScriptCompilerOptions.sourceMap = true
+                # NOTE: Workaround to enable source maps for asynchron loaded
+                # coffee scripts.
+                try
+                    {js, v3SourceMap} = window.CoffeeScript.compile(
+                        coffeeScriptCode, coffeeScriptCompilerOptions)
+                catch error
+                    self::_log(
+                        'Syntax error in source file ' +
+                        "\"#{localSourceRootPath}#{fileName}\".", true)
+                    throw error
+                # NOTE: Additional commend syntax with "/*...*/" is necessary
+                # to support internet explorer.
+                window.eval(
+                    "#{js}\n//# sourceMappingURL=data:application/json;" +
+                    'base64,' + window.btoa(
+                        window.unescape window.encodeURIComponent v3SourceMap
+                    ) + "\n//# sourceURL=#{localSourceRootPath + fileName}")
+                return [js, coffeeScriptCode, v3SourceMap]
+            else
+                window.CoffeeScript.run(
+                    coffeeScriptCode, coffeeScriptCompilerOptions)
+                return [null, coffeeScriptCode, null]
+    ###
+        **generateSourceMaps {Boolean}**
+        Indicates weather source maps should be created.
+    ###
+    this.generateSourceMaps
     ###
         **context {Object}**
         Defines scope where the required dependencies have to be present. In
@@ -262,6 +348,12 @@ class Require
     ###
     this.onEverythingIsLoaded
     ###
+        **_currentSessionTimestamp {Date}**
+        Saves the date and time of each session, to distinguish old local
+        storage entries from new one.
+    ###
+    this._currentSessionTimestamp
+    ###
         **_callQueue {Object[]}**
         Saves function calls to require for running them in right order to
         guarantee dependencies. It consist of a list of tuples storing
@@ -275,59 +367,6 @@ class Require
         "window.require" to reset that reference in "noConflict" mode.
     ###
     this._referenceBackup = window.require
-    ###
-        **_defaultAsynchronModulePatternHandler {Object}**
-        Handles all default asynchron module pattern handler.
-    ###
-    this._defaultAsynchronModulePatternHandler =
-        '^.+\.less$': (lessContent, url) ->
-            # Specify a filename, for better error messages.
-            options = filename: url
-            # Specify search paths for @import directives.
-            options.paths = []
-            if self.basePath.less? and self.basePath.less.length
-                options.paths = self.basePath.less
-            new window.less.Parser(options).parse lessContent, (error, tree) ->
-                if error
-                    self._log error
-                else
-                    styleNode = document.createElement 'style'
-                    styleNode.type = 'text/css'
-                    styleNode.appendChild document.createTextNode tree.toCSS()
-                    self.injectingNode.appendChild styleNode
-        '^.+\.coffee$': (coffeeScriptCode, url, module) ->
-            sourceRootPath = url.replace(/\\/g, '/').replace(
-                /\/[^\/]*\/?$/, '/')
-            localSourceRootPath = sourceRootPath.replace(/^https?:\/\/[^/]+\//,
-                '/')
-            coffeeScriptCompilerOptions =
-                header: '// Generated with require.js'
-                sourceMap: false
-                dirname: localSourceRootPath
-                filename: module[1]
-                modulename: module[1].substr 0, module[1].lastIndexOf '.'
-                generatedFile: module[1].substr(
-                    0, module[1].lastIndexOf('.') + 1
-                ) + 'js'
-                sourceRoot: sourceRootPath
-                sourceFiles: [module[1]]
-            if window.btoa? and window.JSON? and window.unescape? and
-               window.encodeURIComponent?
-                coffeeScriptCompilerOptions.sourceMap = true
-                # NOTE: Workaround to enable source maps for asynchron loaded
-                # coffee scripts.
-                {js, v3SourceMap} = window.CoffeeScript.compile(
-                    coffeeScriptCode, coffeeScriptCompilerOptions)
-                # NOTE: Additional commend syntax with "/*...*/" is necessary
-                # to support internet explorer.
-                window.eval(
-                    "#{js}\n//# sourceMappingURL=data:application/json;" +
-                    'base64,' +
-                    "#{btoa unescape encodeURIComponent v3SourceMap}\n//@ " +
-                    "sourceURL=#{localSourceRootPath}")
-            else
-                window.CoffeeScript.run(
-                    coffeeScriptCode, coffeeScriptCompilerOptions)
 
     # endregion
 
@@ -371,6 +410,7 @@ class Require
                 extension: 'css', domNodeName: 'link'
                 sourcePropertyName: 'href', domNodeProperties:
                     type: 'text/css', media: 'all', rel: 'stylesheet'
+        self.defaultType = 'javaScript' if not self.defaultType?
         self::_determineBasePath() if not self.basePath?.all?
         for type, paths of self.basePath
             for path, index in paths
@@ -378,18 +418,21 @@ class Require
                     self.basePath[type][index] += '/'
         if not self.localStoragePathReminderPrefix?
             self.localStoragePathReminderPrefix = ''
+        self.generateSourceMaps = true if not self.generateSourceMaps?
+        if not self._currentSessionTimestamp?
+            self._currentSessionTimestamp = new Date
         self.appendTimeStamp = false if not self.appendTimeStamp?
         self.passiv = false if not self.passiv?
         self.logging = false if not self.logging?
         self.noConflict = false if not self.noConflict?
         self.initializedLoadings = [] if not self.initializedLoadings?
-        if not self.injectingNode?
-            self.injectingNode = document.getElementsByTagName('head')[0]
+        if not self.injectingDomNode?
+            self.injectingDomNode = document.getElementsByTagName('head')[0]
         if not self.asynchronModulePatternHandling?
             self.asynchronModulePatternHandling = {}
         if not self.onEverythingIsLoaded?
             self.onEverythingIsLoaded = ->
-        for pattern, handler of self._defaultAsynchronModulePatternHandler
+        for pattern, handler of self.defaultAsynchronModulePatternHandler
             if not self.asynchronModulePatternHandling[pattern]?
                 self.asynchronModulePatternHandling[pattern] = handler
         self._callQueue = [] if not self._callQueue?
@@ -399,6 +442,25 @@ class Require
         return self
 
         # endregion
+
+    self.clearOldPathReminder = ->
+        ###
+            Removes all path reminders from local storage of other then the
+            current session.
+
+            **returns {Require}** - Returns the current function (class).
+        ###
+        if self.localStoragePathReminderPrefix
+            for key, value of window.localStorage
+                if(key.substring(
+                    0, self.localStoragePathReminderPrefix.length + 1
+                ) is "#{self.localStoragePathReminderPrefix}:" and
+                key.substring(key.indexOf(':') + 1, key.lastIndexOf(':')) isnt
+                "#{self._currentSessionTimestamp.getTime()}")
+                    self::_log(
+                        "Remove old stored path reference \"#{value}\".")
+                    delete window.localStorage[key]
+        self
 
     # endregion
 
@@ -546,8 +608,10 @@ class Require
                         if ajaxObject.status in [0, 200]
                             if self.localStoragePathReminderPrefix
                                 window.localStorage[self
-                                    .localStoragePathReminderPrefix + ': ' +
-                                    module[1]] = url
+                                    .localStoragePathReminderPrefix +
+                                    ":#{self._currentSessionTimestamp
+                                    .getTime()}:#{module[1]}"
+                                ] = url
                             callback.apply this, [
                                 ajaxObject.responseText, url, module
                             ].concat parameters
@@ -567,13 +631,13 @@ class Require
                                     module, parameters, urls)
                             else
                                 self::_log(
-                                    'Loading resource failed with all known '
+                                    'Loading resource failed with all known ' +
                                     'base paths.')
                 ajaxObject.send null
                 type = 'asynchron request'
                 break
         if not type?
-            self::_injectLoadingDomNode module, parameters
+            self::_injectLoading module, parameters
             type = 'header dom node'
         self::_log "Initialized loading of \"#{module[1]}\" via #{type}."
         self
@@ -626,7 +690,10 @@ class Require
             **returns {String}**        - The absolute path to needed resource.
         ###
         initialScriptFilePath = scriptFilePath
-        if checkAgainExtension
+        result = []
+        if new window.RegExp('^https?://.+').test scriptFilePath
+            result.push scriptFilePath
+        else if checkAgainExtension
             hasExtension = false
             for name, properties of self.includeTypes
                 if(scriptFilePath.substr(-".#{properties.extension}".length) is
@@ -635,9 +702,6 @@ class Require
                     break
             if not hasExtension
                 scriptFilePath += ".#{self.includeTypes.javaScript.extension}"
-        result = []
-        if scriptFilePath.substring(0, 'http://'.length) is 'http://'
-            result.push scriptFilePath
         if self.appendTimeStamp
             scriptFilePath += "?timestamp=#{(new window.Date).getTime()}"
         extension = scriptFilePath.substring scriptFilePath.lastIndexOf(
@@ -646,20 +710,27 @@ class Require
         basePaths = self.basePath.all
         if self.basePath[extension] and self.basePath[extension].length
             basePaths = self.basePath[extension]
-        key = self.localStoragePathReminderPrefix + ': ' +
-            initialScriptFilePath
-        cacheHit = (
-            self.localStoragePathReminderPrefix and window.localStorage[key]?)
+        cacheHit = false
+        if self.localStoragePathReminderPrefix
+            for key of window.localStorage
+                if(key.substring(
+                    0, self.localStoragePathReminderPrefix.length + 1
+                ) is "#{self.localStoragePathReminderPrefix}:" and
+                key.substring(key.lastIndexOf(':') + 1) is
+                initialScriptFilePath)
+                    cacheHit = key
         for path in basePaths
             fullScriptFilePath = path + scriptFilePath
-            if cacheHit and fullScriptFilePath is window.localStorage[key]
-                result.unshift window.localStorage[key]
+            if cacheHit and fullScriptFilePath is window.localStorage[cacheHit]
+                result.unshift window.localStorage[cacheHit]
+                delete window.localStorage[cacheHit]
             else
-                result.push path + scriptFilePath
+                result.push fullScriptFilePath
         result
-    _injectLoadingDomNode: (module, parameters, urls=[]) ->
+    _injectLoading: (module, parameters, urls=[]) ->
         ###
-            Creates a new script loading tag.
+            Injects new script loading dom nodes or initializes asynchron
+            loading processes.
 
             **module {String[]}**     - A tuple of module name to indicate if a
                                         module is presence and its file path
@@ -673,56 +744,80 @@ class Require
 
             **returns {Require}**     - Returns the current function (class).
         ###
+        urls = self::_getScriptFileURLs(module[1], true) if not urls.length
+        url = urls.shift()
         for name, properties of self.includeTypes
-            urls = self::_getScriptFileURLs(module[1], true) if not urls.length
-            url = urls.shift()
             if(url.substr(-"-#{properties.extension}".length) is
                ".#{properties.extension}")
-                domNode = document.createElement properties.domNodeName
-                domNode[properties.sourcePropertyName] = url
-                for name, value in properties.domNodeProperties
-                    domNode[name] = value
-                ###
-                    Internet explorer workaround for capturing event when
-                    script is loaded.
-                ###
-                onErrorCallback = ->
-                    self::_log(
-                        "Loading resource \"#{module[1]}\" via header dom " +
-                        "node with url \"#{url}\" failed.")
-                    if urls.length
-                        self::_log "Retrying with url \"#{urls[0]}\"."
-                        self::_injectLoadingDomNode module, parameters, urls
-                    else
-                        self::_log(
-                            'Loading resource failed with all known base ' +
-                            'paths.')
+                return self::_injectLoadingHelper(
+                    module, parameters, urls, url, properties)
+        self::_log(
+            "No known loading node type for \"#{module[1]}\" available. " +
+            "Using default type \"#{self.defaultType}\".")
+        self::_injectLoadingHelper(
+            module, parameters, urls, url, self.includeTypes[self.defaultType])
+    _injectLoadingHelper: (module, parameters, urls, url, properties) ->
+        ###
+            Injects a new script loading dom node or initializes an asynchron
+            loading process.
+
+            **module {String[]}**     - A tuple of module name to indicate if a
+                                        module is presence and its file path
+                                        resource.
+
+            **parameters {Object[]}** - Saves arguments indented to be given
+                                        to the on load function.
+
+            **urls {String[]}**       - A list of URLs to check for needed
+                                        resource.
+
+            **returns {Require}**     - Returns the current function (class).
+        ###
+        domNode = document.createElement properties.domNodeName
+        domNode[properties.sourcePropertyName] = url
+        for name, value in properties.domNodeProperties
+            domNode[name] = value
+        ###
+            Internet explorer workaround for capturing event when
+            script is loaded.
+        ###
+        onErrorCallback = ->
+            self::_log(
+                "Loading resource \"#{module[1]}\" via header dom " +
+                "node with url \"#{url}\" failed.")
+            if urls.length
+                self::_log "Retrying with url \"#{urls[0]}\"."
+                self::_injectLoading module, parameters, urls
+            else
+                self::_log(
+                    'Loading resource failed with all known base ' +
+                    'paths.')
+            # Delete event after passing it once.
+            domNode.onerror = null
+            domNode.parentElement.removeChild domNode
+        if domNode.readyState
+            domNode.onreadystatechange = ->
+                if(domNode.readyState is 'loaded' or
+                   domNode.readyState is 'complete')
+                    self::_scriptLoaded module, parameters
                     # Delete event after passing it once.
-                    domNode.onerror = null
-                    domNode.parentElement.removeChild domNode
-                if domNode.readyState
-                    domNode.onreadystatechange = ->
-                        if(domNode.readyState is 'loaded' or
-                           domNode.readyState is 'complete')
-                            self::_scriptLoaded module, parameters
-                            # Delete event after passing it once.
-                            domNode.onreadystatechange = null
-                        else
-                            onErrorCallback()
+                    domNode.onreadystatechange = null
                 else
-                    domNode.onload = ->
-                        if self.localStoragePathReminderPrefix
-                            window.localStorage[self
-                                .localStoragePathReminderPrefix + ': ' +
-                                module[1]] = url
-                        self::_scriptLoaded module, parameters
-                        # Delete event after passing it once.
-                        domNode.onload = null
-                    domNode.onerror = onErrorCallback
-                self.injectingNode.appendChild domNode
-                return self
-        throw window.Error(
-            "No known loading node for \"#{module[1]}\" available.")
+                    onErrorCallback()
+        else
+            domNode.onload = ->
+                if self.localStoragePathReminderPrefix
+                    window.localStorage[self
+                        .localStoragePathReminderPrefix +
+                        ":#{self._currentSessionTimestamp
+                        .getTime()}:#{module[1]}"
+                    ] = url
+                self::_scriptLoaded module, parameters
+                # Delete event after passing it once.
+                domNode.onload = null
+            domNode.onerror = onErrorCallback
+        self.injectingDomNode.appendChild domNode
+        self
     _scriptLoaded: (module, parameters) ->
         ###
             If script was loaded it will be deleted from the
@@ -827,20 +922,20 @@ class Require
             moduleDescription = module[0]
         self::_log "\"#{moduleDescription}\" is loaded complete."
         true
-    _log: (message) ->
+    _log: (message, force=false) ->
         ###
             If logging is enabled. Method shows the given message in the
             browsers console if possible or in a standalone alert-window as
             fallback.
 
-            **message {String}** - A logging message.
+            **message {String}**          - A logging message
 
             **returns {undefined|false}** - Returns the return value of
                                             "window.console.log()" or
                                             "window.alert()" or "false" if
                                             logging is disabled.
         ###
-        if self.logging
+        if self.logging or force
             if window.console and window.console.log
                 return window.console.log "require: #{message}"
             return window.alert "require: #{message}"
