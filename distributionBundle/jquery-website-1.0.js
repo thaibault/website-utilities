@@ -72,7 +72,7 @@ Version
           onSwitchSection: $.noop(),
           onStartUpAnimationComplete: $.noop(),
           additionalPageLoadingTimeInMilliseconds: 0,
-          trackingCode: 'UA-0-0',
+          trackingCode: null,
           mediaQueryCssIndicator: [['extraSmall', 'xs'], ['small', 'sm'], ['medium', 'md'], ['large', 'lg']],
           domNode: {
             mediaQueryIndicator: '<div class="media-query-indicator">',
@@ -159,7 +159,7 @@ Version
         } else {
           this.on(this.$domNodes.window, 'load', onLoaded);
         }
-        this._addNavigationEvents()._addMediaQueryChangeEvents()._triggerWindowResizeEvents()._handleGoogleAnalytics();
+        this._addNavigationEvents()._addMediaQueryChangeEvents()._triggerWindowResizeEvents()._handleAnalytics();
         if (this._options.language.logging == null) {
           this._options.language.logging = this._options.logging;
         }
@@ -525,7 +525,7 @@ Version
         return this;
       };
 
-      Website.prototype._handleGoogleAnalytics = function() {
+      Website.prototype._handleAnalytics = function() {
 
         /*
             Executes the page tracking code.
@@ -533,12 +533,14 @@ Version
             **returns {$.Website}**   - Returns the current instance.
          */
         var exception;
-        this.debug("Run analytics code: \"" + this.__analyticsCode + "\"", this._options.trackingCode, this._options.domain);
-        try {
-          (new Function(this.stringFormat(this.__analyticsCode, this._options.trackingCode, this._options.domain)))();
-        } catch (_error) {
-          exception = _error;
-          this.warn('Problem in google analytics code snippet: {1}', exception);
+        if (this._options.trackingCode != null) {
+          this.debug("Run analytics code: \"" + this.__analyticsCode + "\"", this._options.trackingCode, this._options.domain);
+          try {
+            (new Function(this.stringFormat(this.__analyticsCode, this._options.trackingCode, this._options.domain)))();
+          } catch (_error) {
+            exception = _error;
+            this.warn('Problem in google analytics code snippet: {1}', exception);
+          }
         }
         return this;
       };
