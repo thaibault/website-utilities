@@ -556,7 +556,7 @@ Version
 
   if (this.require != null) {
     this.require.scopeIndicator = 'jQuery.Website';
-    this.require([['less.Parser', 'less-2.1.1'], 'jquery-tools-1.0.coffee', ['jQuery.scrollTo', 'jquery-scrollTo-1.4.3.1'], ['jQuery.fn.spin', 'jquery-spin-2.0.1'], ['jQuery.fn.hashchange', 'jquery-observeHashChange-1.0'], 'jquery-lang-1.0.coffee'], main);
+    this.require([['less.Parser', 'less-2.4.0'], ['jQuery.Tools', 'jquery-tools-1.0.coffee'], ['jQuery.scrollTo', 'jquery-scrollTo-1.4.3.1'], ['jQuery.fn.spin', 'jquery-spin-2.0.1'], ['jQuery.fn.hashchange', 'jquery-observeHashChange-1.0'], ['jQuery.Lang', 'jquery-lang-1.0.coffee']], main);
   } else {
     main(null, null, this.jQuery);
   }
