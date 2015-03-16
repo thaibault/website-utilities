@@ -634,7 +634,7 @@ Version
 
   if (this.require != null) {
     this.require.scopeIndicator = 'jQuery.Lang';
-    this.require('jquery-tools-1.0.coffee', main);
+    this.require([['jQuery.Tools', 'jquery-tools-1.0.coffee']], main);
   } else {
     main(this.jQuery);
   }
