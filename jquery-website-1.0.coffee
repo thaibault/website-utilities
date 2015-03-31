@@ -69,7 +69,7 @@ main = (less, lessParser, $) ->
                 onSwitchSection: $.noop()
                 onStartUpAnimationComplete: $.noop()
                 additionalPageLoadingTimeInMilliseconds: 0
-                trackingCode: 'UA-0-0'
+                trackingCode: null
                 mediaQueryCssIndicator: [
                     ['extraSmall', 'xs'], ['small', 'sm'], ['medium', 'md']
                     ['large', 'lg']
@@ -156,7 +156,7 @@ ga('send', 'pageview');'''
             else
                 this.on this.$domNodes.window, 'load', onLoaded
             this._addNavigationEvents()._addMediaQueryChangeEvents(
-            )._triggerWindowResizeEvents()._handleGoogleAnalytics()
+            )._triggerWindowResizeEvents()._handleAnalytics()
             if not this._options.language.logging?
                 this._options.language.logging = this._options.logging
             if this._options.activateLanguageSupport
@@ -483,24 +483,25 @@ ga('send', 'pageview');'''
             else
                 $.scrollTo {top: 0, left: 0}, this._options.scrollToTop.options
             this
-        _handleGoogleAnalytics: () ->
+        _handleAnalytics: () ->
             ###
                 Executes the page tracking code.
 
                 **returns {$.Website}**   - Returns the current instance.
             ###
-            this.debug(
-                "Run analytics code: \"#{this.__analyticsCode}\"",
-                this._options.trackingCode, this._options.domain)
-            try
-                (new Function(this.stringFormat(
-                    this.__analyticsCode, this._options.trackingCode
-                    this._options.domain
-                )))()
-            catch exception
-                this.warn(
-                    'Problem in google analytics code snippet: {1}',
-                    exception)
+            if this._options.trackingCode?
+                this.debug(
+                    "Run analytics code: \"#{this.__analyticsCode}\"",
+                    this._options.trackingCode, this._options.domain)
+                try
+                    (new Function(this.stringFormat(
+                        this.__analyticsCode, this._options.trackingCode
+                        this._options.domain
+                    )))()
+                catch exception
+                    this.warn(
+                        'Problem in google analytics code snippet: {1}',
+                        exception)
             this
 
         # endregion
@@ -521,13 +522,12 @@ ga('send', 'pageview');'''
 if this.require?
     this.require.scopeIndicator = 'jQuery.Website'
     this.require [
-        ['less.Parser', 'less-2.1.1']
-
-        'jquery-tools-1.0.coffee'
-        ['jQuery.scrollTo', 'jquery-scrollTo-1.4.3.1']
+        ['less.Parser', 'less-2.4.0']
+        ['jQuery.Tools', 'jquery-tools-1.0.coffee']
+        ['jQuery.scrollTo', 'jquery-scrollTo-2.1.0']
         ['jQuery.fn.spin', 'jquery-spin-2.0.1']
         ['jQuery.fn.hashchange', 'jquery-observeHashChange-1.0']
-        'jquery-lang-1.0.coffee'
+        ['jQuery.Lang', 'jquery-lang-1.0.coffee']
     ], main
 else
     main null, null, this.jQuery
