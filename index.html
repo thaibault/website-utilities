@@ -1,44 +1,67 @@
-<!DOCTYPE html><html lang=en><head><title>jQuery-website</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content=><link rel="shortcut icon" type=image/x-icon href=image/favicon.ico?md5=49901c52a085153e2d99503db7ba6fb7><link rel=stylesheet href=cascadingStyleSheet/main.css?md5=f866fc25d2b9e24b1ff4caba57dd5989><body class=documentation><div class="website-window-loading-cover tools-visible-on-javascript-enabled"><div></div></div><div class="header-wrap outer"><header class=inner><a href=https://github.com/thaibault/jQuery-website class="website-start-up-animation-number-1 forkme-banner">View on GitHub<i class=icon-github></i></a><h1 class="website-start-up-animation-number-2 project-title"><a href=http://torben.website/jQuery-website>jQuery-website</a></h1><h2 class="website-start-up-animation-number-3 project-tagline">extend your web app<br></h2><section class=header-links><a href=https://github.com/thaibault/jQuery-website/zipball/master class="website-start-up-animation-number-10 zip-source-download">.zip</a><a href=https://github.com/thaibault/jQuery-website/tarball/master class="website-start-up-animation-number-9 tar-gz-source-download">.tar.gz</a><i class="website-start-up-animation-number-8 icon-download-arrow"></i><a href=#lang-deDE class="tools-visible-on-javascript-enabled website-start-up-animation-number-7">de</a><a href=#lang-enUS class="tools-visible-on-javascript-enabled website-start-up-animation-number-6">en</a><span class="glyphicon glyphicon-arrow-left arrow-left-api website-start-up-animation-number-5"></span><a href="http://torben.website/jQuery-website/api/" class="api-link website-start-up-animation-number-4"><langreplace>API<span> Documentation</span></langreplace></a></section></header></div><div class="main-content-wrap outer"><section class="main-content inner">
+<!DOCTYPE html><html lang=en><!-- region head--><head><title>jQuery-website</title><!-- region meta in formations--><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content=><!-- endregion--><!-- region fav and touch icons--><link rel="shortcut icon" type=image/x-icon href=image/favicon.ico?md5=49901c52a085153e2d99503db7ba6fb7><!-- endregion--><!-- region pre load resources--><link rel=stylesheet href=cascadingStyleSheet/main.css?md5=f866fc25d2b9e24b1ff4caba57dd5989><!-- endregion--><!-- endregion--><!-- region body--><body class=documentation><div class="website-window-loading-cover tools-visible-on-javascript-enabled"><div></div></div><!-- region header--><div class="header-wrap outer"><header class=inner><a href=https://github.com/thaibault/jQuery-website class="website-start-up-animation-number-1 forkme-banner">View on GitHub<!--deDE:GitHub-Projekt--><!--frFR:GitHub-Project--><i class=icon-github></i></a><h1 class="website-start-up-animation-number-2 project-title"><a href=http://torben.website/jQuery-website>jQuery-website</a></h1><h2 class="website-start-up-animation-number-3 project-tagline">extend your web app<!--deDE:erweitere deine Webanwendung--><br></h2><section class=header-links><!--NOTE: This elements are shown in reverse order.--><a href=https://github.com/thaibault/jQuery-website/zipball/master class="website-start-up-animation-number-10 zip-source-download">.zip</a><a href=https://github.com/thaibault/jQuery-website/tarball/master class="website-start-up-animation-number-9 tar-gz-source-download">.tar.gz</a><i class="website-start-up-animation-number-8 icon-download-arrow"></i><a href=#lang-deDE class="tools-visible-on-javascript-enabled website-start-up-animation-number-7">de</a><a href=#lang-enUS class="tools-visible-on-javascript-enabled website-start-up-animation-number-6">en</a><span class="glyphicon glyphicon-arrow-left arrow-left-api website-start-up-animation-number-5"></span><a href="http://torben.website/jQuery-website/api/" class="api-link website-start-up-animation-number-4"><langreplace>API<span> Documentation</span></langreplace><!--deDE:API<span>-Dokumentation</span>--><!--frFR:<span>Documentation de l'</span>API--></a></section></header></div><!-- endregion--><!-- region sections--><div class="main-content-wrap outer"><!-- region main content--><section class="main-content inner"><!-- !/usr/bin/env markdown
+-*- coding: utf-8 -*- -->
 
+<!-- region header
 
+Copyright Torben Sickert 16.12.2012
 
+License
+-------
 
+This library written by Torben Sickert stand under a creative commons naming
+3.0 unported license. see http://creativecommons.org/licenses/by/3.0/deed.de
+
+endregion -->
+
+<!--|deDE:Einsatzmöglichkeiten-->
 
 <h2 id=use-cases>Use cases</h2>
 <ul>
-    <li>Predefined scroll events</li>
+    <li>Predefined scroll events<!--deDE:Vordefinierte Scroll-Events--></li>
     <li>
         Client side internationalization support
-        
+        <!--deDE:Klientseitiger Internationalisierungs-Support-->
     </li>
     <li>
         Viewport is on top position detection
-        
+        <!--deDE:
+            Erkennung wenn der sichbare Bereich der Website am obigen Rand ist
+            und setzten entsprechender Events
+        -->
     </li>
     <li>
         Triggering media-query change events
-        
+        <!--deDE:
+            Auslösen von definierten Events wenn media-querys im responsive
+             Design gewechselt werden.
+        -->
     </li>
     <li>
         Handling page load animation
-        
+        <!--deDE:
+            Ermöglichen von Animationen während die Webanwendung im Hintergrund
+            geladen wird.
+        -->
     </li>
     <li>
         Section switching transitions
-        
+        <!--deDE:Animationen zum Übergang einzelner Sektionen-->
     </li>
     <li>
         Simple section detection via url hashes
-        
+        <!--deDE:Erkennung der aktuellen Sektion anhand url Hashes-->
     </li>
-    <li>Handle google tracking.</li>
+    <li>Handle google tracking.<!--deDE:Verbindung zu google tracking.--></li>
 </ul>
 
-
+<!--deDE:Verwendung-->
 
 <h2 id=usage>Usage</h2>
 <p>Here you can see the initialisation with all available plugin options:
-</p>
+<!--deDE:
+    Hier werden alle möglichen Optionen die beim Initialisieren des Plugins
+    gesetzt werden können angegeben:
+--></p>
 <table class=codehilitetable><tr><td class=linenos><div class=linenodiv><pre> 1
  2
  3
@@ -163,8 +186,13 @@
 </pre></div>
 </table>
 
+<!-- region modline
 
-</section><section class="about-this-website inner"><h2 id=about-this-website>About this website</h2><p>Provider of<a href=http://thaibault.github.io/jQuery-website>http://thaibault.github.io/jQuery-website</a>:<br>Torben Sickert<br>Christoph-Mang-Str. 14<br>79100 Freiburg<br>Phone: <a href=tel:004917610248185>+49 (0) 176<span>/</span>10 248 185</a><br>Email: <a href=mailto:t.sickert@gmail.com>t.sickert@gmail.com</a><br>Website: <a href=http://thaibault.github.io/website>http://thaibault.github.io/website</a><br><span class="glyphicon glyphicon-arrow-left arrow-left-home tools-visible-on-javascript-enabled"></span><a href=#home class=tools-visible-on-javascript-enabled>home</a></p><h2>Disclaimer</h2><h3>Liability for content</h3><p>Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die
+vim: set tabstop=4 shiftwidth=4 expandtab:
+vim: foldmethod=marker foldmarker=region,endregion:
+
+endregion -->
+</section><!-- endregion--><!-- region about this website--><section class="about-this-website inner"><h2 id=about-this-website>About this website<!--deDE:Impressum--><!--frFR:Mentions légales--></h2><p>Provider of<!--deDE:Anbieter von--><!--frFR:Fournisseur de--><a href=http://thaibault.github.io/jQuery-website>http://thaibault.github.io/jQuery-website</a>:<br>Torben Sickert<br>Christoph-Mang-Str. 14<br>79100 Freiburg<br>Phone:<!--deDE:Tel.:--><!--frFR:Téléphone:--> <a href=tel:004917610248185>+49 (0) 176<span>/</span>10 248 185</a><br>Email:<!--deDE:E-Mail:--> <a href=mailto:t.sickert@gmail.com>t.sickert@gmail.com</a><br>Website: <!--deDE:Webseite:--><!--frFR:Site:--><a href=http://thaibault.github.io/website>http://thaibault.github.io/website</a><br><span class="glyphicon glyphicon-arrow-left arrow-left-home tools-visible-on-javascript-enabled"></span><a href=#home class=tools-visible-on-javascript-enabled>home<!--deDE:Startseite--><!--frFR:Maison--></a></p><h2>Disclaimer<!--deDE:Haftungsausschluss--><!--frFR:Désistement--></h2><h3>Liability for content<!--deDE:Haftung für Inhalte--><!--frFR:Responsabilité quant au contenu--></h3><p>Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die
 Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch
 keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG
 für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen
@@ -176,7 +204,7 @@ Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon
 unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt
 der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekannt werden
 von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend
-entfernen.</p><h3>Liability for links</h3><p>Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren
+entfernen.</p><h3>Liability for links<!--deDE:Haftung für Links--><!--frFR:Responsabilité pour les liens--></h3><p>Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren
 Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden
 Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten
 Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten
@@ -185,7 +213,7 @@ auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum
 Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche
 Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte
 einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von
-Rechtsverletzungen werden wir derartige Links umgehend entfernen.</p><h3>Copyright</h3><p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen
+Rechtsverletzungen werden wir derartige Links umgehend entfernen.</p><h3>Copyright<!--deDE:Urheberrecht--><!--frFR:Droit d'auteur--></h3><p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen
 Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung,
 Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der
 Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des
@@ -196,7 +224,7 @@ Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als
 solche gekennzeichnet. Sollten Sie trotzdem auf eine
 Urheberrechtsverletzung aufmerksam werden, bitten wir um einen
 entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden
-wir derartige Inhalte umgehend entfernen.</p><h3>Privacy Policy</h3><p>Die Nutzung unserer Webseite ist in der Regel ohne Angabe
+wir derartige Inhalte umgehend entfernen.</p><h3>Privacy Policy<!--deDE:Datenschutz--><!--frFR:Politique de confidentialité--></h3><p>Die Nutzung unserer Webseite ist in der Regel ohne Angabe
 personenbezogener Daten möglich. Soweit auf unseren Seiten
 personenbezogene Daten (beispielsweise Name, Anschrift oder
 E-Mail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf
@@ -209,7 +237,7 @@ veröffentlichten Kontaktdaten durch Dritte zur Übersendung von nicht
 ausdrücklich angeforderter Werbung und Informationsmaterialien wird
 hiermit ausdrücklich widersprochen. Die Betreiber der Seiten behalten
 sich ausdrücklich rechtliche Schritte im Falle der unverlangten Zusendung
-von Werbeinformationen, etwa durch Spam-Mails, vor.</p><h3>Privacy Statement for using Google Analytics</h3><p>Diese Website benutzt Google Analytics, einen Webanalysedienst der Google
+von Werbeinformationen, etwa durch Spam-Mails, vor.</p><h3>Privacy Statement for using Google Analytics<!--deDE:Datenschutzerklärung für die Nutzung von Google Analytics--><!--frFR:Déclaration de confidentialité de l'utilisation de Google Analytics--></h3><p>Diese Website benutzt Google Analytics, einen Webanalysedienst der Google
 Inc. ("Google"). Google Analytics verwendet sog. "Cookies", Textdateien,
 die auf Ihrem Computer gespeichert werden und die eine Analyse der
 Benutzung der Website durch Sie ermöglichen. Die durch den Cookie
@@ -238,4 +266,4 @@ indem Sie das unter dem folgenden<a href="http://tools.google.com/dlpage/gaoptou
 of the website author. Any use for commercial purpose, reproduction and
 publication requires the author's written permission. Commercial work
 created in cooperation or bound by contract with third parties are
-specifically marked. Respective copyrights apply.</p></section></div><div class="footer-wrap outer"><footer class=inner><p class="website-start-up-animation-number-11 copyright">jQuery-website maintained by <a href=https://github.com/thaibault>thaibault</a> &middot; &copy; 2013 Torben Sickert &middot; <a href=#about-this-website>about this website</a></p></footer></div><a href=#top>top</a><script src=javaScript/main.js?md5=1d5befe1194d8544006f7494965875bf></script>
+specifically marked. Respective copyrights apply.</p></section><!-- endregion--></div><!-- endregion--><!-- region footer--><div class="footer-wrap outer"><footer class=inner><p class="website-start-up-animation-number-11 copyright">jQuery-website maintained by<!--deDE:jQuery-website betrieben von--><!--frFR:jQuery-website exploité par--> <a href=https://github.com/thaibault>thaibault</a> &middot; &copy; 2013 Torben Sickert &middot; <a href=#about-this-website>about this website<!--deDE:Impressum--><!--frFR:Mentions légales--></a></p></footer></div><!-- endregion--><a href=#top>top<!--deDE:nach oben--><!--frFR:ascendant--></a><!-- region post load resources--><script src=javaScript/main.js?md5=1d5befe1194d8544006f7494965875bf></script><!-- endregion--><!-- endregion-->
