@@ -4,7 +4,7 @@
 # region header
 
 ###
-[Project page](https://thaibault.github.com/jQuery-website)
+[Project page](http://torben.website/jQuery-website)
 
 This module provides common logic for the whole web page.
 
@@ -32,7 +32,7 @@ Version
 1.0 stable
 ###
 
-main = (less, lessParser, $) ->
+main = ($) ->
 
 # endregion
 
@@ -68,6 +68,12 @@ main = (less, lessParser, $) ->
                 onChangeMediaQueryMode: $.noop()
                 onSwitchSection: $.noop()
                 onStartUpAnimationComplete: $.noop()
+                knownScrollEventNames:
+                    'scroll mousedown wheel DOMMouseScroll mousewheel keyup ' +
+                    'touchmove'
+                switchToManualScrollingIndicator: (event) -> (
+                    event.which > 0 or event.type is 'mousedown' or
+                    event.type is 'mousewheel' or event.type == 'touchmove')
                 additionalPageLoadingTimeInMilliseconds: 0
                 trackingCode: null
                 mediaQueryCssIndicator: [
@@ -134,7 +140,7 @@ ga('send', 'pageview');'''
 
                 **returns {$.Website}** - Returns the current instance.
             ###
-            # Wrap event methods with debouncing handler.
+            # Wrap event methods with debounceing handler.
             this._onViewportMovesToTop = this.debounce(
                 this.getMethod this._onViewportMovesToTop)
             this._onViewportMovesAwayFromTop = this.debounce(
@@ -359,6 +365,13 @@ ga('send', 'pageview');'''
 
                 **returns {$.Website}** - Returns the current instance.
             ###
+            # Stop automatic scrolling if the user wants to scroll manually.
+            $scrollTarget = $('body, html').add this.$domNodes.window
+            $scrollTarget.on(
+                this._options.knownScrollEventNames, (event) =>
+                    if this._options.switchToManualScrollingIndicator event
+                        $scrollTarget.stop true
+            )
             this.on this.$domNodes.window, 'scroll', =>
                 if this.$domNodes.window.scrollTop()
                     if this._viewportIsOnTop
@@ -397,7 +410,8 @@ ga('send', 'pageview');'''
                     ).substr 1)
                 ).hide()
                 if this.$domNodes.windowLoadingCover.length
-                    this.enableScrolling().$domNodes.windowLoadingCover.fadeOut(
+                    this.enableScrolling(
+                    ).$domNodes.windowLoadingCover.fadeOut(
                         this._options.windowLoadingCoverFadeOut)
                 else
                     this._options.windowLoadingCoverFadeOut.always()
@@ -472,26 +486,32 @@ ga('send', 'pageview');'''
                 **returns {$.Website}** - Returns the current instance.
             ###
             this._options.scrollToTop.options.onAfter = onAfter
+            # NOTE: This is a workaround to avoid a bug in "jQuery.scrollTo()"
+            # expecting this property exists.
+            window.document.body = $('body')[0]
             if this._options.scrollToTop.inLinearTime
                 distanceToTopInPixel = this.$domNodes.window.scrollTop()
                 # Scroll four times faster as we have distance to top.
                 this._options.scrollToTop.options.duration =
                     distanceToTopInPixel / 4
-                $.scrollTo(
-                    {top: "-=#{distanceToTopInPixel}", left: '+=0'},
+                $(window).scrollTo(
+                    {top: "-=#{distanceToTopInPixel}", left: '+=0'}
                     this._options.scrollToTop.options)
             else
-                $.scrollTo {top: 0, left: 0}, this._options.scrollToTop.options
+                $(window).scrollTo(
+                    {top: 0, left: 0}, this._options.scrollToTop.options)
             this
-        _handleAnalytics: () ->
+        _handleAnalytics: ->
             ###
                 Executes the page tracking code.
 
-                **returns {$.Website}**   - Returns the current instance.
+                **returns {$.Website}** - Returns the current instance.
             ###
-            if this._options.trackingCode?
+            if this._options.trackingCode? and
+            this._options.trackingCode isnt '__none__' and
+            window.location.hostname isnt 'localhost'
                 this.debug(
-                    "Run analytics code: \"#{this.__analyticsCode}\"",
+                    "Run analytics code: \"#{this.__analyticsCode}\""
                     this._options.trackingCode, this._options.domain)
                 try
                     (new Function(this.stringFormat(
@@ -500,7 +520,7 @@ ga('send', 'pageview');'''
                     )))()
                 catch exception
                     this.warn(
-                        'Problem in google analytics code snippet: {1}',
+                        'Problem in google analytics code snippet: {1}'
                         exception)
             this
 
@@ -522,7 +542,6 @@ ga('send', 'pageview');'''
 if this.require?
     this.require.scopeIndicator = 'jQuery.Website'
     this.require [
-        ['less.Parser', 'less-2.4.0']
         ['jQuery.Tools', 'jquery-tools-1.0.coffee']
         ['jQuery.scrollTo', 'jquery-scrollTo-2.1.0']
         ['jQuery.fn.spin', 'jquery-spin-2.0.1']
@@ -530,7 +549,7 @@ if this.require?
         ['jQuery.Lang', 'jquery-lang-1.0.coffee']
     ], main
 else
-    main null, null, this.jQuery
+    main this.jQuery
 
 # endregion
 

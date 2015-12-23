@@ -11,7 +11,7 @@
 # This library written by Torben Sickert stand under a creative commons naming
 # 3.0 unported license. see http://creativecommons.org/licenses/by/3.0/deed.de
 
-module 'website'
+module 'jQuery/website'
 
 # endregion
 
@@ -43,12 +43,12 @@ test 'disableScrolling|enableScrolling', ->
 
 test '_onViewportMovesToTop', ->
     website._onViewportMovesToTop()
-    # NOTE: Returns undefined because of debouncouing.
-    strictEqual website._onViewportMovesToTop(), undefined
+    # NOTE: Returns timeout id because of debounceing.
+    strictEqual typeof website._onViewportMovesToTop(), 'number'
 test '_onViewportMovesAwayFromTop', ->
     website._onViewportMovesAwayFromTop()
-    # NOTE: Returns undefined because of debouncouing.
-    strictEqual website._onViewportMovesAwayFromTop(), undefined
+    # NOTE: Returns timeout id because of debounceing.
+    strictEqual typeof website._onViewportMovesAwayFromTop(), 'number'
 test '_onChangeMediaQueryMode', ->
     strictEqual website._onChangeMediaQueryMode(), website
 test '_onChangeToLargeMode', ->
@@ -81,8 +81,8 @@ test '_addNavigationEvents', ->
 test '_handleScrollToTopButton', ->
     strictEqual website._handleScrollToTopButton(), website
 test '_scrollToTop', -> strictEqual website._scrollToTop(), website
-test '_handleGoogleAnalytics', ->
-    strictEqual website._handleGoogleAnalytics(), website
+test '_handleAnalytics', ->
+    strictEqual website._handleAnalytics(), website
 
         # endregion
 
