@@ -214,13 +214,13 @@ window.ga(
                     "Run analytics code: \"#{this.__analyticsCode.event}\" " +
                     'with arguments:')
                 this.debug arguments
-                console.log 'A', arguments
                 try
                     (new window.Function(
                         eventCategory, eventAction, eventLabel, eventData
                         eventValue, this.__analyticsCode.event
                     )).apply this, arguments
                 catch exception
+                    console.log exception
                     this.warn(
                         'Problem in google analytics event code snippet: {1}'
                         exception)
@@ -581,6 +581,7 @@ window.ga(
                     event
                 ) =>
                     $domNode = $ this
+                    console.log this, $domNode.text()
                     this.triggerAnalyticsEvent(
                         sectionName, 'click', $domNode.text(), event
                         $domNode.attr('website-analytics-value') or 1)
