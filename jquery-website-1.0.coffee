@@ -214,6 +214,7 @@ window.ga(
                     "Run analytics code: \"#{this.__analyticsCode.event}\" " +
                     'with arguments:')
                 this.debug arguments
+                console.log 'A', arguments
                 try
                     (new window.Function(
                         eventCategory, eventAction, eventLabel, eventData
@@ -576,14 +577,13 @@ window.ga(
                     this.warn(
                         'Problem in analytics initial code snippet: {1}'
                         exception)
-                console.log(
-                    sectionName, 'click', $domNode.text(), event
-                    $(this).attr('website-analytics-value') or 1)
                 this.on this.$domNodes.parent.find('a, button'), 'click', (
                     event
-                ) => this.triggerAnalyticsEvent(
-                    sectionName, 'click', $domNode.text(), event
-                    $(this).attr('website-analytics-value') or 1)
+                ) =>
+                    $domNode = $ this
+                    this.triggerAnalyticsEvent(
+                        sectionName, 'click', $domNode.text(), event
+                        $domNode.attr('website-analytics-value') or 1)
             this
 
         # endregion
