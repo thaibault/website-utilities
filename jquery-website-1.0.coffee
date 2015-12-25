@@ -134,7 +134,7 @@ window,document,'script','//www.google-analytics.com/analytics.js','ga');
 window.ga('create', '{1}', '{2}');
 window.ga('set','anonymizeIp',true);
 window.ga('send', 'pageview');'''
-                sectionSwitch: "window.ga('send', 'pageview', {page: {1}});"
+                sectionSwitch: "window.ga('send', 'pageview', {page: '{1}'});"
                 event: '''
 window.ga(
     'send', 'event', eventCategory, eventAction, eventLabel, eventValue,
@@ -323,7 +323,6 @@ window.ga(
                         this.__analyticsCode.sectionSwitch, sectionName
                     )))()
                 catch exception
-                    console.log exception
                     this.warn(
                         'Problem in google analytics code snippet: {1}'
                         exception)
