@@ -336,11 +336,12 @@ Version
         var exception;
         if ((this._options.trackingCode != null) && this._options.trackingCode !== '__none__' && window.location.hostname !== 'localhost') {
           this.debug('Run analytics code: "' + (this.__analyticsCode.sectionSwitch + "\""), sectionName);
-          console.log(sectionName, this.__analyticsCode.sectionSwitch, arguments);
           try {
+            console.log(this.stringFormat(this.__analyticsCode.sectionSwitch, sectioName));
             (new window.Function(this.stringFormat(this.__analyticsCode.sectionSwitch, sectioName)))();
           } catch (_error) {
             exception = _error;
+            console.log(exception);
             this.warn('Problem in google analytics code snippet: {1}', exception);
           }
         }
