@@ -196,8 +196,31 @@ window.ga(
                 **returns {$.Website}** - Returns the current instance.
             ###
             this.off(
-                this.$domNodes.parent.removeClass('disable-scrolling'),
+                this.$domNodes.parent.removeClass 'disable-scrolling'
                 'touchmove')
+            this
+        triggerAnalyticsEvent: ->
+            ###
+                Triggers an analytics event. All given arguments are forwarded
+                to configured analytics event code to defined their environment
+                variables.
+
+                **returns {$.Website}**  - Returns the current instance.
+            ###
+            if this._options.trackingCode? and
+            this._options.trackingCode isnt '__none__' and
+            window.location.hostname isnt 'localhost'
+                this.debug(
+                    "Run analytics code: \"#{this.__analyticsCode.event}\" " +
+                    'with arguments:')
+                this.debug arguments
+                try
+                    (new window.Function(this.__analyticsCode.event)).apply(
+                        this, arguments)
+                catch exception
+                    this.warn(
+                        'Problem in google analytics event code snippet: {1}'
+                        exception)
             this
 
     # endregion
@@ -324,7 +347,7 @@ window.ga(
                     )))()
                 catch exception
                     this.warn(
-                        'Problem in google analytics code snippet: {1}'
+                        'Problem in analytics section switch code snippet: {1}'
                         exception)
             this
         _onStartUpAnimationComplete: ->
@@ -549,7 +572,7 @@ window.ga(
                     )))()
                 catch exception
                     this.warn(
-                        'Problem in google analytics code snippet: {1}'
+                        'Problem in analytics initial code snippet: {1}'
                         exception)
             this
 
