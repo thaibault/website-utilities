@@ -215,7 +215,7 @@ Version
           this.debug(("Run analytics code: \"" + this.__analyticsCode.event + "\" ") + 'with arguments:');
           this.debug(arguments);
           try {
-            (new window.Function(eventCategory, eventAction, eventLabel, eventData, eventValue, this.__analyticsCode.event)).apply(this, arguments);
+            (new window.Function('eventCategory', 'eventAction', 'eventLabel', 'eventData', 'eventValue', this.__analyticsCode.event)).apply(this, arguments);
           } catch (_error) {
             exception = _error;
             console.log(exception);
@@ -600,9 +600,8 @@ Version
           this.on(this.$domNodes.parent.find('a, button'), 'click', (function(_this) {
             return function(event) {
               var $domNode;
-              $domNode = $(_this);
-              console.log(_this, $domNode.text());
-              return _this.triggerAnalyticsEvent(sectionName, 'click', $domNode.text(), event, $domNode.attr('website-analytics-value') || 1);
+              $domNode = $(event.target);
+              return _this.triggerAnalyticsEvent(sectionName, 'click', $domNode.text(), event.data, $domNode.attr('website-analytics-value') || 1);
             };
           })(this));
         }
