@@ -137,7 +137,7 @@ Version
         this.languageHandler = _at_languageHandler != null ? _at_languageHandler : null;
         this.__analyticsCode = _at___analyticsCode != null ? _at___analyticsCode : {
           initial: '(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\n(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new window.Date();\na=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;\nm.parentNode.insertBefore(a,m)})(\nwindow,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');\nwindow.ga(\'create\', \'{1}\', \'{2}\');\nwindow.ga(\'set\',\'anonymizeIp\',true);\nwindow.ga(\'send\', \'pageview\');',
-          sectionSwitch: "window.ga('send', 'pageview', {page: {1}});",
+          sectionSwitch: "window.ga('send', 'pageview', {page: '{1}'});",
           event: 'window.ga(\n    \'send\', \'event\', eventCategory, eventAction, eventLabel, eventValue,\n    eventData);'
         };
 
@@ -340,7 +340,6 @@ Version
             (new window.Function(this.stringFormat(this.__analyticsCode.sectionSwitch, sectionName)))();
           } catch (_error) {
             exception = _error;
-            console.log(exception);
             this.warn('Problem in google analytics code snippet: {1}', exception);
           }
         }
