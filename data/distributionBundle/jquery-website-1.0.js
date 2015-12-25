@@ -596,11 +596,10 @@ Version
             exception = _error;
             this.warn('Problem in analytics initial code snippet: {1}', exception);
           }
+          console.log(sectionName, 'click', $domNode.text(), event, $(this).attr('website-analytics-value') || 1);
           this.on(this.$domNodes.parent.find('a, button'), 'click', (function(_this) {
             return function(event) {
-              var $domNode;
-              $domNode = $(_this);
-              return _this.triggerAnalyticsEvent(sectionName, 'click', $domNode.text(), event, $domNode.attr('website-analytics-value') || 1);
+              return _this.triggerAnalyticsEvent(sectionName, 'click', $domNode.text(), event, $(_this).attr('website-analytics-value') || 1);
             };
           })(this));
         }
