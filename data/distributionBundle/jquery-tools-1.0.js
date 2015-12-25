@@ -1019,9 +1019,9 @@ Version
           scope = this;
         }
         eventHandlerName = "on" + (this.stringCapitalize(eventName));
-        console.log('BB', additionalArguments);
         if (!callOnlyOptionsMethod) {
           if (scope[eventHandlerName]) {
+            console.log('AA', additionalArguments);
             scope[eventHandlerName].apply(scope, additionalArguments);
           } else if (scope["_" + eventHandlerName]) {
             scope["_" + eventHandlerName].apply(scope, additionalArguments);
