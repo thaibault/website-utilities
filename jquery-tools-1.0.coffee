@@ -848,6 +848,7 @@ main = ($) ->
             ###
             scope = this if not scope
             eventHandlerName = "on#{this.stringCapitalize eventName}"
+            console.log 'BB', additionalArguments
             if not callOnlyOptionsMethod
                 if scope[eventHandlerName]
                     scope[eventHandlerName].apply scope, additionalArguments

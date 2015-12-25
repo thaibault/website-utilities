@@ -484,8 +484,10 @@ window.ga(
             ###
             this.$domNodes.window.hashchange(=>
                 if this.startUpAnimationIsComplete
+                    console.log 'AA', window.location.hash.substring '#'.length
                     this.fireEvent(
-                        'switchSection', false, this, window.location.hash))
+                        'switchSection', false, this
+                        window.location.hash.substring '#'.length))
             this._handleScrollToTopButton()
         _handleScrollToTopButton: ->
             ###
