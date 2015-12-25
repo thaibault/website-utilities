@@ -319,12 +319,10 @@ window.ga(
                     'Run analytics code: "' +
                     "#{this.__analyticsCode.sectionSwitch}\"", sectionName)
                 try
-                    console.log this.stringFormat this.__analyticsCode.sectionSwitch, sectioName
                     (new window.Function(this.stringFormat(
-                        this.__analyticsCode.sectionSwitch, sectioName
+                        this.__analyticsCode.sectionSwitch, sectionName
                     )))()
                 catch exception
-                    console.log exception
                     this.warn(
                         'Problem in google analytics code snippet: {1}'
                         exception)
