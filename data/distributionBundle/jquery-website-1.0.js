@@ -337,11 +337,9 @@ Version
         if ((this._options.trackingCode != null) && this._options.trackingCode !== '__none__' && window.location.hostname !== 'localhost') {
           this.debug('Run analytics code: "' + (this.__analyticsCode.sectionSwitch + "\""), sectionName);
           try {
-            console.log(this.stringFormat(this.__analyticsCode.sectionSwitch, sectioName));
-            (new window.Function(this.stringFormat(this.__analyticsCode.sectionSwitch, sectioName)))();
+            (new window.Function(this.stringFormat(this.__analyticsCode.sectionSwitch, sectionName)))();
           } catch (_error) {
             exception = _error;
-            console.log(exception);
             this.warn('Problem in google analytics code snippet: {1}', exception);
           }
         }
