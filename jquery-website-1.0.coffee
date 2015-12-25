@@ -576,13 +576,14 @@ window.ga(
                     this.warn(
                         'Problem in analytics initial code snippet: {1}'
                         exception)
+                console.log(
+                    sectionName, 'click', $domNode.text(), event
+                    $(this).attr('website-analytics-value') or 1)
                 this.on this.$domNodes.parent.find('a, button'), 'click', (
                     event
-                ) =>
-                    $domNode = $ this
-                    this.triggerAnalyticsEvent(
-                        sectionName, 'click', $domNode.text(), event
-                        $domNode.attr('website-analytics-value') or 1)
+                ) => this.triggerAnalyticsEvent(
+                    sectionName, 'click', $domNode.text(), event
+                    $(this).attr('website-analytics-value') or 1)
             this
 
         # endregion
