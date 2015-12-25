@@ -312,9 +312,11 @@ window.ga(
 
                 **returns {$.Website}**  - Returns the current instance.
             ###
+            console.log 'PAGE SWITCH'
             if this._options.trackingCode? and
             this._options.trackingCode isnt '__none__' and
             window.location.hostname isnt 'localhost'
+                console.log 'AA'
                 this.debug(
                     'Run analytics code: "' +
                     "#{this.__analyticsCode.sectionSwitch}\"", sectionName)
