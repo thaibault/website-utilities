@@ -823,7 +823,7 @@ main = ($) ->
                         additionalArguments or [])
                 timeoutID
         fireEvent: (
-            eventName, callOnlyOptionsMethod=false, scope=this,
+            eventName, callOnlyOptionsMethod=false, scope=this
             additionalArguments...
         ) ->
             ###
@@ -848,9 +848,9 @@ main = ($) ->
             ###
             scope = this if not scope
             eventHandlerName = "on#{this.stringCapitalize eventName}"
-            console.log 'BB', additionalArguments
             if not callOnlyOptionsMethod
                 if scope[eventHandlerName]
+                    console.log 'AA', additionalArguments
                     scope[eventHandlerName].apply scope, additionalArguments
                 else if scope["_#{eventHandlerName}"]
                     scope["_#{eventHandlerName}"].apply(

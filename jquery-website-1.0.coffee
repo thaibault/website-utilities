@@ -318,7 +318,7 @@ window.ga(
                 this.debug(
                     'Run analytics code: "' +
                     "#{this.__analyticsCode.sectionSwitch}\"", sectionName)
-                console.log sectionName, this.__analyticsCode.sectionSwitch
+                console.log sectionName, this.__analyticsCode.sectionSwitch, arguments
                 try
                     (new window.Function(this.stringFormat(
                         this.__analyticsCode.sectionSwitch, sectioName
@@ -484,7 +484,6 @@ window.ga(
             ###
             this.$domNodes.window.hashchange(=>
                 if this.startUpAnimationIsComplete
-                    console.log 'AA', window.location.hash.substring '#'.length
                     this.fireEvent(
                         'switchSection', false, this
                         window.location.hash.substring '#'.length))
