@@ -218,7 +218,6 @@ Version
             (new window.Function('eventCategory', 'eventAction', 'eventLabel', 'eventData', 'eventValue', this.__analyticsCode.event)).apply(this, arguments);
           } catch (_error) {
             exception = _error;
-            console.log(exception);
             this.warn('Problem in google analytics event code snippet: {1}', exception);
           }
         }
@@ -601,7 +600,7 @@ Version
             return function(event) {
               var $domNode;
               $domNode = $(event.target);
-              return _this.triggerAnalyticsEvent(sectionName, 'click', $domNode.text(), event.data, $domNode.attr('website-analytics-value') || 1);
+              return _this.triggerAnalyticsEvent(sectionName, 'click', $domNode.text(), event.data || {}, $domNode.attr('website-analytics-value') || 1);
             };
           })(this));
         }
