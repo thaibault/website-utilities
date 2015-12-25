@@ -215,7 +215,7 @@ Version
           this.debug(("Run analytics code: \"" + this.__analyticsCode.event + "\" ") + 'with arguments:');
           this.debug(arguments);
           try {
-            (new window.Function(this.__analyticsCode.event)).apply(this, arguments);
+            (new window.Function(eventCategory, eventAction, eventLabel, eventData, eventValue, this.__analyticsCode.event)).apply(this, arguments);
           } catch (_error) {
             exception = _error;
             this.warn('Problem in google analytics event code snippet: {1}', exception);
@@ -596,6 +596,13 @@ Version
             exception = _error;
             this.warn('Problem in analytics initial code snippet: {1}', exception);
           }
+          this.on(this.$domNodes.parent.find('a, button'), 'click', (function(_this) {
+            return function(event) {
+              var $domNode;
+              $domNode = $(_this);
+              return _this.triggerAnalyticsEvent(sectionName, 'click', $domNode.text(), event, $domNode.attr('website-analytics-value') || 1);
+            };
+          })(this));
         }
         return this;
       };
