@@ -323,6 +323,7 @@ window.ga(
                         this.__analyticsCode.sectionSwitch, sectionName
                     )))()
                 catch exception
+                    console.log exception
                     this.warn(
                         'Problem in google analytics code snippet: {1}'
                         exception)
