@@ -340,6 +340,7 @@ Version
             (new window.Function(this.stringFormat(this.__analyticsCode.sectionSwitch, sectionName)))();
           } catch (_error) {
             exception = _error;
+            console.log(exception);
             this.warn('Problem in google analytics code snippet: {1}', exception);
           }
         }
