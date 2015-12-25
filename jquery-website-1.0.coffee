@@ -216,8 +216,8 @@ window.ga(
                 this.debug arguments
                 try
                     (new window.Function(
-                        eventCategory, eventAction, eventLabel, eventData
-                        eventValue, this.__analyticsCode.event
+                        'eventCategory', 'eventAction', 'eventLabel'
+                        'eventData', 'eventValue', this.__analyticsCode.event
                     )).apply this, arguments
                 catch exception
                     console.log exception
@@ -580,10 +580,9 @@ window.ga(
                 this.on this.$domNodes.parent.find('a, button'), 'click', (
                     event
                 ) =>
-                    $domNode = $ this
-                    console.log this, $domNode.text()
+                    $domNode = $ event.target
                     this.triggerAnalyticsEvent(
-                        sectionName, 'click', $domNode.text(), event
+                        sectionName, 'click', $domNode.text(), event.data
                         $domNode.attr('website-analytics-value') or 1)
             this
 
