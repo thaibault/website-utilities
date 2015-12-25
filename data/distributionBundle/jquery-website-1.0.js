@@ -201,6 +201,29 @@ Version
         return this;
       };
 
+      Website.prototype.triggerAnalyticsEvent = function() {
+
+        /*
+            Triggers an analytics event. All given arguments are forwarded
+            to configured analytics event code to defined their environment
+            variables.
+        
+            **returns {$.Website}**  - Returns the current instance.
+         */
+        var exception;
+        if ((this._options.trackingCode != null) && this._options.trackingCode !== '__none__' && window.location.hostname !== 'localhost') {
+          this.debug(("Run analytics code: \"" + this.__analyticsCode.event + "\" ") + 'with arguments:');
+          this.debug(arguments);
+          try {
+            (new window.Function(this.__analyticsCode.event)).apply(this, arguments);
+          } catch (_error) {
+            exception = _error;
+            this.warn('Problem in google analytics event code snippet: {1}', exception);
+          }
+        }
+        return this;
+      };
+
       Website.prototype._onViewportMovesToTop = function() {
 
         /*
@@ -340,7 +363,7 @@ Version
             (new window.Function(this.stringFormat(this.__analyticsCode.sectionSwitch, sectionName)))();
           } catch (_error) {
             exception = _error;
-            this.warn('Problem in google analytics code snippet: {1}', exception);
+            this.warn('Problem in analytics section switch code snippet: {1}', exception);
           }
         }
         return this;
@@ -571,7 +594,7 @@ Version
             (new window.Function(this.stringFormat(this.__analyticsCode.initial, this._options.trackingCode, this._options.domain, sectionName)))();
           } catch (_error) {
             exception = _error;
-            this.warn('Problem in google analytics code snippet: {1}', exception);
+            this.warn('Problem in analytics initial code snippet: {1}', exception);
           }
         }
         return this;
