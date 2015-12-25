@@ -334,10 +334,9 @@ Version
             **returns {$.Website}**  - Returns the current instance.
          */
         var exception;
-        console.log('PAGE SWITCH');
         if ((this._options.trackingCode != null) && this._options.trackingCode !== '__none__' && window.location.hostname !== 'localhost') {
-          console.log('AA');
           this.debug('Run analytics code: "' + (this.__analyticsCode.sectionSwitch + "\""), sectionName);
+          console.log(sectionName, this.__analyticsCode.sectionSwitch);
           try {
             (new window.Function(this.stringFormat(this.__analyticsCode.sectionSwitch, sectioName)))();
           } catch (_error) {
