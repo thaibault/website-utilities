@@ -214,6 +214,7 @@ Version
         if ((this._options.trackingCode != null) && this._options.trackingCode !== '__none__' && window.location.hostname !== 'localhost') {
           this.debug(("Run analytics code: \"" + this.__analyticsCode.event + "\" ") + 'with arguments:');
           this.debug(arguments);
+          console.log('A', arguments);
           try {
             (new window.Function(eventCategory, eventAction, eventLabel, eventData, eventValue, this.__analyticsCode.event)).apply(this, arguments);
           } catch (_error) {
@@ -596,10 +597,11 @@ Version
             exception = _error;
             this.warn('Problem in analytics initial code snippet: {1}', exception);
           }
-          console.log(sectionName, 'click', $domNode.text(), event, $(this).attr('website-analytics-value') || 1);
           this.on(this.$domNodes.parent.find('a, button'), 'click', (function(_this) {
             return function(event) {
-              return _this.triggerAnalyticsEvent(sectionName, 'click', $domNode.text(), event, $(_this).attr('website-analytics-value') || 1);
+              var $domNode;
+              $domNode = $(_this);
+              return _this.triggerAnalyticsEvent(sectionName, 'click', $domNode.text(), event, $domNode.attr('website-analytics-value') || 1);
             };
           })(this));
         }
