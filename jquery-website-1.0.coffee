@@ -133,7 +133,7 @@ m.parentNode.insertBefore(a,m)})(
 window,document,'script','//www.google-analytics.com/analytics.js','ga');
 window.ga('create', '{1}', '{2}');
 window.ga('set','anonymizeIp',true);
-window.ga('send', 'pageview');'''
+window.ga('send', 'pageview', '{3}');'''
                 sectionSwitch: "window.ga('send', 'pageview', {page: '{1}'});"
                 event: '''
 window.ga(
@@ -534,13 +534,18 @@ window.ga(
             if this._options.trackingCode? and
             this._options.trackingCode isnt '__none__' and
             window.location.hostname isnt 'localhost'
+                sectionName = 'home'
+                if window.location.hash
+                    sectionName = window.location.hash.substring '#'.length
                 this.debug(
                     "Run analytics code: \"#{this.__analyticsCode.initial}\""
-                    this._options.trackingCode, this._options.domain)
+                    this._options.trackingCode, this._options.domain
+                    sectionName)
                 try
                     (new window.Function(this.stringFormat(
                         this.__analyticsCode.initial
                         this._options.trackingCode, this._options.domain
+                        sectionName
                     )))()
                 catch exception
                     this.warn(
