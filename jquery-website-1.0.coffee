@@ -124,14 +124,23 @@ main = ($) ->
                 domain: 'auto'
             }, @startUpAnimationIsComplete=false, @_viewportIsOnTop=false,
             @_currentMediaQueryMode='', @languageHandler=null,
-            @__analyticsCode='''
+            @__analyticsCode={
+                initial: '''
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new window.Date();
 a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;
 m.parentNode.insertBefore(a,m)})(
 window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', '{1}', '{2}');ga('set','anonymizeIp',true);
-ga('send', 'pageview');'''
+window.ga('create', '{1}', '{2}');
+window.ga('set','anonymizeIp',true);
+window.ga('send', 'pageview');'''
+                sectionSwitch: "window.ga('send', 'pageview', {page: {1}});"
+                event: '''
+window.ga(
+    'send', 'event', eventCategory, eventAction, eventLabel, eventValue,
+    eventData);
+'''
+            }
         ) ->
             ###
                 Initializes the interactive web application.
@@ -162,7 +171,7 @@ ga('send', 'pageview');'''
             else
                 this.on this.$domNodes.window, 'load', onLoaded
             this._addNavigationEvents()._addMediaQueryChangeEvents(
-            )._triggerWindowResizeEvents()._handleAnalytics()
+            )._triggerWindowResizeEvents()._handleAnalyticsInitialisation()
             if not this._options.language.logging?
                 this._options.language.logging = this._options.logging
             if this._options.activateLanguageSupport
@@ -303,6 +312,20 @@ ga('send', 'pageview');'''
 
                 **returns {$.Website}**  - Returns the current instance.
             ###
+            if this._options.trackingCode? and
+            this._options.trackingCode isnt '__none__' and
+            window.location.hostname isnt 'localhost'
+                this.debug(
+                    'Run analytics code: "' +
+                    "#{this.__analyticsCode.sectionSwitch}\"", sectionName)
+                try
+                    (new window.Function(this.stringFormat(
+                        this.__analyticsCode.sectionSwitch, sectioName
+                    )))()
+                catch exception
+                    this.warn(
+                        'Problem in google analytics code snippet: {1}'
+                        exception)
             this
         _onStartUpAnimationComplete: ->
             ###
@@ -501,7 +524,7 @@ ga('send', 'pageview');'''
                 $(window).scrollTo(
                     {top: 0, left: 0}, this._options.scrollToTop.options)
             this
-        _handleAnalytics: ->
+        _handleAnalyticsInitialisation: ->
             ###
                 Executes the page tracking code.
 
@@ -511,12 +534,12 @@ ga('send', 'pageview');'''
             this._options.trackingCode isnt '__none__' and
             window.location.hostname isnt 'localhost'
                 this.debug(
-                    "Run analytics code: \"#{this.__analyticsCode}\""
+                    "Run analytics code: \"#{this.__analyticsCode.initial}\""
                     this._options.trackingCode, this._options.domain)
                 try
-                    (new Function(this.stringFormat(
-                        this.__analyticsCode, this._options.trackingCode
-                        this._options.domain
+                    (new window.Function(this.stringFormat(
+                        this.__analyticsCode.initial
+                        this._options.trackingCode, this._options.domain
                     )))()
                 catch exception
                     this.warn(
