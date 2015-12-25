@@ -136,7 +136,7 @@ Version
         this._currentMediaQueryMode = _at__currentMediaQueryMode != null ? _at__currentMediaQueryMode : '';
         this.languageHandler = _at_languageHandler != null ? _at_languageHandler : null;
         this.__analyticsCode = _at___analyticsCode != null ? _at___analyticsCode : {
-          initial: '(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\n(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new window.Date();\na=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;\nm.parentNode.insertBefore(a,m)})(\nwindow,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');\nwindow.ga(\'create\', \'{1}\', \'{2}\');\nwindow.ga(\'set\',\'anonymizeIp\',true);\nwindow.ga(\'send\', \'pageview\');',
+          initial: '(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\n(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new window.Date();\na=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;\nm.parentNode.insertBefore(a,m)})(\nwindow,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');\nwindow.ga(\'create\', \'{1}\', \'{2}\');\nwindow.ga(\'set\',\'anonymizeIp\',true);\nwindow.ga(\'send\', \'pageview\', \'{3}\');',
           sectionSwitch: "window.ga('send', 'pageview', {page: '{1}'});",
           event: 'window.ga(\n    \'send\', \'event\', eventCategory, eventAction, eventLabel, eventValue,\n    eventData);'
         };
@@ -560,11 +560,15 @@ Version
         
             **returns {$.Website}** - Returns the current instance.
          */
-        var exception;
+        var exception, sectionName;
         if ((this._options.trackingCode != null) && this._options.trackingCode !== '__none__' && window.location.hostname !== 'localhost') {
-          this.debug("Run analytics code: \"" + this.__analyticsCode.initial + "\"", this._options.trackingCode, this._options.domain);
+          sectionName = 'home';
+          if (window.location.hash) {
+            sectionName = window.location.hash.substring('#'.length);
+          }
+          this.debug("Run analytics code: \"" + this.__analyticsCode.initial + "\"", this._options.trackingCode, this._options.domain, sectionName);
           try {
-            (new window.Function(this.stringFormat(this.__analyticsCode.initial, this._options.trackingCode, this._options.domain)))();
+            (new window.Function(this.stringFormat(this.__analyticsCode.initial, this._options.trackingCode, this._options.domain, sectionName)))();
           } catch (_error) {
             exception = _error;
             this.warn('Problem in google analytics code snippet: {1}', exception);
