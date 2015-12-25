@@ -336,7 +336,7 @@ Version
         var exception;
         if ((this._options.trackingCode != null) && this._options.trackingCode !== '__none__' && window.location.hostname !== 'localhost') {
           this.debug('Run analytics code: "' + (this.__analyticsCode.sectionSwitch + "\""), sectionName);
-          console.log(sectionName, this.__analyticsCode.sectionSwitch);
+          console.log(sectionName, this.__analyticsCode.sectionSwitch, arguments);
           try {
             (new window.Function(this.stringFormat(this.__analyticsCode.sectionSwitch, sectioName)))();
           } catch (_error) {
@@ -498,7 +498,6 @@ Version
         this.$domNodes.window.hashchange((function(_this) {
           return function() {
             if (_this.startUpAnimationIsComplete) {
-              console.log('AA', window.location.hash.substring('#'.length));
               return _this.fireEvent('switchSection', false, _this, window.location.hash.substring('#'.length));
             }
           };
