@@ -498,7 +498,8 @@ Version
         this.$domNodes.window.hashchange((function(_this) {
           return function() {
             if (_this.startUpAnimationIsComplete) {
-              return _this.fireEvent('switchSection', false, _this, window.location.hash);
+              console.log('AA', window.location.hash.substring('#'.length));
+              return _this.fireEvent('switchSection', false, _this, window.location.hash.substring('#'.length));
             }
           };
         })(this));
