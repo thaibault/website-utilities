@@ -54,7 +54,7 @@ Version
 
       Website.prototype.__name__ = 'Website';
 
-      Website.prototype.initialize = function(options, _at__parentOptions, _at_startUpAnimationIsComplete, _at__viewportIsOnTop, _at__currentMediaQueryMode, _at_languageHandler, _at___analyticsCode) {
+      Website.prototype.initialize = function(options, _at__parentOptions, _at_startUpAnimationIsComplete, _at_currentSectionName, _at__viewportIsOnTop, _at__currentMediaQueryMode, _at_languageHandler, _at___analyticsCode) {
         var onLoaded;
         if (options == null) {
           options = {};
@@ -132,11 +132,12 @@ Version
           domain: 'auto'
         };
         this.startUpAnimationIsComplete = _at_startUpAnimationIsComplete != null ? _at_startUpAnimationIsComplete : false;
+        this.currentSectionName = _at_currentSectionName != null ? _at_currentSectionName : null;
         this._viewportIsOnTop = _at__viewportIsOnTop != null ? _at__viewportIsOnTop : false;
         this._currentMediaQueryMode = _at__currentMediaQueryMode != null ? _at__currentMediaQueryMode : '';
         this.languageHandler = _at_languageHandler != null ? _at_languageHandler : null;
         this.__analyticsCode = _at___analyticsCode != null ? _at___analyticsCode : {
-          initial: '(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\n(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new window.Date();\na=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;\nm.parentNode.insertBefore(a,m)})(\nwindow,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');\nwindow.ga(\'create\', \'{1}\', \'{2}\');\nwindow.ga(\'set\',\'anonymizeIp\',true);\nwindow.ga(\'send\', \'pageview\', \'{3}\');',
+          initial: '(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\n(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new window.Date();\na=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;\nm.parentNode.insertBefore(a,m)})(\nwindow,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');\nwindow.ga(\'create\', \'{1}\', \'{2}\');\nwindow.ga(\'set\', \'anonymizeIp\', true);\nwindow.ga(\'send\', \'pageview\', {page: \'{3}\'});',
           sectionSwitch: "window.ga('send', 'pageview', {page: '{1}'});",
           event: 'window.ga(\n    \'send\', \'event\', eventCategory, eventAction, eventLabel, eventValue,\n    eventData);'
         };
@@ -148,6 +149,13 @@ Version
         
             **returns {$.Website}** - Returns the current instance.
          */
+        if (this.currenSectionName == null) {
+          if (window.location.hash) {
+            this.currentSectionName = window.location.hash.substring('#'.length);
+          } else {
+            this.currenSectionName = 'home';
+          }
+        }
         this._onViewportMovesToTop = this.debounce(this.getMethod(this._onViewportMovesToTop));
         this._onViewportMovesAwayFromTop = this.debounce(this.getMethod(this._onViewportMovesAwayFromTop));
         this._options = $.extend(true, {}, this._parentOptions, this._options);
@@ -357,10 +365,11 @@ Version
             **returns {$.Website}**  - Returns the current instance.
          */
         var exception;
-        if ((this._options.trackingCode != null) && this._options.trackingCode !== '__none__' && window.location.hostname !== 'localhost') {
-          this.debug('Run analytics code: "' + (this.__analyticsCode.sectionSwitch + "\""), sectionName);
+        if ((this._options.trackingCode != null) && this._options.trackingCode !== '__none__' && window.location.hostname !== 'localhost' && this.currentSectionName !== sectionName) {
+          this.currentSectionName = sectionName;
+          this.debug('Run analytics code: "' + (this.__analyticsCode.sectionSwitch + "\""), this.currentSectionName);
           try {
-            (new window.Function(this.stringFormat(this.__analyticsCode.sectionSwitch, sectionName)))();
+            (new window.Function(this.stringFormat(this.__analyticsCode.sectionSwitch, this.currentSectionName)))();
           } catch (_error) {
             exception = _error;
             this.warn('Problem in analytics section switch code snippet: {1}', exception);
@@ -583,15 +592,11 @@ Version
         
             **returns {$.Website}** - Returns the current instance.
          */
-        var exception, sectionName;
+        var exception;
         if ((this._options.trackingCode != null) && this._options.trackingCode !== '__none__' && window.location.hostname !== 'localhost') {
-          sectionName = 'home';
-          if (window.location.hash) {
-            sectionName = window.location.hash.substring('#'.length);
-          }
-          this.debug("Run analytics code: \"" + this.__analyticsCode.initial + "\"", this._options.trackingCode, this._options.domain, sectionName);
+          this.debug("Run analytics code: \"" + this.__analyticsCode.initial + "\"", this._options.trackingCode, this._options.domain, this.currentSectionName);
           try {
-            (new window.Function(this.stringFormat(this.__analyticsCode.initial, this._options.trackingCode, this._options.domain, sectionName)))();
+            (new window.Function(this.stringFormat(this.__analyticsCode.initial, this._options.trackingCode, this._options.domain, this.currentSectionName)))();
           } catch (_error) {
             exception = _error;
             this.warn('Problem in analytics initial code snippet: {1}', exception);
@@ -600,7 +605,7 @@ Version
             return function(event) {
               var $domNode;
               $domNode = $(event.target);
-              return _this.triggerAnalyticsEvent(sectionName, 'click', $domNode.text(), event.data || {}, $domNode.attr('website-analytics-value') || 1);
+              return _this.triggerAnalyticsEvent(_this.currentSectionName, 'click', $domNode.text(), event.data || {}, $domNode.attr('website-analytics-value') || 1);
             };
           })(this));
         }
