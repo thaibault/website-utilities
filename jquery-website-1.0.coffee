@@ -122,9 +122,9 @@ main = ($) ->
                         showAnimation: duration: 'normal'
                         hideAnimation: duration: 'normal'
                 domain: 'auto'
-            }, @startUpAnimationIsComplete=false, @_viewportIsOnTop=false,
-            @_currentMediaQueryMode='', @languageHandler=null,
-            @__analyticsCode={
+            }, @startUpAnimationIsComplete=false, @currentSectionName=null
+            @_viewportIsOnTop=false, @_currentMediaQueryMode=''
+            @languageHandler=null, @__analyticsCode={
                 initial: '''
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new window.Date();
@@ -132,8 +132,8 @@ a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;
 m.parentNode.insertBefore(a,m)})(
 window,document,'script','//www.google-analytics.com/analytics.js','ga');
 window.ga('create', '{1}', '{2}');
-window.ga('set','anonymizeIp',true);
-window.ga('send', 'pageview', '{3}');'''
+window.ga('set', 'anonymizeIp', true);
+window.ga('send', 'pageview', {page: '{3}'});'''
                 sectionSwitch: "window.ga('send', 'pageview', {page: '{1}'});"
                 event: '''
 window.ga(
@@ -149,6 +149,12 @@ window.ga(
 
                 **returns {$.Website}** - Returns the current instance.
             ###
+            if not this.currenSectionName?
+                if window.location.hash
+                    this.currentSectionName = window.location.hash.substring(
+                        '#'.length)
+                else
+                    this.currenSectionName = 'home'
             # Wrap event methods with debounceing handler.
             this._onViewportMovesToTop = this.debounce(
                 this.getMethod this._onViewportMovesToTop)
@@ -337,15 +343,21 @@ window.ga(
 
                 **returns {$.Website}**  - Returns the current instance.
             ###
-            if this._options.trackingCode? and
-            this._options.trackingCode isnt '__none__' and
-            window.location.hostname isnt 'localhost'
+            if(
+                this._options.trackingCode? and
+                this._options.trackingCode isnt '__none__' and
+                window.location.hostname isnt 'localhost' and
+                this.currentSectionName isnt sectionName
+            )
+                this.currentSectionName = sectionName
                 this.debug(
                     'Run analytics code: "' +
-                    "#{this.__analyticsCode.sectionSwitch}\"", sectionName)
+                    "#{this.__analyticsCode.sectionSwitch}\""
+                    this.currentSectionName)
                 try
                     (new window.Function(this.stringFormat(
-                        this.__analyticsCode.sectionSwitch, sectionName
+                        this.__analyticsCode.sectionSwitch
+                        this.currentSectionName
                     )))()
                 catch exception
                     this.warn(
@@ -559,18 +571,15 @@ window.ga(
             if this._options.trackingCode? and
             this._options.trackingCode isnt '__none__' and
             window.location.hostname isnt 'localhost'
-                sectionName = 'home'
-                if window.location.hash
-                    sectionName = window.location.hash.substring '#'.length
                 this.debug(
                     "Run analytics code: \"#{this.__analyticsCode.initial}\""
                     this._options.trackingCode, this._options.domain
-                    sectionName)
+                    this.currentSectionName)
                 try
                     (new window.Function(this.stringFormat(
                         this.__analyticsCode.initial
                         this._options.trackingCode, this._options.domain
-                        sectionName
+                        this.currentSectionName
                     )))()
                 catch exception
                     this.warn(
@@ -581,8 +590,10 @@ window.ga(
                 ) =>
                     $domNode = $ event.target
                     this.triggerAnalyticsEvent(
-                        sectionName, 'click', $domNode.text(), event.data or {}
-                        $domNode.attr('website-analytics-value') or 1)
+                        this.currentSectionName, 'click', $domNode.text()
+                        event.data or {}, $domNode.attr(
+                            'website-analytics-value'
+                        ) or 1)
             this
 
         # endregion
