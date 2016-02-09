@@ -398,8 +398,10 @@ window.ga(
                 this.$domNodes.mediaQueryIndicator.prependTo(
                     this.$domNodes.parent
                 ).addClass "hidden-#{value[1]}"
-                if(this.$domNodes.mediaQueryIndicator.is(':hidden') and
-                   value[0] isnt this._currentMediaQueryMode)
+                if(
+                    this.$domNodes.mediaQueryIndicator.is(':hidden') and
+                    value[0] isnt this._currentMediaQueryMode
+                )
                     this.fireEvent.apply(
                         this, [
                             'changeMediaQueryMode', false, this,
