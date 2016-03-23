@@ -1,13 +1,13 @@
 {
-    "name": "jquery-tools",
+    "name": "jQuery-website",
     "version": "1.0.0",
-    "description": "upgrade to object orientated rock solid plugins",
-    "keywords": ["jquery", "tools"],
+    "description": "extend your web app",
+    "keywords": ["jquery", "website"],
     "files": ["index.js"],
     "repository": {
-        "type": "git", "url": "https://github.com/thaibault/jQuery-tools"
+        "type": "git", "url": "https://github.com/thaibault/jQuery-website"
     },
-    "homepage": "http://torben.website/jQuery-tools",
+    "homepage": "http://torben.website/jQuery-website",
     "main": "index.compiled.js",
     "webOptimizer": {"moduleAliases": {"jquery": "jquery/src/jquery"}},
     "scripts": {
@@ -19,8 +19,14 @@
         "postinstall": "webOptimizer build"
     },
     "license": "ISC",
+    "dependencies": {
+        "jQuery-tools": "git+ssh://git@github.com/thaibault/jQuery-tools.git",
+        "jQuery-lang": "git+ssh://git@github.com/thaibault/jQuery-lang.git",
+        "spin.js": "2.3.2",
+        "jquery.scrollto": "2.1.2"
+    },
     "devDependencies": {
-        "jquery": "2.2.0",
+        "jquery": "2.2.2",
         "qunitjs": "*",
         "sizzle": "*",
         "webOptimizer": "git+ssh://git@github.com/thaibault/webOptimizer.git"
