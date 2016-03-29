@@ -1,8 +1,6 @@
 #!/usr/bin/env require
 # -*- coding: utf-8 -*-
-
 # region header
-
 # Copyright Torben Sickert (t.sickert["~at~"]gmail.com) 16.12.2012
 
 # License
@@ -10,37 +8,25 @@
 
 # This library written by Torben Sickert stand under a creative commons naming
 # 3.0 unported license. see http://creativecommons.org/licenses/by/3.0/deed.de
-
-module 'jQuery/website'
-
 # endregion
-
+qunit = require 'qunit.js'
+$ = require 'jquery'
+require 'index'
+qunit.start()
 # region tests
-
-    # region mock-up
-
+## region mock-up
 website = $.Website()
-
-    # endregion
-
-    # region public methods
-
-        # region special
-
+## endregion
+## region public methods
+## # region special
 test 'initialize', -> ok website
-
-        # endregion
-
+### endregion
 test 'disableScrolling|enableScrolling', ->
     strictEqual website.disableScrolling(), website
     strictEqual website.enableScrolling(), website
-
-    # endregion
-
-    # region protected methods
-
-        # region event
-
+## endregion
+## region protected methods
+## # region event
 test '_onViewportMovesToTop', ->
     website._onViewportMovesToTop()
     # NOTE: Returns timeout id because of debounceing.
@@ -62,11 +48,8 @@ test '_onChangeToExtraSmallMode', ->
 test '_onSwitchSection', -> strictEqual website._onSwitchSection(), website
 test '_onStartUpAnimationComplete', ->
     strictEqual website._onStartUpAnimationComplete(), website
-
-        # endregion
-
-        # region helper
-
+## # endregion
+## # region helper
 test '_addMediaQueryChangeEvents', ->
     strictEqual website._addMediaQueryChangeEvents(), website
 test '_triggerWindowResizeEvents', ->
@@ -83,16 +66,10 @@ test '_handleScrollToTopButton', ->
 test '_scrollToTop', -> strictEqual website._scrollToTop(), website
 test '_handleAnalytics', ->
     strictEqual website._handleAnalytics(), website
-
-        # endregion
-
-    # endregion
-
+## # endregion
+## endregion
 # endregion
-
 # region vim modline
-
 # vim: set tabstop=4 shiftwidth=4 expandtab:
 # vim: foldmethod=marker foldmarker=region,endregion:
-
 # endregion
