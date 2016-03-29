@@ -20,7 +20,7 @@ website = $.Website()
 ## region public methods
 ## # region special
 test 'initialize', -> ok website
-### endregion
+## # endregion
 test 'disableScrolling|enableScrolling', ->
     strictEqual website.disableScrolling(), website
     strictEqual website.enableScrolling(), website
