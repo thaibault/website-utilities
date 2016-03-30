@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "extend your web app",
     "keywords": ["jquery", "website"],
-    "files": ["index.js"],
+    "files": ["index.coffee"],
     "repository": {
         "type": "git", "url": "https://github.com/thaibault/jQuery-website"
     },
@@ -11,7 +11,7 @@
     "main": "index.compiled.js",
     "webOptimizer": {"moduleAliases": {
         "jQuery-tools": "jQuery-tools/index.compiled",
-        "jQuery-lang": "jQuery-lang/index.compiled",
+        "jQuery-lang": "node_modules/jQuery-lang/index.compiled.js",
         "jQuery-scrollTo": "jQuery.scrollto/jquery.scrollTo",
         "jQuery-spin": "spin.js/jquery.spin"
     }},
