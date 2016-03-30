@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "extend your web app",
     "keywords": ["jquery", "website"],
-    "files": ["index.coffee"],
+    "files": ["index.coffee", "index.less"],
     "repository": {
         "type": "git", "url": "https://github.com/thaibault/jQuery-website"
     },
