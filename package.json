@@ -10,7 +10,7 @@
     "homepage": "http://torben.website/jQuery-website",
     "main": "index.compiled.js",
     "webOptimizer": {"moduleAliases": {
-        "jQuery-scrollTo": "jQuery.scrollto/jquery.scrollTo",
+        "jQuery-scrollTo": "jquery.scrollto/jquery.scrollTo",
         "jQuery-spin": "spin.js/jquery.spin"
     }},
     "scripts": {
