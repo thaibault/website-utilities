@@ -64,8 +64,8 @@ test '_addNavigationEvents', ->
 test '_handleScrollToTopButton', ->
     strictEqual website._handleScrollToTopButton(), website
 test '_scrollToTop', -> strictEqual website._scrollToTop(), website
-test '_handleAnalytics', ->
-    strictEqual website._handleAnalytics(), website
+test '_handleAnalyticsInitialisation', ->
+    strictEqual website._handleAnalyticsInitialisation(), website
 ## # endregion
 ## endregion
 # endregion

@@ -361,7 +361,7 @@ eventData);
         this.startUpAnimationIsComplete = true
         this
     # endregion
-    # region helper
+    ## region helper
     _addMediaQueryChangeEvents: ->
         ###
             This method adds triggers for responsive design switches.
@@ -504,7 +504,7 @@ eventData);
 
             **returns {$.Website}** - Returns the current instance.
         ###
-        this.$domNodes.window.addEventListener 'hashchange', (=>
+        window.addEventListener 'hashchange', (=>
             if this.startUpAnimationIsComplete
                 this.fireEvent(
                     'switchSection', false, this
@@ -582,7 +582,7 @@ eventData);
                         'website-analytics-value'
                     ) or 1)
         this
-    # endregion
+    ## endregion
     # endregion
 # endregion
 module.exports = $.Website = -> $.Tools().controller Website, arguments
