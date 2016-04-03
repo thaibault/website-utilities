@@ -1,8 +1,6 @@
 //!/usr/bin/env lessc
 // -*- coding: utf-8 -*-
-
 /* region header
-
 Copyright Torben Sickert 16.12.2012
 
 License
@@ -11,31 +9,20 @@ License
 This library written by Torben Sickert stand under a creative commons naming
 3.0 unported license. see http://creativecommons.org/licenses/by/3.0/deed.de
 */
-
 /// region constants
-
 //// region locations
-
 @fontPath: '../font/';
 @imagePath: '../image/';
-
 //// endregion
-
 //// region extra small dimension
-
 @minimumExtraExtraSmallWidthInPixel: 360px;
 @minimumExtraSmallWidthInPixel: 500px;
-
 //// endregion
-
 /// region bootstrap default
-
 @minimumSmallWidthInPixel: 768px;
 @minimumMediumWidthInPixel: 992px;
 @minimumLargeWidthInPixel: 1200px;
-
 /// endregion
-
 @backgroundColor: #ffffff;
 @disabledColor: #eeeeee;
 @fontColor: #555555;
@@ -43,15 +30,10 @@ This library written by Torben Sickert stand under a creative commons naming
 
 @fontFamily: 'Open Sans', open-sans, sans-serif;
 @fontFamilyCondensed: 'Open Sans Condensed', open-sans-condensed, sans-serif;
-
 /// endregion
-
 /** region font */
-
 /*** region open sans */
-
 /**** region light */
-
 @font-face {
     font-family: open-sans;
     src: url('@{fontPath}open-sans/Light/OpenSans-Light.eot');
@@ -62,11 +44,8 @@ This library written by Torben Sickert stand under a creative commons naming
     font-weight: 300;
     font-style: normal;
 }
-
 /**** endregion */
-
 /**** region light italic */
-
 @font-face {
     font-family: open-sans;
     src: url('@{fontPath}open-sans/LightItalic/OpenSans-LightItalic.eot');
@@ -77,11 +56,8 @@ This library written by Torben Sickert stand under a creative commons naming
     font-weight: 300;
     font-style: italic;
 }
-
 /**** endregion */
-
 /**** region regular */
-
 @font-face {
     font-family: open-sans;
     src: url('@{fontPath}open-sans/Regular/OpenSans-Regular.eot');
@@ -92,11 +68,8 @@ This library written by Torben Sickert stand under a creative commons naming
     font-weight: normal;
     font-style: normal;
 }
-
 /**** endregion */
-
 /**** region italic */
-
 @font-face {
     font-family: open-sans;
     src: url('@{fontPath}open-sans/Italic/OpenSans-Italic.eot');
@@ -107,11 +80,8 @@ This library written by Torben Sickert stand under a creative commons naming
     font-weight: normal;
     font-style: italic;
 }
-
 /**** endregion */
-
 /**** region semibold */
-
 @font-face {
     font-family: open-sans;
     src: url('@{fontPath}open-sans/Semibold/OpenSans-Semibold.eot');
@@ -122,11 +92,8 @@ This library written by Torben Sickert stand under a creative commons naming
     font-weight: 600;
     font-style: normal;
 }
-
 /**** endregion */
-
 /**** region semibold italic */
-
 @font-face {
     font-family: open-sans;
     src: url('@{fontPath}open-sans/SemiboldItalic/OpenSans-SemiboldItalic.eot');
@@ -137,11 +104,8 @@ This library written by Torben Sickert stand under a creative commons naming
     font-weight: 600;
     font-style: italic;
 }
-
 /**** endregion */
-
 /**** region bold */
-
 @font-face {
     font-family: open-sans;
     src: url('@{fontPath}open-sans/Bold/OpenSans-Bold.eot');
@@ -152,11 +116,8 @@ This library written by Torben Sickert stand under a creative commons naming
     font-weight: bold;
     font-style: normal;
 }
-
 /**** endregion */
-
 /**** region bold italic */
-
 @font-face {
     font-family: open-sans;
     src: url('@{fontPath}open-sans/BoldItalic/OpenSans-BoldItalic.eot');
@@ -167,11 +128,8 @@ This library written by Torben Sickert stand under a creative commons naming
     font-weight: bold;
     font-style: italic;
 }
-
 /**** endregion bold italic */
-
 /**** region extrabold */
-
 @font-face {
     font-family: open-sans;
     src: url('@{fontPath}open-sans/ExtraBold/OpenSans-ExtraBold.eot');
@@ -182,11 +140,8 @@ This library written by Torben Sickert stand under a creative commons naming
     font-weight: 800;
     font-style: normal;
 }
-
 /**** endregion */
-
 /**** region extrabold italic */
-
 @font-face {
     font-family: open-sans;
     src: url('@{fontPath}open-sans/ExtraBoldItalic/OpenSans-ExtraBoldItalic.eot');
@@ -197,15 +152,10 @@ This library written by Torben Sickert stand under a creative commons naming
     font-weight: 800;
     font-style: italic;
 }
-
 /**** endregion extrabold italic */
-
 /*** endregion */
-
 /*** region open sans condensed */
-
 /**** region bold */
-
 @font-face {
     font-family: open-sans-condensed;
     src: url('@{fontPath}open-sans-condensed/CondensedBold/OpenSans-CondBold-webfont.eot');
@@ -216,11 +166,8 @@ This library written by Torben Sickert stand under a creative commons naming
     font-weight: bold;
     font-style: normal;
 }
-
 /**** endregion */
-
 /**** region open sans light */
-
 @font-face {
     font-family: open-sans-condensed;
     src: url('@{fontPath}open-sans-condensed/CondensedLight/OpenSans-CondLight-webfont.eot');
@@ -231,11 +178,8 @@ This library written by Torben Sickert stand under a creative commons naming
     font-weight: 300;
     font-style: normal;
 }
-
 /**** endregion */
-
 /**** region open sans italic */
-
 @font-face {
     font-family: open-sans-condensed;
     src: url('@{fontPath}open-sans-condensed/CondensedLightItalic/OpenSans-CondLightItalic-webfont.eot');
@@ -246,13 +190,9 @@ This library written by Torben Sickert stand under a creative commons naming
     font-weight: 300;
     font-style: italic;
 }
-
 /**** endregion */
-
 /*** endregion */
-
 /*** region glyphicons halflings */
-
 @font-face {
     font-family: 'Glyphicons Halflings';
     src: url('@{fontPath}glyphicons-halflings/glyphicons-halflings-regular.eot');
@@ -261,11 +201,8 @@ This library written by Torben Sickert stand under a creative commons naming
          url('@{fontPath}glyphicons-halflings/glyphicons-halflings-regular.ttf') format('truetype'),
          url('@{fontPath}glyphicons-halflings/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
-
 /*** endregion */
-
 /*** region glyphicons social regular */
-
 @font-face {
     font-family: 'Glyphicons Social Regular';
     src: url('@{fontPath}glyphicons-halflings/glyphicons-halflings-social-regular.eot');
@@ -274,18 +211,11 @@ This library written by Torben Sickert stand under a creative commons naming
          url('@{fontPath}glyphicons-halflings/glyphicons-halflings-social-regular.ttf') format('truetype'),
          url('@{fontPath}glyphicons-halflings/glyphicons-halflings-social-regular.svg#glyphicons_socialregular') format('svg');
 }
-
 /*** endregion */
-
 /** endregion */
-
 /* endregion */
-
-#website() {
-
+.website() {
     /* region bootstrap fixes */
-
-    #bootstrap-nested-labels() {
         /*
             This fix allows label nested non checkbox input fields to avoid
             referencing inputs via ids.
@@ -332,17 +262,13 @@ This library written by Torben Sickert stand under a creative commons naming
             &12 { width: percentage((12 / 12)); }
         }
     }
-
     /* endregion */
-
     margin: 0;
     font-family: @fontFamily;
     font-size: 14px;
 
     langreplacement { display: none; }
-
     // region headline
-
     h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
         font-family: @fontFamily;
     }
@@ -352,22 +278,15 @@ This library written by Torben Sickert stand under a creative commons naming
         font-size: 3em;
     }
     h2 { font-size: 2em; }
-
     // endregion
-
     // region link
-
     a, a:hover, a:focus, a:visited {
         outline: none;
         text-decoration: none;
     }
-
     // endregion
-
     /* region form */
-
     /** region styled select */
-
     /*
         Enables bootstraps form element combinations with this provided
         wrapper.
@@ -407,11 +326,8 @@ This library written by Torben Sickert stand under a creative commons naming
             &::-ms-expand { display: none; }
         }
     }
-
     /** endregion */
-
     /** region styled checkbox */
-
     .form-horizontal .checkbox, .checkbox {
         label {
             .checkbox-styled-wrapper {
@@ -463,15 +379,10 @@ This library written by Torben Sickert stand under a creative commons naming
     form:not(.form-horizontal) .checkbox {
         margin-bottom: 20px;
     }
-
     /** endregion */
-
     /* endregion */
-
 }
-
 /* region classes */
-
 /*
     NOTE: Classes should be usable for the body itself and their for have to be
     outside.
@@ -509,12 +420,8 @@ div.website-window-loading-cover {
         left: 50%;
     }
 }
-
 /* endregion */
-
 // region vim modline
-
 // vim: set tabstop=4 shiftwidth=4 expandtab:
 // vim: foldmethod=marker foldmarker=region,endregion:
-
 // endregion
