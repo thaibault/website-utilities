@@ -216,6 +216,7 @@ This library written by Torben Sickert stand under a creative commons naming
 /* endregion */
 .website() {
     /* region bootstrap fixes */
+    .bootstrap-nested-labels() {
         /*
             This fix allows label nested non checkbox input fields to avoid
             referencing inputs via ids.
@@ -333,7 +334,7 @@ This library written by Torben Sickert stand under a creative commons naming
             .checkbox-styled-wrapper {
                 > input[type="checkbox"] {
                     &:checked ~ span.checkbox-styled
-                    > span.checkbox-styled-checked { #generic > .opacity(1); }
+                    > span.checkbox-styled-checked { .generic .opacity(1); }
                     &:disabled ~ span.checkbox-styled {
                         background-color: @disabledColor;
                     }
@@ -350,8 +351,8 @@ This library written by Torben Sickert stand under a creative commons naming
                     padding: 0;
 
                     > span.checkbox-styled-checked {
-                        #generic > .transform(rotate(-45deg));
-                        #generic > .opacity(0);
+                        .generic .transform(rotate(-45deg));
+                        .generic .opacity(0);
 
                         position: absolute;
                         width: 13px;
@@ -376,9 +377,7 @@ This library written by Torben Sickert stand under a creative commons naming
         padding-top: 3px;
         margin-top: 2px;
     }
-    form:not(.form-horizontal) .checkbox {
-        margin-bottom: 20px;
-    }
+    form:not(.form-horizontal) .checkbox { margin-bottom: 20px; }
     /** endregion */
     /* endregion */
 }
