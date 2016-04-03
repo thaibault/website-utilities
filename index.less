@@ -31,6 +31,7 @@ This library written by Torben Sickert stand under a creative commons naming
 @fontFamily: 'Open Sans', open-sans, sans-serif;
 @fontFamilyCondensed: 'Open Sans Condensed', open-sans-condensed, sans-serif;
 /// endregion
+@import '~genericStyle/index';
 /** region font */
 /*** region open sans */
 /**** region light */
@@ -334,7 +335,9 @@ This library written by Torben Sickert stand under a creative commons naming
             .checkbox-styled-wrapper {
                 > input[type="checkbox"] {
                     &:checked ~ span.checkbox-styled
-                    > span.checkbox-styled-checked { .generic .opacity(1); }
+                    > span.checkbox-styled-checked {
+                        .genericStyle .opacity(1);
+                    }
                     &:disabled ~ span.checkbox-styled {
                         background-color: @disabledColor;
                     }
@@ -351,8 +354,8 @@ This library written by Torben Sickert stand under a creative commons naming
                     padding: 0;
 
                     > span.checkbox-styled-checked {
-                        .generic .transform(rotate(-45deg));
-                        .generic .opacity(0);
+                        .genericStyle .transform(rotate(-45deg));
+                        .genericStyle .opacity(0);
 
                         position: absolute;
                         width: 13px;

@@ -29,6 +29,7 @@
         "jquery.scrollto": "2.1.2"
     },
     "devDependencies": {
+        "genericStyle": "git+ssh://git@github.com/thaibault/genericStyle.git",
         "jquery": "2.2.2",
         "qunitjs": "*",
         "sizzle": "*",
