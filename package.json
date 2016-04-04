@@ -11,7 +11,8 @@
     "main": "index.compiled.js",
     "webOptimizer": {"moduleAliases": {
         "jQuery-scrollTo": "jquery.scrollto/jquery.scrollTo",
-        "jQuery-spin": "spin.js/jquery.spin"
+        "jQuery-spin": "spin.js/jquery.spin",
+        "spin": "spin.js/spin"
     }},
     "scripts": {
         "build": "webOptimizer build",
