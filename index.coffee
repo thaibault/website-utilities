@@ -32,10 +32,11 @@ Version
 ###
 # endregion
 $ = require 'jquery'
-require 'jQuery-tools'
-require 'jQuery-scrollTo'
-require 'jQuery-spin'
-require 'jQuery-lang'
+$Tools = require 'jQuery-tools'
+$.scrollTo = require 'jQuery-scrollTo'
+$.scrollTorequire 'jQuery-spin'
+$.Lang = require 'jQuery-lang'
+cascadingStyleCheets = require './index.less'
 # region plugins/classes
 class Website extends $.Tools.class
     ###This plugin holds all needed methods to extend a whole website.###

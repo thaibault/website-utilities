@@ -26,6 +26,7 @@
     "dependencies": {
         "jQuery-tools": "git+ssh://git@github.com/thaibault/jQuery-tools.git",
         "jQuery-lang": "git+ssh://git@github.com/thaibault/jQuery-lang.git",
+        "genericStyle": "git+ssh://git@github.com/thaibault/genericStyle.git",
         "spin.js": "2.3.2",
         "jquery.scrollto": "2.1.2"
     },
