@@ -15,7 +15,8 @@
             "jQuery-scrollTo": "jquery.scrollto/jquery.scrollTo",
             "jQuery-spin": "spin.js/jquery.spin",
             "spin": "spin.js/spin",
-            "bootstrap": "bootstrap/dist/css/bootstrap"
+            "genericStyle.less": "genericStyle/index",
+            "bootstrap.less": "bootstrap/less/bootstrap"
         }
     },
     "scripts": {
