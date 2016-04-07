@@ -32,6 +32,7 @@ This library written by Torben Sickert stand under a creative commons naming
 @fontFamilyCondensed: 'Open Sans Condensed', open-sans-condensed, sans-serif;
 /// endregion
 @import '~genericStyle/index.less';
+@import '~bootstrap';
 /** region font */
 /*** region open sans */
 /**** region light */
@@ -222,21 +223,19 @@ This library written by Torben Sickert stand under a creative commons naming
             This fix allows label nested non checkbox input fields to avoid
             referencing inputs via ids.
         */
-        form label {
-            &:not([for]) {
-                margin: 0;
-                margin-bottom: -4px;
-                width: 100%;
+        form label:not([for]) {
+            margin: 0;
+            margin-bottom: -4px;
+            width: 100%;
 
-                &.vertical-nested-label:not(.website-sr-only) {
-                    textarea, select, input:not([type="checkbox"]) {
-                       margin-top: 5px;
-                    }
-                }
+            &.vertical-nested-label:not(.website-sr-only) {
                 textarea, select, input:not([type="checkbox"]) {
-                    font-weight: normal;
-                    line-height: 1;
+                   margin-top: 5px;
                 }
+            }
+            textarea, select, input:not([type="checkbox"]) {
+                font-weight: normal;
+                line-height: 1;
             }
         }
     }

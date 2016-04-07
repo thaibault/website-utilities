@@ -10,11 +10,12 @@
     "homepage": "http://torben.website/jQuery-website",
     "main": "index.compiled.js",
     "webOptimizer": {
-        "injects": {"external": "font"},
+        "path": {"asset": {"font": "./font.compiled/"}},
         "moduleAliases": {
             "jQuery-scrollTo": "jquery.scrollto/jquery.scrollTo",
             "jQuery-spin": "spin.js/jquery.spin",
-            "spin": "spin.js/spin"
+            "spin": "spin.js/spin",
+            "bootstrap": "bootstrap/dist/css/bootstrap"
         }
     },
     "scripts": {
@@ -31,7 +32,8 @@
         "jQuery-lang": "git+ssh://git@github.com/thaibault/jQuery-lang.git",
         "spin.js": "2.3.2",
         "jquery.scrollto": "2.1.2",
-        "genericStyle": "git+ssh://git@github.com/thaibault/genericStyle.git"
+        "genericStyle": "git+ssh://git@github.com/thaibault/genericStyle.git",
+        "bootstrap": "^3.3.6"
     },
     "devDependencies": {
         "webOptimizer": "git+ssh://git@github.com/thaibault/webOptimizer.git",
