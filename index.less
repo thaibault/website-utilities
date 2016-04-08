@@ -32,7 +32,6 @@ This library written by Torben Sickert stand under a creative commons naming
 @fontFamilyCondensed: 'Open Sans Condensed', open-sans-condensed, sans-serif;
 /// endregion
 @import '~genericStyle';
-.bootstrap() { @import '~bootstrap'; }
 /** region font */
 /*** region open sans */
 /**** region light */
@@ -217,7 +216,9 @@ This library written by Torben Sickert stand under a creative commons naming
 /** endregion */
 /* endregion */
 .website() {
-    /* region bootstrap fixes */
+    /* region bootstrap */
+    .bootstrap() { @import '~bootstrap'; }
+    /** region fixes */
     .bootstrap-nested-labels() {
         /*
             This fix allows label nested non checkbox input fields to avoid
@@ -263,6 +264,7 @@ This library written by Torben Sickert stand under a creative commons naming
             &12 { width: percentage((12 / 12)); }
         }
     }
+    /** endregion */
     /* endregion */
     margin: 0;
     font-family: @fontFamily;
