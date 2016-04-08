@@ -217,54 +217,58 @@ This library written by Torben Sickert stand under a creative commons naming
 /* endregion */
 .website() {
     /* region bootstrap */
-    .bootstrap() { @import '~bootstrap'; }
-    /** region fixes */
-    .bootstrap-nested-labels() {
-        /*
-            This fix allows label nested non checkbox input fields to avoid
-            referencing inputs via ids.
-        */
-        form label:not([for]) {
-            margin: 0;
-            margin-bottom: -4px;
-            width: 100%;
+    .bootstrap() {
+        @import '~bootstrap';
+        /* region fixes */
+        .fixes() {
+            .nested-labels() {
+                /*
+                    This fix allows label nested non checkbox input fields to avoid
+                    referencing inputs via ids.
+                */
+                form label:not([for]) {
+                    margin: 0;
+                    margin-bottom: -4px;
+                    width: 100%;
 
-            &.vertical-nested-label:not(.website-sr-only) {
-                textarea, select, input:not([type="checkbox"]) {
-                   margin-top: 5px;
+                    &.vertical-nested-label:not(.website-sr-only) {
+                        textarea, select, input:not([type="checkbox"]) {
+                           margin-top: 5px;
+                        }
+                    }
+                    textarea, select, input:not([type="checkbox"]) {
+                        font-weight: normal;
+                        line-height: 1;
+                    }
                 }
             }
-            textarea, select, input:not([type="checkbox"]) {
-                font-weight: normal;
-                line-height: 1;
+            @media all and (max-width: @minimumExtraExtraSmallWidthInPixel) {
+                /* Allows smartphone widths in grid system. */
+                .col-xxs- {
+                    &1, &2, &3, &4, &5, &6, &7, &8, &9, &10, &11, &12 {
+                        float: left;
+                        position: relative;
+                        min-height: 1px;
+                        padding-right: 15px;
+                        padding-left: 15px;
+                    }
+                    &1 { width: percentage((1 / 12)); }
+                    &2 { width: percentage((2 / 12)); }
+                    &3 { width: percentage((3 / 12)); }
+                    &4 { width: percentage((4 / 12)); }
+                    &5 { width: percentage((5 / 12)); }
+                    &6 { width: percentage((6 / 12)); }
+                    &7 { width: percentage((7 / 12)); }
+                    &8 { width: percentage((8 / 12)); }
+                    &9 { width: percentage((9 / 12)); }
+                    &10 { width: percentage((10 / 12)); }
+                    &11 { width: percentage((11 / 12)); }
+                    &12 { width: percentage((12 / 12)); }
+                }
             }
         }
+        /* endregion */
     }
-    @media all and (max-width: @minimumExtraExtraSmallWidthInPixel) {
-        /* Allows smartphone widths in grid system. */
-        .col-xxs- {
-            &1, &2, &3, &4, &5, &6, &7, &8, &9, &10, &11, &12 {
-                float: left;
-                position: relative;
-                min-height: 1px;
-                padding-right: 15px;
-                padding-left: 15px;
-            }
-            &1 { width: percentage((1 / 12)); }
-            &2 { width: percentage((2 / 12)); }
-            &3 { width: percentage((3 / 12)); }
-            &4 { width: percentage((4 / 12)); }
-            &5 { width: percentage((5 / 12)); }
-            &6 { width: percentage((6 / 12)); }
-            &7 { width: percentage((7 / 12)); }
-            &8 { width: percentage((8 / 12)); }
-            &9 { width: percentage((9 / 12)); }
-            &10 { width: percentage((10 / 12)); }
-            &11 { width: percentage((11 / 12)); }
-            &12 { width: percentage((12 / 12)); }
-        }
-    }
-    /** endregion */
     /* endregion */
     margin: 0;
     font-family: @fontFamily;
