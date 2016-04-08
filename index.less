@@ -341,7 +341,7 @@ This library written by Torben Sickert stand under a creative commons naming
                 > input[type="checkbox"] {
                     &:checked ~ span.checkbox-styled
                     > span.checkbox-styled-checked {
-                        .genericStyle .opacity(1);
+                        .genericStyle.opacity(1);
                     }
                     &:disabled ~ span.checkbox-styled {
                         background-color: @disabledColor;
@@ -359,8 +359,8 @@ This library written by Torben Sickert stand under a creative commons naming
                     padding: 0;
 
                     > span.checkbox-styled-checked {
-                        .genericStyle .transform(rotate(-45deg));
-                        .genericStyle .opacity(0);
+                        .genericStyle.transform(rotate(-45deg));
+                        .genericStyle.opacity(0);
 
                         position: absolute;
                         width: 13px;
