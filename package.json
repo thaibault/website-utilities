@@ -14,9 +14,9 @@
         "path": {"asset": {"font": "./font.compiled/"}},
         "module": {"aliases": {
             "bootstrap.less": "bootstrap/less/bootstrap",
+            "spin": "spin.js/spin",
             "jQuery-scrollTo": "jquery.scrollto/jquery.scrollTo",
             "jQuery-spin": "spin.js/jquery.spin",
-            "spin": "spin.js/spin",
             "genericStyle.less": "genericStyle/index.less"
         }}
     },
