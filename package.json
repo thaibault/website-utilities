@@ -23,12 +23,15 @@
     "scripts": {
         "build": "webOptimizer build",
         "clear": "webOptimizer clear",
+        "document": "webOptimizer document",
         "lint": "webOptimizer lint",
         "test": "webOptimizer test",
+        "testInBrowser": "webOptimizer testInBrowser",
         "preinstall": "webOptimizer preinstall",
         "postinstall": "webOptimizer build"
     },
     "dependencies": {
+        "webOptimizer": "git+ssh://git@github.com/thaibault/webOptimizer.git",
         "jQuery-tools": "git+ssh://git@github.com/thaibault/jQuery-tools.git",
         "jQuery-lang": "git+ssh://git@github.com/thaibault/jQuery-lang.git",
         "spin.js": "2.3.2",
@@ -37,7 +40,7 @@
         "bootstrap": "^3.3.6"
     },
     "devDependencies": {
-        "webOptimizer": "git+ssh://git@github.com/thaibault/webOptimizer.git",
-        "qunitjs": "*"
+        "qunitjs": "*",
+        "qunit-cli": "*"
     }
 }
