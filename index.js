@@ -38,8 +38,10 @@ const context:Object = (():Object => {
 if (!context.hasOwnProperty('document') && $.hasOwnProperty('context'))
     context.document = $.context
 // region plugins/classes
-class Website extends $.Tools.class
-    ###This plugin holds all needed methods to extend a whole website.###
+/**
+ * This plugin holds all needed methods to extend a whole website.###
+ */
+class Website extends $.Tools.class {
     # region properties
     ###
         **__name__ {String}**
@@ -585,6 +587,7 @@ eventData);
         this
     ## endregion
     # endregion
+}
 // endregion
 $.Website = function():any {
     return $.Tools().controller(Website, arguments)
