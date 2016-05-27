@@ -1,42 +1,43 @@
-#!/usr/bin/env coffee
-# -*- coding: utf-8 -*-
+// @flow
+// #!/usr/bin/env node
+// -*- coding: utf-8 -*-
+/** @module jQuery-website */
 'use strict'
-# region header
-###
-[Project page](http://torben.website/jQuery-website)
+/* !
+    region header
+    [Project page](http://torben.website/jQuery-website)
 
-This module provides common logic for the whole web page.
+    Copyright Torben Sickert (info["~at~"]torben.website) 16.12.2012
 
-Copyright Torben Sickert 16.12.2012
+    License
+    -------
 
-License
--------
-
-This library written by Torben Sickert stand under a creative commons naming
-3.0 unported license. see http://creativecommons.org/licenses/by/3.0/deed.de
-
-Extending this module
----------------------
-
-For conventions see require on https://github.com/thaibault/require
-
-Author
-------
-
-info["~at~"]torben.website (Torben Sickert)
-
-Version
--------
-
-1.0 stable
-###
-# endregion
-$ = require 'jquery'
-require 'jQuery-tools'
-require 'jQuery-lang'
-require 'jQuery-scrollTo'
-require 'jQuery-spin'
-# region plugins/classes
+    This library written by Torben Sickert stand under a creative commons
+    naming 3.0 unported license.
+    See http://creativecommons.org/licenses/by/3.0/deed.de
+    endregion
+*/
+// region imports
+import $ from 'jquery'
+import 'jQuery-tools'
+import 'jQuery-lang'
+import 'jQuery-scrollTo'
+import 'jQuery-spin'
+/* eslint-disable no-duplicate-imports */
+import type {$DomNode} from 'jQuery-tools'
+/* eslint-enable no-duplicate-imports */
+// endregion
+const context:Object = (():Object => {
+    if ($.type(window) === 'undefined') {
+        if ($.type(global) === 'undefined')
+            return ($.type(module) === 'undefined') ? {} : module
+        return global
+    }
+    return window
+})()
+if (!context.hasOwnProperty('document') && $.hasOwnProperty('context'))
+    context.document = $.context
+// region plugins/classes
 class Website extends $.Tools.class
     ###This plugin holds all needed methods to extend a whole website.###
     # region properties
@@ -584,10 +585,14 @@ eventData);
         this
     ## endregion
     # endregion
-# endregion
-module.exports = $.Website = -> $.Tools().controller Website, arguments
+// endregion
+$.Website = function():any {
+    return $.Tools().controller(Website, arguments)
+}
 $.Website.class = Website
-# region vim modline
-# vim: set tabstop=4 shiftwidth=4 expandtab:
-# vim: foldmethod=marker foldmarker=region,endregion:
-# endregion
+/** The jQuery-website plugin class. */
+export default Website
+// region vim modline
+// vim: set tabstop=4 shiftwidth=4 expandtab:
+// vim: foldmethod=marker foldmarker=region,endregion:
+// endregion
