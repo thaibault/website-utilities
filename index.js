@@ -40,15 +40,18 @@ if (!context.hasOwnProperty('document') && $.hasOwnProperty('context'))
 // region plugins/classes
 /**
  * This plugin holds all needed methods to extend a whole website.###
+ * @extends jQuery-tools:Tools
+ * @property static:_name - Defines this class name to allow retrieving them
+ * after name mangling.
+ * TODO
  */
 class Website extends $.Tools.class {
-    # region properties
-    ###
-        **__name__ {String}**
-        Holds the class name to provide inspection features.
-    ###
-    __name__: 'Website'
-    # endregion
+    // region static properties
+    static _name:string = 'Website'
+    // endregion
+    // region dynamic properties
+    // TODO
+    // endregion
     # region public methods
     ## region special
     initialize: (
