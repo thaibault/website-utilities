@@ -43,20 +43,39 @@ if (!context.hasOwnProperty('document') && $.hasOwnProperty('context'))
  * @extends jQuery-tools:Tools
  * @property static:_name - Defines this class name to allow retrieving them
  * after name mangling.
- * TODO
+ * @property _options - Options extended by the options given to the
+ * initializer method.
+ * @property _parentOptions - Saves default options to extend by options given
+ * to the initializer method.
+ * @property _parentOptions.domNodeSelectorPrefix {string} - Selector prefix
+ * for all nodes to take into account.
+ * TODO finalize remaining parent options!
+ * @property startUpAnimationIsComplete - Indicates weather start up animations
+ * has finished.
+ * @property currentSectionName - Saves current section hash name.
+ * @property viewportIsOnTop - Indicates weather current viewport is on top.
+ * @property currentMediaQueryMode - Saves current media query status depending
+ * on available space in current browser window.
+ * @property languageHandler - Reference to the language switcher instance.
+ * @property _analyticsCode - Saves uses google analytics code snippet.
  */
 class Website extends $.Tools.class {
     // region static properties
     static _name:string = 'Website'
     // endregion
     // region dynamic properties
-    // TODO
+    _parentOptions:Object
+    startUpAnimationIsComplete:boolean
+    currentSectionName:string
+    viewportIsOnTop:boolean
+    currentMediaQueryMode:string
+    languageHandler:$.Lang.class
+    _analyticsCode:string;
     // endregion
     # region public methods
     ## region special
     initialize: (
         options={}, @_parentOptions={
-            logging: false
             domNodeSelectorPrefix: 'body.{1}'
             onViewportMovesToTop: $.noop()
             onViewportMovesAwayFromTop: $.noop()
@@ -122,8 +141,8 @@ class Website extends $.Tools.class {
                     hideAnimation: duration: 'normal'
             domain: 'auto'
         }, @startUpAnimationIsComplete=false, @currentSectionName=null
-        @_viewportIsOnTop=false, @_currentMediaQueryMode=''
-        @languageHandler=null, @__analyticsCode={
+        @viewportIsOnTop=false, @currentMediaQueryMode=''
+        @languageHandler=null, @_analyticsCode={
             initial: '''
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new window.Date();
@@ -214,13 +233,13 @@ eventData);
         this._options.trackingCode isnt '__none__' and
         window.location.hostname isnt 'localhost'
             this.debug(
-                "Run analytics code: \"#{this.__analyticsCode.event}\" " +
+                "Run analytics code: \"#{this._analyticsCode.event}\" " +
                 'with arguments:')
             this.debug arguments
             try
                 (new window.Function(
                     'eventCategory', 'eventAction', 'eventLabel'
-                    'eventData', 'eventValue', this.__analyticsCode.event
+                    'eventData', 'eventValue', this._analyticsCode.event
                 )).apply this, arguments
             catch exception
                 this.warn(
@@ -345,11 +364,11 @@ eventData);
             this.currentSectionName = sectionName
             this.debug(
                 'Run analytics code: "' +
-                "#{this.__analyticsCode.sectionSwitch}\""
+                "#{this._analyticsCode.sectionSwitch}\""
                 this.currentSectionName)
             try
                 (new window.Function(this.stringFormat(
-                    this.__analyticsCode.sectionSwitch
+                    this._analyticsCode.sectionSwitch
                     this.currentSectionName
                 )))()
             catch exception
@@ -390,12 +409,12 @@ eventData);
             ).addClass "hidden-#{value[1]}"
             if(
                 this.$domNodes.mediaQueryIndicator.is(':hidden') and
-                value[0] isnt this._currentMediaQueryMode
+                value[0] isnt this.currentMediaQueryMode
             )
                 this.fireEvent.apply(
                     this, [
                         'changeMediaQueryMode', false, this,
-                        this._currentMediaQueryMode, value[0]
+                        this.currentMediaQueryMode, value[0]
                     ].concat this.argumentsObjectToArray arguments
                 )
                 this.fireEvent.apply(
@@ -403,11 +422,11 @@ eventData);
                         this.stringFormat(
                             'changeTo{1}Mode',
                             this.stringCapitalize(value[0])
-                        ), false, this, this._currentMediaQueryMode,
+                        ), false, this, this.currentMediaQueryMode,
                         value[0]
                     ].concat this.argumentsObjectToArray arguments
                 )
-                this._currentMediaQueryMode = value[0]
+                this.currentMediaQueryMode = value[0]
             this.$domNodes.mediaQueryIndicator.removeClass(
                 "hidden-#{value[1]}")
         this
@@ -426,23 +445,23 @@ eventData);
         )
         this.on this.$domNodes.window, 'scroll', =>
             if this.$domNodes.window.scrollTop()
-                if this._viewportIsOnTop
-                    this._viewportIsOnTop = false
+                if this.viewportIsOnTop
+                    this.viewportIsOnTop = false
                     this.fireEvent.apply this, [
                         'viewportMovesAwayFromTop', false, this
                     ].concat this.argumentsObjectToArray arguments
-            else if not this._viewportIsOnTop
-                this._viewportIsOnTop = true
+            else if not this.viewportIsOnTop
+                this.viewportIsOnTop = true
                 this.fireEvent.apply this, [
                     'viewportMovesToTop', false, this
                 ].concat this.argumentsObjectToArray arguments
         if this.$domNodes.window.scrollTop()
-            this._viewportIsOnTop = false
+            this.viewportIsOnTop = false
             this.fireEvent.apply this, [
                 'viewportMovesAwayFromTop', false, this
             ].concat this.argumentsObjectToArray arguments
         else
-            this._viewportIsOnTop = true
+            this.viewportIsOnTop = true
             this.fireEvent.apply this, [
                 'viewportMovesToTop', false, this
             ].concat this.argumentsObjectToArray arguments
@@ -565,12 +584,12 @@ eventData);
         this._options.trackingCode isnt '__none__' and
         window.location.hostname isnt 'localhost'
             this.debug(
-                "Run analytics code: \"#{this.__analyticsCode.initial}\""
+                "Run analytics code: \"#{this._analyticsCode.initial}\""
                 this._options.trackingCode, this._options.domain
                 this.currentSectionName)
             try
                 (new window.Function(this.stringFormat(
-                    this.__analyticsCode.initial
+                    this._analyticsCode.initial
                     this._options.trackingCode, this._options.domain
                     this.currentSectionName
                 )))()
