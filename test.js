@@ -17,10 +17,7 @@
 // region imports
 import browserAPI from 'webOptimizer/browserAPI'
 import type {Window} from 'webOptimizer/type'
-import type {$DomNode} from 'jQuery-tools'
-/* eslint-disable no-duplicate-imports */
 import type Website from './index'
-/* eslint-enable no-duplicate-imports */
 // endregion
 // region declaration
 declare var TARGET:string

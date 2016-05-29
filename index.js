@@ -20,7 +20,7 @@
 // region imports
 import $ from 'jquery'
 import 'jQuery-tools'
-import 'jQuery-lang'
+import Lang from 'jQuery-lang'
 import 'jQuery-scrollTo'
 import 'jQuery-spin'
 /* eslint-disable no-duplicate-imports */
@@ -145,7 +145,7 @@ class Website extends $.Tools.class {
     currentSectionName:string
     viewportIsOnTop:boolean
     currentMediaQueryMode:string
-    languageHandler:$.Lang.class
+    languageHandler:Lang
     _analyticsCode:AnalyticsCode;
     // endregion
     // region public methods
