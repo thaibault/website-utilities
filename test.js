@@ -54,7 +54,7 @@ browserAPI((window:Window):void => {
     // / endregion
     // / region public methods
     // // region special
-    test 'initialize', -> ok website
+    qunit.test('initialize', ():void => qunit.ok(website))
     // // endregion
     qunit.test('disableScrolling|enableScrolling', ():void => {
         qunit.strictEqual(website.disableScrolling(), website)
@@ -75,17 +75,17 @@ browserAPI((window:Window):void => {
             typeof website._onViewportMovesAwayFromTop(), 'number')
     })
     qunit.test('_onChangeMediaQueryMode', ():void => qunit.strictEqual(
-        website._onChangeMediaQueryMode(), website)
+        website._onChangeMediaQueryMode('old', 'new'), website))
     qunit.test('_onChangeToLargeMode', ():void => qunit.strictEqual(
-        website._onChangeToLargeMode(), website))
+        website._onChangeToLargeMode('old', 'new'), website))
     qunit.test('_onChangeToMediumMode', ():void => qunit.strictEqual(
-        website._onChangeToMediumMode(), website))
+        website._onChangeToMediumMode('old', 'new'), website))
     qunit.test('_onChangeToSmallMode', ():void => qunit.strictEqual(
-        website._onChangeToSmallMode(), website)
+        website._onChangeToSmallMode('old', 'new'), website))
     qunit.test('_onChangeToExtraSmallMode', ():void => qunit.strictEqual(
-        website._onChangeToExtraSmallMode(), website)
+        website._onChangeToExtraSmallMode('old', 'new'), website))
     qunit.test('_onSwitchSection', ():void => qunit.strictEqual(
-        website._onSwitchSection(), website))
+        website._onSwitchSection('newSectionName'), website))
     qunit.test('_onStartUpAnimationComplete', ():void => qunit.strictEqual(
         website._onStartUpAnimationComplete(), website))
     // // endregion
@@ -99,7 +99,7 @@ browserAPI((window:Window):void => {
     qunit.test('_removeLoadingCover', ():void => qunit.strictEqual(
         website._removeLoadingCover(), website))
     qunit.test('_handleStartUpEffects', ():void => qunit.strictEqual(
-        website._handleStartUpEffects(), website))
+        website._handleStartUpEffects(10), website))
     qunit.test('_addNavigationEvents', ():void => qunit.strictEqual(
         website._addNavigationEvents(), website))
     qunit.test('_handleScrollToTopButton', ():void => qunit.strictEqual(

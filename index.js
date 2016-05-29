@@ -27,6 +27,13 @@ import 'jQuery-spin'
 import type {$DomNode} from 'jQuery-tools'
 /* eslint-enable no-duplicate-imports */
 // endregion
+// region types
+export type AnalyticsCode = {
+    initial:string;
+    sectionSwitch:string;
+    event:string;
+}
+// endregion
 const context:Object = (():Object => {
     if ($.type(window) === 'undefined') {
         if ($.type(global) === 'undefined')
@@ -119,7 +126,14 @@ if (!context.hasOwnProperty('document') && $.hasOwnProperty('context'))
  * @property currentMediaQueryMode - Saves current media query status depending
  * on available space in current browser window.
  * @property languageHandler - Reference to the language switcher instance.
- * @property _analyticsCode - Saves analytics code snippet to use.
+ * @property _analyticsCode - Saves analytics code snippets to use for
+ * referenced situations.
+ * @property _analyticsCode.initial {string} - Initial string to use for
+ * analyses on.
+ * @property _analyticsCode.sectionSwitch {string} - Code to execute on each
+ * section switch. Current page is available via "{1}" string formatting.
+ * @property _analyticsCod.event {string} - Code to execute on each fired
+ * event.
  */
 class Website extends $.Tools.class {
     // region static properties
@@ -132,7 +146,7 @@ class Website extends $.Tools.class {
     viewportIsOnTop:boolean
     currentMediaQueryMode:string
     languageHandler:$.Lang.class
-    _analyticsCode:string;
+    _analyticsCode:AnalyticsCode;
     // endregion
     // region public methods
     // / region special
@@ -167,7 +181,7 @@ class Website extends $.Tools.class {
                 'touchmove',
             switchToManualScrollingIndicator: (event:Object) => (
                 event.which > 0 || event.type === 'mousedown' ||
-                event.type === 'mousewheel' || event.type === 'touchmove')
+                event.type === 'mousewheel' || event.type === 'touchmove'),
             additionalPageLoadingTimeInMilliseconds: 0,
             trackingCode: null,
             mediaQueryClassNameIndicator: [
@@ -224,11 +238,7 @@ class Website extends $.Tools.class {
         }, startUpAnimationIsComplete:boolean = false,
         currentSectionName:?string = null,
         viewportIsOnTop:boolean = false, currentMediaQueryMode:string = '',
-        languageHandler:$.Lang.class = null, analyticsCode:{
-            initial:string;
-            sectionSwitch:string;
-            event:string
-        } = {
+        languageHandler:$.Lang.class = null, analyticsCode:AnalyticsCode = {
             initial: `
                 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new window.Date();
@@ -247,18 +257,18 @@ class Website extends $.Tools.class {
         }
     ):Website {
         this._parentOptions = parentOptions
-        this.startUpAnimationIsComplete = startUpAnimationComplete
-        this.currentSectionName = currentSectionName
+        this.startUpAnimationIsComplete = startUpAnimationIsComplete
         this.viewportIsOnTop = viewportIsOnTop
-        this.currentMediaQueryMode = currentSectionName
+        this.currentMediaQueryMode = currentMediaQueryMode
         this.languageHandler = languageHandler
         this._analyticsCode = analyticsCode
-        if (!this.currenSectionName)
-            if (context.hasOwnProperty('location') && context.location.hash)
-                this.currentSectionName = context.location.hash.substring(
-                    '#'.length)
-            else
-                this.currenSectionName = 'home'
+        if (currentSectionName)
+            this.currentSectionName = currentSectionName
+        else if (context.hasOwnProperty('location') && context.location.hash)
+            this.currentSectionName = context.location.hash.substring(
+                '#'.length)
+        else
+            this.currenSectionName = 'home'
         // Wrap event methods with debounceing handler.
         this._onViewportMovesToTop = this.debounce(this.getMethod(
             this._onViewportMovesToTop))
@@ -388,7 +398,7 @@ class Website extends $.Tools.class {
      * @param newMode - Saves the new mode.
      * @returns Returns the current instance.
      */
-    _onChangeMediaQueryMode(oldMode:$DomNode, newMode:$DomNode):Website {
+    _onChangeMediaQueryMode(oldMode:string, newMode:string):Website {
         return this
     }
     /**
@@ -397,7 +407,7 @@ class Website extends $.Tools.class {
      * @param newMode - Saves the new mode.
      * @returns Returns the current instance.
      */
-    _onChangeToLargeMode(oldMode:$DomNode, newMode:$DomNode):Website {
+    _onChangeToLargeMode(oldMode:string, newMode:string):Website {
         return this
     }
     /**
@@ -406,7 +416,7 @@ class Website extends $.Tools.class {
      * @param newMode - Saves the new mode.
      * @returns Returns the current instance.
      */
-    _onChangeToMediumMode(oldMode:$DomNode, newMode:$DomNode):Website {
+    _onChangeToMediumMode(oldMode:string, newMode:string):Website {
         return this
     }
     /**
@@ -415,7 +425,7 @@ class Website extends $.Tools.class {
      * @param newMode - Saves the new mode.
      * @returns Returns the current instance.
      */
-    _onChangeToSmallMode(oldMode:$DomNode, newMode:$DomNode):Website {
+    _onChangeToSmallMode(oldMode:string, newMode:string):Website {
         return this
     }
     /**
@@ -425,7 +435,7 @@ class Website extends $.Tools.class {
      * @param newMode - Saves the new mode.
      * @returns Returns the current instance.
      */
-    _onChangeToExtraSmallMode(oldMode:$DomNode, newMode:$DomNode):Website {
+    _onChangeToExtraSmallMode(oldMode:string, newMode:string):Website {
         return this
     }
     /**
@@ -519,10 +529,11 @@ class Website extends $.Tools.class {
         // Stop automatic scrolling if the user wants to scroll manually.
         if (!this.$domNodes.hasOwnProperty('window'))
             return this
-        $scrollTarget = $('body, html').add(this.$domNodes.window)
+        const $scrollTarget:$DomNode = $('body, html').add(
+            this.$domNodes.window)
         $scrollTarget.on(this._options.knownScrollEventNames, (
             event:Object
-        ):void {
+        ):void => {
             if (this._options.switchToManualScrollingIndicator(event))
                 $scrollTarget.stop(true)
         })
@@ -562,7 +573,7 @@ class Website extends $.Tools.class {
         setTimeout(():void => {
             // Hide startup animation dom nodes to show them step by step.
             $(this.stringFormat(
-                '[class^="{1}"], [class*=" {1}"]'
+                '[class^="{1}"], [class*=" {1}"]',
                 this.sliceDomNodeSelectorPrefix(
                     this._options.domNode.startUpAnimationClassPrefix
                 ).substr(1)
@@ -586,7 +597,7 @@ class Website extends $.Tools.class {
         if (!$.isNumeric(elementNumber))
             elementNumber = 1
         if ($(this.stringFormat(
-            '[class^="{1}"], [class*=" {1}"]'
+            '[class^="{1}"], [class*=" {1}"]',
             this.sliceDomNodeSelectorPrefix(
                 this._options.domNode.startUpAnimationClassPrefix
             ).substr(1)
@@ -594,8 +605,8 @@ class Website extends $.Tools.class {
             setTimeout(():void => {
                 let lastElementTriggered:boolean = false
                 this._options.startUpFadeIn.always = ():void => {
-                    if lastElementTriggered
-                        this.fireEvent 'startUpAnimationComplete'
+                    if (lastElementTriggered)
+                        this.fireEvent('startUpAnimationComplete')
                 }
                 $(
                     this._options.domNode.startUpAnimationClassPrefix +
@@ -655,7 +666,8 @@ class Website extends $.Tools.class {
         */
         context.document.body = $('body')[0]
         if (this._options.scrollToTop.inLinearTime) {
-            distanceToTopInPixel = this.$domNodes.window.scrollTop()
+            const distanceToTopInPixel:number =
+                this.$domNodes.window.scrollTop()
             // Scroll four times faster as we have distance to top.
             this._options.scrollToTop.options.duration =
                 distanceToTopInPixel / 4
@@ -695,7 +707,7 @@ class Website extends $.Tools.class {
             this.on(this.$domNodes.parent.find('a, button'), 'click', (
                 event:Object
             ):void => {
-                $domNode = $(event.target)
+                const $domNode:$DomNode = $(event.target)
                 this.triggerAnalyticsEvent(
                     this.currentSectionName, 'click', $domNode.text(),
                     event.data || {}, $domNode.attr(
