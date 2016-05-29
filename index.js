@@ -179,7 +179,7 @@ class Website extends $.Tools.class {
             knownScrollEventNames:
                 'scroll mousedown wheel DOMMouseScroll mousewheel keyup ' +
                 'touchmove',
-            switchToManualScrollingIndicator: (event:Object) => (
+            switchToManualScrollingIndicator: (event:Object):boolean => (
                 event.which > 0 || event.type === 'mousedown' ||
                 event.type === 'mousewheel' || event.type === 'touchmove'),
             additionalPageLoadingTimeInMilliseconds: 0,
@@ -240,12 +240,16 @@ class Website extends $.Tools.class {
         viewportIsOnTop:boolean = false, currentMediaQueryMode:string = '',
         languageHandler:?Lang = null, analyticsCode:AnalyticsCode = {
             initial: `
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new window.Date();
-                a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;
-                m.parentNode.insertBefore(a,m)})(
-                window,document,'script','//www.google-analytics.com/analytics.js','ga');
-                window.ga('create', '{1}', '{2}');
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=` +
+                    'i[r]||function(){' +
+                '(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*' +
+                    'new window.Date();' +
+                'a=s.createElement(o),m=s.getElementsByTagName(o)[0];' +
+                    'a.async=1;a.src=g;' +
+                'm.parentNode.insertBefore(a,m)})(' +
+                "window,document,'script','//www.google-analytics.com/" +
+                    "analytics.js','ga');" +
+                `window.ga('create', '{1}', '{2}');
                 window.ga('set', 'anonymizeIp', true);
                 window.ga('send', 'pageview', {page: '{3}'});
             `,
@@ -304,7 +308,7 @@ class Website extends $.Tools.class {
      */
     disableScrolling():Website {
         this.$domNodes.parent.addClass('disable-scrolling').on(
-            'touchmove', (event:Object) => event.preventDefault())
+            'touchmove', (event:Object):void => event.preventDefault())
         return this
     }
     /**
@@ -392,6 +396,7 @@ class Website extends $.Tools.class {
             }, this._options.scrollToTop.button.showAnimation)
         return this
     }
+    /* eslint-disable no-unused-vars */
     /**
      * This method triggers if the responsive design switches to another mode.
      * @param oldMode - Saves the previous mode.
@@ -438,6 +443,7 @@ class Website extends $.Tools.class {
     _onChangeToExtraSmallMode(oldMode:string, newMode:string):Website {
         return this
     }
+    /* eslint-enable no-unused-vars */
     /**
      * This method triggers if we change the current section.
      * @param sectionName - Contains the new section name.
