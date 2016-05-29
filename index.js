@@ -49,7 +49,69 @@ if (!context.hasOwnProperty('document') && $.hasOwnProperty('context'))
  * to the initializer method.
  * @property _parentOptions.domNodeSelectorPrefix {string} - Selector prefix
  * for all nodes to take into account.
- * TODO finalize remaining parent options!
+ * @property _parantOptions.onViewportMovesToTop {Function} - Callback to
+ * trigger when viewport arrives at top.
+ * @property _parantOptions.onViewportMovesAwayFromTop {Function} - Callback to
+ * trigger when viewport moves away from top.
+ * @property _parentOptions.onChangeToLargeMode {Function} - Callback to
+ * trigger if media query mode changes to large mode.
+ * @property _parentOptions.onChangeToMediumMode {Function} - Callback to
+ * trigger if media query mode changes to medium mode.
+ * @property _parentOptions.onChangeToSmallMode {Function} - Callback to
+ * trigger if media query mode changes to small mode.
+ * @property _parentOptions.onChangeToExtraSmallMode {Function} - Callback to
+ * trigger if media query mode changes to extra small mode.
+ * @property _parentOptions.onChangeMediaQueryMode {Function} - Callback to
+ * trigger if media query mode changes.
+ * @property _parentOptions.onSwitchSection {Function} - Callback to trigger
+ * if current section switches.
+ * @property _parentOptions.onStartUpAnimationComplete {Function} - Callback to
+ * trigger if all start up animations has finished.
+ * @property _parentOptions.knownScrollEventNames {string} - Saves all known
+ * scroll events in a space separated string.
+ * @property _parentOption.switchToManualScrollingIndicator {Function} -
+ * Indicator function to stop currently running scroll animations to let the
+ * user get control of current scrolling behavior. Given callback gets an event
+ * object. If the function returns "true" current animated scrolls will be
+ * stopped.
+ * @property _parentOptions.additionalPageLoadingTimeInMilliseconds {Number} -
+ * Additional time to wait until page will be indicated as loaded.
+ * @property _parentOptions.trackingCode - Analytic tracking code to collect
+ * user behavior data.
+ * @property _parentOptions.mediaQueryClassNameIndicator
+ * {Array.Array.<string>} - Mapping of media query class indicator names to
+ * internal event names.
+ * @property _parentOptions.domNode {Object.<string, string>} - Mapping of
+ * dom node descriptions to their corresponding selectors.
+ * @property _parentOptions.domNode.mediaQueryIndicator {string} - Selector
+ * for indicator dom node to use to trigger current media query mode.
+ * @property _parentOptions.domNode.top {string} - Selector to indicate that
+ * viewport is currently on top.
+ * @property _parentOptions.domNode.scrollToTopButton {string} - Selector for
+ * starting an animated scroll to top.
+ * @property _parentOption.domNode.startUpAnimationClassPrefix {string} -
+ * Class name selector prefix for all dom nodes to appear during start up
+ * animations.
+ * @property _parentOptions.domNode.windowLoadingCover {string} - Selector
+ * to the full window loading cover dom node.
+ * @property _parentOptions.domNode.windowLoadingSpinner {string} - Selector
+ * to the window loading spinner (on top of the window loading cover).
+ * @property _parentOption.startUpFadeIn {Object} - Options for startup
+ * fade in animation.
+ * @property _parentOptions.windowLoadingCoverFadeOut {Object} - Options for
+ * startup loading cover fade out animation.
+ * @property _parentOptions.startUpAnimationElementDelayInMiliseconds {number}
+ * - Delay between two startup animated dom nodes in order.
+ * @property _parentOptions.windowLoadingSpinner {Object} - Options for the
+ * window loading cover spinner.
+ * @property _parentOptions.activateLanguageSupport {boolean} - Indicates
+ * weather language support should be used or not.
+ * @property _parentOptions.language {Object} - Options for client side
+ * internationalisation handler.
+ * @property _parentOptions.scrollTop {Object} - Options for automated scroll
+ * top animation.
+ * @property _parentOptions.domain {string} - Sets current domain name. If
+ * "auto" is given it will be determined automatically.
  * @property startUpAnimationIsComplete - Indicates weather start up animations
  * has finished.
  * @property currentSectionName - Saves current section hash name.
@@ -57,7 +119,7 @@ if (!context.hasOwnProperty('document') && $.hasOwnProperty('context'))
  * @property currentMediaQueryMode - Saves current media query status depending
  * on available space in current browser window.
  * @property languageHandler - Reference to the language switcher instance.
- * @property _analyticsCode - Saves uses google analytics code snippet.
+ * @property _analyticsCode - Saves analytics code snippet to use.
  */
 class Website extends $.Tools.class {
     // region static properties
@@ -72,543 +134,579 @@ class Website extends $.Tools.class {
     languageHandler:$.Lang.class
     _analyticsCode:string;
     // endregion
-    # region public methods
-    ## region special
-    initialize: (
-        options={}, @_parentOptions={
-            domNodeSelectorPrefix: 'body.{1}'
-            onViewportMovesToTop: $.noop()
-            onViewportMovesAwayFromTop: $.noop()
-            onChangeToLargeMode: $.noop()
-            onChangeToMediumMode: $.noop()
-            onChangeToSmallMode: $.noop()
-            onChangeToExtraSmallMode: $.noop()
-            onChangeMediaQueryMode: $.noop()
-            onSwitchSection: $.noop()
-            onStartUpAnimationComplete: $.noop()
+    // region public methods
+    // / region special
+    /**
+     * Initializes the interactive web application.
+     * @param options - An options object.
+     * @param parentOptions - A default options object.
+     * @param startUpAnimationIsComplete - If set to "true", no start up
+     * animation will be performed.
+     * @param currentSectionName - Initial section name to use.
+     * @param viewportIsOnTop - Indicates weather viewport is on top initially.
+     * @param currentMediaQueryMode - Initial media query mode to use (until
+     * first window resize event could trigger a change).
+     * @param languageHandler - Language handler instance to use.
+     * @param analyticsCode - Analytic code snippet to use.
+     * @returns Returns the current instance.
+     */
+    initialize(
+        options:Object = {}, parentOptions:Object = {
+            domNodeSelectorPrefix: 'body.{1}',
+            onViewportMovesToTop: $.noop(),
+            onViewportMovesAwayFromTop: $.noop(),
+            onChangeToLargeMode: $.noop(),
+            onChangeToMediumMode: $.noop(),
+            onChangeToSmallMode: $.noop(),
+            onChangeToExtraSmallMode: $.noop(),
+            onChangeMediaQueryMode: $.noop(),
+            onSwitchSection: $.noop(),
+            onStartUpAnimationComplete: $.noop(),
             knownScrollEventNames:
                 'scroll mousedown wheel DOMMouseScroll mousewheel keyup ' +
-                'touchmove'
-            switchToManualScrollingIndicator: (event) -> (
-                event.which > 0 or event.type is 'mousedown' or
-                event.type is 'mousewheel' or event.type == 'touchmove')
-            additionalPageLoadingTimeInMilliseconds: 0
-            trackingCode: null
-            mediaQueryCssIndicator: [
-                ['extraSmall', 'xs'], ['small', 'sm'], ['medium', 'md']
+                'touchmove',
+            switchToManualScrollingIndicator: (event:Object) => (
+                event.which > 0 || event.type === 'mousedown' ||
+                event.type === 'mousewheel' || event.type === 'touchmove')
+            additionalPageLoadingTimeInMilliseconds: 0,
+            trackingCode: null,
+            mediaQueryClassNameIndicator: [
+                ['extraSmall', 'xs'], ['small', 'sm'], ['medium', 'md'],
                 ['large', 'lg']
             ],
-            domNode:
-                mediaQueryIndicator: '<div class="media-query-indicator">'
-                top: '> div.navbar-wrapper'
-                scrollToTopButton: 'a[href="#top"]'
+            domNode: {
+                mediaQueryIndicator: '<div class="media-query-indicator">',
+                top: '> div.navbar-wrapper',
+                scrollToTopButton: 'a[href="#top"]',
                 startUpAnimationClassPrefix:
-                    '.website-start-up-animation-number-'
-                windowLoadingCover: 'div.website-window-loading-cover'
-                windowLoadingSpinner:
-                    'div.website-window-loading-cover > div'
-            startUpFadeIn:
-                easing: 'swing'
+                    '.website-start-up-animation-number-',
+                windowLoadingCover: 'div.website-window-loading-cover',
+                windowLoadingSpinner: 'div.website-window-loading-cover > div'
+            },
+            startUpFadeIn: {
+                easing: 'swing',
                 duration: 'slow'
-            windowLoadingCoverFadeOut:
-                easing: 'swing'
+            },
+            windowLoadingCoverFadeOut: {
+                easing: 'swing',
                 duration: 'slow'
-            startUpAnimationElementDelayInMiliseconds: 100
-            windowLoadingSpinner:
-                lines: 9 # The number of lines to draw
-                length: 23 # The length of each line
-                width: 11 # The line thickness
-                radius: 40 # The radius of the inner circle
-                corners: 1 # Corner roundness (0..1)
-                rotate: 75 # The rotation offset
-                color: '#000' # #rgb or #rrggbb
-                speed: 1.1 # Rounds per second
-                trail: 58 # Afterglow percentage
-                shadow: false # Whether to render a shadow
-                hwaccel: false # Whether to use hardware acceleration
-                className: 'spinner' # CSS class to assign to the spinner
-                zIndex: 2e9 # The z-index (defaults to 2000000000)
-                top: 'auto' # Top position relative to parent in px
-                left: 'auto' # Left position relative to parent in px
-            activateLanguageSupport: true
-            language: {}
-            scrollToTop:
-                inLinearTime: true
-                options: duration: 'normal'
-                button:
-                    slideDistanceInPixel: 30
-                    showAnimation: duration: 'normal'
-                    hideAnimation: duration: 'normal'
+            },
+            startUpAnimationElementDelayInMiliseconds: 100,
+            windowLoadingSpinner: {
+                lines: 9, // The number of lines to draw
+                length: 23, // The length of each line
+                width: 11, // The line thickness
+                radius: 40, // The radius of the inner circle
+                corners: 1, // Corner roundness (0..1)
+                rotate: 75, // The rotation offset
+                color: '#000', // #rgb or #rrggbb
+                speed: 1.1, // Rounds per second
+                trail: 58, // Afterglow percentage
+                shadow: false, // Whether to render a shadow
+                hwaccel: false, // Whether to use hardware acceleration
+                className: 'spinner', // CSS class to assign to the spinner
+                zIndex: 2e9, // The z-index (defaults to 2000000000)
+                top: 'auto', // Top position relative to parent in px
+                left: 'auto' // Left position relative to parent in px
+            },
+            activateLanguageSupport: true,
+            language: {},
+            scrollToTop: {
+                inLinearTime: true,
+                options: {duration: 'normal'},
+                button: {
+                    slideDistanceInPixel: 30,
+                    showAnimation: {duration: 'normal'},
+                    hideAnimation: {duration: 'normal'}
+                }
+            },
             domain: 'auto'
-        }, @startUpAnimationIsComplete=false, @currentSectionName=null
-        @viewportIsOnTop=false, @currentMediaQueryMode=''
-        @languageHandler=null, @_analyticsCode={
-            initial: '''
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new window.Date();
-a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;
-m.parentNode.insertBefore(a,m)})(
-window,document,'script','//www.google-analytics.com/analytics.js','ga');
-window.ga('create', '{1}', '{2}');
-window.ga('set', 'anonymizeIp', true);
-window.ga('send', 'pageview', {page: '{3}'});'''
-            sectionSwitch: "window.ga('send', 'pageview', {page: '{1}'});"
-            event: '''
-window.ga(
-'send', 'event', eventCategory, eventAction, eventLabel, eventValue,
-eventData);
-'''
+        }, startUpAnimationIsComplete:boolean = false,
+        currentSectionName:?string = null,
+        viewportIsOnTop:boolean = false, currentMediaQueryMode:string = '',
+        languageHandler:$.Lang.class = null, analyticsCode:{
+            initial:string;
+            sectionSwitch:string;
+            event:string
+        } = {
+            initial: `
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new window.Date();
+                a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;
+                m.parentNode.insertBefore(a,m)})(
+                window,document,'script','//www.google-analytics.com/analytics.js','ga');
+                window.ga('create', '{1}', '{2}');
+                window.ga('set', 'anonymizeIp', true);
+                window.ga('send', 'pageview', {page: '{3}'});
+            `,
+            sectionSwitch: "window.ga('send', 'pageview', {page: '{1}'});",
+            event: `window.ga(
+                'send', 'event', eventCategory, eventAction, eventLabel,
+                eventValue, eventData);
+            `
         }
-    ) ->
-        ###
-            Initializes the interactive web application.
-
-            **options {Object}**    - An options object.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
-        if not this.currenSectionName?
-            if window.location.hash
-                this.currentSectionName = window.location.hash.substring(
+    ):Website {
+        this._parentOptions = parentOptions
+        this.startUpAnimationIsComplete = startUpAnimationComplete
+        this.currentSectionName = currentSectionName
+        this.viewportIsOnTop = viewportIsOnTop
+        this.currentMediaQueryMode = currentSectionName
+        this.languageHandler = languageHandler
+        this._analyticsCode = analyticsCode
+        if (!this.currenSectionName)
+            if (context.hasOwnProperty('location') && context.location.hash)
+                this.currentSectionName = context.location.hash.substring(
                     '#'.length)
             else
                 this.currenSectionName = 'home'
-        # Wrap event methods with debounceing handler.
-        this._onViewportMovesToTop = this.debounce(
-            this.getMethod this._onViewportMovesToTop)
-        this._onViewportMovesAwayFromTop = this.debounce(
-            this.getMethod this._onViewportMovesAwayFromTop)
+        // Wrap event methods with debounceing handler.
+        this._onViewportMovesToTop = this.debounce(this.getMethod(
+            this._onViewportMovesToTop))
+        this._onViewportMovesAwayFromTop = this.debounce(this.getMethod(
+            this._onViewportMovesAwayFromTop))
         this._options = $.extend(
             true, {}, this._parentOptions, this._options)
-        super options
-        this.$domNodes = this.grabDomNode this._options.domNode
+        super.initialize(options)
+        this.$domNodes = this.grabDomNode(this._options.domNode)
         this.disableScrolling()._options.windowLoadingCoverFadeOut.always =
-            this.getMethod this._handleStartUpEffects
+            this.getMethod(this._handleStartUpEffects)
         this.$domNodes.windowLoadingSpinner.spin(
             this._options.windowLoadingSpinner)
         this._bindScrollEvents().$domNodes.parent.show()
-        onLoaded = =>
+        onLoaded = ():void => {
             this.windowLoaded = true
             this._removeLoadingCover()
-        if window.less?
-            window.less.pageLoadFinished.then onLoaded
-        else
-            this.on this.$domNodes.window, 'load', onLoaded
+        }
+        if (this.$domNodes.hasOwnProperty('window'))
+            this.on(this.$domNodes.window, 'load', onLoaded)
         this._addNavigationEvents()._addMediaQueryChangeEvents(
         )._triggerWindowResizeEvents()._handleAnalyticsInitialisation()
-        if not this._options.language.logging?
+        if (!this._options.language.logging)
             this._options.language.logging = this._options.logging
-        if this._options.activateLanguageSupport
-            this.languageHandler = $.Lang this._options.language
-        this
-    # endregion
-    disableScrolling: ->
-        ###
-            This method disables scrolling on the given web view.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
+        if (this._options.activateLanguageSupport && !this.languageHandler)
+            this.languageHandler = $.Lang(this._options.language)
+        return this
+    }
+    // endregion
+    /**
+     * This method disables scrolling on the given web view.
+     * @returns Returns the current instance.
+     */
+    disableScrolling():Website {
         this.$domNodes.parent.addClass('disable-scrolling').on(
-            'touchmove', (event) -> event.preventDefault())
-        this
-    enableScrolling: ->
-        ###
-            This method disables scrolling on the given web view.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
-        this.off(
-            this.$domNodes.parent.removeClass 'disable-scrolling'
-            'touchmove')
-        this
-    triggerAnalyticsEvent: ->
-        ###
-            Triggers an analytics event. All given arguments are forwarded
-            to configured analytics event code to defined their environment
-            variables.
-
-            **returns {$.Website}**  - Returns the current instance.
-        ###
-        if this._options.trackingCode? and
-        this._options.trackingCode isnt '__none__' and
-        window.location.hostname isnt 'localhost'
+            'touchmove', (event:Object) => event.preventDefault())
+        return this
+    }
+    /**
+     * This method disables scrolling on the given web view.
+     * @returns Returns the current instance.
+     */
+    enableScrolling():Website {
+        this.off(this.$domNodes.parent.removeClass(
+            'disable-scrolling', 'touchmove'))
+        return this
+    }
+    /**
+     * Triggers an analytics event. All given arguments are forwarded to
+     * configured analytics event code to defined their environment variables.
+     * @returns Returns the current instance.
+     */
+    triggerAnalyticsEvent():Window {
+        if (
+            this._options.trackingCode &&
+            this._options.trackingCode !== '__none__' &&
+            context.hasOwnProperty('location') &&
+            context.location.hostname !== 'localhost'
+        ) {
             this.debug(
-                "Run analytics code: \"#{this._analyticsCode.event}\" " +
-                'with arguments:')
-            this.debug arguments
-            try
-                (new window.Function(
-                    'eventCategory', 'eventAction', 'eventLabel'
-                    'eventData', 'eventValue', this._analyticsCode.event
-                )).apply this, arguments
-            catch exception
+                "Run analytics code: \"#{this._analyticsCode.event}\" with " +
+                'arguments:')
+            this.debug(arguments)
+            try {
+                (new Function(
+                    'eventCategory', 'eventAction', 'eventLabel', 'eventData',
+                    'eventValue', this._analyticsCode.event
+                )).apply(this, arguments)
+            } catch (exception) {
                 this.warn(
-                    'Problem in google analytics event code snippet: {1}'
+                    'Problem in google analytics event code snippet: {1}',
                     exception)
-        this
-    # endregion
-    # region protected methods
-    ## region event
-    _onViewportMovesToTop: ->
-        ###
-            This method triggers if the viewport moves to top.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
-        if this.$domNodes.scrollToTopButton.css('visibility') is 'hidden'
-            this.$domNodes.scrollToTopButton.css 'opacity', 0
-        else
-            this._options.scrollToTop.button.hideAnimation.always = =>
-                this.$domNodes.scrollToTopButton.css
-                    bottom: '-=' +
-                    this._options.scrollToTop.button.slideDistanceInPixel
+            }
+        }
+        return this
+    }
+    // endregion
+    // region protected methods
+    // / region event
+    /**
+     * This method triggers if the viewport moves to top.
+     * @returns Returns the current instance.
+     */
+    _onViewportMovesToTop():Website {
+        if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
+            this.$domNodes.scrollToTopButton.css('opacity', 0)
+        else {
+            this._options.scrollToTop.button.hideAnimation.always = (
+            ):void => {
+                this.$domNodes.scrollToTopButton.css(
+                    'bottom',
+                        '-=' +
+                        this._options.scrollToTop.button.slideDistanceInPixel)
+            }
             this.$domNodes.scrollToTopButton.finish().animate({
                 bottom: '+=' +
-                this._options.scrollToTop.button.slideDistanceInPixel
+                    this._options.scrollToTop.button.slideDistanceInPixel,
                 opacity: 0
             }, this._options.scrollToTop.button.hideAnimation)
-        this
-    _onViewportMovesAwayFromTop: ->
-        ###
-            This method triggers if the viewport moves away from top.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
-        if this.$domNodes.scrollToTopButton.css('visibility') is 'hidden'
-            this.$domNodes.scrollToTopButton.css 'opacity', 1
+        }
+        return this
+    }
+    /**
+     * This method triggers if the viewport moves away from top.
+     * @returns Returns the current instance.
+     */
+    _onViewportMovesAwayFromTop():Website {
+        if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
+            this.$domNodes.scrollToTopButton.css('opacity', 1)
         else
-            this.$domNodes.scrollToTopButton.finish().css(
+            this.$domNodes.scrollToTopButton.finish().css({
                 bottom: '+=' +
-                this._options.scrollToTop.button.slideDistanceInPixel
-                display: 'block', opacity: 0
-            ).animate({
+                    this._options.scrollToTop.button.slideDistanceInPixel,
+                display: 'block',
+                opacity: 0
+            }).animate({
                 bottom: '-=' +
-                this._options.scrollToTop.button.slideDistanceInPixel
-                queue: false, opacity: 1
+                    this._options.scrollToTop.button.slideDistanceInPixel,
+                queue: false,
+                opacity: 1
             }, this._options.scrollToTop.button.showAnimation)
-        this
-    _onChangeMediaQueryMode: (oldMode, newMode) ->
-        ###
-            This method triggers if the responsive design switches to
-            another mode.
-
-            **oldMode {String}**    - Saves the previous mode.
-
-            **newMode {String}**    - Saves the new mode.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
-        this
-    _onChangeToLargeMode: (oldMode, newMode) ->
-        ###
-            This method triggers if the responsive design switches to large
-            mode.
-
-            **oldMode {String}**    - Saves the previous mode.
-
-            **newMode {String}**    - Saves the new mode.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
-        this
-    _onChangeToMediumMode: (oldMode, newMode) ->
-        ###
-            This method triggers if the responsive design switches to
-            medium mode.
-
-            **oldMode {String}**    - Saves the previous mode.
-
-            **newMode {String}**    - Saves the new mode.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
-        this
-    _onChangeToSmallMode: (oldMode, newMode) ->
-        ###
-            This method triggers if the responsive design switches to small
-            mode.
-
-            **oldMode {String}**    - Saves the previous mode.
-
-            **newMode {String}**    - Saves the new mode.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
-        this
-    _onChangeToExtraSmallMode: (oldMode, newMode) ->
-        ###
-            This method triggers if the responsive design switches to extra
-            small mode.
-
-            **oldMode {String}**    - Saves the previous mode.
-
-            **newMode {String}**    - Saves the new mode.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
-        this
-    _onSwitchSection: (sectionName) ->
-        ###
-            This method triggers if we change the current section.
-
-            **sectionName {String}** - Contains the new section name.
-
-            **returns {$.Website}**  - Returns the current instance.
-        ###
-        if(
-            this._options.trackingCode? and
-            this._options.trackingCode isnt '__none__' and
-            window.location.hostname isnt 'localhost' and
-            this.currentSectionName isnt sectionName
-        )
+        return this
+    }
+    /**
+     * This method triggers if the responsive design switches to another mode.
+     * @param oldMode - Saves the previous mode.
+     * @param newMode - Saves the new mode.
+     * @returns Returns the current instance.
+     */
+    _onChangeMediaQueryMode(oldMode:$DomNode, newMode:$DomNode):Website {
+        return this
+    }
+    /**
+     * This method triggers if the responsive design switches to large mode.
+     * @param oldMode - Saves the previous mode.
+     * @param newMode - Saves the new mode.
+     * @returns Returns the current instance.
+     */
+    _onChangeToLargeMode(oldMode:$DomNode, newMode:$DomNode):Website {
+        return this
+    }
+    /**
+     * This method triggers if the responsive design switches to medium mode.
+     * @param oldMode - Saves the previous mode.
+     * @param newMode - Saves the new mode.
+     * @returns Returns the current instance.
+     */
+    _onChangeToMediumMode(oldMode:$DomNode, newMode:$DomNode):Website {
+        return this
+    }
+    /**
+     * This method triggers if the responsive design switches to small mode.
+     * @param oldMode - Saves the previous mode.
+     * @param newMode - Saves the new mode.
+     * @returns Returns the current instance.
+     */
+    _onChangeToSmallMode(oldMode:$DomNode, newMode:$DomNode):Website {
+        return this
+    }
+    /**
+     * This method triggers if the responsive design switches to extra small
+     * mode.
+     * @param oldMode - Saves the previous mode.
+     * @param newMode - Saves the new mode.
+     * @returns Returns the current instance.
+     */
+    _onChangeToExtraSmallMode(oldMode:$DomNode, newMode:$DomNode):Website {
+        return this
+    }
+    /**
+     * This method triggers if we change the current section.
+     * @param sectionName - Contains the new section name.
+     * @returns Returns the current instance.
+     */
+    _onSwitchSection(sectionName:string):Website {
+        if (
+            this._options.trackingCode &&
+            this._options.trackingCode !== '__none__' &&
+            context.hasOwnProperty('location') &&
+            context.location.hostname !== 'localhost' &&
+            this.currentSectionName !== sectionName
+        ) {
             this.currentSectionName = sectionName
             this.debug(
-                'Run analytics code: "' +
-                "#{this._analyticsCode.sectionSwitch}\""
+                `Run analytics code: "${this._analyticsCode.sectionSwitch}"`,
                 this.currentSectionName)
-            try
-                (new window.Function(this.stringFormat(
-                    this._analyticsCode.sectionSwitch
-                    this.currentSectionName
+            try {
+                (new Function(this.stringFormat(
+                    this._analyticsCode.sectionSwitch, this.currentSectionName
                 )))()
-            catch exception
+            } catch (exception) {
                 this.warn(
-                    'Problem in analytics section switch code snippet: {1}'
+                    'Problem in analytics section switch code snippet: {1}',
                     exception)
-        this
-    _onStartUpAnimationComplete: ->
-        ###
-            This method is complete if last startup animation was
-            initialized.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
+            }
+        }
+        return this
+    }
+    /**
+     * This method is complete if last startup animation was initialized.
+     * @returns Returns the current instance.
+     */
+    _onStartUpAnimationComplete():Website {
         this.startUpAnimationIsComplete = true
-        this
-    # endregion
-    ## region helper
-    _addMediaQueryChangeEvents: ->
-        ###
-            This method adds triggers for responsive design switches.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
-        this.on this.$domNodes.window, 'resize', this.getMethod(
-            this._triggerWindowResizeEvents)
-        this
-    _triggerWindowResizeEvents: ->
-        ###
-            This method triggers if the responsive design switches its
-            mode.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
-        $.each this._options.mediaQueryCssIndicator, (key, value) =>
+        return this
+    }
+    // endregion
+    // / region helper
+    /**
+     * This method adds triggers for responsive design switches.
+     * @returns Returns the current instance.
+     */
+    _addMediaQueryChangeEvents():Website {
+        this.on(this.$domNodes.window, 'resize', this.getMethod(
+            this._triggerWindowResizeEvents))
+        return this
+    }
+    /**
+     * This method triggers if the responsive design switches its mode.
+     * @returns Returns the current instance.
+     */
+    _triggerWindowResizeEvents():Website {
+        $.each(this._options.mediaQueryClassNameIndicator, (
+            index:string, classNameMapping:string
+        ):void => {
             this.$domNodes.mediaQueryIndicator.prependTo(
                 this.$domNodes.parent
-            ).addClass "hidden-#{value[1]}"
-            if(
-                this.$domNodes.mediaQueryIndicator.is(':hidden') and
-                value[0] isnt this.currentMediaQueryMode
-            )
+            ).addClass(`hidden-${classNameMapping[1]}`)
+            if (
+                this.$domNodes.mediaQueryIndicator.is(':hidden') &&
+                classNameMapping[0] !== this.currentMediaQueryMode
+            ) {
                 this.fireEvent.apply(
                     this, [
                         'changeMediaQueryMode', false, this,
-                        this.currentMediaQueryMode, value[0]
-                    ].concat this.argumentsObjectToArray arguments
-                )
+                        this.currentMediaQueryMode, classNameMapping[0]
+                    ].concat(this.argumentsObjectToArray(arguments)))
                 this.fireEvent.apply(
                     this, [
                         this.stringFormat(
-                            'changeTo{1}Mode',
-                            this.stringCapitalize(value[0])
+                            `changeTo{1}Mode`,
+                            this.stringCapitalize(classNameMapping[0])
                         ), false, this, this.currentMediaQueryMode,
-                        value[0]
-                    ].concat this.argumentsObjectToArray arguments
-                )
-                this.currentMediaQueryMode = value[0]
+                        classNameMapping[0]
+                    ].concat(this.argumentsObjectToArray(arguments)))
+                this.currentMediaQueryMode = classNameMapping[0]
+            }
             this.$domNodes.mediaQueryIndicator.removeClass(
-                "hidden-#{value[1]}")
-        this
-    _bindScrollEvents: ->
-        ###
-            This method triggers if view port arrives at special areas.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
-        # Stop automatic scrolling if the user wants to scroll manually.
-        $scrollTarget = $('body, html').add this.$domNodes.window
-        $scrollTarget.on(
-            this._options.knownScrollEventNames, (event) =>
-                if this._options.switchToManualScrollingIndicator event
-                    $scrollTarget.stop true
-        )
-        this.on this.$domNodes.window, 'scroll', =>
-            if this.$domNodes.window.scrollTop()
-                if this.viewportIsOnTop
+                `hidden-${classNameMapping[1]}`)
+        })
+        return this
+    }
+    /**
+     * This method triggers if view port arrives at special areas.
+     * @returns Returns the current instance.
+     */
+    _bindScrollEvents():Website {
+        // Stop automatic scrolling if the user wants to scroll manually.
+        if (!this.$domNodes.hasOwnProperty('window'))
+            return this
+        $scrollTarget = $('body, html').add(this.$domNodes.window)
+        $scrollTarget.on(this._options.knownScrollEventNames, (
+            event:Object
+        ):void {
+            if (this._options.switchToManualScrollingIndicator(event))
+                $scrollTarget.stop(true)
+        })
+        this.on(this.$domNodes.window, 'scroll', ():void => {
+            if (this.$domNodes.window.scrollTop()) {
+                if (this.viewportIsOnTop) {
                     this.viewportIsOnTop = false
-                    this.fireEvent.apply this, [
+                    this.fireEvent.apply(this, [
                         'viewportMovesAwayFromTop', false, this
-                    ].concat this.argumentsObjectToArray arguments
-            else if not this.viewportIsOnTop
+                    ].concat(this.argumentsObjectToArray(arguments)))
+                }
+            } else if (!this.viewportIsOnTop) {
                 this.viewportIsOnTop = true
-                this.fireEvent.apply this, [
+                this.fireEvent.apply(this, [
                     'viewportMovesToTop', false, this
-                ].concat this.argumentsObjectToArray arguments
-        if this.$domNodes.window.scrollTop()
+                ].concat(this.argumentsObjectToArray(arguments)))
+            }
+        })
+        if (this.$domNodes.window.scrollTop()) {
             this.viewportIsOnTop = false
-            this.fireEvent.apply this, [
+            this.fireEvent.apply(this, [
                 'viewportMovesAwayFromTop', false, this
-            ].concat this.argumentsObjectToArray arguments
-        else
+            ].concat(this.argumentsObjectToArray(arguments)))
+        } else {
             this.viewportIsOnTop = true
-            this.fireEvent.apply this, [
+            this.fireEvent.apply(this, [
                 'viewportMovesToTop', false, this
-            ].concat this.argumentsObjectToArray arguments
-        this
-    _removeLoadingCover: ->
-        ###
-            This method triggers after window is loaded.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
-        window.setTimeout(=>
-            # Hide startup animation dom nodes to show them step by step.
+            ].concat(this.argumentsObjectToArray(arguments)))
+        }
+        return this
+    }
+    /**
+     * This method triggers after window is loaded.
+     * @returns Returns the current instance.
+     */
+    _removeLoadingCover():Website {
+        setTimeout(():void => {
+            // Hide startup animation dom nodes to show them step by step.
             $(this.stringFormat(
                 '[class^="{1}"], [class*=" {1}"]'
                 this.sliceDomNodeSelectorPrefix(
                     this._options.domNode.startUpAnimationClassPrefix
-                ).substr 1)
-            ).hide()
-            if this.$domNodes.windowLoadingCover.length
-                this.enableScrolling(
-                ).$domNodes.windowLoadingCover.fadeOut(
+                ).substr(1)
+            )).hide()
+            if (this.$domNodes.windowLoadingCover.length)
+                this.enableScrolling().$domNodes.windowLoadingCover.fadeOut(
                     this._options.windowLoadingCoverFadeOut)
             else
                 this._options.windowLoadingCoverFadeOut.always()
-        , this._options.additionalPageLoadingTimeInMilliseconds)
-        this
-    _handleStartUpEffects: (elementNumber) ->
-        ###
-            This method handles the given start up effect step.
-
-            **elementNumber {Number}** - The current start up step.
-
-            **returns {$.Website}**    - Returns the current instance.
-        ###
-        # Stop and delete spinner instance.
-        this.$domNodes.windowLoadingSpinner.spin false
-        elementNumber = 1 if not $.isNumeric elementNumber
-        if $(this.stringFormat(
+        }, this._options.additionalPageLoadingTimeInMilliseconds)
+        return this
+    }
+    /**
+     * This method handles the given start up effect step.
+     * @param elementNumber - The current start up step.
+     * @returns Returns the current instance.
+     */
+    _handleStartUpEffects(elementNumber:number):Website {
+        // Stop and delete spinner instance.
+        this.$domNodes.windowLoadingSpinner.spin(false)
+        if (!$.isNumeric(elementNumber))
+            elementNumber = 1
+        if ($(this.stringFormat(
             '[class^="{1}"], [class*=" {1}"]'
             this.sliceDomNodeSelectorPrefix(
                 this._options.domNode.startUpAnimationClassPrefix
-            ).substr 1)
-        ).length
-            window.setTimeout((=>
-                lastElementTriggered = false
-                this._options.startUpFadeIn.always = =>
+            ).substr(1)
+        )).length)
+            setTimeout(():void => {
+                let lastElementTriggered:boolean = false
+                this._options.startUpFadeIn.always = ():void => {
                     if lastElementTriggered
                         this.fireEvent 'startUpAnimationComplete'
+                }
                 $(
                     this._options.domNode.startUpAnimationClassPrefix +
                     elementNumber
-                ).fadeIn this._options.startUpFadeIn
-                if $(this._options.domNode.startUpAnimationClassPrefix +
-                     (elementNumber + 1)).length
-                    this._handleStartUpEffects elementNumber + 1
+                ).fadeIn(this._options.startUpFadeIn)
+                if ($(
+                    this._options.domNode.startUpAnimationClassPrefix +
+                    (elementNumber + 1)
+                ).length)
+                    this._handleStartUpEffects(elementNumber + 1)
                 else
                     lastElementTriggered = true
-            ), this._options.startUpAnimationElementDelayInMiliseconds)
+            }, this._options.startUpAnimationElementDelayInMiliseconds)
         else
-            this.fireEvent 'startUpAnimationComplete'
-        this
-    _addNavigationEvents: ->
-        ###
-            This method adds triggers to switch section.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
-        window.addEventListener 'hashchange', (=>
-            if this.startUpAnimationIsComplete
-                this.fireEvent(
-                    'switchSection', false, this
-                    window.location.hash.substring '#'.length)
-        ), false
-        this._handleScrollToTopButton()
-    _handleScrollToTopButton: ->
-        ###
-            Adds trigger to scroll top buttons.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
-        this.on(
-            this.$domNodes.scrollToTopButton, 'click', (event) =>
-                event.preventDefault()
-                this._scrollToTop()
-        )
-        this
-    _scrollToTop: (onAfter=$.noop()) ->
-        ###
-            Scrolls to top of page. Runs the given function after viewport
-            arrives.
-
-            **onAfter {Function}**  - Callback to call after effect has
-                                      finished.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
+            this.fireEvent('startUpAnimationComplete')
+        return this
+    }
+    /**
+     * This method adds triggers to switch section.
+     * @returns Returns the current instance.
+     */
+    _addNavigationEvents():Website {
+        if (context.hasOwnProperty('window'))
+            window.addEventListener('hashchange', ():void => {
+                if (this.startUpAnimationIsComplete)
+                    this.fireEvent(
+                        'switchSection', false, this, location.hash.substring(
+                            '#'.length))
+            }, false)
+        return this._handleScrollToTopButton()
+    }
+    /**
+     * Adds trigger to scroll top buttons.
+     * @returns Returns the current instance.
+     */
+    _handleScrollToTopButton():Website {
+        this.on(this.$domNodes.scrollToTopButton, 'click', (
+            event:Object
+        ):void => {
+            event.preventDefault()
+            this._scrollToTop()
+        })
+        return this
+    }
+    /**
+     * Scrolls to top of page. Runs the given function after viewport arrives.
+     * @param onAfter - Callback to call after effect has finished.
+     * @returns Returns the current instance.
+     */
+    _scrollToTop(onAfter:Function = $.noop()):Website {
+        if (!context.hasOwnProperty('document'))
+            return this
         this._options.scrollToTop.options.onAfter = onAfter
-        # NOTE: This is a workaround to avoid a bug in "jQuery.scrollTo()"
-        # expecting this property exists.
-        window.document.body = $('body')[0]
-        if this._options.scrollToTop.inLinearTime
+        /*
+            NOTE: This is a workaround to avoid a bug in "jQuery.scrollTo()"
+            expecting this property exists.
+        */
+        context.document.body = $('body')[0]
+        if (this._options.scrollToTop.inLinearTime) {
             distanceToTopInPixel = this.$domNodes.window.scrollTop()
-            # Scroll four times faster as we have distance to top.
+            // Scroll four times faster as we have distance to top.
             this._options.scrollToTop.options.duration =
                 distanceToTopInPixel / 4
-            $(window).scrollTo(
-                {top: "-=#{distanceToTopInPixel}", left: '+=0'}
+            this.$domNodes.window.scrollTo(
+                {top: `-=${distanceToTopInPixel}`, left: '+=0'},
                 this._options.scrollToTop.options)
-        else
+        } else
             $(window).scrollTo(
                 {top: 0, left: 0}, this._options.scrollToTop.options)
-        this
-    _handleAnalyticsInitialisation: ->
-        ###
-            Executes the page tracking code.
-
-            **returns {$.Website}** - Returns the current instance.
-        ###
-        if this._options.trackingCode? and
-        this._options.trackingCode isnt '__none__' and
-        window.location.hostname isnt 'localhost'
+        return this
+    }
+    /**
+     * Executes the page tracking code.
+     * @returns Returns the current instance.
+     */
+    _handleAnalyticsInitialisation():Website {
+        if (
+            this._options.trackingCode &&
+            this._options.trackingCode !== '__none__' &&
+            context.hasOwnProperty('location') &&
+            context.location.hostname !== 'localhost'
+        ) {
             this.debug(
-                "Run analytics code: \"#{this._analyticsCode.initial}\""
-                this._options.trackingCode, this._options.domain
+                `Run analytics code: "${this._analyticsCode.initial}"`,
+                this._options.trackingCode, this._options.domain,
                 this.currentSectionName)
-            try
-                (new window.Function(this.stringFormat(
-                    this._analyticsCode.initial
-                    this._options.trackingCode, this._options.domain
-                    this.currentSectionName
+            try {
+                (new Function(this.stringFormat(
+                    this._analyticsCode.initial, this._options.trackingCode,
+                    this._options.domain, this.currentSectionName
                 )))()
-            catch exception
+            } catch (exception) {
                 this.warn(
-                    'Problem in analytics initial code snippet: {1}'
+                    'Problem in analytics initial code snippet: {1}',
                     exception)
-            this.on this.$domNodes.parent.find('a, button'), 'click', (
-                event
-            ) =>
-                $domNode = $ event.target
+            }
+            this.on(this.$domNodes.parent.find('a, button'), 'click', (
+                event:Object
+            ):void => {
+                $domNode = $(event.target)
                 this.triggerAnalyticsEvent(
-                    this.currentSectionName, 'click', $domNode.text()
-                    event.data or {}, $domNode.attr(
+                    this.currentSectionName, 'click', $domNode.text(),
+                    event.data || {}, $domNode.attr(
                         'website-analytics-value'
-                    ) or 1)
-        this
-    ## endregion
-    # endregion
+                    ) || 1)
+            })
+        }
+        return this
+    }
+    // / endregion
+    // endregion
 }
 // endregion
 $.Website = function():any {
