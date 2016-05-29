@@ -10,6 +10,8 @@
 esproposal.class_static_fields=enable
 
 module.name_mapper='^\./index\.compiled$' -> './index'
+module.name_mapper='^jQuery-scrollTo$' -> 'jquery.scrollto/jquery.scrollTo'
+module.name_mapper='^jQuery-spin$' -> 'spin.js/jquery.spin'
 
 module.file_ext=.js
 module.file_ext=.compiled.js

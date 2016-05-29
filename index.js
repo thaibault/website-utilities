@@ -283,7 +283,7 @@ class Website extends $.Tools.class {
         this.$domNodes.windowLoadingSpinner.spin(
             this._options.windowLoadingSpinner)
         this._bindScrollEvents().$domNodes.parent.show()
-        onLoaded = ():void => {
+        const onLoaded:() => void = ():void => {
             this.windowLoaded = true
             this._removeLoadingCover()
         }
@@ -321,7 +321,7 @@ class Website extends $.Tools.class {
      * configured analytics event code to defined their environment variables.
      * @returns Returns the current instance.
      */
-    triggerAnalyticsEvent():Window {
+    triggerAnalyticsEvent():Website {
         if (
             this._options.trackingCode &&
             this._options.trackingCode !== '__none__' &&
