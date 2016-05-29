@@ -145,7 +145,7 @@ class Website extends $.Tools.class {
     currentSectionName:string
     viewportIsOnTop:boolean
     currentMediaQueryMode:string
-    languageHandler:Lang
+    languageHandler:?Lang
     _analyticsCode:AnalyticsCode;
     // endregion
     // region public methods
@@ -238,7 +238,7 @@ class Website extends $.Tools.class {
         }, startUpAnimationIsComplete:boolean = false,
         currentSectionName:?string = null,
         viewportIsOnTop:boolean = false, currentMediaQueryMode:string = '',
-        languageHandler:$.Lang.class = null, analyticsCode:AnalyticsCode = {
+        languageHandler:?Lang = null, analyticsCode:AnalyticsCode = {
             initial: `
                 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new window.Date();
