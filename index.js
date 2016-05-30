@@ -274,10 +274,10 @@ class Website extends $.Tools.class {
         else
             this.currenSectionName = 'home'
         // Wrap event methods with debounceing handler.
-        this._onViewportMovesToTop = this.debounce(this.getMethod(
+        this._onViewportMovesToTop = this.constructor.debounce(this.getMethod(
             this._onViewportMovesToTop))
-        this._onViewportMovesAwayFromTop = this.debounce(this.getMethod(
-            this._onViewportMovesAwayFromTop))
+        this._onViewportMovesAwayFromTop = this.constructor.debounce(
+            this.getMethod(this._onViewportMovesAwayFromTop))
         this._options = $.extend(
             true, {}, this._parentOptions, this._options)
         super.initialize(options)
@@ -462,7 +462,7 @@ class Website extends $.Tools.class {
                 `Run analytics code: "${this._analyticsCode.sectionSwitch}"`,
                 this.currentSectionName)
             try {
-                (new Function(this.stringFormat(
+                (new Function(this.constructor.stringFormat(
                     this._analyticsCode.sectionSwitch, this.currentSectionName
                 )))()
             } catch (exception) {
@@ -511,15 +511,18 @@ class Website extends $.Tools.class {
                     this, [
                         'changeMediaQueryMode', false, this,
                         this.currentMediaQueryMode, classNameMapping[0]
-                    ].concat(this.argumentsObjectToArray(arguments)))
+                    ].concat(this.constructor.argumentsObjectToArray(
+                        arguments)))
                 this.fireEvent.apply(
                     this, [
-                        this.stringFormat(
+                        this.constructor.stringFormat(
                             `changeTo{1}Mode`,
-                            this.stringCapitalize(classNameMapping[0])
+                            this.constructor.stringCapitalize(
+                                classNameMapping[0])
                         ), false, this, this.currentMediaQueryMode,
                         classNameMapping[0]
-                    ].concat(this.argumentsObjectToArray(arguments)))
+                    ].concat(this.constructor.argumentsObjectToArray(
+                        arguments)))
                 this.currentMediaQueryMode = classNameMapping[0]
             }
             this.$domNodes.mediaQueryIndicator.removeClass(
@@ -549,25 +552,26 @@ class Website extends $.Tools.class {
                     this.viewportIsOnTop = false
                     this.fireEvent.apply(this, [
                         'viewportMovesAwayFromTop', false, this
-                    ].concat(this.argumentsObjectToArray(arguments)))
+                    ].concat(this.constructor.argumentsObjectToArray(
+                        arguments)))
                 }
             } else if (!this.viewportIsOnTop) {
                 this.viewportIsOnTop = true
                 this.fireEvent.apply(this, [
                     'viewportMovesToTop', false, this
-                ].concat(this.argumentsObjectToArray(arguments)))
+                ].concat(this.constructor.argumentsObjectToArray(arguments)))
             }
         })
         if (this.$domNodes.window.scrollTop()) {
             this.viewportIsOnTop = false
             this.fireEvent.apply(this, [
                 'viewportMovesAwayFromTop', false, this
-            ].concat(this.argumentsObjectToArray(arguments)))
+            ].concat(this.constructor.argumentsObjectToArray(arguments)))
         } else {
             this.viewportIsOnTop = true
             this.fireEvent.apply(this, [
                 'viewportMovesToTop', false, this
-            ].concat(this.argumentsObjectToArray(arguments)))
+            ].concat(this.constructor.argumentsObjectToArray(arguments)))
         }
         return this
     }
@@ -578,7 +582,7 @@ class Website extends $.Tools.class {
     _removeLoadingCover():Website {
         setTimeout(():void => {
             // Hide startup animation dom nodes to show them step by step.
-            $(this.stringFormat(
+            $(this.constructor.stringFormat(
                 '[class^="{1}"], [class*=" {1}"]',
                 this.sliceDomNodeSelectorPrefix(
                     this._options.domNode.startUpAnimationClassPrefix
@@ -602,7 +606,7 @@ class Website extends $.Tools.class {
         this.$domNodes.windowLoadingSpinner.spin(false)
         if (!$.isNumeric(elementNumber))
             elementNumber = 1
-        if ($(this.stringFormat(
+        if ($(this.constructor.stringFormat(
             '[class^="{1}"], [class*=" {1}"]',
             this.sliceDomNodeSelectorPrefix(
                 this._options.domNode.startUpAnimationClassPrefix
@@ -701,7 +705,7 @@ class Website extends $.Tools.class {
                 this._options.trackingCode, this._options.domain,
                 this.currentSectionName)
             try {
-                (new Function(this.stringFormat(
+                (new Function(this.constructor.stringFormat(
                     this._analyticsCode.initial, this._options.trackingCode,
                     this._options.domain, this.currentSectionName
                 )))()
