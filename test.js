@@ -63,13 +63,16 @@ browserAPI((window:Window):void => {
     qunit.test('_onViewportMovesToTop', ():void => {
         website._onViewportMovesToTop()
         // NOTE: Returns timeout id because of debounceing.
-        qunit.strictEqual(typeof website._onViewportMovesToTop(), 'number')
+        qunit.strictEqual(
+            typeof website._onViewportMovesToTop(),
+            typeof setTimeout(():void => {}, 0))
     })
     qunit.test('_onViewportMovesAwayFromTop', ():void => {
         website._onViewportMovesAwayFromTop()
         // NOTE: Returns timeout id because of debounceing.
         qunit.strictEqual(
-            typeof website._onViewportMovesAwayFromTop(), 'number')
+            typeof website._onViewportMovesAwayFromTop(),
+            typeof setTimeout(():void => {}, 0))
     })
     qunit.test('_onChangeMediaQueryMode', ():void => qunit.strictEqual(
         website._onChangeMediaQueryMode('old', 'new'), website))

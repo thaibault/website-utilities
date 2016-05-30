@@ -674,7 +674,7 @@ class Website extends $.Tools.class {
             NOTE: This is a workaround to avoid a bug in "jQuery.scrollTo()"
             expecting this property exists.
         */
-        context.document.body = $('body')[0]
+        Object.defineProperty(context.document, 'body', {value: $('body')[0]})
         if (this._options.scrollToTop.inLinearTime) {
             const distanceToTopInPixel:number =
                 this.$domNodes.window.scrollTop()
