@@ -294,20 +294,10 @@ This library written by Torben Sickert stand under a creative commons naming
     /// endregion
     /* endregion */
     /* region generic classes */
-    /*
-        NOTE: Classes should be usable for the body itself and their for have
-        to be outside.
-    */
-    .tools {
-        /* Initially show javaScript dependent dom nodes. */
-        &-hidden-on-javascript-enabled { display: initial; }
-        /* Initially hide javaScript dependent dom nodes. */
-        &-visible-on-javascript-enabled { display: none; }
-        /* Disables and hides a scrolling and scrollbar. */
-        &-disable-scrolling {
-            height: 100% !important;
-            overflow: hidden !important;
-        }
+    /* Disables and hides a scrolling and scrollbar. */
+    .tools-disable-scrolling {
+        height: 100% !important;
+        overflow: hidden !important;
     }
     .website-action { cursor: pointer; }
     // Overlay the whole page till everything is loaded completely.
@@ -508,8 +498,10 @@ This library written by Torben Sickert stand under a creative commons naming
     /* endregion */
 }
 html.javascript .tools {
-    /* Initially hide javaScript dependent dom nodes. */
+    /* Initially show javaScript dependent dom nodes. */
     &-visible-on-javascript-enabled { display: initial; }
+    /* Initially show javaScript dependent dom nodes. */
+    &-hidden-on-javascript-enabled { display: none; }
 }
 // region vim modline
 // vim: set tabstop=4 shiftwidth=4 expandtab:
