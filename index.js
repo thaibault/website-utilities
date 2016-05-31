@@ -287,12 +287,11 @@ class Website extends $.Tools.class {
         this.$domNodes.windowLoadingSpinner.spin(
             this._options.windowLoadingSpinner)
         this._bindScrollEvents().$domNodes.parent.show()
-        const onLoaded:() => void = ():void => {
-            this.windowLoaded = true
-            this._removeLoadingCover()
-        }
         if (this.$domNodes.hasOwnProperty('window'))
-            this.on(this.$domNodes.window, 'load', onLoaded)
+            this.on(this.$domNodes.window, 'load', ():void => {
+                this.windowLoaded = true
+                this._removeLoadingCover()
+            })
         this._addNavigationEvents()._addMediaQueryChangeEvents(
         )._triggerWindowResizeEvents()._handleAnalyticsInitialisation()
         if (!this._options.language.logging)
