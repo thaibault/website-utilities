@@ -638,8 +638,8 @@ class Website extends $.Tools.class {
      * @returns Returns the current instance.
      */
     _addNavigationEvents():Website {
-        if (context.hasOwnProperty('window'))
-            window.addEventListener('hashchange', ():void => {
+        if (addEventListener in context)
+            context.addEventListener('hashchange', ():void => {
                 if (this.startUpAnimationIsComplete)
                     this.fireEvent(
                         'switchSection', false, this, location.hash.substring(
