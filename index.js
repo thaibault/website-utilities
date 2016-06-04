@@ -42,7 +42,7 @@ const context:Object = (():Object => {
     }
     return window
 })()
-if (!context.hasOwnProperty('document') && $.hasOwnProperty('context'))
+if (!('document' in context) && 'context' in $)
     context.document = $.context
 // region plugins/classes
 /**
@@ -268,7 +268,7 @@ class Website extends $.Tools.class {
         this._analyticsCode = analyticsCode
         if (currentSectionName)
             this.currentSectionName = currentSectionName
-        else if (context.hasOwnProperty('location') && context.location.hash)
+        else if ('location' in context && context.location.hash)
             this.currentSectionName = context.location.hash.substring(
                 '#'.length)
         else
@@ -287,7 +287,7 @@ class Website extends $.Tools.class {
         this.$domNodes.windowLoadingSpinner.spin(
             this._options.windowLoadingSpinner)
         this._bindScrollEvents().$domNodes.parent.show()
-        if (this.$domNodes.hasOwnProperty('window'))
+        if ('window' in this.$domNodes)
             this.on(this.$domNodes.window, 'load', ():void => {
                 this.windowLoaded = true
                 this._removeLoadingCover()
@@ -328,7 +328,7 @@ class Website extends $.Tools.class {
         if (
             this._options.trackingCode &&
             this._options.trackingCode !== '__none__' &&
-            context.hasOwnProperty('location') &&
+            'location' in context &&
             context.location.hostname !== 'localhost'
         ) {
             this.debug(
@@ -452,7 +452,7 @@ class Website extends $.Tools.class {
         if (
             this._options.trackingCode &&
             this._options.trackingCode !== '__none__' &&
-            context.hasOwnProperty('location') &&
+            'location' in context &&
             context.location.hostname !== 'localhost' &&
             this.currentSectionName !== sectionName
         ) {
@@ -535,7 +535,7 @@ class Website extends $.Tools.class {
      */
     _bindScrollEvents():Website {
         // Stop automatic scrolling if the user wants to scroll manually.
-        if (!this.$domNodes.hasOwnProperty('window'))
+        if (!('window' in this.$domNodes))
             return this
         const $scrollTarget:$DomNode = $('body, html').add(
             this.$domNodes.window)
@@ -666,7 +666,7 @@ class Website extends $.Tools.class {
      * @returns Returns the current instance.
      */
     _scrollToTop(onAfter:Function = $.noop()):Website {
-        if (!context.hasOwnProperty('document'))
+        if (!('document' in context))
             return this
         this._options.scrollToTop.options.onAfter = onAfter
         /*
@@ -696,7 +696,7 @@ class Website extends $.Tools.class {
         if (
             this._options.trackingCode &&
             this._options.trackingCode !== '__none__' &&
-            context.hasOwnProperty('location') &&
+            'location' in context &&
             context.location.hostname !== 'localhost'
         ) {
             this.debug(
