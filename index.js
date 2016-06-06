@@ -638,7 +638,7 @@ class Website extends $.Tools.class {
      * @returns Returns the current instance.
      */
     _addNavigationEvents():Website {
-        if (addEventListener in context)
+        if ('addEventListener' in context)
             context.addEventListener('hashchange', ():void => {
                 if (this.startUpAnimationIsComplete)
                     this.fireEvent(
