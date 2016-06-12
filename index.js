@@ -587,10 +587,10 @@ class Website extends $.Tools.class {
                     this._options.domNode.startUpAnimationClassPrefix
                 ).substr(1)
             )).hide()
-            if (this.$domNodes.windowLoadingCover.length)
+            if (this.$domNodes.windowLoadingCover.length) {
                 this.enableScrolling().$domNodes.windowLoadingCover.fadeOut(
                     this._options.windowLoadingCoverFadeOut)
-            else
+            } else
                 this._options.windowLoadingCoverFadeOut.always()
         }, this._options.additionalPageLoadingTimeInMilliseconds)
         return this
