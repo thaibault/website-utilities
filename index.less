@@ -302,6 +302,8 @@ This library written by Torben Sickert stand under a creative commons naming
     .website-action { cursor: pointer; }
     // Overlay the whole page till everything is loaded completely.
     div.website-window-loading-cover {
+        // NOTE: Only show this div if javaScript is enabled.
+        display: none;
         background-color: @backgroundColor;
         /* always cover full viewport */
         position: fixed;
