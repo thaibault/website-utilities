@@ -499,9 +499,15 @@ This library written by Torben Sickert stand under a creative commons naming
 }
 html.javascript .tools {
     /* Initially show javaScript dependent dom nodes. */
-    &-visible-on-javascript-enabled { display: initial; }
+    &-visible-on-javascript-enabled { display: initial !important; }
     /* Initially show javaScript dependent dom nodes. */
-    &-hidden-on-javascript-enabled { display: none; }
+    &-hidden-on-javascript-enabled { display: none !important; }
+}
+html.no-javascript .tools {
+    /* Initially show none javaScript dependent dom nodes. */
+    &-visible-on-javascript-disabled { display: initial !important; }
+    /* Initially show none javaScript dependent dom nodes. */
+    &-hidden-on-javascript-disabled { display: none !important; }
 }
 // region vim modline
 // vim: set tabstop=4 shiftwidth=4 expandtab:
