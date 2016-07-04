@@ -41,7 +41,8 @@
         "bootstrap": "^3.3.6"
     },
     "devDependencies": {
-        "qunitjs": "*",
-        "qunit-cli": "*"
+        "jsdom": ">=9.4.0",
+        "qunitjs": ">=2.0.0",
+        "qunit-cli": ">=0.2.0*"
     }
 }
