@@ -16,8 +16,7 @@
             "bootstrap.less$": "bootstrap/less/bootstrap",
             "jQuery-scrollTo$": "jquery.scrollto/jquery.scrollTo",
             "jQuery-spin$": "spin.js/jquery.spin",
-            "genericStyle.less$": "genericStyle/index.less",
-            "browserAPI": "browserAPI.compiled.js"
+            "genericStyle.less$": "genericStyle/index.less"
         }}
     },
     "scripts": {
