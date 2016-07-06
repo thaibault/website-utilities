@@ -21,6 +21,7 @@
     },
     "scripts": {
         "build": "webOptimizer build",
+        "buildDLL": "webOptimizer buildDLL",
         "clear": "webOptimizer clear",
         "document": "webOptimizer document",
         "lint": "webOptimizer typeCheck && webOptimizer lint",
@@ -28,7 +29,8 @@
         "postinstall": "webOptimizer build",
         "preinstall": "webOptimizer preinstall",
         "testInBrowser": "webOptimizer testInBrowser",
-        "watch": "webOptimizer build --watch"
+        "watch": "webOptimizer build --watch",
+        "watchDLL": "webOptimizer buildDLL --watch"
     },
     "dependencies": {
         "webOptimizer": "git+ssh://git@github.com/thaibault/webOptimizer.git",
