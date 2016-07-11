@@ -21,7 +21,6 @@ import type Website from './index'
 // endregion
 // region declaration
 declare var TARGET:string
-declare var module:{hot:Object}
 // endregion
 // region types
 type JQueryFunction = (object:any) => Object
@@ -115,6 +114,7 @@ browserAPI((window:Window, alreadyLoaded:boolean):void => {
     // region hot module replacement handler
     if (typeof module === 'object' && 'hot' in module && module.hot) {
         module.hot.accept()
+        // IgnoreTypeCheck
         module.hot.dispose(():void => {
             /*
                 NOTE: We have to delay status indicator reset because qunits
