@@ -27,7 +27,7 @@ type JQueryFunction = (object:any) => Object
 // endregion
 const qunit:Object = (TARGET === 'node') ? require('qunit-cli') : require(
     'qunitjs')
-browserAPI((window:Window):void => {
+browserAPI((window:Window, alreadyLoaded:boolean):void => {
     /*
         NOTE: We have to define window globally before jQuery is loaded to
         ensure that all jquery instances share the same window object.
@@ -43,7 +43,7 @@ browserAPI((window:Window):void => {
     require('./index')
     if (TARGET === 'node')
         qunit.load()
-    else
+    else if (!alreadyLoaded)
         qunit.start()
     // region tests
     // / region mock-up
