@@ -37,15 +37,15 @@
         "webOptimizer": "git+ssh://git@github.com/thaibault/webOptimizer.git",
         "jQuery-tools": "git+ssh://git@github.com/thaibault/jQuery-tools.git",
         "jQuery-lang": "git+ssh://git@github.com/thaibault/jQuery-lang.git",
-        "spin.js": "2.3.2",
-        "jquery.scrollto": "2.1.2",
+        "spin.js": ">=2.3.2",
+        "jquery.scrollto": ">=2.1.2",
         "genericStyle": "git+ssh://git@github.com/thaibault/genericStyle.git",
-        "bootstrap": "^3.3.6"
+        "bootstrap": "3.3.6"
     },
     "devDependencies": {
-        "jsdom": ">=9.4.0",
+        "jsdom": ">=9.4.1",
         "qunitjs": ">=2.0.0",
         "qunit-cli": ">=0.2.0*",
-        "source-map-support": ">=0.4.0"
+        "source-map-support": ">=0.4.2"
     }
 }
