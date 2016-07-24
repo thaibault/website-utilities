@@ -234,6 +234,7 @@ class Website extends $.Tools.class {
                     hideAnimation: {duration: 'normal'}
                 }
             },
+            windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 5000,
             domain: 'auto'
         }, startUpAnimationIsComplete:boolean = false,
         currentSectionName:?string = null,
@@ -287,11 +288,17 @@ class Website extends $.Tools.class {
         this.$domNodes.windowLoadingSpinner.spin(
             this._options.windowLoadingSpinner)
         this._bindScrollEvents().$domNodes.parent.show()
-        if ('window' in this.$domNodes)
-            this.on(this.$domNodes.window, 'load', ():void => {
-                this.windowLoaded = true
-                this._removeLoadingCover()
-            })
+        if ('window' in this.$domNodes) {
+            const onLoaded:Function = ():void => {
+                if (!this.windowLoaded) {
+                    this.windowLoaded = true
+                    this._removeLoadingCover()
+                }
+            }
+            $(():void => setTimeout(onLoaded, this._options
+                .windowLoadedTimeoutAfterDocumentLoadedInMilliseconds))
+            this.on(this.$domNodes.window, 'load', onLoaded)
+        }
         this._addNavigationEvents()._addMediaQueryChangeEvents(
         )._triggerWindowResizeEvents()._handleAnalyticsInitialisation()
         if (!this._options.language.logging)
