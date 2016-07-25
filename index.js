@@ -234,7 +234,7 @@ class Website extends $.Tools.class {
                     hideAnimation: {duration: 'normal'}
                 }
             },
-            windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 5000,
+            windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 3000,
             domain: 'auto'
         }, startUpAnimationIsComplete:boolean = false,
         currentSectionName:?string = null,
