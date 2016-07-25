@@ -197,14 +197,14 @@ class Website extends $.Tools.class {
                 windowLoadingCover: 'div.website-window-loading-cover',
                 windowLoadingSpinner: 'div.website-window-loading-cover > div'
             },
-            startUpShowAnimation: [{opacity: 100}, {
+            startUpShowAnimation: [{opacity: 1}, {
                 easing: 'swing',
                 duration: 'slow'
             }],
-            windowLoadingCoverHideAnimation: {
+            windowLoadingCoverHideAnimation: [{opacity: 0}, {
                 easing: 'swing',
                 duration: 'slow'
-            },
+            }],
             startUpAnimationElementDelayInMiliseconds: 100,
             windowLoadingSpinner: {
                 lines: 9, // The number of lines to draw
@@ -229,9 +229,14 @@ class Website extends $.Tools.class {
                 inLinearTime: true,
                 options: {duration: 'normal'},
                 button: {
-                    slideDistanceInPixel: 30,
-                    showAnimation: [{opacity: 100}, {duration: 'normal'}],
-                    hideAnimation: [{opacity: 0}, {duration: 'normal'}]
+                    showAnimation: [{
+                        bottom: '-=30',
+                        opacity: 1
+                    }, {duration: 'normal'}],
+                    hideAnimation: [{
+                        bottom: '+=30',
+                        opacity: 0
+                    }, {duration: 'normal'}]
                 }
             },
             windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 3000,
@@ -370,17 +375,11 @@ class Website extends $.Tools.class {
             this.$domNodes.scrollToTopButton.css('opacity', 0)
         else {
             this._options.scrollToTop.button.hideAnimation.always = (
-            ):void => {
-                this.$domNodes.scrollToTopButton.css(
-                    'bottom',
-                        '-=' +
-                        this._options.scrollToTop.button.slideDistanceInPixel)
-            }
-            this.$domNodes.scrollToTopButton.finish().animate({
-                bottom: '+=' +
-                    this._options.scrollToTop.button.slideDistanceInPixel,
-                opacity: 0
-            }, this._options.scrollToTop.button.hideAnimation)
+            ):$DomNode => this.$domNodes.scrollToTopButton.css(
+                this._options.scrollToTop.button.showAnimation[0])
+            this.$domNodes.scrollToTopButton.finish().animate.apply(
+                this.$domNodes.scrollToTopButton,
+                this._options.scrollToTop.button.hideAnimation)
         }
         return this
     }
@@ -392,17 +391,13 @@ class Website extends $.Tools.class {
         if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
             this.$domNodes.scrollToTopButton.css('opacity', 1)
         else
-            this.$domNodes.scrollToTopButton.finish().css({
-                bottom: '+=' +
-                    this._options.scrollToTop.button.slideDistanceInPixel,
-                display: 'block',
-                opacity: 0
-            }).animate({
-                bottom: '-=' +
-                    this._options.scrollToTop.button.slideDistanceInPixel,
-                queue: false,
-                opacity: 1
-            }, this._options.scrollToTop.button.showAnimation)
+            this.$domNodes.scrollToTopButton.finish().css($.extend({
+                display: 'block'
+            }, this._options.scrollToTop.button.hideAnimation).animate(
+                $.extend({
+                    queue: false
+                }, this._options.scrollToTop.button.showAnimation)
+            ), this._options.scrollToTop.button.showAnimation)
         return this
     }
     /* eslint-disable no-unused-vars */
