@@ -285,7 +285,7 @@ class Website extends $.Tools.class {
         super.initialize(options)
         this.$domNodes = this.grabDomNode(this._options.domNode)
         this.disableScrolling(
-        )._options.windowLoadingCoverHideAnimation.always =
+        )._options.windowLoadingCoverHideAnimation[1].always =
             this.getMethod(this._handleStartUpEffects)
         this.$domNodes.windowLoadingSpinner.spin(
             this._options.windowLoadingSpinner)
@@ -479,7 +479,7 @@ class Website extends $.Tools.class {
         this.startUpAnimationIsComplete = true
         return this
     }
-    /// endregion
+    // endregion
     // / region helper
     /**
      * This method adds triggers for responsive design switches.
