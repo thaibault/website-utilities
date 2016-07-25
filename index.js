@@ -238,8 +238,10 @@ class Website extends $.Tools.class {
             domain: 'auto'
         }, startUpAnimationIsComplete:boolean = false,
         currentSectionName:?string = null,
-        viewportIsOnTop:boolean = false, currentMediaQueryMode:string = '',
-        languageHandler:?Lang = null, analyticsCode:AnalyticsCode = {
+        viewportIsOnTop:boolean = false,
+        currentMediaQueryMode:string = '',
+        languageHandler:?Lang = null,
+        analyticsCode:AnalyticsCode = {
             initial: `
                 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=` +
                     'i[r]||function(){' +
