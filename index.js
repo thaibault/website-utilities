@@ -197,14 +197,8 @@ class Website extends $.Tools.class {
                 windowLoadingCover: 'div.website-window-loading-cover',
                 windowLoadingSpinner: 'div.website-window-loading-cover > div'
             },
-            startUpShowAnimation: [{opacity: 1}, {
-                easing: 'swing',
-                duration: 'slow'
-            }],
-            windowLoadingCoverHideAnimation: [{opacity: 0}, {
-                easing: 'swing',
-                duration: 'slow'
-            }],
+            startUpShowAnimation: [{opacity: 1}, {}],
+            windowLoadingCoverHideAnimation: [{opacity: 0}, {}],
             startUpAnimationElementDelayInMiliseconds: 100,
             windowLoadingSpinner: {
                 lines: 9, // The number of lines to draw
@@ -393,7 +387,7 @@ class Website extends $.Tools.class {
         else
             this.$domNodes.scrollToTopButton.finish().css($.extend({
                 display: 'block'
-            }, this._options.scrollToTop.button.hideAnimation).animate(
+            }, this._options.scrollToTop.button.hideAnimation[0]).animate(
                 $.extend({
                     queue: false
                 }, this._options.scrollToTop.button.showAnimation)
@@ -485,7 +479,7 @@ class Website extends $.Tools.class {
         this.startUpAnimationIsComplete = true
         return this
     }
-    // endregion
+    /// endregion
     // / region helper
     /**
      * This method adds triggers for responsive design switches.
