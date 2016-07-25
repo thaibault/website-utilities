@@ -103,10 +103,10 @@ if (!('document' in context) && 'context' in $)
  * to the full window loading cover dom node.
  * @property _parentOptions.domNode.windowLoadingSpinner {string} - Selector
  * to the window loading spinner (on top of the window loading cover).
- * @property _parentOption.startUpFadeIn {Object} - Options for startup
- * fade in animation.
- * @property _parentOptions.windowLoadingCoverFadeOut {Object} - Options for
- * startup loading cover fade out animation.
+ * @property _parentOption.startUpShowAnimation {Object} - Options for startup
+ * show in animation.
+ * @property _parentOptions.windowLoadingCoverHideAnimation {Object} - Options
+ * for startup loading cover hide animation.
  * @property _parentOptions.startUpAnimationElementDelayInMiliseconds {number}
  * - Delay between two startup animated dom nodes in order.
  * @property _parentOptions.windowLoadingSpinner {Object} - Options for the
@@ -197,11 +197,11 @@ class Website extends $.Tools.class {
                 windowLoadingCover: 'div.website-window-loading-cover',
                 windowLoadingSpinner: 'div.website-window-loading-cover > div'
             },
-            startUpFadeIn: {
+            startUpShowAnimation: [{opacity: 100}, {
                 easing: 'swing',
                 duration: 'slow'
-            },
-            windowLoadingCoverFadeOut: {
+            }],
+            windowLoadingCoverHideAnimation: {
                 easing: 'swing',
                 duration: 'slow'
             },
@@ -230,8 +230,8 @@ class Website extends $.Tools.class {
                 options: {duration: 'normal'},
                 button: {
                     slideDistanceInPixel: 30,
-                    showAnimation: {duration: 'normal'},
-                    hideAnimation: {duration: 'normal'}
+                    showAnimation: [{opacity: 100}, {duration: 'normal'}],
+                    hideAnimation: [{opacity: 0}, {duration: 'normal'}]
                 }
             },
             windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 3000,
@@ -283,7 +283,8 @@ class Website extends $.Tools.class {
             true, {}, this._parentOptions, this._options)
         super.initialize(options)
         this.$domNodes = this.grabDomNode(this._options.domNode)
-        this.disableScrolling()._options.windowLoadingCoverFadeOut.always =
+        this.disableScrolling(
+        )._options.windowLoadingCoverHideAnimation.always =
             this.getMethod(this._handleStartUpEffects)
         this.$domNodes.windowLoadingSpinner.spin(
             this._options.windowLoadingSpinner)
@@ -595,10 +596,11 @@ class Website extends $.Tools.class {
                 ).substr(1)
             )).hide()
             if (this.$domNodes.windowLoadingCover.length)
-                this.enableScrolling().$domNodes.windowLoadingCover.fadeOut(
-                    this._options.windowLoadingCoverFadeOut)
+                this.enableScrolling().$domNodes.windowLoadingCover.animate(
+                    this.$domNodes.windowLoadingCover,
+                    this._options.windowLoadingCoverHideAnimation)
             else
-                this._options.windowLoadingCoverFadeOut.always()
+                this._options.windowLoadingCoverHideAnimation[1].always()
         }, this._options.additionalPageLoadingTimeInMilliseconds)
         return this
     }
@@ -620,14 +622,16 @@ class Website extends $.Tools.class {
         )).length)
             setTimeout(():void => {
                 let lastElementTriggered:boolean = false
-                this._options.startUpFadeIn.always = ():void => {
+                this._options.startUpShowAnimation[1].always = ():void => {
                     if (lastElementTriggered)
                         this.fireEvent('startUpAnimationComplete')
                 }
-                $(
+                const $domNode:$DomNode = $(
                     this._options.domNode.startUpAnimationClassPrefix +
                     elementNumber
-                ).fadeIn(this._options.startUpFadeIn)
+                )
+                $domNode.animate.apply(
+                    $domNode, this._options.startUpShowAnimation)
                 if ($(
                     this._options.domNode.startUpAnimationClassPrefix +
                     (elementNumber + 1)
