@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3>jQuery-website 1.0.0</h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><!-- !/usr/bin/env markdown
+-*- coding: utf-8 -*- -->
+<!-- region header
+
+Copyright Torben Sickert 16.12.2012
+
+License
+-------
+
+This library written by Torben Sickert stand under a creative commons naming
+3.0 unported license. see http://creativecommons.org/licenses/by/3.0/deed.de
+
+endregion -->
+<!--|deDE:Einsatzmöglichkeiten-->
+<h2>Use cases</h2><ul>
+    <li>Predefined scroll events<!--deDE:Vordefinierte Scroll-Events--></li>
+    <li>
+        Client side internationalization support
+        <!--deDE:Klientseitiger Internationalisierungs-Support-->
+    </li>
+    <li>
+        Viewport is on top position detection
+        <!--deDE:
+            Erkennung wenn der sichbare Bereich der Website am obigen Rand ist
+            und setzten entsprechender Events
+        -->
+    </li>
+    <li>
+        Triggering media-query change events
+        <!--deDE:
+            Auslösen von definierten Events wenn media-querys im responsive
+             Design gewechselt werden.
+        -->
+    </li>
+    <li>
+        Handling page load animation
+        <!--deDE:
+            Ermöglichen von Animationen während die Webanwendung im Hintergrund
+            geladen wird.
+        -->
+    </li>
+    <li>
+        Section switching transitions
+        <!--deDE:Animationen zum Übergang einzelner Sektionen-->
+    </li>
+    <li>
+        Simple section detection via url hashes
+        <!--deDE:Erkennung der aktuellen Sektion anhand url Hashes-->
+    </li>
+    <li>Handle google tracking.<!--deDE:Verbindung zu google tracking.--></li>
+</ul>
+
+<!--deDE:Verwendung-->
+<h2>Usage</h2><p>Here you can see the initialisation with all available plugin options:
+<!--deDE:
+    Hier werden alle möglichen Optionen die beim Initialisieren des Plugins
+    gesetzt werden können angegeben:
+--></p>
+<pre class="prettyprint source"><code>#!/usr/bin/env javaScript
+
+$.Website({
+    logging: false,
+    domNodeSelectorPrefix: 'body.{1}',
+    onViewportMovesToTop: $.noop(),
+    onViewportMovesAwayFromTop: $.noop(),
+    onChangeToLargeMode: $.noop(),
+    onChangeToMediumMode: $.noop(),
+    onChangeToSmallMode: $.noop(),
+    onChangeToExtraSmallMode: $.noop(),
+    onChangeMediaQueryMode: $.noop(),
+    onSwitchSection: $.noop(),
+    onStartUpAnimationComplete: $.noop(),
+    additionalPageLoadingTimeInMilliseconds: 0,
+    trackingCode: 'UA-0-0',
+    mediaQueryCssIndicator: [
+        ['extraSmall', 'xs'], ['small', 'sm'], ['medium', 'md'],
+        ['large', 'lg']
+    ],
+    domNode: {
+        mediaQueryIndicator: '&lt;div class=&quot;media-query-indicator&quot;>',
+        top: 'div.navigation-bar',
+        scrollToTopButtons: 'a[href=&quot;#top&quot;]',
+        startUpAnimationClassPrefix: '.start-up-animation-number-',
+        windowLoadingCover: '> div.window-loading-cover',
+        windowLoadingSpinner: '> div.window-loading-cover > div'
+    },
+    startUpFadeIn: {
+        easing: 'swing', duration: 'slow'
+    },
+    windowLoadingCoverFadeOut: {
+        easing: 'swing', duration: 'slow'
+    },
+    startUpAnimationElementDelayInMiliseconds: 100,
+    windowLoadingSpinner: {
+        lines: 9, # The number of lines to draw
+        length: 23, # The length of each line
+        width: 11, # The line thickness
+        radius: 40, # The radius of the inner circle
+        corners: 1, # Corner roundness (0..1)
+        rotate: 75, # The rotation offset
+        color: '#000', # #rgb or #rrggbb
+        speed: 1.1, # Rounds per second
+        trail: 58, # Afterglow percentage
+        shadow: false, # Whether to render a shadow
+        hwaccel: false, # Whether to use hardware acceleration
+        className: 'spinner', # CSS class to assign to the spinner
+        zIndex: 2e9, # The z-index (defaults to 2000000000)
+        top: 'auto', # Top position relative to parent in px
+        left: 'auto', # Left position relative to parent in px
+    },
+    activateLanguageSupport: true,
+    language: {},
+    scrollInLinearTime: true,
+    scrollToTop: duration: 'normal',
+    scrollToTopSlideDistanceInPixel: 30,
+    scrollToTopShowAnimation: { duration: 'normal' },
+    scrollToTopHideAnimation: { duration: 'normal' },
+    domain: 'auto'
+});</code></pre><!-- region modline
+
+vim: set tabstop=4 shiftwidth=4 expandtab:
+vim: foldmethod=marker foldmarker=region,endregion:
+
+endregion --></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-jQuery-website.html">jQuery-website</a></li></ul><h3>Classes</h3><ul><li><a href="module-jQuery-website-Website.html">Website</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Jul 26 2016 17:32:27 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
