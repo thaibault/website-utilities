@@ -105,6 +105,8 @@ if (!('document' in context) && 'context' in $)
  * to the window loading spinner (on top of the window loading cover).
  * @property _parentOption.startUpShowAnimation {Object} - Options for startup
  * show in animation.
+ * @property _parentOption.startUpHide {Object} - Options for initially hiding
+ * dom nodes showing on startup later.
  * @property _parentOptions.windowLoadingCoverHideAnimation {Object} - Options
  * for startup loading cover hide animation.
  * @property _parentOptions.startUpAnimationElementDelayInMiliseconds {number}
@@ -198,6 +200,7 @@ class Website extends $.Tools.class {
                 windowLoadingSpinner: 'div.website-window-loading-cover > div'
             },
             startUpShowAnimation: [{opacity: 1}, {}],
+            startUpHide: {opacity: 0},
             windowLoadingCoverHideAnimation: [{opacity: 0}, {}],
             startUpAnimationElementDelayInMiliseconds: 100,
             windowLoadingSpinner: {
@@ -223,14 +226,9 @@ class Website extends $.Tools.class {
                 inLinearTime: true,
                 options: {duration: 'normal'},
                 button: {
-                    showAnimation: [{
-                        bottom: '-=30',
-                        opacity: 1
-                    }, {duration: 'normal'}],
-                    hideAnimation: [{
-                        bottom: '+=30',
-                        opacity: 0
-                    }, {duration: 'normal'}]
+                    slideDistanceInPixel: 30,
+                    showAnimation: {duration: 'normal'},
+                    hideAnimation: {duration: 'normal'}
                 }
             },
             windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 3000,
@@ -285,8 +283,8 @@ class Website extends $.Tools.class {
         super.initialize(options)
         this.$domNodes = this.grabDomNode(this._options.domNode)
         this.disableScrolling(
-        )._options.windowLoadingCoverHideAnimation[1].always =
-            this.getMethod(this._handleStartUpEffects)
+        )._options.windowLoadingCoverHideAnimation[1].always = this.getMethod(
+            this._handleStartUpEffects)
         this.$domNodes.windowLoadingSpinner.spin(
             this._options.windowLoadingSpinner)
         this._bindScrollEvents().$domNodes.parent.show()
@@ -369,11 +367,16 @@ class Website extends $.Tools.class {
             this.$domNodes.scrollToTopButton.css('opacity', 0)
         else {
             this._options.scrollToTop.button.hideAnimation.always = (
-            ):$DomNode => this.$domNodes.scrollToTopButton.css(
-                this._options.scrollToTop.button.showAnimation[0])
-            this.$domNodes.scrollToTopButton.finish().animate.apply(
-                this.$domNodes.scrollToTopButton,
-                this._options.scrollToTop.button.hideAnimation)
+            ):$DomNode => this.$domNodes.scrollToTopButton.css({
+                bottom:
+                `-=${this._options.scrollToTop.button.slideDistanceInPixel}`,
+                display: 'none'
+            })
+            this.$domNodes.scrollToTopButton.finish().animate({
+                bottom: '+=' +
+                    this._options.scrollToTop.button.slideDistanceInPixel,
+                opacity: 0
+            }, this._options.scrollToTop.button.hideAnimation)
         }
         return this
     }
@@ -385,13 +388,17 @@ class Website extends $.Tools.class {
         if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
             this.$domNodes.scrollToTopButton.css('opacity', 1)
         else
-            this.$domNodes.scrollToTopButton.finish().css($.extend({
-                display: 'block'
-            }, this._options.scrollToTop.button.hideAnimation[0]).animate(
-                $.extend({
-                    queue: false
-                }, this._options.scrollToTop.button.showAnimation)
-            ), this._options.scrollToTop.button.showAnimation)
+            this.$domNodes.scrollToTopButton.finish().css({
+                bottom: '+=' +
+                    this._options.scrollToTop.button.slideDistanceInPixel,
+                display: 'block',
+                opacity: 0
+            }).animate({
+                bottom: '-=' +
+                    this._options.scrollToTop.button.slideDistanceInPixel,
+                queue: false,
+                opacity: 1
+            }, this._options.scrollToTop.button.showAnimation)
         return this
     }
     /* eslint-disable no-unused-vars */
@@ -585,11 +592,12 @@ class Website extends $.Tools.class {
                 this.sliceDomNodeSelectorPrefix(
                     this._options.domNode.startUpAnimationClassPrefix
                 ).substr(1)
-            )).hide()
+            )).css(this._options.startUpHide)
             if (this.$domNodes.windowLoadingCover.length)
-                this.enableScrolling().$domNodes.windowLoadingCover.animate(
-                    this.$domNodes.windowLoadingCover,
-                    this._options.windowLoadingCoverHideAnimation)
+                this.enableScrolling().$domNodes.windowLoadingCover.animate
+                    .apply(
+                        this.$domNodes.windowLoadingCover,
+                        this._options.windowLoadingCoverHideAnimation)
             else
                 this._options.windowLoadingCoverHideAnimation[1].always()
         }, this._options.additionalPageLoadingTimeInMilliseconds)
@@ -602,6 +610,7 @@ class Website extends $.Tools.class {
      */
     _handleStartUpEffects(elementNumber:number):Website {
         // Stop and delete spinner instance.
+        this.$domNodes.windowLoadingCover.hide()
         this.$domNodes.windowLoadingSpinner.spin(false)
         if (!$.isNumeric(elementNumber))
             elementNumber = 1
@@ -619,8 +628,7 @@ class Website extends $.Tools.class {
                 }
                 const $domNode:$DomNode = $(
                     this._options.domNode.startUpAnimationClassPrefix +
-                    elementNumber
-                )
+                        elementNumber)
                 $domNode.animate.apply(
                     $domNode, this._options.startUpShowAnimation)
                 if ($(
