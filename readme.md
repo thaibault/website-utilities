@@ -65,7 +65,7 @@ Here you can see the initialisation with all available plugin options:
     gesetzt werden können angegeben:
 -->
 
-    #!/usr/bin/env javaScript
+    #!JavaScript
 
     $.Website({
         activateLanguageSupport: true,
