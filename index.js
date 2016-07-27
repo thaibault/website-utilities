@@ -168,28 +168,9 @@ class Website extends $.Tools.class {
      */
     initialize(
         options:Object = {}, parentOptions:Object = {
-            domNodeSelectorPrefix: 'body.{1}',
-            onViewportMovesToTop: $.noop(),
-            onViewportMovesAwayFromTop: $.noop(),
-            onChangeToLargeMode: $.noop(),
-            onChangeToMediumMode: $.noop(),
-            onChangeToSmallMode: $.noop(),
-            onChangeToExtraSmallMode: $.noop(),
-            onChangeMediaQueryMode: $.noop(),
-            onSwitchSection: $.noop(),
-            onStartUpAnimationComplete: $.noop(),
-            knownScrollEventNames:
-                'scroll mousedown wheel DOMMouseScroll mousewheel keyup ' +
-                'touchmove',
-            switchToManualScrollingIndicator: (event:Object):boolean => (
-                event.which > 0 || event.type === 'mousedown' ||
-                event.type === 'mousewheel' || event.type === 'touchmove'),
+            activateLanguageSupport: true,
             additionalPageLoadingTimeInMilliseconds: 0,
-            trackingCode: null,
-            mediaQueryClassNameIndicator: [
-                ['extraSmall', 'xs'], ['small', 'sm'], ['medium', 'md'],
-                ['large', 'lg']
-            ],
+            domain: 'auto',
             domNode: {
                 mediaQueryIndicator: '<div class="media-query-indicator">',
                 top: '> div.navbar-wrapper',
@@ -199,10 +180,41 @@ class Website extends $.Tools.class {
                 windowLoadingCover: 'div.website-window-loading-cover',
                 windowLoadingSpinner: 'div.website-window-loading-cover > div'
             },
+            domNodeSelectorPrefix: 'body.{1}',
+            knownScrollEventNames:
+                'scroll mousedown wheel DOMMouseScroll mousewheel keyup ' +
+                'touchmove',
+            language: {},
+            mediaQueryClassNameIndicator: [
+                ['extraSmall', 'xs'], ['small', 'sm'], ['medium', 'md'],
+                ['large', 'lg']
+            ],
+            onViewportMovesToTop: $.noop(),
+            onViewportMovesAwayFromTop: $.noop(),
+            onChangeToLargeMode: $.noop(),
+            onChangeToMediumMode: $.noop(),
+            onChangeToSmallMode: $.noop(),
+            onChangeToExtraSmallMode: $.noop(),
+            onChangeMediaQueryMode: $.noop(),
+            onSwitchSection: $.noop(),
+            onStartUpAnimationComplete: $.noop(),
+            startUpAnimationElementDelayInMiliseconds: 100,
             startUpShowAnimation: [{opacity: 1}, {}],
             startUpHide: {opacity: 0},
+            switchToManualScrollingIndicator: (event:Object):boolean => (
+                event.which > 0 || event.type === 'mousedown' ||
+                event.type === 'mousewheel' || event.type === 'touchmove'),
+            scrollToTop: {
+                inLinearTime: true,
+                options: {duration: 'normal'},
+                button: {
+                    slideDistanceInPixel: 30,
+                    showAnimation: {duration: 'normal'},
+                    hideAnimation: {duration: 'normal'}
+                }
+            },
+            trackingCode: null,
             windowLoadingCoverHideAnimation: [{opacity: 0}, {}],
-            startUpAnimationElementDelayInMiliseconds: 100,
             windowLoadingSpinner: {
                 lines: 9, // The number of lines to draw
                 length: 23, // The length of each line
@@ -220,19 +232,7 @@ class Website extends $.Tools.class {
                 top: 'auto', // Top position relative to parent in px
                 left: 'auto' // Left position relative to parent in px
             },
-            activateLanguageSupport: true,
-            language: {},
-            scrollToTop: {
-                inLinearTime: true,
-                options: {duration: 'normal'},
-                button: {
-                    slideDistanceInPixel: 30,
-                    showAnimation: {duration: 'normal'},
-                    hideAnimation: {duration: 'normal'}
-                }
-            },
-            windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 3000,
-            domain: 'auto'
+            windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 3000
         }, startUpAnimationIsComplete:boolean = false,
         currentSectionName:?string = null,
         viewportIsOnTop:boolean = false,

@@ -68,8 +68,27 @@ Here you can see the initialisation with all available plugin options:
     #!/usr/bin/env javaScript
 
     $.Website({
-        logging: false,
+        activateLanguageSupport: true,
+        additionalPageLoadingTimeInMilliseconds: 0,
+        domain: 'auto',
+        domNode: {
+            mediaQueryIndicator: '<div class="media-query-indicator">',
+            top: '> div.navbar-wrapper',
+            scrollToTopButton: 'a[href="#top"]',
+            startUpAnimationClassPrefix:
+                '.website-start-up-animation-number-',
+            windowLoadingCover: 'div.website-window-loading-cover',
+            windowLoadingSpinner: 'div.website-window-loading-cover > div'
+        },
         domNodeSelectorPrefix: 'body.{1}',
+        knownScrollEventNames:
+            'scroll mousedown wheel DOMMouseScroll mousewheel keyup ' +
+            'touchmove',
+        language: {},
+        mediaQueryClassNameIndicator: [
+            ['extraSmall', 'xs'], ['small', 'sm'], ['medium', 'md'],
+            ['large', 'lg']
+        ],
         onViewportMovesToTop: $.noop(),
         onViewportMovesAwayFromTop: $.noop(),
         onChangeToLargeMode: $.noop(),
@@ -79,57 +98,44 @@ Here you can see the initialisation with all available plugin options:
         onChangeMediaQueryMode: $.noop(),
         onSwitchSection: $.noop(),
         onStartUpAnimationComplete: $.noop(),
-        additionalPageLoadingTimeInMilliseconds: 0,
-        trackingCode: 'UA-0-0',
-        mediaQueryCssIndicator: [
-            ['extraSmall', 'xs'], ['small', 'sm'], ['medium', 'md'],
-            ['large', 'lg']
-        ],
-        domNode: {
-            mediaQueryIndicator: '<div class="media-query-indicator">',
-            top: 'div.navigation-bar',
-            scrollToTopButtons: 'a[href="#top"]',
-            startUpAnimationClassPrefix: '.start-up-animation-number-',
-            windowLoadingCover: '> div.window-loading-cover',
-            windowLoadingSpinner: '> div.window-loading-cover > div'
-        },
-        startUpFadeIn: {
-            easing: 'swing', duration: 'slow'
-        },
-        windowLoadingCoverFadeOut: {
-            easing: 'swing', duration: 'slow'
-        },
         startUpAnimationElementDelayInMiliseconds: 100,
-        windowLoadingSpinner: {
-            lines: 9, # The number of lines to draw
-            length: 23, # The length of each line
-            width: 11, # The line thickness
-            radius: 40, # The radius of the inner circle
-            corners: 1, # Corner roundness (0..1)
-            rotate: 75, # The rotation offset
-            color: '#000', # #rgb or #rrggbb
-            speed: 1.1, # Rounds per second
-            trail: 58, # Afterglow percentage
-            shadow: false, # Whether to render a shadow
-            hwaccel: false, # Whether to use hardware acceleration
-            className: 'spinner', # CSS class to assign to the spinner
-            zIndex: 2e9, # The z-index (defaults to 2000000000)
-            top: 'auto', # Top position relative to parent in px
-            left: 'auto', # Left position relative to parent in px
+        startUpShowAnimation: [{opacity: 1}, {}],
+        startUpHide: {opacity: 0},
+        switchToManualScrollingIndicator: (event:Object):boolean => (
+            event.which > 0 || event.type === 'mousedown' ||
+            event.type === 'mousewheel' || event.type === 'touchmove'),
+        scrollToTop: {
+            inLinearTime: true,
+            options: {duration: 'normal'},
+            button: {
+                slideDistanceInPixel: 30,
+                showAnimation: {duration: 'normal'},
+                hideAnimation: {duration: 'normal'}
+            }
         },
-        activateLanguageSupport: true,
-        language: {},
-        scrollInLinearTime: true,
-        scrollToTop: duration: 'normal',
-        scrollToTopSlideDistanceInPixel: 30,
-        scrollToTopShowAnimation: { duration: 'normal' },
-        scrollToTopHideAnimation: { duration: 'normal' },
-        domain: 'auto'
+        trackingCode: null,
+        windowLoadingCoverHideAnimation: [{opacity: 0}, {}],
+        windowLoadingSpinner: {
+            lines: 9, // The number of lines to draw
+            length: 23, // The length of each line
+            width: 11, // The line thickness
+            radius: 40, // The radius of the inner circle
+            corners: 1, // Corner roundness (0..1)
+            rotate: 75, // The rotation offset
+            color: '#000', // #rgb or #rrggbb
+            speed: 1.1, // Rounds per second
+            trail: 58, // Afterglow percentage
+            shadow: false, // Whether to render a shadow
+            hwaccel: false, // Whether to use hardware acceleration
+            className: 'spinner', // CSS class to assign to the spinner
+            zIndex: 2e9, // The z-index (defaults to 2000000000)
+            top: 'auto', // Top position relative to parent in px
+            left: 'auto' // Left position relative to parent in px
+        },
+        windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 3000
     });
 
 <!-- region modline
-
 vim: set tabstop=4 shiftwidth=4 expandtab:
 vim: foldmethod=marker foldmarker=region,endregion:
-
 endregion -->
