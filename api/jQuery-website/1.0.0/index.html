@@ -101,75 +101,80 @@ endregion -->
     Hier werden alle möglichen Optionen die beim Initialisieren des Plugins
     gesetzt werden können angegeben:
 --></p>
-<pre class="prettyprint source"><code>#!JavaScript
+<pre class="prettyprint source"><code>#!HTML
 
-$.Website({
-    activateLanguageSupport: true,
-    additionalPageLoadingTimeInMilliseconds: 0,
-    domain: 'auto',
-    domNode: {
-        mediaQueryIndicator: '&lt;div class=&quot;media-query-indicator&quot;>',
-        top: '> div.navbar-wrapper',
-        scrollToTopButton: 'a[href=&quot;#top&quot;]',
-        startUpAnimationClassPrefix:
-            '.website-start-up-animation-number-',
-        windowLoadingCover: 'div.website-window-loading-cover',
-        windowLoadingSpinner: 'div.website-window-loading-cover > div'
-    },
-    domNodeSelectorPrefix: 'body.{1}',
-    knownScrollEventNames:
-        'scroll mousedown wheel DOMMouseScroll mousewheel keyup ' +
-        'touchmove',
-    language: {},
-    mediaQueryClassNameIndicator: [
-        ['extraSmall', 'xs'], ['small', 'sm'], ['medium', 'md'],
-        ['large', 'lg']
-    ],
-    onViewportMovesToTop: $.noop(),
-    onViewportMovesAwayFromTop: $.noop(),
-    onChangeToLargeMode: $.noop(),
-    onChangeToMediumMode: $.noop(),
-    onChangeToSmallMode: $.noop(),
-    onChangeToExtraSmallMode: $.noop(),
-    onChangeMediaQueryMode: $.noop(),
-    onSwitchSection: $.noop(),
-    onStartUpAnimationComplete: $.noop(),
-    startUpAnimationElementDelayInMiliseconds: 100,
-    startUpShowAnimation: [{opacity: 1}, {}],
-    startUpHide: {opacity: 0},
-    switchToManualScrollingIndicator: (event:Object):boolean => (
-        event.which > 0 || event.type === 'mousedown' ||
-        event.type === 'mousewheel' || event.type === 'touchmove'),
-    scrollToTop: {
-        inLinearTime: true,
-        options: {duration: 'normal'},
-        button: {
-            slideDistanceInPixel: 30,
-            showAnimation: {duration: 'normal'},
-            hideAnimation: {duration: 'normal'}
-        }
-    },
-    trackingCode: null,
-    windowLoadingCoverHideAnimation: [{opacity: 0}, {}],
-    windowLoadingSpinner: {
-        lines: 9, // The number of lines to draw
-        length: 23, // The length of each line
-        width: 11, // The line thickness
-        radius: 40, // The radius of the inner circle
-        corners: 1, // Corner roundness (0..1)
-        rotate: 75, // The rotation offset
-        color: '#000', // #rgb or #rrggbb
-        speed: 1.1, // Rounds per second
-        trail: 58, // Afterglow percentage
-        shadow: false, // Whether to render a shadow
-        hwaccel: false, // Whether to use hardware acceleration
-        className: 'spinner', // CSS class to assign to the spinner
-        zIndex: 2e9, // The z-index (defaults to 2000000000)
-        top: 'auto', // Top position relative to parent in px
-        left: 'auto' // Left position relative to parent in px
-    },
-    windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 3000
-});</code></pre><!-- region modline
+&lt;script src=&quot;https://code.jquery.com/jquery-3.1.0.js&quot; integrity=&quot;sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=&quot; crossorigin=&quot;anonymous&quot;>&lt;/script>
+&lt;script src=&quot;http://torben.website/jQuery-tools/data/distributionBundle/index.compiled.js&quot;>&lt;/script>
+&lt;script src=&quot;http://torben.website/jQuery-website/data/distributionBundle/index.compiled.js&quot;>&lt;/script>
+&lt;script>
+    $(($) => $.Website({
+        activateLanguageSupport: true,
+        additionalPageLoadingTimeInMilliseconds: 0,
+        domain: 'auto',
+        domNode: {
+            mediaQueryIndicator: '&lt;div class=&quot;media-query-indicator&quot;>',
+            top: '> div.navbar-wrapper',
+            scrollToTopButton: 'a[href=&quot;#top&quot;]',
+            startUpAnimationClassPrefix:
+                '.website-start-up-animation-number-',
+            windowLoadingCover: 'div.website-window-loading-cover',
+            windowLoadingSpinner: 'div.website-window-loading-cover > div'
+        },
+        domNodeSelectorPrefix: 'body.{1}',
+        knownScrollEventNames:
+            'scroll mousedown wheel DOMMouseScroll mousewheel keyup ' +
+            'touchmove',
+        language: {},
+        mediaQueryClassNameIndicator: [
+            ['extraSmall', 'xs'], ['small', 'sm'], ['medium', 'md'],
+            ['large', 'lg']
+        ],
+        onViewportMovesToTop: $.noop(),
+        onViewportMovesAwayFromTop: $.noop(),
+        onChangeToLargeMode: $.noop(),
+        onChangeToMediumMode: $.noop(),
+        onChangeToSmallMode: $.noop(),
+        onChangeToExtraSmallMode: $.noop(),
+        onChangeMediaQueryMode: $.noop(),
+        onSwitchSection: $.noop(),
+        onStartUpAnimationComplete: $.noop(),
+        startUpAnimationElementDelayInMiliseconds: 100,
+        startUpShowAnimation: [{opacity: 1}, {}],
+        startUpHide: {opacity: 0},
+        switchToManualScrollingIndicator: (event:Object):boolean => (
+            event.which > 0 || event.type === 'mousedown' ||
+            event.type === 'mousewheel' || event.type === 'touchmove'),
+        scrollToTop: {
+            inLinearTime: true,
+            options: {duration: 'normal'},
+            button: {
+                slideDistanceInPixel: 30,
+                showAnimation: {duration: 'normal'},
+                hideAnimation: {duration: 'normal'}
+            }
+        },
+        trackingCode: null,
+        windowLoadingCoverHideAnimation: [{opacity: 0}, {}],
+        windowLoadingSpinner: {
+            lines: 9, // The number of lines to draw
+            length: 23, // The length of each line
+            width: 11, // The line thickness
+            radius: 40, // The radius of the inner circle
+            corners: 1, // Corner roundness (0..1)
+            rotate: 75, // The rotation offset
+            color: '#000', // #rgb or #rrggbb
+            speed: 1.1, // Rounds per second
+            trail: 58, // Afterglow percentage
+            shadow: false, // Whether to render a shadow
+            hwaccel: false, // Whether to use hardware acceleration
+            className: 'spinner', // CSS class to assign to the spinner
+            zIndex: 2e9, // The z-index (defaults to 2000000000)
+            top: 'auto', // Top position relative to parent in px
+            left: 'auto' // Left position relative to parent in px
+        },
+        windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 3000
+    }))
+&lt;/script></code></pre><!-- region modline
 vim: set tabstop=4 shiftwidth=4 expandtab:
 vim: foldmethod=marker foldmarker=region,endregion:
 endregion --></article>
@@ -189,7 +194,7 @@ endregion --></article>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Jul 27 2016 17:22:56 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Jul 27 2016 18:54:38 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>
