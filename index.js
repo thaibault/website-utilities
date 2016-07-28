@@ -516,8 +516,7 @@ class Website extends $.Tools.class {
                     this, [
                         'changeMediaQueryMode', false, this,
                         this.currentMediaQueryMode, classNameMapping[0]
-                    ].concat(this.constructor.argumentsObjectToArray(
-                        arguments)))
+                    ].concat($.makeArray(arguments)))
                 this.fireEvent.apply(
                     this, [
                         this.constructor.stringFormat(
@@ -526,8 +525,7 @@ class Website extends $.Tools.class {
                                 classNameMapping[0])
                         ), false, this, this.currentMediaQueryMode,
                         classNameMapping[0]
-                    ].concat(this.constructor.argumentsObjectToArray(
-                        arguments)))
+                    ].concat($.makeArray(arguments)))
                 this.currentMediaQueryMode = classNameMapping[0]
             }
             this.$domNodes.mediaQueryIndicator.removeClass(
@@ -557,26 +555,25 @@ class Website extends $.Tools.class {
                     this.viewportIsOnTop = false
                     this.fireEvent.apply(this, [
                         'viewportMovesAwayFromTop', false, this
-                    ].concat(this.constructor.argumentsObjectToArray(
-                        arguments)))
+                    ].concat($.makeArray(arguments)))
                 }
             } else if (!this.viewportIsOnTop) {
                 this.viewportIsOnTop = true
                 this.fireEvent.apply(this, [
                     'viewportMovesToTop', false, this
-                ].concat(this.constructor.argumentsObjectToArray(arguments)))
+                ].concat($.makeArray(arguments)))
             }
         })
         if (this.$domNodes.window.scrollTop()) {
             this.viewportIsOnTop = false
             this.fireEvent.apply(this, [
                 'viewportMovesAwayFromTop', false, this
-            ].concat(this.constructor.argumentsObjectToArray(arguments)))
+            ].concat($.makeArray(arguments)))
         } else {
             this.viewportIsOnTop = true
             this.fireEvent.apply(this, [
                 'viewportMovesToTop', false, this
-            ].concat(this.constructor.argumentsObjectToArray(arguments)))
+            ].concat($.makeArray(arguments)))
         }
         return this
     }
