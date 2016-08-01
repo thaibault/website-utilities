@@ -16,7 +16,7 @@
 */
 // region imports
 import browserAPI from 'webOptimizer/browserAPI'
-import type {Window} from 'webOptimizer/type'
+import type {Browser} from 'webOptimizer/type'
 import type Website from './index'
 // endregion
 // region declaration
@@ -27,19 +27,21 @@ type JQueryFunction = (object:any) => Object
 // endregion
 const qunit:Object = (TARGET === 'node') ? require('qunit-cli') : require(
     'qunitjs')
-browserAPI((window:Window, alreadyLoaded:boolean):void => {
+browserAPI((browser:Browser, alreadyLoaded:boolean):void => {
     /*
         NOTE: We have to define window globally before jQuery is loaded to
         ensure that all jquery instances share the same window object.
     */
-    if (typeof global !== 'undefined' && global !== window) {
-        global.window = window
-        for (const key in window)
-            if (window.hasOwnProperty(key) && !global.hasOwnProperty(key))
-                global[key] = window[key]
+    if (typeof global !== 'undefined' && global !== browser.window) {
+        global.window = browser.window
+        for (const key in browser.window)
+            if (browser.window.hasOwnProperty(key) && !global.hasOwnProperty(
+                key
+            ))
+                global[key] = browser.window[key]
     }
     const $:JQueryFunction = require('jquery')
-    $.context = window.document
+    $.context = browser.window.document
     require('./index')
     if (TARGET === 'node')
         qunit.load()
@@ -122,7 +124,7 @@ browserAPI((window:Window, alreadyLoaded:boolean):void => {
             */
             setTimeout(():void => {
                 if (!$('.fail').length) {
-                    window.document.title = '✔ test'
+                    browser.window.document.title = '✔ test'
                     $('#qunit-banner').removeClass('qunit-fail').addClass(
                         'qunit-pass')
                 }
