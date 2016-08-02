@@ -48,14 +48,14 @@ browserAPI((
     const $:JQueryFunction = require('jquery')
     $.context = browser.window.document
     require('./index')
+    // region mock-up
+    const website:Website = $.Website()
+    // endregion
     if (TARGET === 'node')
         qunit.load()
     else if (!alreadyLoaded)
         qunit.start()
     // region tests
-    // / region mock-up
-    const website:Website = $.Website()
-    // / endregion
     // / region public methods
     // // region special
     qunit.test('initialize', ():void => qunit.ok(website))
