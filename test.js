@@ -25,7 +25,7 @@ declare var TARGET:string
 // region types
 type JQueryFunction = (object:any) => Object
 // endregion
-const qunit:Object = (TARGET === 'node') ? require('qunit-cli') : require(
+const QUnit:Object = (TARGET === 'node') ? require('qunit-cli') : require(
     'qunitjs')
 browserAPI((browserAPI:BrowserAPI, alreadyLoaded:boolean):void => {
     const $:JQueryFunction = require('jquery')
@@ -35,69 +35,74 @@ browserAPI((browserAPI:BrowserAPI, alreadyLoaded:boolean):void => {
     const website:Website = $.Website()
     // endregion
     if (TARGET === 'node')
-        qunit.load()
+        QUnit.load()
     else if (!alreadyLoaded)
-        qunit.start()
+        QUnit.start()
     // region tests
     // / region public methods
     // // region special
-    qunit.test('initialize', ():void => qunit.ok(website))
+    QUnit.test('initialize', (assert:Object):void => assert.ok(website))
     // // endregion
-    qunit.test('disableScrolling|enableScrolling', ():void => {
-        qunit.strictEqual(website.disableScrolling(), website)
-        qunit.strictEqual(website.enableScrolling(), website)
+    QUnit.test('disableScrolling|enableScrolling', (assert:Object):void => {
+        assert.strictEqual(website.disableScrolling(), website)
+        assert.strictEqual(website.enableScrolling(), website)
     })
     // / endregion
     // / region protected methods
     // // region event
-    qunit.test('_onViewportMovesToTop', ():void => {
+    QUnit.test('_onViewportMovesToTop', (assert:Object):void => {
         website._onViewportMovesToTop()
         // NOTE: Returns timeout id because of debounceing.
-        qunit.strictEqual(
+        assert.strictEqual(
             typeof website._onViewportMovesToTop(),
             typeof setTimeout(():void => {}, 0))
     })
-    qunit.test('_onViewportMovesAwayFromTop', ():void => {
+    QUnit.test('_onViewportMovesAwayFromTop', (assert:Object):void => {
         website._onViewportMovesAwayFromTop()
         // NOTE: Returns timeout id because of debounceing.
-        qunit.strictEqual(
+        assert.strictEqual(
             typeof website._onViewportMovesAwayFromTop(),
             typeof setTimeout(():void => {}, 0))
     })
-    qunit.test('_onChangeMediaQueryMode', ():void => qunit.strictEqual(
-        website._onChangeMediaQueryMode('old', 'new'), website))
-    qunit.test('_onChangeToLargeMode', ():void => qunit.strictEqual(
-        website._onChangeToLargeMode('old', 'new'), website))
-    qunit.test('_onChangeToMediumMode', ():void => qunit.strictEqual(
-        website._onChangeToMediumMode('old', 'new'), website))
-    qunit.test('_onChangeToSmallMode', ():void => qunit.strictEqual(
-        website._onChangeToSmallMode('old', 'new'), website))
-    qunit.test('_onChangeToExtraSmallMode', ():void => qunit.strictEqual(
-        website._onChangeToExtraSmallMode('old', 'new'), website))
-    qunit.test('_onSwitchSection', ():void => qunit.strictEqual(
+    QUnit.test('_onChangeMediaQueryMode', (assert:Object):void =>
+        assert.strictEqual(
+            website._onChangeMediaQueryMode('old', 'new'), website))
+    QUnit.test('_onChangeToLargeMode', (assert:Object):void =>
+        assert.strictEqual(
+            website._onChangeToLargeMode('old', 'new'), website))
+    QUnit.test('_onChangeToMediumMode', (assert:Object):void =>
+        assert.strictEqual(
+            website._onChangeToMediumMode('old', 'new'), website))
+    QUnit.test('_onChangeToSmallMode', (assert:Object):void =>
+        assert.strictEqual(
+            website._onChangeToSmallMode('old', 'new'), website))
+    QUnit.test('_onChangeToExtraSmallMode', (assert:Object):void =>
+        assert.strictEqual(
+            website._onChangeToExtraSmallMode('old', 'new'), website))
+    QUnit.test('_onSwitchSection', (assert:Object):void => assert.strictEqual(
         website._onSwitchSection('newSectionName'), website))
-    qunit.test('_onStartUpAnimationComplete', ():void => qunit.strictEqual(
-        website._onStartUpAnimationComplete(), website))
+    QUnit.test('_onStartUpAnimationComplete', (assert:Object):void =>
+        assert.strictEqual(website._onStartUpAnimationComplete(), website))
     // // endregion
     // // region helper
-    qunit.test('_addMediaQueryChangeEvents', ():void => qunit.strictEqual(
-        website._addMediaQueryChangeEvents(), website))
-    qunit.test('_triggerWindowResizeEvents', ():void => qunit.strictEqual(
-        website._triggerWindowResizeEvents(), website))
-    qunit.test('_bindScrollEvents', ():void => qunit.strictEqual(
+    QUnit.test('_addMediaQueryChangeEvents', (assert:Object):void =>
+        assert.strictEqual(website._addMediaQueryChangeEvents(), website))
+    QUnit.test('_triggerWindowResizeEvents', (assert:Object):void =>
+        assert.strictEqual(website._triggerWindowResizeEvents(), website))
+    QUnit.test('_bindScrollEvents', (assert:Object):void => assert.strictEqual(
         website._bindScrollEvents(), website))
-    qunit.test('_removeLoadingCover', ():void => qunit.strictEqual(
-        website._removeLoadingCover(), website))
-    qunit.test('_handleStartUpEffects', ():void => qunit.strictEqual(
-        website._handleStartUpEffects(10), website))
-    qunit.test('_addNavigationEvents', ():void => qunit.strictEqual(
-        website._addNavigationEvents(), website))
-    qunit.test('_handleScrollToTopButton', ():void => qunit.strictEqual(
-        website._handleScrollToTopButton(), website))
-    qunit.test('_scrollToTop', ():void => qunit.strictEqual(
+    QUnit.test('_removeLoadingCover', (assert:Object):void =>
+        assert.strictEqual(website._removeLoadingCover(), website))
+    QUnit.test('_handleStartUpEffects', (assert:Object):void =>
+        assert.strictEqual(website._handleStartUpEffects(10), website))
+    QUnit.test('_addNavigationEvents', (assert:Object):void =>
+        assert.strictEqual(website._addNavigationEvents(), website))
+    QUnit.test('_handleScrollToTopButton', (assert:Object):void =>
+        assert.strictEqual(website._handleScrollToTopButton(), website))
+    QUnit.test('_scrollToTop', (assert:Object):void => assert.strictEqual(
         website._scrollToTop(), website))
-    qunit.test('_handleAnalyticsInitialisation', ():void => qunit.strictEqual(
-        website._handleAnalyticsInitialisation(), website))
+    QUnit.test('_handleAnalyticsInitialisation', (assert:Object):void =>
+        assert.strictEqual(website._handleAnalyticsInitialisation(), website))
     // // endregion
     // / endregion
     // endregion
