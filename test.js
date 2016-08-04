@@ -20,13 +20,14 @@ import type {BrowserAPI} from 'webOptimizer/type'
 import type Website from './index'
 // endregion
 // region declaration
-declare var TARGET:string
+declare var TARGET_TECHNOLOGY:string
 // endregion
 // region types
 type JQueryFunction = (object:any) => Object
 // endregion
-const QUnit:Object = (TARGET === 'node') ? require('qunit-cli') : require(
-    'qunitjs')
+const QUnit:Object = (TARGET_TECHNOLOGY === 'node') ? require(
+    'qunit-cli'
+) : require('qunitjs')
 browserAPI((browserAPI:BrowserAPI):void => {
     const $:JQueryFunction = require('jquery')
     $.context = browserAPI.window.document
@@ -117,7 +118,7 @@ browserAPI((browserAPI:BrowserAPI):void => {
     // // endregion
     // / endregion
     // endregion
-    if (TARGET === 'node')
+    if (TARGET_TECHNOLOGY === 'node')
         QUnit.load()
     // region hot module replacement handler
     /*
