@@ -11,6 +11,7 @@
     "homepage": "http://torben.website/jQuery-website",
     "main": "index.compiled.js",
     "webOptimizer": {
+        "injection": {"externalAliases": {"jQuery-tools": "$.Tools"}},
         "path": {"asset": {"font": "./font.compiled/"}},
         "module": {"aliases": {
             "bootstrap.less$": "bootstrap/less/bootstrap",
