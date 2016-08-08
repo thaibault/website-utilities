@@ -12,6 +12,7 @@
     "main": "index.compiled.js",
     "webOptimizer": {
         "injection": {"externalAliases": {
+            "jquery": "jQuery",
             "jQuery-tools": "$.Tools",
             "jQuery-spin": "$.fn.spin",
             "jQuery-scrollTo": "$.fn.scrollTo",
@@ -30,7 +31,7 @@
         "buildDLL": "webOptimizer buildDLL",
         "clear": "webOptimizer clear",
         "document": "webOptimizer document",
-        "export": "webOptimizer build '{exportFormat:\"var\"}'",
+        "export": "webOptimizer build '{exportFormat:{external:\"var\",self:\"var\"}}'",
         "lint": "webOptimizer typeCheck && webOptimizer lint",
         "test": "webOptimizer test",
         "postinstall": "webOptimizer build",

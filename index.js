@@ -741,8 +741,8 @@ $.Website = function():any {
     return $.Tools().controller(Website, arguments)
 }
 $.Website.class = Website
-/** The jQuery-website plugin class. */
-export default Website
+/** jQuery extended with jQuery-website plugin. */
+export default $
 // region vim modline
 // vim: set tabstop=4 shiftwidth=4 expandtab:
 // vim: foldmethod=marker foldmarker=region,endregion:
