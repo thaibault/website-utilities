@@ -11,13 +11,18 @@
     "homepage": "http://torben.website/jQuery-website",
     "main": "index.compiled.js",
     "webOptimizer": {
-        "injection": {"externalAliases": {
-            "jquery": "jQuery",
-            "jQuery-tools": "$.Tools",
-            "jQuery-spin": "$.fn.spin",
-            "jQuery-scrollTo": "$.fn.scrollTo",
-            "jQuery-lang": "$.Lang"
-        }},
+        "injection": {
+            "externalAliases": {
+                "jquery": "jQuery",
+                "jQuery-tools": "$.Tools",
+                "jQuery-spin": "$.fn.spin",
+                "jQuery-scrollTo": "$.fn.scrollTo",
+                "jQuery-lang": "$.Lang"
+            },
+            "internal": {"vendor": {
+                "__evaluate__": "self.debug && 2 < self.givenCommandLineArguments.length && ['buildDLL', 'serve', 'testInBrowser', 'watchDLL'].includes(self.givenCommandLineArguments[2]) ? ['jquery', 'jQuery-tools', 'jQuery-spin', 'jQuery-scrollTo', 'jQuery-lang'].concat(self.givenCommandLineArguments[2] === 'serve' ? [] : ['qunitjs', 'webOptimizer/browserAPI']) : []"
+            }}
+        },
         "path": {"asset": {"font": "./font.compiled/"}},
         "module": {"aliases": {
             "bootstrap.less$": "bootstrap/less/bootstrap",
