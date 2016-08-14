@@ -20,6 +20,7 @@ import type {BrowserAPI} from 'webOptimizer/type'
 import type Website from './index'
 // endregion
 // region declaration
+declare var DEBUG:boolean
 declare var TARGET_TECHNOLOGY:string
 // endregion
 // region types
