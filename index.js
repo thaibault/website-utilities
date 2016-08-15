@@ -295,8 +295,8 @@ class Website extends $.Tools.class {
                     this._removeLoadingCover()
                 }
             }
-            setTimeout(onLoaded, this._options
-                .windowLoadedTimeoutAfterDocumentLoadedInMilliseconds)
+            $(():number => setTimeout(onLoaded, this._options
+                .windowLoadedTimeoutAfterDocumentLoadedInMilliseconds))
             this.on(this.$domNodes.window, 'load', onLoaded)
         }
         this._addNavigationEvents()._addMediaQueryChangeEvents(
