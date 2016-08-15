@@ -2,7 +2,6 @@
 -*- coding: utf-8 -*- -->
 
 <!-- region header
-
 Copyright Torben Sickert 16.12.2012
 
 License
@@ -10,7 +9,6 @@ License
 
 This library written by Torben Sickert stand under a creative commons naming
 3.0 unported license. see http://creativecommons.org/licenses/by/3.0/deed.de
-
 endregion -->
 
 <!--|deDE:Einsatzmöglichkeiten-->
@@ -55,6 +53,83 @@ Use cases
     <li>Handle google tracking.<!--deDE:Verbindung zu google tracking.--></li>
 </ul>
 
+<!--|deDE:Inhalt-->
+Content
+-------
+
+<!--Place for automatic generated table of contents.-->
+[TOC]
+
+<!--|deDE:Installation-->
+Installation
+------------
+
+<!--|deDE:Klassische Dom-Integration-->
+### Classical dom injection
+
+You can simply download the compiled version as zip file here and inject it
+after needed dependencies:
+<!--deDE:
+    Du kannst einfach das Plugin als Zip-Archiv herunterladen und per
+    Script-Tag in deine Webseite integrieren:
+-->
+
+    #!HTML
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--TODO load genericStyle from "http://git@github.com/thaibault/genericStyle.git"-->
+    <script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=" crossorigin="anonymous"></script>
+    <script src="http://torben.website/jQuery-tools/data/distributionBundle/index.compiled.js"></script>
+    <script src="http://torben.website/jQuery-lang/data/distributionBundle/index.compiled.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
+    <!--Inject downloaded file:-->
+    <script src="/index.compiled.js"></script>
+    <!--Or integrate via cdn:
+    <script src="http://torben.website/jQuery-website/data/distributionBundle/index.compiled.js"></script>
+    -->
+
+The compiled format supports AMD, commonjs, commonjs2 and variable injection
+into given context (UMD) as export format: You can use a module bundler if you
+want.
+
+<!--|deDE:Paket-Management und Modul-Komposition-->
+### Package managed and module bundled
+
+If you are using npm as package manager and/or a module bundler you can simply
+add this tool to your "package.json" as dependency:
+<!--deDE:
+    Nutzt du npm als Paket-Manager und/oder hast einen Module-Bundler, dann
+    solltest du einfach deine "package.json" erweitern:
+-->
+
+    #!JSON
+
+    ...
+    "dependencies": {
+        ...
+        "jQuery-website": "git+ssh://git@github.com/thaibault/jQuery-website.git",
+        ...
+    },
+    ...
+
+After updating your packages you can simply depend on this script and let
+a module bundler to the hard stuff or access it via a exported variable name
+into given context.
+<!--deDE:
+    Nach einem Update deiner Pakete kannst du dieses Plugin einfach in deine
+    JavaScript-Module importieren oder die exportiert Variable im gegebenen
+    Context referenzieren.
+-->
+
+    #!JavaScript
+
+    ...
+    $ = require('jQuery-website')
+    ...
+    $.Website().isEquivalentDom('<div>', '<script>') // false
+    ...
+
 <!--deDE:Verwendung-->
 Usage
 -----
@@ -68,6 +143,7 @@ Here you can see the initialisation with all available plugin options:
     #!HTML
 
     <script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=" crossorigin="anonymous"></script>
+    <script>window.jquery = window.jQuery</script>
     <script src="http://torben.website/jQuery-tools/data/distributionBundle/index.compiled.js"></script>
     <script src="http://torben.website/jQuery-website/data/distributionBundle/index.compiled.js"></script>
     <script>

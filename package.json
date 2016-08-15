@@ -36,7 +36,6 @@
         "buildDLL": "webOptimizer buildDLL",
         "clear": "webOptimizer clear",
         "document": "webOptimizer document",
-        "export": "webOptimizer build '{exportFormat:{external:\"var\",self:\"var\"}}'",
         "lint": "webOptimizer typeCheck && webOptimizer lint",
         "serve": "webOptimizer serve",
         "test": "webOptimizer test",
@@ -53,7 +52,7 @@
         "spin.js": ">=2.3.2",
         "jquery.scrollto": ">=2.1.2",
         "genericStyle": "git+ssh://git@github.com/thaibault/genericStyle.git",
-        "bootstrap": "3.3.6"
+        "bootstrap": "3.3.7"
     },
     "devDependencies": {
         "jsdom": ">=9.4.1",
