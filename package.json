@@ -38,6 +38,7 @@
         "document": "webOptimizer document",
         "lint": "webOptimizer typeCheck && webOptimizer lint",
         "serve": "webOptimizer serve",
+        "start": "npm run serve",
         "test": "webOptimizer test",
         "postinstall": "webOptimizer build",
         "preinstall": "webOptimizer preinstall",
