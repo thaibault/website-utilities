@@ -232,7 +232,7 @@ class Website extends $.Tools.class {
                 top: 'auto', // Top position relative to parent in px
                 left: 'auto' // Left position relative to parent in px
             },
-            windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 3000
+            windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 2000
         }, startUpAnimationIsComplete:boolean = false,
         currentSectionName:?string = null,
         viewportIsOnTop:boolean = false,
