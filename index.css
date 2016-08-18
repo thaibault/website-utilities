@@ -1,4 +1,4 @@
-/*!/usr/bin/env lessc
+/*!/usr/bin/env css
 -*- coding: utf-8 -*-*/
 /* region header
 Copyright Torben Sickert 16.12.2012
@@ -12,13 +12,13 @@ endregion */
 :root {
     /* region constants */
     /** region extra small dimension **/
-    --minimumExtraExtraSmallWidthInPixel: 360px;
-    --minimumExtraSmallWidthInPixel: 500px;
+    @custom-media --extra-extra-small (min-width: 360px);
+    @custom-media --extra-small (min-width: 500px);
     /** endregion */
     /** region bootstrap default */
-    --minimumSmallWidthInPixel: 768px;
-    --minimumMediumWidthInPixel: 992px;
-    --minimumLargeWidthInPixel: 1200px;
+    @custom-media --small (min-width: 768px);
+    @custom-media --medium (min-width: 992px);
+    @custom-media --large (min-width: 1200px);
     /** endregion */
     --backgroundColor: #ffffff;
     --disabledColor: #eeeeee;
@@ -154,72 +154,64 @@ endregion */
 :root {
     --website: {
         /* region bootstrap fixes */
-        /* TODO
-        .fixes() {
-            .nested-labels() {
-        */
-                /*
-                    This fix allows label nested non checkbox input fields to avoid
-                    referencing inputs via ids.
-                */
-        /* TODO
-                form label:not([for]) {
-                    margin: 0;
-                    margin-bottom: -4px;
-                    width: 100%;
+        .nested-labels() {
+            /*
+                This fix allows label nested non checkbox input fields to avoid
+                referencing inputs via ids.
+            */
+            form label:not([for]) {
+                margin: 0;
+                margin-bottom: -4px;
+                width: 100%;
 
-                    &.vertical-nested-label:not(.website-sr-only) {
-                        textarea, select, input:not([type="checkbox"]) {
-                           margin-top: 5px;
-                        }
-                    }
+                &.vertical-nested-label:not(.website-sr-only) {
                     textarea, select, input:not([type="checkbox"]) {
-                        font-weight: normal;
-                        line-height: 1;
+                       margin-top: 5px;
                     }
                 }
-            }
-            @media all and (max-width: @minimumExtraExtraSmallWidthInPixel) {
-        */
-                /* Allows smartphone widths in grid system. */
-        /* TODO
-                .col-xxs- {
-                    &1, &2, &3, &4, &5, &6, &7, &8, &9, &10, &11, &12 {
-                        float: left;
-                        position: relative;
-                        min-height: 1px;
-                        padding-right: 15px;
-                        padding-left: 15px;
-                    }
-                    &1 { width: percentage((1 / 12)); }
-                    &2 { width: percentage((2 / 12)); }
-                    &3 { width: percentage((3 / 12)); }
-                    &4 { width: percentage((4 / 12)); }
-                    &5 { width: percentage((5 / 12)); }
-                    &6 { width: percentage((6 / 12)); }
-                    &7 { width: percentage((7 / 12)); }
-                    &8 { width: percentage((8 / 12)); }
-                    &9 { width: percentage((9 / 12)); }
-                    &10 { width: percentage((10 / 12)); }
-                    &11 { width: percentage((11 / 12)); }
-                    &12 { width: percentage((12 / 12)); }
+                textarea, select, input:not([type="checkbox"]) {
+                    font-weight: normal;
+                    line-height: 1;
                 }
             }
         }
-        */
+        @media (--extra-extra-small) {
+            /* Allows smartphone widths in grid system. */
+            .col-xxs- {
+                &1, &2, &3, &4, &5, &6, &7, &8, &9, &10, &11, &12 {
+                    float: left;
+                    position: relative;
+                    min-height: 1px;
+                    padding-right: 15px;
+                    padding-left: 15px;
+                }
+                &1 { width: percentage((1 / 12)); }
+                &2 { width: percentage((2 / 12)); }
+                &3 { width: percentage((3 / 12)); }
+                &4 { width: percentage((4 / 12)); }
+                &5 { width: percentage((5 / 12)); }
+                &6 { width: percentage((6 / 12)); }
+                &7 { width: percentage((7 / 12)); }
+                &8 { width: percentage((8 / 12)); }
+                &9 { width: percentage((9 / 12)); }
+                &10 { width: percentage((10 / 12)); }
+                &11 { width: percentage((11 / 12)); }
+                &12 { width: percentage((12 / 12)); }
+            }
+        }
         /* endregion */
         margin: 0;
-        font-family: @fontFamily;
+        font-family: var(--fontFamily);
         font-size: 14px;
 
         langreplacement { display: none; }
         /* region generic dom nodes */
         /** region headline */
         h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-            font-family: @fontFamily;
+            font-family: var(--fontFamily);
         }
         h1, h2 {
-            font-family: @fontFamilyCondensed;
+            font-family: var(--fontFamilyCondensed);
             font-weight: normal;
             font-size: 3em;
         }
@@ -241,7 +233,7 @@ endregion */
         .website-action { cursor: pointer; }
         /* Overlay the whole page till everything is loaded completely. */
         div.website-window-loading-cover {
-            background-color: @backgroundColor;
+            background-color: var(--backgroundColor);
             /* always cover full viewport */
             position: fixed;
             height: 100%;
@@ -400,7 +392,7 @@ endregion */
                             opacity: 1;
                         }
                         &:disabled ~ span.checkbox-styled {
-                            background-color: @disabledColor;
+                            background-color: var(--disabledColor);
                         }
                     }
                     > span.checkbox-styled {
@@ -409,7 +401,7 @@ endregion */
                         width: 25px;
                         height: 25px;
                         border-radius: 4px;
-                        border: 2px solid @borderColor;
+                        border: 2px solid var(--borderColor);
                         padding: 0;
 
                         > span.checkbox-styled-checked {
@@ -422,7 +414,7 @@ endregion */
                             background: transparent;
                             top: 5px;
                             left: 4px;
-                            border: 3px solid @fontColor;
+                            border: 3px solid var(--fontColor);
                             border-top: none;
                             border-right: none;
                         }
@@ -448,11 +440,9 @@ endregion */
         &-hidden-on-javascript-disabled { display: none !important; }
     }
 }
-/* TODO MOCKUPS: */
-body div {
+body {
     @apply --website;
 }
-/**/
 /*region vim modline
 vim: set tabstop=4 shiftwidth=4 expandtab:
 vim: foldmethod=marker foldmarker=region,endregion:
