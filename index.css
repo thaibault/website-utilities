@@ -1,5 +1,5 @@
-//!/usr/bin/env lessc
-// -*- coding: utf-8 -*-
+/*!/usr/bin/env lessc
+-*- coding: utf-8 -*-*/
 /* region header
 Copyright Torben Sickert 16.12.2012
 
@@ -10,19 +10,16 @@ This library written by Torben Sickert stand under a creative commons naming
 3.0 unported license. see http://creativecommons.org/licenses/by/3.0/deed.de
 endregion */
 :root {
-    // region constants
-    // region locations
-    --fontPath: 'font/';
-    // endregion
-    // region extra small dimension
+    /* region constants */
+    /** region extra small dimension **/
     --minimumExtraExtraSmallWidthInPixel: 360px;
     --minimumExtraSmallWidthInPixel: 500px;
-    // endregion
-    // region bootstrap default
+    /** endregion */
+    /** region bootstrap default */
     --minimumSmallWidthInPixel: 768px;
     --minimumMediumWidthInPixel: 992px;
     --minimumLargeWidthInPixel: 1200px;
-    // endregion
+    /** endregion */
     --backgroundColor: #ffffff;
     --disabledColor: #eeeeee;
     --fontColor: #555555;
@@ -30,201 +27,142 @@ endregion */
 
     --fontFamily: 'Open Sans', open-sans, sans-serif;
     --fontFamilyCondensed: 'Open Sans Condensed', open-sans-condensed, sans-serif;
-    // endregion
+    /* endregion */
 }
-/** region font */
-/*** region open sans */
-/**** region light */
+/* region font */
+/** region open sans */
+/*** region light */
 @font-face {
     font-family: open-sans;
-    src: url('@{fontPath}open-sans/Light/OpenSans-Light.eot');
-    src: url('@{fontPath}open-sans/Light/OpenSans-Light.eot?#iefix') format('embedded-opentype'),
-         url('@{fontPath}open-sans/Light/OpenSans-Light.woff') format('woff'),
-         url('@{fontPath}open-sans/Light/OpenSans-Light.ttf') format('truetype'),
-         url('@{fontPath}open-sans/Light/OpenSans-Light.svg#OpenSansLight') format('svg');
+    font-path: 'font/open-sans/Light/OpenSans-Light';
     font-weight: 300;
     font-style: normal;
 }
-/**** endregion */
-/**** region light italic */
+/*** endregion */
+/*** region light italic */
 @font-face {
     font-family: open-sans;
-    src: url('@{fontPath}open-sans/LightItalic/OpenSans-LightItalic.eot');
-    src: url('@{fontPath}open-sans/LightItalic/OpenSans-LightItalic.eot?#iefix') format('embedded-opentype'),
-         url('@{fontPath}open-sans/LightItalic/OpenSans-LightItalic.woff') format('woff'),
-         url('@{fontPath}open-sans/LightItalic/OpenSans-LightItalic.ttf') format('truetype'),
-         url('@{fontPath}open-sans/LightItalic/OpenSans-LightItalic.svg#OpenSansLightItalic') format('svg');
+    font-path: 'font/open-sans/LightItalic/OpenSans-LightItalic';
     font-weight: 300;
     font-style: italic;
 }
-/**** endregion */
-/**** region regular */
+/*** endregion */
+/*** region regular */
 @font-face {
     font-family: open-sans;
-    src: url('@{fontPath}open-sans/Regular/OpenSans-Regular.eot');
-    src: url('@{fontPath}open-sans/Regular/OpenSans-Regular.eot?#iefix') format('embedded-opentype'),
-         url('@{fontPath}open-sans/Regular/OpenSans-Regular.woff') format('woff'),
-         url('@{fontPath}open-sans/Regular/OpenSans-Regular.ttf') format('truetype'),
-         url('@{fontPath}open-sans/Regular/OpenSans-Regular.svg#OpenSansRegular') format('svg');
+    font-path: 'font/open-sans/Regular/OpenSans-Regular';
     font-weight: normal;
     font-style: normal;
 }
-/**** endregion */
-/**** region italic */
+/*** endregion */
+/*** region italic */
 @font-face {
     font-family: open-sans;
-    src: url('@{fontPath}open-sans/Italic/OpenSans-Italic.eot');
-    src: url('@{fontPath}open-sans/Italic/OpenSans-Italic.eot?#iefix') format('embedded-opentype'),
-         url('@{fontPath}open-sans/Italic/OpenSans-Italic.woff') format('woff'),
-         url('@{fontPath}open-sans/Italic/OpenSans-Italic.ttf') format('truetype'),
-         url('@{fontPath}open-sans/Italic/OpenSans-Italic.svg#OpenSansItalic') format('svg');
+    font-path: 'font/open-sans/Italic/OpenSans-Italic';
     font-weight: normal;
     font-style: italic;
 }
-/**** endregion */
-/**** region semibold */
+/*** endregion */
+/*** region semibold */
 @font-face {
     font-family: open-sans;
-    src: url('@{fontPath}open-sans/Semibold/OpenSans-Semibold.eot');
-    src: url('@{fontPath}open-sans/Semibold/OpenSans-Semibold.eot?#iefix') format('embedded-opentype'),
-         url('@{fontPath}open-sans/Semibold/OpenSans-Semibold.woff') format('woff'),
-         url('@{fontPath}open-sans/Semibold/OpenSans-Semibold.ttf') format('truetype'),
-         url('@{fontPath}open-sans/Semibold/OpenSans-Semibold.svg#OpenSansSemibold') format('svg');
+    font-path: 'font/open-sans/Semibold/OpenSans-Semibold';
     font-weight: 600;
     font-style: normal;
 }
-/**** endregion */
-/**** region semibold italic */
+/*** endregion */
+/*** region semibold italic */
 @font-face {
     font-family: open-sans;
-    src: url('@{fontPath}open-sans/SemiboldItalic/OpenSans-SemiboldItalic.eot');
-    src: url('@{fontPath}open-sans/SemiboldItalic/OpenSans-SemiboldItalic.eot?#iefix') format('embedded-opentype'),
-         url('@{fontPath}open-sans/SemiboldItalic/OpenSans-SemiboldItalic.woff') format('woff'),
-         url('@{fontPath}open-sans/SemiboldItalic/OpenSans-SemiboldItalic.ttf') format('truetype'),
-         url('@{fontPath}open-sans/SemiboldItalic/OpenSans-SemiboldItalic.svg#OpenSansSemiboldItalic') format('svg');
+    font-path: 'font/open-sans/SemiboldItalic/OpenSans-SemiboldItalic';
     font-weight: 600;
     font-style: italic;
 }
-/**** endregion */
-/**** region bold */
+/*** endregion */
+/*** region bold */
 @font-face {
     font-family: open-sans;
-    src: url('@{fontPath}open-sans/Bold/OpenSans-Bold.eot');
-    src: url('@{fontPath}open-sans/Bold/OpenSans-Bold.eot?#iefix') format('embedded-opentype'),
-         url('@{fontPath}open-sans/Bold/OpenSans-Bold.woff') format('woff'),
-         url('@{fontPath}open-sans/Bold/OpenSans-Bold.ttf') format('truetype'),
-         url('@{fontPath}open-sans/Bold/OpenSans-Bold.svg#OpenSansBold') format('svg');
+    font-path: 'font/open-sans/Bold/OpenSans-Bold';
     font-weight: bold;
     font-style: normal;
 }
-/**** endregion */
-/**** region bold italic */
+/*** endregion */
+/*** region bold italic */
 @font-face {
     font-family: open-sans;
-    src: url('@{fontPath}open-sans/BoldItalic/OpenSans-BoldItalic.eot');
-    src: url('@{fontPath}open-sans/BoldItalic/OpenSans-BoldItalic.eot?#iefix') format('embedded-opentype'),
-         url('@{fontPath}open-sans/BoldItalic/OpenSans-BoldItalic.woff') format('woff'),
-         url('@{fontPath}open-sans/BoldItalic/OpenSans-BoldItalic.ttf') format('truetype'),
-         url('@{fontPath}open-sans/BoldItalic/OpenSans-BoldItalic.svg#OpenSansBoldItalic') format('svg');
+    font-path: 'font/open-sans/BoldItalic/OpenSans-BoldItalic';
     font-weight: bold;
     font-style: italic;
 }
-/**** endregion bold italic */
-/**** region extrabold */
+/*** endregion */
+/*** region extrabold */
 @font-face {
     font-family: open-sans;
-    src: url('@{fontPath}open-sans/ExtraBold/OpenSans-ExtraBold.eot');
-    src: url('@{fontPath}open-sans/ExtraBold/OpenSans-ExtraBold.eot?#iefix') format('embedded-opentype'),
-         url('@{fontPath}open-sans/ExtraBold/OpenSans-ExtraBold.woff') format('woff'),
-         url('@{fontPath}open-sans/ExtraBold/OpenSans-ExtraBold.ttf') format('truetype'),
-         url('@{fontPath}open-sans/ExtraBold/OpenSans-ExtraBold.svg#OpenSansExtrabold') format('svg');
+    font-path: 'font/open-sans/ExtraBold/OpenSans-ExtraBold';
     font-weight: 800;
     font-style: normal;
 }
-/**** endregion */
-/**** region extrabold italic */
+/*** endregion */
+/*** region extrabold italic */
 @font-face {
     font-family: open-sans;
-    src: url('@{fontPath}open-sans/ExtraBoldItalic/OpenSans-ExtraBoldItalic.eot');
-    src: url('@{fontPath}open-sans/ExtraBoldItalic/OpenSans-ExtraBoldItalic.eot?#iefix') format('embedded-opentype'),
-         url('@{fontPath}open-sans/ExtraBoldItalic/OpenSans-ExtraBoldItalic.woff') format('woff'),
-         url('@{fontPath}open-sans/ExtraBoldItalic/OpenSans-ExtraBoldItalic.ttf') format('truetype'),
-         url('@{fontPath}open-sans/ExtraBoldItalic/OpenSans-ExtraBoldItalic.svg#OpenSansExtraboldItalic') format('svg');
+    font-path: 'font/open-sans/ExtraBoldItalic/OpenSans-ExtraBoldItalic';
     font-weight: 800;
     font-style: italic;
-}
-/**** endregion extrabold italic */
-/*** endregion */
-/*** region open sans condensed */
-/**** region bold */
-@font-face {
-    font-family: open-sans-condensed;
-    src: url('@{fontPath}open-sans-condensed/CondensedBold/OpenSans-CondBold-webfont.eot');
-    src: url('@{fontPath}open-sans-condensed/CondensedBold/OpenSans-CondBold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('@{fontPath}open-sans-condensed/CondensedBold/OpenSans-CondBold-webfont.woff') format('woff'),
-         url('@{fontPath}open-sans-condensed/CondensedBold/OpenSans-CondBold-webfont.ttf') format('truetype'),
-         url('@{fontPath}open-sans-condensed/CondensedBold/OpenSans-CondBold-webfont.svg#open_sans_condensedbold') format('svg');
-    font-weight: bold;
-    font-style: normal;
-}
-/**** endregion */
-/**** region open sans light */
-@font-face {
-    font-family: open-sans-condensed;
-    src: url('@{fontPath}open-sans-condensed/CondensedLight/OpenSans-CondLight-webfont.eot');
-    src: url('@{fontPath}open-sans-condensed/CondensedLight/OpenSans-CondLight-webfont.eot?#iefix') format('embedded-opentype'),
-         url('@{fontPath}open-sans-condensed/CondensedLight/OpenSans-CondLight-webfont.woff') format('woff'),
-         url('@{fontPath}open-sans-condensed/CondensedLight/OpenSans-CondLight-webfont.ttf') format('truetype'),
-         url('@{fontPath}open-sans-condensed/CondensedLight/OpenSans-CondLight-webfont.svg#open_sanscondensed_light') format('svg');
-    font-weight: 300;
-    font-style: normal;
-}
-/**** endregion */
-/**** region open sans italic */
-@font-face {
-    font-family: open-sans-condensed;
-    src: url('@{fontPath}open-sans-condensed/CondensedLightItalic/OpenSans-CondLightItalic-webfont.eot');
-    src: url('@{fontPath}open-sans-condensed/CondensedLightItalic/OpenSans-CondLightItalic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('@{fontPath}open-sans-condensed/CondensedLightItalic/OpenSans-CondLightItalic-webfont.woff') format('woff'),
-         url('@{fontPath}open-sans-condensed/CondensedLightItalic/OpenSans-CondLightItalic-webfont.ttf') format('truetype'),
-         url('@{fontPath}open-sans-condensed/CondensedLightItalic/OpenSans-CondLightItalic-webfont.svg#open_sansCnLtIt') format('svg');
-    font-weight: 300;
-    font-style: italic;
-}
-/**** endregion */
-/*** endregion */
-/*** region glyphicons halflings */
-@font-face {
-    font-family: 'Glyphicons Halflings';
-    src: url('@{fontPath}glyphicons-halflings/glyphicons-halflings-regular.eot');
-    src: url('@{fontPath}glyphicons-halflings/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
-         url('@{fontPath}glyphicons-halflings/glyphicons-halflings-regular.woff') format('woff'),
-         url('@{fontPath}glyphicons-halflings/glyphicons-halflings-regular.ttf') format('truetype'),
-         url('@{fontPath}glyphicons-halflings/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
-}
-/*** endregion */
-/*** region glyphicons social regular */
-@font-face {
-    font-family: 'Glyphicons Social Regular';
-    src: url('@{fontPath}glyphicons-halflings/glyphicons-halflings-social-regular.eot');
-    src: url('@{fontPath}glyphicons-halflings/glyphicons-halflings-social-regular.eot?#iefix') format('embedded-opentype'),
-         url('@{fontPath}glyphicons-halflings/glyphicons-halflings-social-regular.woff') format('woff'),
-         url('@{fontPath}glyphicons-halflings/glyphicons-halflings-social-regular.ttf') format('truetype'),
-         url('@{fontPath}glyphicons-halflings/glyphicons-halflings-social-regular.svg#glyphicons_socialregular') format('svg');
 }
 /*** endregion */
 /** endregion */
-.website() {
-    /* region bootstrap */
-    .bootstrap() {
-        @import '~bootstrap';
-        /* region fixes */
+/** region open sans condensed */
+/*** region bold */
+@font-face {
+    font-family: open-sans-condensed;
+    font-path: 'font/open-sans-condensed/CondensedBold/OpenSans-CondBold-webfont';
+    font-weight: bold;
+    font-style: normal;
+}
+/*** endregion */
+/*** region open sans light */
+@font-face {
+    font-family: open-sans-condensed;
+    font-path: 'font/open-sans-condensed/CondensedLight/OpenSans-CondLight-webfont';
+    font-weight: 300;
+    font-style: normal;
+}
+/*** endregion */
+/*** region open sans italic */
+@font-face {
+    font-family: open-sans-condensed;
+    font-path: 'font/open-sans-condensed/CondensedLightItalic/OpenSans-CondLightItalic-webfont';
+    font-weight: 300;
+    font-style: italic;
+}
+/*** endregion */
+/** endregion */
+/** region glyphicons halflings */
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    font-path: 'font/glyphicons-halflings/glyphicons-halflings-regular';
+}
+/** endregion */
+/** region glyphicons social regular */
+@font-face {
+    font-family: 'Glyphicons Social Regular';
+    font-path: 'font/glyphicons-halflings/glyphicons-halflings-social-regular';
+}
+/** endregion */
+/* endregion */
+:root {
+    --website: {
+        /* region bootstrap fixes */
+        /* TODO
         .fixes() {
             .nested-labels() {
+        */
                 /*
                     This fix allows label nested non checkbox input fields to avoid
                     referencing inputs via ids.
                 */
+        /* TODO
                 form label:not([for]) {
                     margin: 0;
                     margin-bottom: -4px;
@@ -242,7 +180,9 @@ endregion */
                 }
             }
             @media all and (max-width: @minimumExtraExtraSmallWidthInPixel) {
+        */
                 /* Allows smartphone widths in grid system. */
+        /* TODO
                 .col-xxs- {
                     &1, &2, &3, &4, &5, &6, &7, &8, &9, &10, &11, &12 {
                         float: left;
@@ -266,250 +206,254 @@ endregion */
                 }
             }
         }
+        */
         /* endregion */
-    }
-    /* endregion */
-    margin: 0;
-    font-family: @fontFamily;
-    font-size: 14px;
-
-    langreplacement { display: none; }
-    /* region generic dom nodes */
-    /// region headline
-    h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+        margin: 0;
         font-family: @fontFamily;
-    }
-    h1, h2 {
-        font-family: @fontFamilyCondensed;
-        font-weight: normal;
-        font-size: 3em;
-    }
-    h2 { font-size: 2em; }
-    /// endregion
-    /// region link
-    a, a:hover, a:focus, a:visited {
-        outline: none;
-        text-decoration: none;
-    }
-    /// endregion
-    /* endregion */
-    /* region generic classes */
-    /* Disables and hides a scrolling and scrollbar. */
-    .tools-disable-scrolling {
-        height: 100% !important;
-        overflow: hidden !important;
-    }
-    .website-action { cursor: pointer; }
-    // Overlay the whole page till everything is loaded completely.
-    div.website-window-loading-cover {
-        background-color: @backgroundColor;
-        /* always cover full viewport */
-        position: fixed;
-        height: 100%;
-        width: 100%;
-        z-index: 1002 !important;
+        font-size: 14px;
 
-        // Positioning the loading spinner in center in the loading
-        // overlay.
-        > div {
-            position: absolute;
-            top: 50%;
-            left: 50%;
+        langreplacement { display: none; }
+        /* region generic dom nodes */
+        /** region headline */
+        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+            font-family: @fontFamily;
         }
-    }
-    /** region glyphicon-social */
-    .glyphicon-social {
-        color: #1d1d1b;
-        display: inline;
-        display: inline-block;
-        padding-left: 30px;
-        position: relative;
-        text-decoration: none;
-        vertical-align: middle;
-        zoom: 1;
+        h1, h2 {
+            font-family: @fontFamilyCondensed;
+            font-weight: normal;
+            font-size: 3em;
+        }
+        h2 { font-size: 2em; }
+        /** endregion */
+        /** region link */
+        a, a:hover, a:focus, a:visited {
+            outline: none;
+            text-decoration: none;
+        }
+        /** endregion */
+        /* endregion */
+        /* region generic classes */
+        /* Disables and hides a scrolling and scrollbar. */
+        .tools-disable-scrolling {
+            height: 100% !important;
+            overflow: hidden !important;
+        }
+        .website-action { cursor: pointer; }
+        /* Overlay the whole page till everything is loaded completely. */
+        div.website-window-loading-cover {
+            background-color: @backgroundColor;
+            /* always cover full viewport */
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            z-index: 1002 !important;
 
-        &:before {
-            /** Edited to enable hover effects.
+            /* Positioning the loading spinner in center in the loading overlay. */
+            > div {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+            }
+        }
+        /** region glyphicon-social */
+        .glyphicon-social {
             color: #1d1d1b;
-            **/
             display: inline;
             display: inline-block;
-            font: 24px/1em 'Glyphicons Social Regular';
-            font-style: normal;
-            font-weight: normal;
-            left: 0;
-            margin: 0 5px 0 0;
-            position: absolute;
-            text-transform: none;
-            top: 0;
+            padding-left: 30px;
+            position: relative;
+            text-decoration: none;
             vertical-align: middle;
-            webkit-font-smoothing: antialiased;
             zoom: 1;
-        }
-        &-white:before { color: #fff; }
-        &-pinterest:before { content: "\E001"; }
-        &-dropbox:before { content: "\E002"; }
-        &-google_plus:before { content: "\E003"; }
-        &-jolicloud:before { content: "\E004"; }
-        &-yahoo:before { content: "\E005"; }
-        &-blogger:before { content: "\E006"; }
-        &-picasa:before { content: "\E007"; }
-        &-amazon:before { content: "\E008"; }
-        &-tumblr:before { content: "\E009"; }
-        &-wordpress:before { content: "\E010"; }
-        &-instapaper:before { content: "\E011"; }
-        &-evernote:before { content: "\E012"; }
-        &-xing:before { content: "\E013"; }
-        &-zootool:before { content: "\E014"; }
-        &-dribbble:before { content: "\E015"; }
-        &-deviantart:before { content: "\E016"; }
-        &-read_it_later:before { content: "\E017"; }
-        &-linked_in:before { content: "\E018"; }
-        &-forrst:before { content: "\E019"; }
-        &-pinboard:before { content: "\E020"; }
-        &-behance:before { content: "\E021"; }
-        &-github:before { content: "\E022"; }
-        &-youtube:before { content: "\E023"; }
-        &-skitch:before { content: "\E024"; }
-        &-foursquare:before { content: "\E025"; }
-        &-quora:before { content: "\E026"; }
-        &-badoo:before { content: "\E027"; }
-        &-spotify:before { content: "\E028"; }
-        &-stumbleupon:before { content: "\E029"; }
-        &-readability:before { content: "\E030"; }
-        &-facebook:before { content: "\E031"; }
-        &-twitter:before { content: "\E032"; }
-        &-instagram:before { content: "\E033"; }
-        &-posterous_spaces:before { content: "\E034"; }
-        &-vimeo:before { content: "\E035"; }
-        &-flickr:before { content: "\E036"; }
-        &-last_fm:before { content: "\E037"; }
-        &-rss:before { content: "\E038"; }
-        &-skype:before { content: "\E039"; }
-        &-e-mail:before { content: "\E040"; }
-        &-vine:before { content: "\E041"; }
-        &-myspace:before { content: "\E042"; }
-        &-goodreads:before { content: "\E043"; }
-        &-apple:before { content: "\F8FF"; }
-        &-windows:before { content: "\E045"; }
-        &-yelp:before { content: "\E046"; }
-        &-playstation:before { content: "\E047"; }
-        &-xbox:before { content: "\E048"; }
-        &-android:before { content: "\E049"; }
-        &-ios:before { content: "\E050"; }
-    }
-    /** endregion */
-    /** region form */
-    /*** region styled select */
-    /*
-        Enables bootstraps form element combinations with this provided
-        wrapper.
-    */
-    .input-group .select-styled-wrapper {
-        &:not(:first-child):not(:last-child) .form-control {
-            border-radius: 0;
-        }
-        &:last-child .form-control {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-        }
-    }
-    .select-styled-wrapper {
-        position: relative;
 
-        > .select-styled-arrow {
-            position: absolute;
-            top: 3px;
-            right: 15px;
-            pointer-events: none;
-
-            span {
-                vertical-align: bottom;
-                font-size: 10px;
-            }
-        }
-        > select {
-            position: initial !important;
-            padding-left: 7px !important;
-            padding-right: 25px !important;
-            /* hide default down arrow in webkit */
-            -webkit-appearance: none;
-            /* hide arrow in firefox */
-            @-moz-document url-prefix() { -moz-appearance: none; }
-            /* hide default down arrow in IE10 */
-            &::-ms-expand { display: none; }
-        }
-    }
-    /*** endregion */
-    /*** region styled checkbox */
-    .form-horizontal .checkbox, .checkbox {
-        label {
-            .checkbox-styled-wrapper {
-                > input[type="checkbox"] {
-                    &:checked ~ span.checkbox-styled
-                    > span.checkbox-styled-checked {
-                        opacity: 1;
-                    }
-                    &:disabled ~ span.checkbox-styled {
-                        background-color: @disabledColor;
-                    }
-
-                    display: none;
-                }
-                > span.checkbox-styled {
-                    cursor: pointer;
-                    float: right;
-                    width: 25px;
-                    height: 25px;
-                    border-radius: 4px;
-                    border: 2px solid @borderColor;
-                    padding: 0;
-
-                    > span.checkbox-styled-checked {
-                        transform: rotate(-45deg);
-                        opacity: 0;
-
-                        position: absolute;
-                        width: 13px;
-                        height: 8px;
-                        background: transparent;
-                        top: 5px;
-                        left: 4px;
-                        border: 3px solid @fontColor;
-                        border-top: none;
-                        border-right: none;
-                    }
-                }
-
+            &:before {
+                /* Edited to enable hover effects.
+                color: #1d1d1b;
+                */
+                display: inline;
+                display: inline-block;
+                font: 24px/1em 'Glyphicons Social Regular';
+                font-style: normal;
+                font-weight: normal;
+                left: 0;
+                margin: 0 5px 0 0;
                 position: absolute;
-                margin-top: -2px;
-                margin-left: -40px;
+                text-transform: none;
+                top: 0;
+                vertical-align: middle;
+                webkit-font-smoothing: antialiased;
+                zoom: 1;
             }
-
-            padding-left: 40px;
+            &-white:before { color: #fff; }
+            &-pinterest:before { content: "\E001"; }
+            &-dropbox:before { content: "\E002"; }
+            &-google_plus:before { content: "\E003"; }
+            &-jolicloud:before { content: "\E004"; }
+            &-yahoo:before { content: "\E005"; }
+            &-blogger:before { content: "\E006"; }
+            &-picasa:before { content: "\E007"; }
+            &-amazon:before { content: "\E008"; }
+            &-tumblr:before { content: "\E009"; }
+            &-wordpress:before { content: "\E010"; }
+            &-instapaper:before { content: "\E011"; }
+            &-evernote:before { content: "\E012"; }
+            &-xing:before { content: "\E013"; }
+            &-zootool:before { content: "\E014"; }
+            &-dribbble:before { content: "\E015"; }
+            &-deviantart:before { content: "\E016"; }
+            &-read_it_later:before { content: "\E017"; }
+            &-linked_in:before { content: "\E018"; }
+            &-forrst:before { content: "\E019"; }
+            &-pinboard:before { content: "\E020"; }
+            &-behance:before { content: "\E021"; }
+            &-github:before { content: "\E022"; }
+            &-youtube:before { content: "\E023"; }
+            &-skitch:before { content: "\E024"; }
+            &-foursquare:before { content: "\E025"; }
+            &-quora:before { content: "\E026"; }
+            &-badoo:before { content: "\E027"; }
+            &-spotify:before { content: "\E028"; }
+            &-stumbleupon:before { content: "\E029"; }
+            &-readability:before { content: "\E030"; }
+            &-facebook:before { content: "\E031"; }
+            &-twitter:before { content: "\E032"; }
+            &-instagram:before { content: "\E033"; }
+            &-posterous_spaces:before { content: "\E034"; }
+            &-vimeo:before { content: "\E035"; }
+            &-flickr:before { content: "\E036"; }
+            &-last_fm:before { content: "\E037"; }
+            &-rss:before { content: "\E038"; }
+            &-skype:before { content: "\E039"; }
+            &-e-mail:before { content: "\E040"; }
+            &-vine:before { content: "\E041"; }
+            &-myspace:before { content: "\E042"; }
+            &-goodreads:before { content: "\E043"; }
+            &-apple:before { content: "\F8FF"; }
+            &-windows:before { content: "\E045"; }
+            &-yelp:before { content: "\E046"; }
+            &-playstation:before { content: "\E047"; }
+            &-xbox:before { content: "\E048"; }
+            &-android:before { content: "\E049"; }
+            &-ios:before { content: "\E050"; }
         }
+        /** endregion */
+        /** region form */
+        /*** region styled select */
+        /*
+            Enables bootstraps form element combinations with this provided
+            wrapper.
+        */
+        .input-group .select-styled-wrapper {
+            &:not(:first-child):not(:last-child) .form-control {
+                border-radius: 0;
+            }
+            &:last-child .form-control {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+        .select-styled-wrapper {
+            position: relative;
 
-        padding-top: 3px;
-        margin-top: 2px;
+            > .select-styled-arrow {
+                position: absolute;
+                top: 3px;
+                right: 15px;
+                pointer-events: none;
+
+                span {
+                    vertical-align: bottom;
+                    font-size: 10px;
+                }
+            }
+            > select {
+                position: initial !important;
+                padding-left: 7px !important;
+                padding-right: 25px !important;
+                /* hide default down arrow in webkit */
+                -webkit-appearance: none;
+                /* hide arrow in firefox */
+                @-moz-document url-prefix() { -moz-appearance: none; }
+                /* hide default down arrow in IE10 */
+                &::-ms-expand { display: none; }
+            }
+        }
+        /*** endregion */
+        /*** region styled checkbox */
+        .form-horizontal .checkbox, .checkbox {
+            padding-top: 3px;
+            margin-top: 2px;
+
+            label {
+                padding-left: 40px;
+
+                .checkbox-styled-wrapper {
+                    position: absolute;
+                    margin-top: -2px;
+                    margin-left: -40px;
+
+                    > input[type="checkbox"] {
+                        display: none;
+
+                        &:checked ~ span.checkbox-styled
+                        > span.checkbox-styled-checked {
+                            opacity: 1;
+                        }
+                        &:disabled ~ span.checkbox-styled {
+                            background-color: @disabledColor;
+                        }
+                    }
+                    > span.checkbox-styled {
+                        cursor: pointer;
+                        float: right;
+                        width: 25px;
+                        height: 25px;
+                        border-radius: 4px;
+                        border: 2px solid @borderColor;
+                        padding: 0;
+
+                        > span.checkbox-styled-checked {
+                            transform: rotate(-45deg);
+                            opacity: 0;
+
+                            position: absolute;
+                            width: 13px;
+                            height: 8px;
+                            background: transparent;
+                            top: 5px;
+                            left: 4px;
+                            border: 3px solid @fontColor;
+                            border-top: none;
+                            border-right: none;
+                        }
+                    }
+                }
+            }
+        }
+        form:not(.form-horizontal) .checkbox { margin-bottom: 20px; }
+        /*** endregion */
+        /** endregion */
+        /* endregion */
+    };
+    & .javascript .tools {
+        /* Initially show javaScript dependent dom nodes. */
+        &-visible-on-javascript-enabled { display: initial !important; }
+        /* Initially show javaScript dependent dom nodes. */
+        &-hidden-on-javascript-enabled { display: none !important; }
     }
-    form:not(.form-horizontal) .checkbox { margin-bottom: 20px; }
-    /*** endregion */
-    /** endregion */
-    /* endregion */
+    & .no-javascript .tools {
+        /* Initially show none javaScript dependent dom nodes. */
+        &-visible-on-javascript-disabled { display: initial !important; }
+        /* Initially show none javaScript dependent dom nodes. */
+        &-hidden-on-javascript-disabled { display: none !important; }
+    }
 }
-html.javascript .tools {
-    /* Initially show javaScript dependent dom nodes. */
-    &-visible-on-javascript-enabled { display: initial !important; }
-    /* Initially show javaScript dependent dom nodes. */
-    &-hidden-on-javascript-enabled { display: none !important; }
+/* TODO MOCKUPS: */
+body div {
+    @apply --website;
 }
-html.no-javascript .tools {
-    /* Initially show none javaScript dependent dom nodes. */
-    &-visible-on-javascript-disabled { display: initial !important; }
-    /* Initially show none javaScript dependent dom nodes. */
-    &-hidden-on-javascript-disabled { display: none !important; }
-}
-// region vim modline
-// vim: set tabstop=4 shiftwidth=4 expandtab:
-// vim: foldmethod=marker foldmarker=region,endregion:
-// endregion
+/**/
+/*region vim modline
+vim: set tabstop=4 shiftwidth=4 expandtab:
+vim: foldmethod=marker foldmarker=region,endregion:
+endregion*/
