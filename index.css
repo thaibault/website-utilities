@@ -8,29 +8,30 @@ License
 
 This library written by Torben Sickert stand under a creative commons naming
 3.0 unported license. see http://creativecommons.org/licenses/by/3.0/deed.de
-*/
-/// region constants
-//// region locations
-@fontPath: 'font/';
-//// endregion
-//// region extra small dimension
-@minimumExtraExtraSmallWidthInPixel: 360px;
-@minimumExtraSmallWidthInPixel: 500px;
-//// endregion
-/// region bootstrap default
-@minimumSmallWidthInPixel: 768px;
-@minimumMediumWidthInPixel: 992px;
-@minimumLargeWidthInPixel: 1200px;
-/// endregion
-@backgroundColor: #ffffff;
-@disabledColor: #eeeeee;
-@fontColor: #555555;
-@borderColor: #ccc;
+endregion */
+:root {
+    // region constants
+    // region locations
+    --fontPath: 'font/';
+    // endregion
+    // region extra small dimension
+    --minimumExtraExtraSmallWidthInPixel: 360px;
+    --minimumExtraSmallWidthInPixel: 500px;
+    // endregion
+    // region bootstrap default
+    --minimumSmallWidthInPixel: 768px;
+    --minimumMediumWidthInPixel: 992px;
+    --minimumLargeWidthInPixel: 1200px;
+    // endregion
+    --backgroundColor: #ffffff;
+    --disabledColor: #eeeeee;
+    --fontColor: #555555;
+    --borderColor: #ccc;
 
-@fontFamily: 'Open Sans', open-sans, sans-serif;
-@fontFamilyCondensed: 'Open Sans Condensed', open-sans-condensed, sans-serif;
-/// endregion
-@import '~genericStyle';
+    --fontFamily: 'Open Sans', open-sans, sans-serif;
+    --fontFamilyCondensed: 'Open Sans Condensed', open-sans-condensed, sans-serif;
+    // endregion
+}
 /** region font */
 /*** region open sans */
 /**** region light */
@@ -213,7 +214,6 @@ This library written by Torben Sickert stand under a creative commons naming
 }
 /*** endregion */
 /** endregion */
-/* endregion */
 .website() {
     /* region bootstrap */
     .bootstrap() {
@@ -448,7 +448,7 @@ This library written by Torben Sickert stand under a creative commons naming
                 > input[type="checkbox"] {
                     &:checked ~ span.checkbox-styled
                     > span.checkbox-styled-checked {
-                        .genericStyle.opacity(1);
+                        opacity: 1;
                     }
                     &:disabled ~ span.checkbox-styled {
                         background-color: @disabledColor;
@@ -466,8 +466,8 @@ This library written by Torben Sickert stand under a creative commons naming
                     padding: 0;
 
                     > span.checkbox-styled-checked {
-                        .genericStyle.transform(rotate(-45deg));
-                        .genericStyle.opacity(0);
+                        transform: rotate(-45deg);
+                        opacity: 0;
 
                         position: absolute;
                         width: 13px;
