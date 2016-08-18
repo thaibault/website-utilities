@@ -440,9 +440,6 @@ endregion */
         &-hidden-on-javascript-disabled { display: none !important; }
     }
 }
-body {
-    @apply --website;
-}
 /*region vim modline
 vim: set tabstop=4 shiftwidth=4 expandtab:
 vim: foldmethod=marker foldmarker=region,endregion:
