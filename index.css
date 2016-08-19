@@ -34,7 +34,7 @@ endregion */
 /*** region light */
 @font-face {
     font-family: open-sans;
-    font-path: 'font/open-sans/Light/OpenSans-Light';
+    font-path: '/font/open-sans/Light/OpenSans-Light';
     font-weight: 300;
     font-style: normal;
 }
@@ -42,7 +42,7 @@ endregion */
 /*** region light italic */
 @font-face {
     font-family: open-sans;
-    font-path: 'font/open-sans/LightItalic/OpenSans-LightItalic';
+    font-path: '/font/open-sans/LightItalic/OpenSans-LightItalic';
     font-weight: 300;
     font-style: italic;
 }
@@ -50,7 +50,7 @@ endregion */
 /*** region regular */
 @font-face {
     font-family: open-sans;
-    font-path: 'font/open-sans/Regular/OpenSans-Regular';
+    font-path: '/font/open-sans/Regular/OpenSans-Regular';
     font-weight: normal;
     font-style: normal;
 }
@@ -58,7 +58,7 @@ endregion */
 /*** region italic */
 @font-face {
     font-family: open-sans;
-    font-path: 'font/open-sans/Italic/OpenSans-Italic';
+    font-path: '/font/open-sans/Italic/OpenSans-Italic';
     font-weight: normal;
     font-style: italic;
 }
@@ -66,7 +66,7 @@ endregion */
 /*** region semibold */
 @font-face {
     font-family: open-sans;
-    font-path: 'font/open-sans/Semibold/OpenSans-Semibold';
+    font-path: '/font/open-sans/Semibold/OpenSans-Semibold';
     font-weight: 600;
     font-style: normal;
 }
@@ -74,7 +74,7 @@ endregion */
 /*** region semibold italic */
 @font-face {
     font-family: open-sans;
-    font-path: 'font/open-sans/SemiboldItalic/OpenSans-SemiboldItalic';
+    font-path: '/font/open-sans/SemiboldItalic/OpenSans-SemiboldItalic';
     font-weight: 600;
     font-style: italic;
 }
@@ -82,7 +82,7 @@ endregion */
 /*** region bold */
 @font-face {
     font-family: open-sans;
-    font-path: 'font/open-sans/Bold/OpenSans-Bold';
+    font-path: '/font/open-sans/Bold/OpenSans-Bold';
     font-weight: bold;
     font-style: normal;
 }
@@ -90,7 +90,7 @@ endregion */
 /*** region bold italic */
 @font-face {
     font-family: open-sans;
-    font-path: 'font/open-sans/BoldItalic/OpenSans-BoldItalic';
+    font-path: '/font/open-sans/BoldItalic/OpenSans-BoldItalic';
     font-weight: bold;
     font-style: italic;
 }
@@ -98,7 +98,7 @@ endregion */
 /*** region extrabold */
 @font-face {
     font-family: open-sans;
-    font-path: 'font/open-sans/ExtraBold/OpenSans-ExtraBold';
+    font-path: '/font/open-sans/ExtraBold/OpenSans-ExtraBold';
     font-weight: 800;
     font-style: normal;
 }
@@ -106,7 +106,7 @@ endregion */
 /*** region extrabold italic */
 @font-face {
     font-family: open-sans;
-    font-path: 'font/open-sans/ExtraBoldItalic/OpenSans-ExtraBoldItalic';
+    font-path: '/font/open-sans/ExtraBoldItalic/OpenSans-ExtraBoldItalic';
     font-weight: 800;
     font-style: italic;
 }
@@ -116,7 +116,7 @@ endregion */
 /*** region bold */
 @font-face {
     font-family: open-sans-condensed;
-    font-path: 'font/open-sans-condensed/CondensedBold/OpenSans-CondBold-webfont';
+    font-path: '/font/open-sans-condensed/CondensedBold/OpenSans-CondBold-webfont';
     font-weight: bold;
     font-style: normal;
 }
@@ -124,7 +124,7 @@ endregion */
 /*** region open sans light */
 @font-face {
     font-family: open-sans-condensed;
-    font-path: 'font/open-sans-condensed/CondensedLight/OpenSans-CondLight-webfont';
+    font-path: '/font/open-sans-condensed/CondensedLight/OpenSans-CondLight-webfont';
     font-weight: 300;
     font-style: normal;
 }
@@ -132,7 +132,7 @@ endregion */
 /*** region open sans italic */
 @font-face {
     font-family: open-sans-condensed;
-    font-path: 'font/open-sans-condensed/CondensedLightItalic/OpenSans-CondLightItalic-webfont';
+    font-path: '/font/open-sans-condensed/CondensedLightItalic/OpenSans-CondLightItalic-webfont';
     font-weight: 300;
     font-style: italic;
 }
@@ -141,13 +141,13 @@ endregion */
 /** region glyphicons halflings */
 @font-face {
     font-family: 'Glyphicons Halflings';
-    font-path: 'font/glyphicons-halflings/glyphicons-halflings-regular';
+    font-path: '/font/glyphicons-halflings/glyphicons-halflings-regular';
 }
 /** endregion */
 /** region glyphicons social regular */
 @font-face {
     font-family: 'Glyphicons Social Regular';
-    font-path: 'font/glyphicons-halflings/glyphicons-halflings-social-regular';
+    font-path: '/font/glyphicons-halflings/glyphicons-halflings-social-regular';
 }
 /** endregion */
 /* endregion */
