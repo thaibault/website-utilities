@@ -25,7 +25,6 @@
         },
         "path": {"asset": {"font": "./font.compiled/"}},
         "module": {"aliases": {
-            "bootstrap.less$": "bootstrap/less/bootstrap",
             "jQuery-scrollTo$": "jquery.scrollto/jquery.scrollTo",
             "jQuery-spin$": "spin.js/jquery.spin"
         }}
