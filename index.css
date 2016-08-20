@@ -159,17 +159,17 @@ endregion */
                 This fix allows label nested non checkbox input fields to avoid
                 referencing inputs via ids.
             */
-            form label:not([for]) {
+            & form label:not([for]) {
                 margin: 0;
                 margin-bottom: -4px;
                 width: 100%;
 
                 &.vertical-nested-label:not(.website-sr-only) {
-                    textarea, select, input:not([type="checkbox"]) {
+                    & textarea, & select, & input:not([type="checkbox"]) {
                        margin-top: 5px;
                     }
                 }
-                textarea, select, input:not([type="checkbox"]) {
+                & textarea, & select, & input:not([type="checkbox"]) {
                     font-weight: normal;
                     line-height: 1;
                 }
@@ -241,7 +241,7 @@ endregion */
             z-index: 1002 !important;
 
             /* Positioning the loading spinner in center in the loading overlay. */
-            > div {
+            & > div {
                 position: absolute;
                 top: 50%;
                 left: 50%;
@@ -347,18 +347,18 @@ endregion */
         .select-styled-wrapper {
             position: relative;
 
-            > .select-styled-arrow {
+            & > .select-styled-arrow {
                 position: absolute;
                 top: 3px;
                 right: 15px;
                 pointer-events: none;
 
-                span {
+                & span {
                     vertical-align: bottom;
                     font-size: 10px;
                 }
             }
-            > select {
+            & > select {
                 position: initial !important;
                 padding-left: 7px !important;
                 padding-right: 25px !important;
@@ -372,30 +372,30 @@ endregion */
         }
         /*** endregion */
         /*** region styled checkbox */
-        .form-horizontal .checkbox, .checkbox {
+        .form-horizontal .checkbox, & .checkbox {
             padding-top: 3px;
             margin-top: 2px;
 
-            label {
+            & label {
                 padding-left: 40px;
 
-                .checkbox-styled-wrapper {
+                & .checkbox-styled-wrapper {
                     position: absolute;
                     margin-top: -2px;
                     margin-left: -40px;
 
-                    > input[type="checkbox"] {
+                    & > input[type="checkbox"] {
                         display: none;
 
                         &:checked ~ span.checkbox-styled
-                        > span.checkbox-styled-checked {
+                        & > span.checkbox-styled-checked {
                             opacity: 1;
                         }
                         &:disabled ~ span.checkbox-styled {
                             background-color: var(--disabledColor);
                         }
                     }
-                    > span.checkbox-styled {
+                    & > span.checkbox-styled {
                         cursor: pointer;
                         float: right;
                         width: 25px;
@@ -404,7 +404,7 @@ endregion */
                         border: 2px solid var(--borderColor);
                         padding: 0;
 
-                        > span.checkbox-styled-checked {
+                        & > span.checkbox-styled-checked {
                             transform: rotate(-45deg);
                             opacity: 0;
 
@@ -422,7 +422,7 @@ endregion */
                 }
             }
         }
-        form:not(.form-horizontal) .checkbox { margin-bottom: 20px; }
+        form:not(.form-horizontal) & .checkbox { margin-bottom: 20px; }
         /*** endregion */
         /** endregion */
         /* endregion */
