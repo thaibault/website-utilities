@@ -154,7 +154,7 @@ endregion */
 :root {
     --website: {
         /* region bootstrap fixes */
-        .nested-labels() {
+        & .nested-labels() {
             /*
                 This fix allows label nested non checkbox input fields to avoid
                 referencing inputs via ids.
@@ -177,7 +177,7 @@ endregion */
         }
         @media (--extra-extra-small) {
             /* Allows smartphone widths in grid system. */
-            .col-xxs- {
+            & .col-xxs- {
                 &1, &2, &3, &4, &5, &6, &7, &8, &9, &10, &11, &12 {
                     float: left;
                     position: relative;
@@ -204,21 +204,22 @@ endregion */
         font-family: var(--fontFamily);
         font-size: 14px;
 
-        langreplacement { display: none; }
+        & langreplacement { display: none; }
         /* region generic dom nodes */
         /** region headline */
-        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+        & h1, & h2, & h3, & h4, & h5, & h6, & .h1, & .h2, & .h3, & .h4, & .h5,
+        & .h6 {
             font-family: var(--fontFamily);
         }
-        h1, h2 {
+        & h1, & h2 {
             font-family: var(--fontFamilyCondensed);
             font-weight: normal;
             font-size: 3em;
         }
-        h2 { font-size: 2em; }
+        & h2 { font-size: 2em; }
         /** endregion */
         /** region link */
-        a, a:hover, a:focus, a:visited {
+        & a, & a:hover, & a:focus, & a:visited {
             outline: none;
             text-decoration: none;
         }
@@ -226,13 +227,13 @@ endregion */
         /* endregion */
         /* region generic classes */
         /* Disables and hides a scrolling and scrollbar. */
-        .tools-disable-scrolling {
+        & .tools-disable-scrolling {
             height: 100% !important;
             overflow: hidden !important;
         }
-        .website-action { cursor: pointer; }
+        & .website-action { cursor: pointer; }
         /* Overlay the whole page till everything is loaded completely. */
-        div.website-window-loading-cover {
+        & div.website-window-loading-cover {
             background-color: var(--backgroundColor);
             /* always cover full viewport */
             position: fixed;
@@ -248,7 +249,7 @@ endregion */
             }
         }
         /** region glyphicon-social */
-        .glyphicon-social {
+        & .glyphicon-social {
             color: #1d1d1b;
             display: inline;
             display: inline-block;
@@ -335,7 +336,7 @@ endregion */
             Enables bootstraps form element combinations with this provided
             wrapper.
         */
-        .input-group .select-styled-wrapper {
+        & .input-group .select-styled-wrapper {
             &:not(:first-child):not(:last-child) .form-control {
                 border-radius: 0;
             }
@@ -344,7 +345,7 @@ endregion */
                 border-bottom-left-radius: 0;
             }
         }
-        .select-styled-wrapper {
+        & .select-styled-wrapper {
             position: relative;
 
             & > .select-styled-arrow {
@@ -372,7 +373,7 @@ endregion */
         }
         /*** endregion */
         /*** region styled checkbox */
-        .form-horizontal .checkbox, & .checkbox {
+        & .form-horizontal .checkbox, & .checkbox {
             padding-top: 3px;
             margin-top: 2px;
 
@@ -422,7 +423,7 @@ endregion */
                 }
             }
         }
-        form:not(.form-horizontal) & .checkbox { margin-bottom: 20px; }
+        & form:not(.form-horizontal) & .checkbox { margin-bottom: 20px; }
         /*** endregion */
         /** endregion */
         /* endregion */
