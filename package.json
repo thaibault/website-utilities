@@ -29,6 +29,7 @@
             "jQuery-spin$": "spin.js/jquery.spin"
         }}
     },
+    "stylelint": {},
     "scripts": {
         "build": "webOptimizer build",
         "buildDLL": "webOptimizer buildDLL",
