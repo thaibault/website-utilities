@@ -23,7 +23,7 @@
                 "__evaluate__": "self.debug && 2 < self.givenCommandLineArguments.length && ['buildDLL', 'serve', 'testInBrowser', 'watchDLL'].includes(self.givenCommandLineArguments[2]) ? ['jQuery-tools', 'jQuery-spin', 'jQuery-scrollTo', 'jQuery-lang'].concat(self.givenCommandLineArguments[2] === 'serve' ? [] : ['qunitjs', 'webOptimizer/browserAPI']) : []"
             }}
         },
-        "path": {"asset": {"font": "./font.compiled/"}},
+        "path": {"target": {"asset": {"font": "font.compiled"}}},
         "module": {"aliases": {
             "jQuery-scrollTo$": "jquery.scrollto/jquery.scrollTo",
             "jQuery-spin$": "spin.js/jquery.spin"
