@@ -18,8 +18,8 @@
     endregion
 */
 // region imports
-import $ from 'jquery'
-import 'jQuery-tools'
+global.$ = require('jquery')
+import 'tools'
 import Lang from 'jQuery-lang'
 import 'jQuery-scrollTo'
 import 'jQuery-spin'
@@ -34,16 +34,6 @@ export type AnalyticsCode = {
     event:string;
 }
 // endregion
-const context:Object = (():Object => {
-    if (typeof window === 'undefined') {
-        if (typeof global === 'undefined')
-            return (typeof module === 'undefined') ? {} : module
-        return global
-    }
-    return window
-})()
-if (!('document' in context) && 'context' in $)
-    context.document = $.context
 // region plugins/classes
 /**
  * This plugin holds all needed methods to extend a whole website.###
@@ -268,8 +258,8 @@ class Website extends $.Tools.class {
         this._analyticsCode = analyticsCode
         if (currentSectionName)
             this.currentSectionName = currentSectionName
-        else if ('location' in context && context.location.hash)
-            this.currentSectionName = context.location.hash.substring(
+        else if ('location' in $.global && $.global.location.hash)
+            this.currentSectionName = $.global.location.hash.substring(
                 '#'.length)
         else
             this.currenSectionName = 'home'
@@ -335,8 +325,8 @@ class Website extends $.Tools.class {
         if (
             this._options.trackingCode &&
             this._options.trackingCode !== '__none__' &&
-            'location' in context &&
-            context.location.hostname !== 'localhost'
+            'location' in $.global &&
+            $.global.location.hostname !== 'localhost'
         ) {
             this.debug(
                 "Run analytics code: \"#{this._analyticsCode.event}\" with " +
@@ -458,8 +448,8 @@ class Website extends $.Tools.class {
         if (
             this._options.trackingCode &&
             this._options.trackingCode !== '__none__' &&
-            'location' in context &&
-            context.location.hostname !== 'localhost' &&
+            'location' in $.global &&
+            $.global.location.hostname !== 'localhost' &&
             this.currentSectionName !== sectionName
         ) {
             this.currentSectionName = sectionName
@@ -645,8 +635,8 @@ class Website extends $.Tools.class {
      * @returns Returns the current instance.
      */
     _addNavigationEvents():Website {
-        if ('addEventListener' in context)
-            context.addEventListener('hashchange', ():void => {
+        if ('addEventListener' in $.global)
+            $.global.addEventListener('hashchange', ():void => {
                 if (this.startUpAnimationIsComplete)
                     this.fireEvent(
                         'switchSection', false, this, location.hash.substring(
@@ -673,14 +663,14 @@ class Website extends $.Tools.class {
      * @returns Returns the current instance.
      */
     _scrollToTop(onAfter:Function = $.noop()):Website {
-        if (!('document' in context))
+        if (!('document' in $.global))
             return this
         this._options.scrollToTop.options.onAfter = onAfter
         /*
             NOTE: This is a workaround to avoid a bug in "jQuery.scrollTo()"
             expecting this property exists.
         */
-        Object.defineProperty(context.document, 'body', {value: $('body')[0]})
+        Object.defineProperty($.global.document, 'body', {value: $('body')[0]})
         if (this._options.scrollToTop.inLinearTime) {
             const distanceToTopInPixel:number =
                 this.$domNodes.window.scrollTop()
@@ -703,8 +693,8 @@ class Website extends $.Tools.class {
         if (
             this._options.trackingCode &&
             this._options.trackingCode !== '__none__' &&
-            'location' in context &&
-            context.location.hostname !== 'localhost'
+            'location' in $.global &&
+            $.global.location.hostname !== 'localhost'
         ) {
             this.debug(
                 `Run analytics code: "${this._analyticsCode.initial}"`,
