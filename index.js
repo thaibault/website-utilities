@@ -104,17 +104,17 @@ export type AnalyticsCode = {
  * @property _parentOptions.windowLoadingSpinner {Object} - Options for the
  * window loading cover spinner.
  * @property _parentOptions.activateLanguageSupport {boolean} - Indicates
- * weather language support should be used or not.
+ * whether language support should be used or not.
  * @property _parentOptions.language {Object} - Options for client side
  * internationalisation handler.
  * @property _parentOptions.scrollTop {Object} - Options for automated scroll
  * top animation.
  * @property _parentOptions.domain {string} - Sets current domain name. If
  * "auto" is given it will be determined automatically.
- * @property startUpAnimationIsComplete - Indicates weather start up animations
+ * @property startUpAnimationIsComplete - Indicates whether start up animations
  * has finished.
  * @property currentSectionName - Saves current section hash name.
- * @property viewportIsOnTop - Indicates weather current viewport is on top.
+ * @property viewportIsOnTop - Indicates whether current viewport is on top.
  * @property currentMediaQueryMode - Saves current media query status depending
  * on available space in current browser window.
  * @property languageHandler - Reference to the language switcher instance.
@@ -149,7 +149,7 @@ class Website extends $.Tools.class {
      * @param startUpAnimationIsComplete - If set to "true", no start up
      * animation will be performed.
      * @param currentSectionName - Initial section name to use.
-     * @param viewportIsOnTop - Indicates weather viewport is on top initially.
+     * @param viewportIsOnTop - Indicates whether viewport is on top initially.
      * @param currentMediaQueryMode - Initial media query mode to use (until
      * first window resize event could trigger a change).
      * @param languageHandler - Language handler instance to use.
