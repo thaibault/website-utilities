@@ -14,7 +14,7 @@
         "injection": {
             "externalAliases": {
                 "jquery": "jQuery",
-                "tools": "$.Tools",
+                "clientNode": "$.Tools",
                 "jQuery-spin": "$.fn.spin",
                 "jQuery-scrollTo": "$.fn.scrollTo",
                 "language": "$.Language"
@@ -23,7 +23,7 @@
                 "__evaluate__": "self.debug && 2 < self.givenCommandLineArguments.length && ['buildDLL', 'serve', 'testInBrowser', 'watchDLL'].includes(self.givenCommandLineArguments[2]) ? ['tools', 'jQuery-spin', 'jQuery-scrollTo', 'language'].concat(self.givenCommandLineArguments[2] === 'serve' ? [] : ['qunitjs', 'webOptimizer/browserAPI']) : []"
             }},
             "module": {"skipParseRegularExpression": {
-                "__evaluate__": "/\\/(?:(?:jquery)|(?:module)|([^/]+\\.min))\\.js(?:\\?.+|$)/"
+                "__evaluate__": "/\\/(?:(?:clientNode(?:\.compiled)?)|(?:jquery)|(?:module)|([^/]+\\.min))\\.js(?:\\?.+|$)/"
             }}
         },
         "path": {"target": {"asset": {"font": "font.compiled"}}},
@@ -32,7 +32,6 @@
             "jQuery-spin$": "spin.js/jquery.spin"
         }}
     },
-    "stylelint": {},
     "scripts": {
         "build": "webOptimizer build",
         "buildDLL": "webOptimizer buildDLL",
@@ -49,18 +48,18 @@
         "watchDLL": "webOptimizer buildDLL --watch"
     },
     "dependencies": {
-        "webOptimizer": "git+ssh://git@github.com/thaibault/webOptimizer.git",
+        "bootstrap": "3.3.7",
+        "clientNode": "latest",
         "jquery": ">=3.1.0",
-        "tools": "git+ssh://git@github.com/thaibault/tools.git",
-        "language": "git+ssh://git@github.com/thaibault/language.git",
-        "spin.js": ">=2.3.2",
         "jquery.scrollto": ">=2.1.2",
-        "bootstrap": "3.3.7"
+        "language": "latest",
+        "spin.js": ">=2.3.2"
     },
     "devDependencies": {
-        "jsdom": ">=9.4.1",
-        "qunitjs": ">=2.0.0",
-        "qunit-cli": ">=0.2.0*",
-        "source-map-support": ">=0.4.2"
+        "jsdom": "latest",
+        "qunitjs": "latest",
+        "qunit-cli": "latest",
+        "source-map-support": "latest",
+        "webOptimizer": "latest"
     }
 }
