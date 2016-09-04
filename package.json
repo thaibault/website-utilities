@@ -50,7 +50,7 @@
     "dependencies": {
         "bootstrap": "3.3.7",
         "clientNode": "latest",
-        "jquery": ">=3.1.0",
+        "jquery": "latest",
         "jquery.scrollto": ">=2.1.2",
         "language": "latest",
         "spin.js": ">=2.3.2"
