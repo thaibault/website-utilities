@@ -23,7 +23,7 @@
                 "__evaluate__": "self.debug && 2 < self.givenCommandLineArguments.length && ['buildDLL', 'serve', 'testInBrowser', 'watchDLL'].includes(self.givenCommandLineArguments[2]) ? ['tools', 'jQuery-spin', 'jQuery-scrollTo', 'language'].concat(self.givenCommandLineArguments[2] === 'serve' ? [] : ['qunitjs', 'webOptimizer/browserAPI']) : []"
             }},
             "module": {"skipParseRegularExpression": {
-                "__evaluate__": "/\\/(?:(?:clientNode(?:\.compiled)?)|(?:jquery)|(?:module)|([^/]+\\.min))\\.js(?:\\?.+|$)/"
+                "__evaluate__": "/\\/(?:(?:clientNode(?:\\.compiled)?)|(?:jquery)|(?:module)|([^/]+\\.min))\\.js(?:\\?.+|$)/"
             }}
         },
         "path": {"target": {"asset": {"font": "font.compiled"}}},
