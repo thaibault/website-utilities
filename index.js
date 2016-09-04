@@ -19,8 +19,8 @@
 */
 // region imports
 global.$ = require('jquery')
-import 'tools'
-import Lang from 'jQuery-lang'
+import 'clientNode'
+import Language from 'language'
 import 'jQuery-scrollTo'
 import 'jQuery-spin'
 /* eslint-disable no-duplicate-imports */
@@ -137,7 +137,7 @@ class Website extends $.Tools.class {
     currentSectionName:string
     viewportIsOnTop:boolean
     currentMediaQueryMode:string
-    languageHandler:?Lang
+    languageHandler:?Language
     _analyticsCode:AnalyticsCode;
     // endregion
     // region public methods
@@ -227,7 +227,7 @@ class Website extends $.Tools.class {
         currentSectionName:?string = null,
         viewportIsOnTop:boolean = false,
         currentMediaQueryMode:string = '',
-        languageHandler:?Lang = null,
+        languageHandler:?Language = null,
         analyticsCode:AnalyticsCode = {
             initial: `
                 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=` +
@@ -294,7 +294,7 @@ class Website extends $.Tools.class {
         if (!this._options.language.logging)
             this._options.language.logging = this._options.logging
         if (this._options.activateLanguageSupport && !this.languageHandler)
-            this.languageHandler = $.Lang(this._options.language)
+            this.languageHandler = $.Language(this._options.language)
         return this
     }
     // endregion
