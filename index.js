@@ -20,7 +20,7 @@
 // region imports
 global.$ = require('jquery')
 import 'clientNode'
-import Language from 'language'
+import Language from 'internationalisation'
 import 'jQuery-scrollTo'
 import 'jQuery-spin'
 /* eslint-disable no-duplicate-imports */
