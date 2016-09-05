@@ -37,7 +37,9 @@ endregion */
 /*** region light */
 @font-face {
     font-family: open-sans;
+    /* stylelint-disable property-no-unknown */
     font-path: 'font/open-sans/Light/OpenSans-Light';
+    /* stylelint-enable property-no-unknown */
     font-weight: 300;
     font-style: normal;
 }
@@ -45,7 +47,9 @@ endregion */
 /*** region light italic */
 @font-face {
     font-family: open-sans;
+    /* stylelint-disable property-no-unknown */
     font-path: 'font/open-sans/LightItalic/OpenSans-LightItalic';
+    /* stylelint-enable property-no-unknown */
     font-weight: 300;
     font-style: italic;
 }
@@ -53,7 +57,9 @@ endregion */
 /*** region regular */
 @font-face {
     font-family: open-sans;
+    /* stylelint-disable property-no-unknown */
     font-path: 'font/open-sans/Regular/OpenSans-Regular';
+    /* stylelint-enable property-no-unknown */
     font-weight: normal;
     font-style: normal;
 }
@@ -61,7 +67,9 @@ endregion */
 /*** region italic */
 @font-face {
     font-family: open-sans;
+    /* stylelint-disable property-no-unknown */
     font-path: 'font/open-sans/Italic/OpenSans-Italic';
+    /* stylelint-enable property-no-unknown */
     font-weight: normal;
     font-style: italic;
 }
@@ -69,7 +77,9 @@ endregion */
 /*** region semibold */
 @font-face {
     font-family: open-sans;
+    /* stylelint-disable property-no-unknown */
     font-path: 'font/open-sans/Semibold/OpenSans-Semibold';
+    /* stylelint-enable property-no-unknown */
     font-weight: 600;
     font-style: normal;
 }
@@ -77,7 +87,9 @@ endregion */
 /*** region semibold italic */
 @font-face {
     font-family: open-sans;
+    /* stylelint-disable property-no-unknown */
     font-path: 'font/open-sans/SemiboldItalic/OpenSans-SemiboldItalic';
+    /* stylelint-enable property-no-unknown */
     font-weight: 600;
     font-style: italic;
 }
@@ -85,7 +97,9 @@ endregion */
 /*** region bold */
 @font-face {
     font-family: open-sans;
+    /* stylelint-disable property-no-unknown */
     font-path: 'font/open-sans/Bold/OpenSans-Bold';
+    /* stylelint-enable property-no-unknown */
     font-weight: bold;
     font-style: normal;
 }
@@ -93,7 +107,9 @@ endregion */
 /*** region bold italic */
 @font-face {
     font-family: open-sans;
+    /* stylelint-disable property-no-unknown */
     font-path: 'font/open-sans/BoldItalic/OpenSans-BoldItalic';
+    /* stylelint-enable property-no-unknown */
     font-weight: bold;
     font-style: italic;
 }
@@ -101,7 +117,9 @@ endregion */
 /*** region extrabold */
 @font-face {
     font-family: open-sans;
+    /* stylelint-disable property-no-unknown */
     font-path: 'font/open-sans/ExtraBold/OpenSans-ExtraBold';
+    /* stylelint-enable property-no-unknown */
     font-weight: 800;
     font-style: normal;
 }
@@ -109,7 +127,9 @@ endregion */
 /*** region extrabold italic */
 @font-face {
     font-family: open-sans;
+    /* stylelint-disable property-no-unknown */
     font-path: 'font/open-sans/ExtraBoldItalic/OpenSans-ExtraBoldItalic';
+    /* stylelint-enable property-no-unknown */
     font-weight: 800;
     font-style: italic;
 }
@@ -119,7 +139,9 @@ endregion */
 /*** region bold */
 @font-face {
     font-family: open-sans-condensed;
+    /* stylelint-disable property-no-unknown */
     font-path: 'font/open-sans-condensed/CondensedBold/OpenSans-CondBold-webfont';
+    /* stylelint-enable property-no-unknown */
     font-weight: bold;
     font-style: normal;
 }
@@ -127,7 +149,9 @@ endregion */
 /*** region open sans light */
 @font-face {
     font-family: open-sans-condensed;
+    /* stylelint-disable property-no-unknown */
     font-path: 'font/open-sans-condensed/CondensedLight/OpenSans-CondLight-webfont';
+    /* stylelint-enable property-no-unknown */
     font-weight: 300;
     font-style: normal;
 }
@@ -135,7 +159,9 @@ endregion */
 /*** region open sans italic */
 @font-face {
     font-family: open-sans-condensed;
+    /* stylelint-disable property-no-unknown */
     font-path: 'font/open-sans-condensed/CondensedLightItalic/OpenSans-CondLightItalic-webfont';
+    /* stylelint-enable property-no-unknown */
     font-weight: 300;
     font-style: italic;
 }
@@ -144,13 +170,17 @@ endregion */
 /** region glyphicons halflings */
 @font-face {
     font-family: 'Glyphicons Halflings';
+    /* stylelint-disable property-no-unknown */
     font-path: 'font/glyphicons-halflings/glyphicons-halflings-regular';
+    /* stylelint-enable property-no-unknown */
 }
 /** endregion */
 /** region glyphicons social regular */
 @font-face {
     font-family: 'Glyphicons Social Regular';
+    /* stylelint-disable property-no-unknown */
     font-path: 'font/glyphicons-halflings/glyphicons-halflings-social-regular';
+    /* stylelint-enable property-no-unknown */
 }
 /** endregion */
 /* endregion */
@@ -286,7 +316,6 @@ endregion */
         /** region glyphicon-social */
         & .glyphicon-social {
             color: #1d1d1b;
-            display: inline;
             display: inline-block;
             padding-left: 30px;
             position: relative;
@@ -307,7 +336,6 @@ endregion */
                 position: absolute;
                 text-transform: none;
                 top: 0;
-                webkit-font-smoothing: antialiased;
                 zoom: 1;
             }
             &-white::before { color: #fff; }
@@ -425,9 +453,10 @@ endregion */
                     & > input[type="checkbox"] {
                         display: none;
 
-                        &:checked ~ span.checkbox-styled
-                        & > span.checkbox-styled-checked {
-                            opacity: 1;
+                        &:checked ~ span.checkbox-styled > span {
+                            &.checkbox-styled-checked {
+                                opacity: 1;
+                            }
                         }
 
                         &:disabled ~ span.checkbox-styled {

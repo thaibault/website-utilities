@@ -41,7 +41,7 @@
       ],
       "internal": {
         "vendor": {
-          "__evaluate__": "self.debug && 2 < self.givenCommandLineArguments.length && ['buildDLL', 'serve', 'testInBrowser', 'watchDLL'].includes(self.givenCommandLineArguments[2]) ? ['tools', 'jQuery-spin', 'jQuery-scrollTo', 'internationalisation'].concat(self.givenCommandLineArguments[2] === 'serve' ? [] : ['qunitjs', 'webOptimizer/browserAPI']) : []"
+          "__evaluate__": "self.debug && 2 < self.givenCommandLineArguments.length && ['buildDLL', 'serve', 'testInBrowser', 'watchDLL'].includes(self.givenCommandLineArguments[2]) ? ['clientNode', 'jQuery-spin', 'jQuery-scrollTo', 'internationalisation'].concat(self.givenCommandLineArguments[2] === 'serve' ? ['script!jquery'] : ['jquery', 'script!qunitjs', 'webOptimizer/browserAPI']) : []"
         }
       }
     },
@@ -69,7 +69,7 @@
     "clear": "webOptimizer clear",
     "document": "webOptimizer document",
     "lint": "webOptimizer typeCheck && webOptimizer lint",
-    "prepublish_": "npm run build",
+    "prepublish": "npm run build",
     "serve": "webOptimizer serve",
     "start": "npm run serve",
     "test": "webOptimizer test",
