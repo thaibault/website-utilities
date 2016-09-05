@@ -59,8 +59,8 @@ export type AnalyticsCode = {
  * trigger if media query mode changes to extra small mode.
  * @property _parentOptions.onChangeMediaQueryMode {Function} - Callback to
  * trigger if media query mode changes.
- * @property _parentOptions.onSwitchSection {Function} - Callback to trigger
- * if current section switches.
+ * @property _parentOptions.onSwitchSection {Function} - Callback to trigger if
+ * current section switches.
  * @property _parentOptions.onStartUpAnimationComplete {Function} - Callback to
  * trigger if all start up animations has finished.
  * @property _parentOptions.knownScrollEventNames {string} - Saves all known
@@ -178,15 +178,15 @@ export default class Website extends $.Tools.class {
                 ['extraSmall', 'xs'], ['small', 'sm'], ['medium', 'md'],
                 ['large', 'lg']
             ],
-            onViewportMovesToTop: $.noop(),
-            onViewportMovesAwayFromTop: $.noop(),
-            onChangeToLargeMode: $.noop(),
-            onChangeToMediumMode: $.noop(),
-            onChangeToSmallMode: $.noop(),
-            onChangeToExtraSmallMode: $.noop(),
-            onChangeMediaQueryMode: $.noop(),
-            onSwitchSection: $.noop(),
-            onStartUpAnimationComplete: $.noop(),
+            onViewportMovesToTop: Website.noop,
+            onViewportMovesAwayFromTop: Website.noop,
+            onChangeToLargeMode: Website.noop,
+            onChangeToMediumMode: Website.noop,
+            onChangeToSmallMode: Website.noop,
+            onChangeToExtraSmallMode: Website.noop,
+            onChangeMediaQueryMode: Website.noop,
+            onSwitchSection: Website.noop,
+            onStartUpAnimationComplete: Website.noop,
             startUpAnimationElementDelayInMiliseconds: 100,
             startUpShowAnimation: [{opacity: 1}, {}],
             startUpHide: {opacity: 0},
@@ -267,7 +267,7 @@ export default class Website extends $.Tools.class {
             this._onViewportMovesToTop))
         this._onViewportMovesAwayFromTop = this.constructor.debounce(
             this.getMethod(this._onViewportMovesAwayFromTop))
-        this._options = $.extend(
+        this._options = this.constructor.extendObjec(
             true, {}, this._parentOptions, this._options)
         super.initialize(options)
         this.$domNodes = this.grabDomNode(this._options.domNode)
@@ -491,9 +491,10 @@ export default class Website extends $.Tools.class {
      * @returns Returns the current instance.
      */
     _triggerWindowResizeEvents():Website {
-        $.each(this._options.mediaQueryClassNameIndicator, (
-            index:string, classNameMapping:string
-        ):void => {
+        for (
+            const classNameMapping:string of
+            this._options.mediaQueryClassNameIndicator
+        ) {
             this.$domNodes.mediaQueryIndicator.prependTo(
                 this.$domNodes.parent
             ).addClass(`hidden-${classNameMapping[1]}`)
@@ -505,7 +506,7 @@ export default class Website extends $.Tools.class {
                     this, [
                         'changeMediaQueryMode', false, this,
                         this.currentMediaQueryMode, classNameMapping[0]
-                    ].concat($.makeArray(arguments)))
+                    ].concat(this.constructor.arrayMake(arguments)))
                 this.fireEvent.apply(
                     this, [
                         this.constructor.stringFormat(
@@ -514,12 +515,12 @@ export default class Website extends $.Tools.class {
                                 classNameMapping[0])
                         ), false, this, this.currentMediaQueryMode,
                         classNameMapping[0]
-                    ].concat($.makeArray(arguments)))
+                    ].concat(this.constructor.arrayMake(arguments)))
                 this.currentMediaQueryMode = classNameMapping[0]
             }
             this.$domNodes.mediaQueryIndicator.removeClass(
                 `hidden-${classNameMapping[1]}`)
-        })
+        }
         return this
     }
     /**
@@ -544,25 +545,25 @@ export default class Website extends $.Tools.class {
                     this.viewportIsOnTop = false
                     this.fireEvent.apply(this, [
                         'viewportMovesAwayFromTop', false, this
-                    ].concat($.makeArray(arguments)))
+                    ].concat(this.arrayMake(arguments)))
                 }
             } else if (!this.viewportIsOnTop) {
                 this.viewportIsOnTop = true
                 this.fireEvent.apply(this, [
                     'viewportMovesToTop', false, this
-                ].concat($.makeArray(arguments)))
+                ].concat(this.constructor.arrayMake(arguments)))
             }
         })
         if (this.$domNodes.window.scrollTop()) {
             this.viewportIsOnTop = false
             this.fireEvent.apply(this, [
                 'viewportMovesAwayFromTop', false, this
-            ].concat($.makeArray(arguments)))
+            ].concat(this.constructor.arrayMake(arguments)))
         } else {
             this.viewportIsOnTop = true
             this.fireEvent.apply(this, [
                 'viewportMovesToTop', false, this
-            ].concat($.makeArray(arguments)))
+            ].concat(this.constructor.arrayMake(arguments)))
         }
         return this
     }
@@ -598,7 +599,7 @@ export default class Website extends $.Tools.class {
         // Stop and delete spinner instance.
         this.$domNodes.windowLoadingCover.hide()
         this.$domNodes.windowLoadingSpinner.spin(false)
-        if (!$.isNumeric(elementNumber))
+        if (!this.constructor.isNumeric(elementNumber))
             elementNumber = 1
         if ($(this.constructor.stringFormat(
             '[class^="{1}"], [class*=" {1}"]',
@@ -661,7 +662,7 @@ export default class Website extends $.Tools.class {
      * @param onAfter - Callback to call after effect has finished.
      * @returns Returns the current instance.
      */
-    _scrollToTop(onAfter:Function = $.noop()):Website {
+    _scrollToTop(onAfter:Function = Website.noop):Website {
         if (!('document' in $.global))
             return this
         this._options.scrollToTop.options.onAfter = onAfter
