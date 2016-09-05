@@ -1,80 +1,96 @@
 {
-    "name": "websiteUtilities",
-    "version": "1.0.0",
-    "description": "extend your web app",
-    "keywords": ["jquery", "website", "utilities"],
-    "license": "CC-BY-3.0",
-    "files": ["index.js", "index.css", "font"],
-    "repository": {
-        "type": "git", "url": "https://github.com/thaibault/websiteUtilities"
-    },
-    "homepage": "http://torben.website/websiteUtilities",
-    "main": "index.compiled.js",
-    "webOptimizer": {
-        "injection": {
-            "externalAliases": {
-                "jquery": "jQuery",
-                "clientNode": "$.Tools",
-                "jQuery-spin": "$.fn.spin",
-                "jQuery-scrollTo": "$.fn.scrollTo",
-                "internationalisation": "$.Language"
-            },
-          "implicitExternalExcludePattern": [
-            {
-              "__evaluate__": "/^webOptimizer\\/browserAPI(?:\\.compiled)?(?:\\.js)?$/"
-            },
-            {
-              "__evaluate__": "/^clientNode\\/test(?:\\.compiled)?(?:\\.js)?$/"
-            },
-            {
-              "__evaluate__": "/\\/webpack\\/buildin\\/module\\.js$/"
-            }
-          ],
-            "internal": {"vendor": {
-                "__evaluate__": "self.debug && 2 < self.givenCommandLineArguments.length && ['buildDLL', 'serve', 'testInBrowser', 'watchDLL'].includes(self.givenCommandLineArguments[2]) ? ['tools', 'jQuery-spin', 'jQuery-scrollTo', 'internationalisation'].concat(self.givenCommandLineArguments[2] === 'serve' ? [] : ['qunitjs', 'webOptimizer/browserAPI']) : []"
-            }}
+  "name": "websiteUtilities",
+  "version": "1.0.1",
+  "description": "extend your web app",
+  "keywords": [
+    "jquery",
+    "website",
+    "utilities"
+  ],
+  "license": "CC-BY-3.0",
+  "files": [
+    "index.js",
+    "index.css",
+    "font"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thaibault/websiteUtilities"
+  },
+  "homepage": "http://torben.website/websiteUtilities",
+  "main": "index.compiled.js",
+  "webOptimizer": {
+    "injection": {
+      "externalAliases": {
+        "jquery": "jQuery",
+        "clientNode": "$.Tools",
+        "jQuery-spin": "$.fn.spin",
+        "jQuery-scrollTo": "$.fn.scrollTo",
+        "internationalisation": "$.Language"
+      },
+      "implicitExternalExcludePattern": [
+        {
+          "__evaluate__": "/^webOptimizer\\/browserAPI(?:\\.compiled)?(?:\\.js)?$/"
         },
-        "path": {"target": {"asset": {"font": "font.compiled"}}},
-        "module": {
-            "aliases": {
-
-              "clientNode/test$": "clientNode/test.compiled",
-                "jQuery-scrollTo$": "jquery.scrollto/jquery.scrollTo",
-                "jQuery-spin$": "spin.js/jquery.spin"
-            },
-                "skipParseRegularExpression": {
-                    "__evaluate__": "/\\/(?:(?:clientNode(?:\\.compiled)?)|(?:jquery)|(?:module)|([^/]+\\.min))\\.js(?:\\?.+|$)/"
-                }
+        {
+          "__evaluate__": "/^clientNode\\/test(?:\\.compiled)?(?:\\.js)?$/"
+        },
+        {
+          "__evaluate__": "/\\/webpack\\/buildin\\/module\\.js$/"
         }
+      ],
+      "internal": {
+        "vendor": {
+          "__evaluate__": "self.debug && 2 < self.givenCommandLineArguments.length && ['buildDLL', 'serve', 'testInBrowser', 'watchDLL'].includes(self.givenCommandLineArguments[2]) ? ['tools', 'jQuery-spin', 'jQuery-scrollTo', 'internationalisation'].concat(self.givenCommandLineArguments[2] === 'serve' ? [] : ['qunitjs', 'webOptimizer/browserAPI']) : []"
+        }
+      }
     },
-    "scripts": {
-        "build": "webOptimizer build",
-        "buildDLL": "webOptimizer buildDLL",
-        "clear": "webOptimizer clear",
-        "document": "webOptimizer document",
-        "lint": "webOptimizer typeCheck && webOptimizer lint",
-        "prepublish_": "npm run build",
-        "serve": "webOptimizer serve",
-        "start": "npm run serve",
-        "test": "webOptimizer test",
-        "testInBrowser": "webOptimizer testInBrowser",
-        "update": "npm version patch && npm publish",
-        "watch": "webOptimizer build --watch",
-        "watchDLL": "webOptimizer buildDLL --watch"
+    "path": {
+      "target": {
+        "asset": {
+          "font": "font.compiled"
+        }
+      }
     },
-    "dependencies": {
-        "bootstrap": "3.3.7",
-        "clientNode": "latest",
-        "jquery": "latest",
-        "jquery.scrollto": ">=2.1.2",
-        "internationalisation": "latest",
-        "spin.js": ">=2.3.2"
-    },
-    "devDependencies": {
-        "jsdom": "latest",
-        "qunitjs": "latest",
-        "qunit-cli": "latest",
-        "source-map-support": "latest",
-        "webOptimizer": "latest"
+    "module": {
+      "aliases": {
+        "clientNode/test$": "clientNode/test.compiled",
+        "jQuery-scrollTo$": "jquery.scrollto/jquery.scrollTo",
+        "jQuery-spin$": "spin.js/jquery.spin"
+      },
+      "skipParseRegularExpression": {
+        "__evaluate__": "/\\/(?:(?:clientNode(?:\\.compiled)?)|(?:jquery)|(?:module)|([^/]+\\.min))\\.js(?:\\?.+|$)/"
+      }
     }
+  },
+  "scripts": {
+    "build": "webOptimizer build",
+    "buildDLL": "webOptimizer buildDLL",
+    "clear": "webOptimizer clear",
+    "document": "webOptimizer document",
+    "lint": "webOptimizer typeCheck && webOptimizer lint",
+    "prepublish_": "npm run build",
+    "serve": "webOptimizer serve",
+    "start": "npm run serve",
+    "test": "webOptimizer test",
+    "testInBrowser": "webOptimizer testInBrowser",
+    "update": "npm version patch && npm publish",
+    "watch": "webOptimizer build --watch",
+    "watchDLL": "webOptimizer buildDLL --watch"
+  },
+  "dependencies": {
+    "bootstrap": "3.3.7",
+    "clientNode": "latest",
+    "jquery": "latest",
+    "jquery.scrollto": ">=2.1.2",
+    "internationalisation": "latest",
+    "spin.js": ">=2.3.2"
+  },
+  "devDependencies": {
+    "jsdom": "latest",
+    "qunitjs": "latest",
+    "qunit-cli": "latest",
+    "source-map-support": "latest",
+    "webOptimizer": "latest"
+  }
 }
