@@ -18,13 +18,12 @@
     endregion
 */
 // region imports
-global.$ = require('jquery')
-import 'clientNode'
+import {$} from 'clientNode'
 import Language from 'internationalisation'
 import 'jQuery-scrollTo'
 import 'jQuery-spin'
 /* eslint-disable no-duplicate-imports */
-import type {$DomNode} from 'jQuery-tools'
+import type {$DomNode} from 'clientNode'
 /* eslint-enable no-duplicate-imports */
 // endregion
 // region types
@@ -127,7 +126,7 @@ export type AnalyticsCode = {
  * @property _analyticsCod.event {string} - Code to execute on each fired
  * event.
  */
-class Website extends $.Tools.class {
+export default class Website extends $.Tools.class {
     // region static properties
     static _name:string = 'Website'
     // endregion
@@ -731,8 +730,6 @@ $.Website = function():any {
     return $.Tools().controller(Website, arguments)
 }
 $.Website.class = Website
-/** jQuery extended with jQuery-website plugin. */
-export default $
 // region vim modline
 // vim: set tabstop=4 shiftwidth=4 expandtab:
 // vim: foldmethod=marker foldmarker=region,endregion:
