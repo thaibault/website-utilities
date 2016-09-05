@@ -267,7 +267,7 @@ export default class Website extends $.Tools.class {
             this._onViewportMovesToTop))
         this._onViewportMovesAwayFromTop = this.constructor.debounce(
             this.getMethod(this._onViewportMovesAwayFromTop))
-        this._options = this.constructor.extendObjec(
+        this._options = this.constructor.extendObject(
             true, {}, this._parentOptions, this._options)
         super.initialize(options)
         this.$domNodes = this.grabDomNode(this._options.domNode)
