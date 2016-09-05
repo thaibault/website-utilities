@@ -2,6 +2,22 @@
 
 ## Generic
 
+# Generated documentations
+documentation/build
+apiDocumentation/
+
+# Temporary compile files
+*.compiled.*
+*.compiled
+!/api/**/*
+*Bundle.*
+!/data/**/*
+.dynamicConfiguration-*.json
+*.dll-manifest.json
+
+# Profiling data.
+*.profile
+
 # Packages
 *.egg
 *.egg-info
@@ -49,17 +65,22 @@ nosetests.xml
 # Gedit autosave backups.
 *~
 
+# Temporary fuse files
+**/.fuse_hidden*
+
+# Temporary windows files
+*Thumbs.db
+
 # Node Modules
 node_modules/
 .npm/
-v8flags.*
+.v8flags.*
 /.cache
 /.config
 .npm-debug.log
+npm-debug.log
 
 # region vim modline
-
 # vim: set tabstop=4 shiftwidth=4 expandtab:
 # vim: foldmethod=marker foldmarker=region,endregion:
-
 # endregion
