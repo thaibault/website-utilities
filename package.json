@@ -48,7 +48,7 @@
     "path": {
       "target": {
         "asset": {
-          "font": "font.compiled"
+          "font": "font.compiled/"
         }
       }
     },
