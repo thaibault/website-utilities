@@ -1,6 +1,6 @@
 {
   "name": "website-utilities",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "extend your web app",
   "keywords": [
     "jquery",
@@ -58,7 +58,9 @@
         "jQuery-scrollTo$": "jquery.scrollto/jquery.scrollTo",
         "jQuery-spin$": "spin.js/jquery.spin"
       },
-      "provide": {"$": "jquery"},
+      "provide": {
+        "$": "jquery"
+      },
       "skipParseRegularExpression": {
         "__evaluate__": "/\\/(?:(?:clientNode(?:\\.compiled)?)|(?:jquery)|(?:module)|([^/]+\\.min))\\.js(?:\\?.+|$)/"
       }
