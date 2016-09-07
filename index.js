@@ -1,11 +1,11 @@
 // @flow
 // #!/usr/bin/env node
 // -*- coding: utf-8 -*-
-/** @module jQuery-website */
+/** @module website-untilities */
 'use strict'
 /* !
     region header
-    [Project page](http://torben.website/jQuery-website)
+    [Project page](http://torben.website/websiteUtilities)
 
     Copyright Torben Sickert (info["~at~"]torben.website) 16.12.2012
 
@@ -37,7 +37,7 @@ export type AnalyticsCode = {
 // region plugins/classes
 /**
  * This plugin holds all needed methods to extend a whole website.###
- * @extends jQuery-tools:Tools
+ * @extends clientNode:Tools
  * @property static:_name - Defines this class name to allow retrieving them
  * after name mangling.
  * @property _options - Options extended by the options given to the
@@ -546,7 +546,7 @@ export default class Website extends $.Tools.class {
                     this.viewportIsOnTop = false
                     this.fireEvent.apply(this, [
                         'viewportMovesAwayFromTop', false, this
-                    ].concat(this.arrayMake(arguments)))
+                    ].concat(this.constructor.arrayMake(arguments)))
                 }
             } else if (!this.viewportIsOnTop) {
                 this.viewportIsOnTop = true
