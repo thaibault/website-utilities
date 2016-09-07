@@ -18,13 +18,14 @@
     endregion
 */
 // region imports
-import {$} from 'clientnode'
+import {$ as binding} from 'clientnode'
 import Language from 'internationalisation'
 import 'jQuery-scrollTo'
 import 'jQuery-spin'
 /* eslint-disable no-duplicate-imports */
 import type {$DomNode} from 'clientnode'
 /* eslint-enable no-duplicate-imports */
+export const $:any = binding
 // endregion
 // region types
 export type AnalyticsCode = {
