@@ -15,7 +15,6 @@
     endregion
 */
 // region imports
-import type {$Deferred, $DomNode} from 'clientnode'
 import registerTest from 'clientnode/test'
 import type Website from './index'
 // endregion
