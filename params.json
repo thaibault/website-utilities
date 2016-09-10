@@ -1,9 +1,0 @@
-{
-    "name": "jQuery-website",
-    "tagline": "extend your web app<!--deDE:erweitere deine Webanwendung-->",
-    "body": "",
-    "google": "UA-40192634-5",
-    "language": "en",
-    "note":"Don't delete this file! It's used internally to help with page regeneration.",
-    "languages": ["deDE", "enUS"]
-}
