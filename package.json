@@ -20,6 +20,7 @@
     "index.js",
     "index.css",
     "index.compiled.css",
+    "index.sh",
     "font",
     "font.compiled"
   ],
