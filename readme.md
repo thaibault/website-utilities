@@ -79,7 +79,7 @@ after needed dependencies:
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!--TODO load genericStyle from "http://git@github.com/thaibault/genericStyle.git"-->
     <script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=" crossorigin="anonymous"></script>
-    <script src="http://torben.website/clientnode/data/distributionBundle/index.compiled.js"></script>
+    <script src="http://torben.website/clientNode/data/distributionBundle/index.compiled.js"></script>
     <script src="http://torben.website/language/data/distributionBundle/index.compiled.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
@@ -148,7 +148,7 @@ Here you can see the initialisation with all available plugin options:
     #!HTML
 
     <script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=" crossorigin="anonymous"></script>
-    <script src="http://torben.website/clientnode/data/distributionBundle/index.compiled.js"></script>
+    <script src="http://torben.website/clientNode/data/distributionBundle/index.compiled.js"></script>
     <script src="http://torben.website/websiteUtilities/data/distributionBundle/index.compiled.js"></script>
     <script>
         $(($) => $.Website({
