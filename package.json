@@ -2,6 +2,11 @@
   "name": "website-utilities",
   "version": "1.0.7",
   "description": "extend your web app",
+  "documentationWebsite": {
+    "tagline": "extend your web app<!--deDE:erweitere deine Webanwendung-->",
+    "trackingCode": "UA-40192634-5",
+    "languages": ["deDE", "enUS"]
+  },
   "keywords": [
     "jquery",
     "website",
@@ -15,6 +20,9 @@
     "font",
     "font.compiled"
   ],
+  "bin": {
+    "websiteUtilities": "index.sh"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/thaibault/websiteUtilities"
@@ -77,6 +85,7 @@
     "test": "webOptimizer test",
     "testInBrowser": "webOptimizer testInBrowser",
     "update": "npm version patch && npm publish",
+    "updateDocumentation": "documentationWebsite",
     "watch": "webOptimizer build --watch",
     "watchDLL": "webOptimizer buildDLL --watch"
   },
@@ -89,6 +98,7 @@
     "spin.js": ">=2.3.2"
   },
   "devDependencies": {
+    "documentation-website": "latest",
     "jsdom": "latest",
     "qunitjs": "latest",
     "qunit-cli": "latest",
