@@ -2,6 +2,11 @@
   "name": "website-utilities",
   "version": "1.0.7",
   "description": "extend your web app",
+  "documentationWebsite": {
+    "tagline": "extend your web app<!--deDE:erweitere deine Webanwendung-->",
+    "trackingCode": "UA-40192634-5",
+    "languages": ["deDE", "enUS"]
+  },
   "keywords": [
     "jquery",
     "website",
