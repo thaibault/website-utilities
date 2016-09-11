@@ -3,6 +3,7 @@
   "version": "1.0.9",
   "description": "extend your web app",
   "documentationWebsite": {
+    "name": "websiteUtilities",
     "tagline": "extend your web app<!--deDE:erweitere deine Webanwendung-->",
     "trackingCode": "UA-40192634-5",
     "languages": [
