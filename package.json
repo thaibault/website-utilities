@@ -38,10 +38,8 @@
     "injection": {
       "externalAliases": {
         "jquery": "jQuery",
-        "clientnode": "$.Tools",
         "jQuery-spin": "$.fn.spin",
-        "jQuery-scrollTo": "$.fn.scrollTo",
-        "internationalisation": "$.Language"
+        "jQuery-scrollTo": "$.fn.scrollTo"
       },
       "implicitExternalExcludePattern": {"__append__": {
           "__evaluate__": "/^clientnode\\/test(?:\\.compiled)?(?:\\.js)?$/"
