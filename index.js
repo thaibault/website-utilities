@@ -163,12 +163,12 @@ export default class Website extends $.Tools.class {
             domain: 'auto',
             domNode: {
                 mediaQueryIndicator: '<div class="media-query-indicator">',
-                top: '> div.navbar-wrapper',
+                top: 'header',
                 scrollToTopButton: 'a[href="#top"]',
                 startUpAnimationClassPrefix:
                     '.website-start-up-animation-number-',
-                windowLoadingCover: 'div.website-window-loading-cover',
-                windowLoadingSpinner: 'div.website-window-loading-cover > div'
+                windowLoadingCover: '.website-window-loading-cover',
+                windowLoadingSpinner: '.website-window-loading-cover > div'
             },
             domNodeSelectorPrefix: 'body.{1}',
             knownScrollEventNames:
@@ -298,6 +298,34 @@ export default class Website extends $.Tools.class {
         return this
     }
     // endregion
+    /**
+     * Scrolls to top of page. Runs the given function after viewport arrives.
+     * @param onAfter - Callback to call after effect has finished.
+     * @returns Returns the current instance.
+     */
+    scrollToTop(onAfter:Function = Website.noop):Website {
+        if (!('document' in $.global))
+            return this
+        this._options.scrollToTop.options.onAfter = onAfter
+        /*
+            NOTE: This is a workaround to avoid a bug in "jQuery.scrollTo()"
+            expecting this property exists.
+        */
+        Object.defineProperty($.global.document, 'body', {value: $('body')[0]})
+        if (this._options.scrollToTop.inLinearTime) {
+            const distanceToTopInPixel:number =
+                this.$domNodes.window.scrollTop()
+            // Scroll four times faster as we have distance to top.
+            this._options.scrollToTop.options.duration =
+                distanceToTopInPixel / 4
+            this.$domNodes.window.scrollTo(
+                {top: `-=${distanceToTopInPixel}`, left: '+=0'},
+                this._options.scrollToTop.options)
+        } else
+            $(window).scrollTo(
+                {top: 0, left: 0}, this._options.scrollToTop.options)
+        return this
+    }
     /**
      * This method disables scrolling on the given web view.
      * @returns Returns the current instance.
@@ -654,36 +682,8 @@ export default class Website extends $.Tools.class {
             event:Object
         ):void => {
             event.preventDefault()
-            this._scrollToTop()
+            this.scrollToTop()
         })
-        return this
-    }
-    /**
-     * Scrolls to top of page. Runs the given function after viewport arrives.
-     * @param onAfter - Callback to call after effect has finished.
-     * @returns Returns the current instance.
-     */
-    _scrollToTop(onAfter:Function = Website.noop):Website {
-        if (!('document' in $.global))
-            return this
-        this._options.scrollToTop.options.onAfter = onAfter
-        /*
-            NOTE: This is a workaround to avoid a bug in "jQuery.scrollTo()"
-            expecting this property exists.
-        */
-        Object.defineProperty($.global.document, 'body', {value: $('body')[0]})
-        if (this._options.scrollToTop.inLinearTime) {
-            const distanceToTopInPixel:number =
-                this.$domNodes.window.scrollTop()
-            // Scroll four times faster as we have distance to top.
-            this._options.scrollToTop.options.duration =
-                distanceToTopInPixel / 4
-            this.$domNodes.window.scrollTo(
-                {top: `-=${distanceToTopInPixel}`, left: '+=0'},
-                this._options.scrollToTop.options)
-        } else
-            $(window).scrollTo(
-                {top: 0, left: 0}, this._options.scrollToTop.options)
         return this
     }
     /**
