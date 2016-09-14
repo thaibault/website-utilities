@@ -77,14 +77,13 @@ after needed dependencies:
     #!HTML
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <!--TODO load genericStyle from "http://git@github.com/thaibault/genericStyle.git"-->
     <script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=" crossorigin="anonymous"></script>
     <script src="http://torben.website/clientNode/data/distributionBundle/index.compiled.js"></script>
-    <script src="http://torben.website/language/data/distributionBundle/index.compiled.js"></script>
+    <script src="http://torben.website/internationalisation/data/distributionBundle/index.compiled.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
     <!--Inject downloaded file:-->
-    <script src="/index.compiled.js"></script>
+    <script src="index.compiled.js"></script>
     <!--Or integrate via cdn:
     <script src="http://torben.website/websiteUtilities/data/distributionBundle/index.compiled.js"></script>
     -->
@@ -119,8 +118,8 @@ If you are using npm as package manager you can simply add this tool to your
     ...
 
 After updating your packages you can simply depend on this script and let
-a module bundler do the hard stuff or access it via a exported variable name
-into given context.
+a module bundler do the hard stuff or access it via an exported variable name
+in given context.
 <!--deDE:
     Nach einem Update deiner Pakete kannst du dieses Plugin einfach in deine
     JavaScript-Module importieren oder die exportierte Variable im gegebenen
@@ -133,6 +132,22 @@ into given context.
     $ = require('website-utilities')
     ...
     $.Website().isEquivalentDom('<div>', '<script>') // false
+    ...
+
+    ...
+    import Website from 'website-utilities'
+    class SpecialWebsite extends Website...
+    Website({options..})
+    // or
+    import {$} from 'website-utilities'
+    $.Website().isEquivalentDom('<div>', '<script>') // false
+    class SpecialWebsite extends $.Website.class ...
+    // or
+    Website = require('website-utilities').default
+    value instanceof Website
+    // or
+    $ = require('website-utilities').$
+    $.Website()
     ...
 
 <!--deDE:Verwendung-->
