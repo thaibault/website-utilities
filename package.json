@@ -1,6 +1,6 @@
 {
   "name": "website-utilities",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "extend your web app",
   "documentationWebsite": {
     "name": "websiteUtilities",
@@ -41,9 +41,11 @@
         "jQuery-spin": "$.fn.spin",
         "jQuery-scrollTo": "$.fn.scrollTo"
       },
-      "implicitExternalExcludePattern": {"__append__": {
+      "implicitExternalExcludePattern": {
+        "__append__": {
           "__evaluate__": "/^clientnode\\/test(?:\\.compiled)?(?:\\.js)?$/"
-      }},
+        }
+      },
       "internal": {
         "vendor": {
           "__evaluate__": "self.debug && 2 < self.givenCommandLineArguments.length && ['buildDLL', 'serve', 'testInBrowser', 'watchDLL'].includes(self.givenCommandLineArguments[2]) ? ['clientnode', 'jQuery-spin', 'jQuery-scrollTo', 'internationalisation'].concat(self.givenCommandLineArguments[2] === 'serve' ? [] : ['script!qunitjs', 'weboptimizer/browserAPI']) : []"
