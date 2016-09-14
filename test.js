@@ -28,6 +28,8 @@ registerTest(function(
     // // region special
     this.test('initialize', (assert:Object):void => assert.ok(website))
     // // endregion
+    this.test('scrollToTop', (assert:Object):void => assert.strictEqual(
+        website.scrollToTop(), website))
     this.test('disableScrolling|enableScrolling', (assert:Object):void => {
         assert.strictEqual(website.disableScrolling(), website)
         assert.strictEqual(website.enableScrolling(), website)
@@ -84,8 +86,6 @@ registerTest(function(
         assert.strictEqual(website._addNavigationEvents(), website))
     this.test('_handleScrollToTopButton', (assert:Object):void =>
         assert.strictEqual(website._handleScrollToTopButton(), website))
-    this.test('_scrollToTop', (assert:Object):void => assert.strictEqual(
-        website._scrollToTop(), website))
     this.test('_handleAnalyticsInitialisation', (assert:Object):void =>
         assert.strictEqual(website._handleAnalyticsInitialisation(), website))
     // // endregion
