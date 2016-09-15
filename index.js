@@ -195,7 +195,7 @@ export default class Website extends $.Tools.class {
                 event.which > 0 || event.type === 'mousedown' ||
                 event.type === 'mousewheel' || event.type === 'touchmove'),
             scrollToTop: {
-                inLinearTime: true,
+                inLinearTime: false,
                 options: {duration: 'normal'},
                 button: {
                     slideDistanceInPixel: 30,
