@@ -294,7 +294,11 @@ export default class Website extends $.Tools.class {
         if (!this._options.language.logging)
             this._options.language.logging = this._options.logging
         if (this._options.activateLanguageSupport && !this.languageHandler)
-            this.languageHandler = $.Language(this._options.language)
+            $.Language(this._options.language).always((
+                languageHandler:Language
+            ):void => {
+                this.languageHandler = languageHandler
+            })
         return this
     }
     // endregion
