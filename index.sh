@@ -9,6 +9,7 @@
 #    see http://creativecommons.org/licenses/by/3.0/deed.de
 # endregion
 exit 0
+# TODO implement in js.
 set -o errexit
 if [[ $(git branch | grep '* master') ]]; then
     echo 'Build new web page.'
