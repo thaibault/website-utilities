@@ -36,15 +36,17 @@
   "main": "index.compiled.js",
   "webOptimizer": {
     "injection": {
-      "externalAliases": {
-        "jquery": "jQuery",
-        "jQuery-spin": "$.fn.spin",
-        "jQuery-scrollTo": "$.fn.scrollTo"
-      },
-      "implicitExternalExcludePattern": {
-        "__append__": {
-          "__evaluate__": "/^clientnode\\/test(?:\\.compiled)?(?:\\.js)?$/"
-        }
+      "external":{
+        "aliases": {
+          "jquery": "jQuery",
+          "jQuery-spin": "$.fn.spin",
+          "jQuery-scrollTo": "$.fn.scrollTo"
+        },
+        "implicit":{"pattern":{"exclude": {
+          "__append__": {
+            "__evaluate__": "/^clientnode\\/test(?:\\.compiled)?(?:\\.js)?$/"
+          }
+        }}}
       },
       "internal": {
         "vendor": {
@@ -65,7 +67,7 @@
         "jQuery-scrollTo$": "jquery.scrollto/jquery.scrollTo",
         "jQuery-spin$": "spin.js/jquery.spin"
       },
-      "skipParseRegularExpression": {
+      "skipParseRegularExpressions": {
         "__evaluate__": "/\\/(?:(?:jquery)|(?:module)|([^/]+\\.min))\\.js(?:\\?.+|$)/"
       }
     }
