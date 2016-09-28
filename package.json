@@ -1,6 +1,6 @@
 {
   "name": "website-utilities",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "extend your web app",
   "documentationWebsite": {
     "name": "websiteUtilities",
@@ -36,17 +36,21 @@
   "main": "index.compiled.js",
   "webOptimizer": {
     "injection": {
-      "external":{
+      "external": {
         "aliases": {
           "jquery": "jQuery",
           "jQuery-spin": "$.fn.spin",
           "jQuery-scrollTo": "$.fn.scrollTo"
         },
-        "implicit":{"pattern":{"exclude": {
-          "__append__": {
-            "__evaluate__": "/^clientnode\\/test(?:\\.compiled)?(?:\\.js)?$/"
+        "implicit": {
+          "pattern": {
+            "exclude": {
+              "__append__": {
+                "__evaluate__": "/^clientnode\\/test(?:\\.compiled)?(?:\\.js)?$/"
+              }
+            }
           }
-        }}}
+        }
       },
       "internal": {
         "vendor": {
