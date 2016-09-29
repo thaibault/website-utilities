@@ -67,7 +67,6 @@
     },
     "module": {
       "aliases": {
-        "clientnode/index$": "clientnode",
         "clientnode/test$": "clientnode/test.compiled",
         "jQuery-scrollTo$": "jquery.scrollto/jquery.scrollTo",
         "jQuery-spin$": "spin.js/jquery.spin"
