@@ -294,7 +294,7 @@ export default class Website extends $.Tools.class {
         if (!this._options.language.logging)
             this._options.language.logging = this._options.logging
         if (this._options.activateLanguageSupport && !this.languageHandler)
-            $.Language(this._options.language).always((
+            $.Language(this._options.language).then((
                 languageHandler:Language
             ):void => {
                 this.languageHandler = languageHandler
