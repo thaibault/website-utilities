@@ -59,6 +59,11 @@
       }
     },
     "path": {
+      "source": {
+        "asset": {
+          "font": "font/"
+        }
+      },
       "target": {
         "asset": {
           "font": "font.compiled/"
