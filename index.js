@@ -351,9 +351,11 @@ export default class Website extends $.Tools.class {
     /**
      * Triggers an analytics event. All given arguments are forwarded to
      * configured analytics event code to defined their environment variables.
+     * @param parameter - All parameter will be forwarded to the analytics
+     * code.
      * @returns Returns the current instance.
      */
-    triggerAnalyticsEvent():Website {
+    triggerAnalyticsEvent(...parameter:Array<any>):Website {
         if (
             this._options.trackingCode &&
             this._options.trackingCode !== '__none__' &&
@@ -368,7 +370,7 @@ export default class Website extends $.Tools.class {
                 (new Function(
                     'eventCategory', 'eventAction', 'eventLabel', 'eventData',
                     'eventValue', this._analyticsCode.event
-                )).apply(this, arguments)
+                )).call(this, ...parameter)
             } catch (exception) {
                 this.warn(
                     'Problem in google analytics event code snippet: {1}',
@@ -521,9 +523,11 @@ export default class Website extends $.Tools.class {
     }
     /**
      * This method triggers if the responsive design switches its mode.
+     * @param parameter - All arguments will be appended to the event handler
+     * callbacks.
      * @returns Returns the current instance.
      */
-    _triggerWindowResizeEvents():Website {
+    _triggerWindowResizeEvents(...parameter:Array<any>):Website {
         for (
             const classNameMapping:string of
             this._options.mediaQueryClassNameIndicator
@@ -535,20 +539,15 @@ export default class Website extends $.Tools.class {
                 this.$domNodes.mediaQueryIndicator.is(':hidden') &&
                 classNameMapping[0] !== this.currentMediaQueryMode
             ) {
-                this.fireEvent.apply(
-                    this, [
-                        'changeMediaQueryMode', false, this,
-                        this.currentMediaQueryMode, classNameMapping[0]
-                    ].concat(this.constructor.arrayMake(arguments)))
-                this.fireEvent.apply(
-                    this, [
-                        this.constructor.stringFormat(
-                            `changeTo{1}Mode`,
-                            this.constructor.stringCapitalize(
-                                classNameMapping[0])
-                        ), false, this, this.currentMediaQueryMode,
-                        classNameMapping[0]
-                    ].concat(this.constructor.arrayMake(arguments)))
+                this.fireEvent(
+                    'changeMediaQueryMode', false, this,
+                    this.currentMediaQueryMode, classNameMapping[0],
+                    ...parameter)
+                this.fireEvent(this.constructor.stringFormat(
+                    `changeTo{1}Mode`, this.constructor.stringCapitalize(
+                        classNameMapping[0])),
+                    false, this, this.currentMediaQueryMode,
+                    classNameMapping[0], ...parameter)
                 this.currentMediaQueryMode = classNameMapping[0]
             }
             this.$domNodes.mediaQueryIndicator.removeClass(
@@ -558,9 +557,11 @@ export default class Website extends $.Tools.class {
     }
     /**
      * This method triggers if view port arrives at special areas.
+     * @param parameter - All arguments will be appended to the event handler
+     * callbacks.
      * @returns Returns the current instance.
      */
-    _bindScrollEvents():Website {
+    _bindScrollEvents(...parameter:Array<any>):Website {
         // Stop automatic scrolling if the user wants to scroll manually.
         if (!('window' in this.$domNodes))
             return this
@@ -576,27 +577,21 @@ export default class Website extends $.Tools.class {
             if (this.$domNodes.window.scrollTop()) {
                 if (this.viewportIsOnTop) {
                     this.viewportIsOnTop = false
-                    this.fireEvent.apply(this, [
-                        'viewportMovesAwayFromTop', false, this
-                    ].concat(this.constructor.arrayMake(arguments)))
+                    this.fireEvent(
+                        'viewportMovesAwayFromTop', false, this, ...parameter)
                 }
             } else if (!this.viewportIsOnTop) {
                 this.viewportIsOnTop = true
-                this.fireEvent.apply(this, [
-                    'viewportMovesToTop', false, this
-                ].concat(this.constructor.arrayMake(arguments)))
+                this.fireEvent('viewportMovesToTop', false, this, ...parameter)
             }
         })
         if (this.$domNodes.window.scrollTop()) {
             this.viewportIsOnTop = false
-            this.fireEvent.apply(this, [
-                'viewportMovesAwayFromTop', false, this
-            ].concat(this.constructor.arrayMake(arguments)))
+            this.fireEvent(
+                'viewportMovesAwayFromTop', false, this, ...parameter)
         } else {
             this.viewportIsOnTop = true
-            this.fireEvent.apply(this, [
-                'viewportMovesToTop', false, this
-            ].concat(this.constructor.arrayMake(arguments)))
+            this.fireEvent('viewportMovesToTop', false, this, ...parameter)
         }
         return this
     }
@@ -614,10 +609,8 @@ export default class Website extends $.Tools.class {
                 ).substr(1)
             )).css(this._options.startUpHide)
             if (this.$domNodes.windowLoadingCover.length)
-                this.enableScrolling().$domNodes.windowLoadingCover.animate
-                    .apply(
-                        this.$domNodes.windowLoadingCover,
-                        this._options.windowLoadingCoverHideAnimation)
+                this.enableScrolling().$domNodes.windowLoadingCover.animate(
+                    ...this._options.windowLoadingCoverHideAnimation)
             else
                 this._options.windowLoadingCoverHideAnimation[1].always()
         }, this._options.additionalPageLoadingTimeInMilliseconds)
@@ -649,8 +642,7 @@ export default class Website extends $.Tools.class {
                 const $domNode:$DomNode = $(
                     this._options.domNode.startUpAnimationClassPrefix +
                         elementNumber)
-                $domNode.animate.apply(
-                    $domNode, this._options.startUpShowAnimation)
+                $domNode.animate(...this._options.startUpShowAnimation)
                 if ($(
                     this._options.domNode.startUpAnimationClassPrefix +
                     (elementNumber + 1)
