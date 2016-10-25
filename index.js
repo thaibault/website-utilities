@@ -237,13 +237,13 @@ export default class Website extends $.Tools.class {
                 'a=s.createElement(o),m=s.getElementsByTagName(o)[0];' +
                     'a.async=1;a.src=g;' +
                 'm.parentNode.insertBefore(a,m)})(' +
-                "window,document,'script','//www.google-analytics.com/" +
-                    "analytics.js','ga');" +
+                `window,document,'script','//www.google-analytics.com/` +
+                    `analytics.js','ga');` +
                 `window.ga('create', '{1}', '{2}');
                 window.ga('set', 'anonymizeIp', true);
                 window.ga('send', 'pageview', {page: '{3}'});
             `,
-            sectionSwitch: "window.ga('send', 'pageview', {page: '{1}'});",
+            sectionSwitch: `window.ga('send', 'pageview', {page: '{1}'});`,
             event: `window.ga(
                 'send', 'event', eventCategory, eventAction, eventLabel,
                 eventValue, eventData);
@@ -363,9 +363,9 @@ export default class Website extends $.Tools.class {
             $.global.location.hostname !== 'localhost'
         ) {
             this.debug(
-                "Run analytics code: \"#{this._analyticsCode.event}\" with " +
+                'Run analytics code: "#{this._analyticsCode.event}" with ' +
                 'arguments:')
-            this.debug(arguments)
+            this.debug(parameter)
             try {
                 (new Function(
                     'eventCategory', 'eventAction', 'eventLabel', 'eventData',
@@ -724,8 +724,8 @@ export default class Website extends $.Tools.class {
     // endregion
 }
 // endregion
-$.Website = function():any {
-    return $.Tools().controller(Website, arguments)
+$.Website = function(...parameter:Array<any>):any {
+    return $.Tools().controller(Website, ...parameter)
 }
 $.Website.class = Website
 // region vim modline
