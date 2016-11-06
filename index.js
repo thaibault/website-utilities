@@ -262,8 +262,10 @@ export default class Website extends $.Tools.class {
         else
             this.currenSectionName = 'home'
         // Wrap event methods with debounceing handler.
+        // IgnoreTypeCheck
         this._onViewportMovesToTop = this.constructor.debounce(this.getMethod(
             this._onViewportMovesToTop))
+        // IgnoreTypeCheck
         this._onViewportMovesAwayFromTop = this.constructor.debounce(
             this.getMethod(this._onViewportMovesAwayFromTop))
         this._options = this.constructor.extendObject(
@@ -722,9 +724,8 @@ export default class Website extends $.Tools.class {
     // endregion
 }
 // endregion
-$.Website = function(...parameter:Array<any>):any {
-    return $.Tools().controller(Website, ...parameter)
-}
+$.Website = (...parameter:Array<any>):any => $.Tools().controller(
+    Website, parameter)
 $.Website.class = Website
 // region vim modline
 // vim: set tabstop=4 shiftwidth=4 expandtab:
