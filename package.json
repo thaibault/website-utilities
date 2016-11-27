@@ -77,7 +77,7 @@
         "jQuery-spin$": "spin.js/jquery.spin"
       },
       "skipParseRegularExpressions": {
-        "__evaluate__": "/\\/(?:(?:jquery)|(?:module)|([^/]+\\.min))\\.js(?:\\?.+|$)/"
+        "__evaluate__": "/\\/(?:(?:jquery\\/dist\\/jquery)|(?:module)|([^/]+\\.min))\\.js(?:\\?.+|$)/"
       }
     }
   },
