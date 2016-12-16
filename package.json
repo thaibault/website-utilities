@@ -104,13 +104,27 @@
       }
     },
     "module": {
-      "aliases": {
-        "clientnode/test$": "clientnode/test.compiled",
-        "jQuery-scrollTo$": "jquery.scrollto/jquery.scrollTo",
-        "jQuery-spin$": "spin.js/jquery.spin"
+      "optimizer": {
+        "babili": null
+      },
+      "preprocessor": {
+        "javaScript": {
+          "configuration": {
+            "presets": {
+              "__evaluate__": "(self.target === 'node' ? ['es2017-node7'] : [['modern-browsers', {loose: true}], 'es2017']).concat('stage-0')"
+            }
+          }
+        }
+      },
+      "replacements": {
+        "normal": {
+          "^clientnode/test$": "clientnode/test.compiled.js",
+          "^jQuery-scrollTo$": "jquery.scrollto/jquery.scrollTo.js",
+          "^jQuery-spin$": "spin.js/jquery.spin.js"
+        }
       },
       "skipParseRegularExpressions": {
-        "__evaluate__": "/\\/(?:(?:jquery\\/dist\\/jquery)|(?:module)|([^/]+\\.min))\\.js(?:\\?.+|$)/"
+        "__evaluate__": "/\\/(?:(?:jquery\\/dist\\/jquery)|(?:spin\\.js\\/jquery\\.spin)|(?:module)|([^/]+\\.min))\\.js(?:\\?.+|$)/"
       }
     }
   }
