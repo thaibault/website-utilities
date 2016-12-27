@@ -18,11 +18,11 @@
 import registerTest from 'clientnode/test'
 import type Website from './index'
 // endregion
-registerTest(function(
+registerTest(async function(
     roundType:string, targetTechnology:?string, $:any
-):void {
+):Promise<void> {
     require('./index')
-    const website:Website = $.Website()
+    const website:Website = await $.Website()
     // region tests
     // / region public methods
     // // region special
@@ -40,16 +40,13 @@ registerTest(function(
     this.test('_onViewportMovesToTop', (assert:Object):void => {
         website._onViewportMovesToTop()
         // NOTE: Returns timeout id because of debounceing.
-        assert.strictEqual(
-            typeof website._onViewportMovesToTop(),
-            typeof setTimeout(():void => {}, 0))
+        assert.ok(website._onViewportMovesToTop().hasOwnProperty('clear'))
     })
     this.test('_onViewportMovesAwayFromTop', (assert:Object):void => {
         website._onViewportMovesAwayFromTop()
         // NOTE: Returns timeout id because of debounceing.
-        assert.strictEqual(
-            typeof website._onViewportMovesAwayFromTop(),
-            typeof setTimeout(():void => {}, 0))
+        assert.ok(website._onViewportMovesAwayFromTop().hasOwnProperty(
+            'clear'))
     })
     this.test('_onChangeMediaQueryMode', (assert:Object):void =>
         assert.strictEqual(
@@ -78,10 +75,10 @@ registerTest(function(
         assert.strictEqual(website._triggerWindowResizeEvents(), website))
     this.test('_bindScrollEvents', (assert:Object):void => assert.strictEqual(
         website._bindScrollEvents(), website))
-    this.test('_removeLoadingCover', (assert:Object):void =>
-        assert.strictEqual(website._removeLoadingCover(), website))
-    this.test('_handleStartUpEffects', (assert:Object):void =>
-        assert.strictEqual(website._handleStartUpEffects(10), website))
+    this.test('_removeLoadingCover', async (assert:Object):Promise<void> =>
+        assert.strictEqual(await website._removeLoadingCover(), website))
+    this.test('_handleStartUpEffects', async (assert:Object):Promise<void> =>
+        assert.strictEqual(await website._handleStartUpEffects(10), website))
     this.test('_addNavigationEvents', (assert:Object):void =>
         assert.strictEqual(website._addNavigationEvents(), website))
     this.test('_handleScrollToTopButton', (assert:Object):void =>

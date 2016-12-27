@@ -154,7 +154,7 @@ export default class Website extends $.Tools.class {
      * @param analyticsCode - Analytic code snippet to use.
      * @returns Returns the current instance.
      */
-    initialize(
+    async initialize(
         options:Object = {}, parentOptions:Object = {
             activateLanguageSupport: true,
             additionalPageLoadingTimeInMilliseconds: 0,
@@ -247,7 +247,7 @@ export default class Website extends $.Tools.class {
                 eventValue, eventData);
             `
         }
-    ):Website {
+    ):Promise<Website> {
         this._parentOptions = parentOptions
         this.startUpAnimationIsComplete = startUpAnimationIsComplete
         this.viewportIsOnTop = viewportIsOnTop
@@ -273,8 +273,8 @@ export default class Website extends $.Tools.class {
         super.initialize(options)
         this.$domNodes = this.grabDomNode(this._options.domNode)
         this.disableScrolling(
-        )._options.windowLoadingCoverHideAnimation[1].always = this.getMethod(
-            this._handleStartUpEffects)
+        )._options.windowLoadingCoverHideAnimation[1].always =
+            await this.getMethod(this._handleStartUpEffects)
         this.$domNodes.windowLoadingSpinner.spin(
             this._options.windowLoadingSpinner)
         this._bindScrollEvents().$domNodes.parent.show()
@@ -285,8 +285,9 @@ export default class Website extends $.Tools.class {
                     this._removeLoadingCover()
                 }
             }
-            $(():number => setTimeout(onLoaded, this._options
-                .windowLoadedTimeoutAfterDocumentLoadedInMilliseconds))
+            $(():Promise<boolean> => this.constructor.timeout(
+                onLoaded, this._options
+                    .windowLoadedTimeoutAfterDocumentLoadedInMilliseconds))
             this.on(this.$domNodes.window, 'load', onLoaded)
         }
         this._addNavigationEvents()._addMediaQueryChangeEvents(
@@ -599,21 +600,21 @@ export default class Website extends $.Tools.class {
      * This method triggers after window is loaded.
      * @returns Returns the current instance.
      */
-    _removeLoadingCover():Website {
-        setTimeout(():void => {
-            // Hide startup animation dom nodes to show them step by step.
-            $(this.constructor.stringFormat(
-                '[class^="{1}"], [class*=" {1}"]',
-                this.sliceDomNodeSelectorPrefix(
-                    this._options.domNode.startUpAnimationClassPrefix
-                ).substr(1)
-            )).css(this._options.startUpHide)
-            if (this.$domNodes.windowLoadingCover.length)
-                this.enableScrolling().$domNodes.windowLoadingCover.animate(
-                    ...this._options.windowLoadingCoverHideAnimation)
-            else
-                this._options.windowLoadingCoverHideAnimation[1].always()
-        }, this._options.additionalPageLoadingTimeInMilliseconds)
+    async _removeLoadingCover():Promise<Website> {
+        await this.constructor.timeout(
+            this._options.additionalPageLoadingTimeInMilliseconds)
+        // Hide startup animation dom nodes to show them step by step.
+        $(this.constructor.stringFormat(
+            '[class^="{1}"], [class*=" {1}"]',
+            this.sliceDomNodeSelectorPrefix(
+                this._options.domNode.startUpAnimationClassPrefix
+            ).substr(1)
+        )).css(this._options.startUpHide)
+        if (this.$domNodes.windowLoadingCover.length)
+            this.enableScrolling().$domNodes.windowLoadingCover.animate(
+                ...this._options.windowLoadingCoverHideAnimation)
+        else
+            this._options.windowLoadingCoverHideAnimation[1].always()
         return this
     }
     /**
@@ -621,7 +622,7 @@ export default class Website extends $.Tools.class {
      * @param elementNumber - The current start up step.
      * @returns Returns the current instance.
      */
-    _handleStartUpEffects(elementNumber:number):Website {
+    async _handleStartUpEffects(elementNumber:number):Promise<Website> {
         // Stop and delete spinner instance.
         this.$domNodes.windowLoadingCover.hide()
         this.$domNodes.windowLoadingSpinner.spin(false)
@@ -632,26 +633,25 @@ export default class Website extends $.Tools.class {
             this.sliceDomNodeSelectorPrefix(
                 this._options.domNode.startUpAnimationClassPrefix
             ).substr(1)
-        )).length)
-            setTimeout(():void => {
-                let lastElementTriggered:boolean = false
-                this._options.startUpShowAnimation[1].always = ():void => {
-                    if (lastElementTriggered)
-                        this.fireEvent('startUpAnimationComplete')
-                }
-                const $domNode:$DomNode = $(
-                    this._options.domNode.startUpAnimationClassPrefix +
-                        elementNumber)
-                $domNode.animate(...this._options.startUpShowAnimation)
-                if ($(
-                    this._options.domNode.startUpAnimationClassPrefix +
-                    (elementNumber + 1)
-                ).length)
-                    this._handleStartUpEffects(elementNumber + 1)
-                else
-                    lastElementTriggered = true
-            }, this._options.startUpAnimationElementDelayInMiliseconds)
-        else
+        )).length) {
+            await this.constructor.timeout(
+                this._options.startUpAnimationElementDelayInMiliseconds)
+            let lastElementTriggered:boolean = false
+            this._options.startUpShowAnimation[1].always = ():void => {
+                if (lastElementTriggered)
+                    this.fireEvent('startUpAnimationComplete')
+            }
+            const $domNode:$DomNode = $(
+                this._options.domNode.startUpAnimationClassPrefix +
+                    elementNumber)
+            $domNode.animate(...this._options.startUpShowAnimation)
+            if ($(this._options.domNode.startUpAnimationClassPrefix + (
+                elementNumber + 1
+            )).length)
+                await this._handleStartUpEffects(elementNumber + 1)
+            else
+                lastElementTriggered = true
+        } else
             this.fireEvent('startUpAnimationComplete')
         return this
     }
