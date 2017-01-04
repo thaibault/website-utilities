@@ -5,13 +5,10 @@
   "description": "extend your web app",
   "homepage": "http://torben.website/websiteUtilities",
   "documentationWebsite": {
+    "languages": ["deDE", "enUS"],
     "name": "websiteUtilities",
     "tagline": "extend your web app<!--deDE:erweitere deine Webanwendung-->",
-    "trackingCode": "UA-40192634-5",
-    "languages": [
-      "deDE",
-      "enUS"
-    ]
+    "trackingCode": "UA-40192634-5"
   },
   "keywords": [
     "jquery",
@@ -61,9 +58,6 @@
   },
   "devDependencies": {
     "documentation-website": "latest",
-    "jsdom": "latest",
-    "qunitjs": "latest",
-    "qunit-cli": "latest",
     "source-map-support": "latest",
     "weboptimizer": "latest"
   },
