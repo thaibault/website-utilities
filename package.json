@@ -1,11 +1,14 @@
 {
   "name": "website-utilities",
-  "version": "1.0.27",
+  "version": "1.0.28",
   "license": "CC-BY-3.0",
   "description": "extend your web app",
   "homepage": "http://torben.website/websiteUtilities",
   "documentationWebsite": {
-    "languages": ["deDE", "enUS"],
+    "languages": [
+      "deDE",
+      "enUS"
+    ],
     "name": "websiteUtilities",
     "tagline": "extend your web app<!--deDE:erweitere deine Webanwendung-->",
     "trackingCode": "UA-40192634-5"
