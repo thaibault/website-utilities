@@ -154,7 +154,7 @@ export default class Website extends $.Tools.class {
      * @param analyticsCode - Analytic code snippet to use.
      * @returns Returns the current instance.
      */
-    async initialize(
+    initialize(
         options:Object = {}, parentOptions:Object = {
             activateLanguageSupport: true,
             additionalPageLoadingTimeInMilliseconds: 0,
@@ -272,35 +272,39 @@ export default class Website extends $.Tools.class {
             true, {}, this._parentOptions, this._options)
         super.initialize(options)
         this.$domNodes = this.grabDomNode(this._options.domNode)
-        this.disableScrolling(
-        )._options.windowLoadingCoverHideAnimation[1].always =
-            await this.getMethod(this._handleStartUpEffects)
-        this.$domNodes.windowLoadingSpinner.spin(
-            this._options.windowLoadingSpinner)
-        this._bindScrollEvents().$domNodes.parent.show()
-        if ('window' in this.$domNodes) {
-            const onLoaded:Function = ():void => {
-                if (!this.windowLoaded) {
-                    this.windowLoaded = true
-                    this._removeLoadingCover()
-                }
-            }
-            $(():Promise<boolean> => this.constructor.timeout(
-                onLoaded, this._options
-                    .windowLoadedTimeoutAfterDocumentLoadedInMilliseconds))
-            this.on(this.$domNodes.window, 'load', onLoaded)
-        }
-        this._addNavigationEvents()._addMediaQueryChangeEvents(
-        )._triggerWindowResizeEvents()._handleAnalyticsInitialisation()
-        if (!this._options.language.logging)
-            this._options.language.logging = this._options.logging
-        if (this._options.activateLanguageSupport && !this.languageHandler)
-            $.Language(this._options.language).then((
-                languageHandler:Language
+        this.disableScrolling()
+        return new Promise((resolve:Function):void => {
+            this._options.windowLoadingCoverHideAnimation[1].always = (
             ):void => {
-                this.languageHandler = languageHandler
-            })
-        return this
+                this._handleStartUpEffects()
+                resolve(this)
+            }
+            this.$domNodes.windowLoadingSpinner.spin(
+                this._options.windowLoadingSpinner)
+            this._bindScrollEvents().$domNodes.parent.show()
+            if ('window' in this.$domNodes) {
+                const onLoaded:Function = ():void => {
+                    if (!this.windowLoaded) {
+                        this.windowLoaded = true
+                        this._removeLoadingCover()
+                    }
+                }
+                $(():Promise<boolean> => this.constructor.timeout(
+                    onLoaded, this._options
+                        .windowLoadedTimeoutAfterDocumentLoadedInMilliseconds))
+                this.on(this.$domNodes.window, 'load', onLoaded)
+            }
+            this._addNavigationEvents()._addMediaQueryChangeEvents(
+            )._triggerWindowResizeEvents()._handleAnalyticsInitialisation()
+            if (!this._options.language.logging)
+                this._options.language.logging = this._options.logging
+            if (this._options.activateLanguageSupport && !this.languageHandler)
+                $.Language(this._options.language).then((
+                    languageHandler:Language
+                ):void => {
+                    this.languageHandler = languageHandler
+                })
+        })
     }
     // endregion
     /**
@@ -622,12 +626,10 @@ export default class Website extends $.Tools.class {
      * @param elementNumber - The current start up step.
      * @returns Returns the current instance.
      */
-    async _handleStartUpEffects(elementNumber:number):Promise<Website> {
+    async _handleStartUpEffects(elementNumber:number = 1):Promise<Website> {
         // Stop and delete spinner instance.
         this.$domNodes.windowLoadingCover.hide()
         this.$domNodes.windowLoadingSpinner.spin(false)
-        if (!this.constructor.isNumeric(elementNumber))
-            elementNumber = 1
         if ($(this.constructor.stringFormat(
             '[class^="{1}"], [class*=" {1}"]',
             this.sliceDomNodeSelectorPrefix(
