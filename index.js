@@ -279,6 +279,7 @@ export default class Website extends $.Tools.class {
                 this._handleStartUpEffects()
                 resolve(this)
             }
+            console.log('A', this.$domNodes.windowLoadingSpinner)
             this.$domNodes.windowLoadingSpinner.spin(
                 this._options.windowLoadingSpinner)
             this._bindScrollEvents().$domNodes.parent.show()
