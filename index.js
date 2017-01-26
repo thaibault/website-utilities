@@ -363,9 +363,7 @@ export default class Website extends $.Tools.class {
      */
     triggerAnalyticsEvent(...parameter:Array<any>):Website {
         if (
-            this._options.trackingCode &&
-            this._options.trackingCode !== '__none__' &&
-            'location' in $.global &&
+            this._options.trackingCode && 'location' in $.global &&
             $.global.location.hostname !== 'localhost'
         ) {
             this.debug(
