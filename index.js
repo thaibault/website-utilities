@@ -279,9 +279,9 @@ export default class Website extends $.Tools.class {
                 this._handleStartUpEffects()
                 resolve(this)
             }
-            console.log('A', this.$domNodes.windowLoadingSpinner)
-            this.$domNodes.windowLoadingSpinner.spin(
-                this._options.windowLoadingSpinner)
+            if (this.$domNodes.windowLoadingSpinner.length)
+                this.$domNodes.windowLoadingSpinner.spin(
+                    this._options.windowLoadingSpinner)
             this._bindScrollEvents().$domNodes.parent.show()
             if ('window' in this.$domNodes) {
                 const onLoaded:Function = ():void => {
@@ -332,7 +332,7 @@ export default class Website extends $.Tools.class {
                 {top: `-=${distanceToTopInPixel}`, left: '+=0'},
                 this._options.scrollToTop.options)
         } else
-            $(window).scrollTo(
+            this.$domNodes.window.scrollTo(
                 {top: 0, left: 0}, this._options.scrollToTop.options)
         return this
     }
@@ -630,7 +630,8 @@ export default class Website extends $.Tools.class {
     async _handleStartUpEffects(elementNumber:number = 1):Promise<Website> {
         // Stop and delete spinner instance.
         this.$domNodes.windowLoadingCover.hide()
-        this.$domNodes.windowLoadingSpinner.spin(false)
+        if (this.$domNodes.windowLoadingSpinner.length)
+            this.$domNodes.windowLoadingSpinner.spin(false)
         if ($(this.constructor.stringFormat(
             '[class^="{1}"], [class*=" {1}"]',
             this.sliceDomNodeSelectorPrefix(
