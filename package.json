@@ -118,7 +118,8 @@
           "^clientnode/test$": "clientnode/test.compiled.js",
           "^jquery$": "jquery/dist/jquery.min.js",
           "^jQuery-scrollTo$": "jquery.scrollto/jquery.scrollTo.min.js",
-          "^jQuery-spin$": "spin.js/jquery.spin.js"
+          "^jQuery-spin$": "spin.js/jquery.spin.js",
+          "^spin\\.js$": "spin.js/spin.min.js"
         }
       },
       "skipParseRegularExpressions": {
