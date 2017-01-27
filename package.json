@@ -39,7 +39,7 @@
     "buildDLL": "webOptimizer buildDLL",
     "clear": "webOptimizer clear",
     "document": "webOptimizer document",
-    "export": "webOptimizer build '{development:{tool:false},module:{preprocessor:{javaScript:{configuration:{plugins:{__remove__:\"transform-runtime\"}}}}}}'",
+    "export": "webOptimizer build '{development:{tool:false},module:{preprocessor:{javaScript:{options:{plugins:{__remove__:\"transform-runtime\"}}}}}}'",
     "lint": "webOptimizer typeCheck && webOptimizer lint",
     "prepublish": "npm run build",
     "serve": "webOptimizer serve",
@@ -106,7 +106,7 @@
       },
       "preprocessor": {
         "javaScript": {
-          "configuration": {
+          "options": {
             "presets": {
               "__evaluate__": "(self.target === 'node' ? ['es2017-node7'] : [['modern-browsers', {loose: true}], 'es2017']).concat('stage-0')"
             }
