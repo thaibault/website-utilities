@@ -1,7 +1,7 @@
 // @flow
 // #!/usr/bin/env node
 // -*- coding: utf-8 -*-
-/** @module website-untilities */
+/** @module website-utilities */
 'use strict'
 /* !
     region header
@@ -22,9 +22,7 @@ import {$ as binding} from 'clientnode'
 import Language from 'internationalisation'
 import 'jQuery-scrollTo'
 import 'jQuery-spin'
-/* eslint-disable no-duplicate-imports */
 import type {$DomNode} from 'clientnode'
-/* eslint-enable no-duplicate-imports */
 export const $:any = binding
 // endregion
 // region types
@@ -237,19 +235,19 @@ export default class Website extends $.Tools.class {
                 'a=s.createElement(o),m=s.getElementsByTagName(o)[0];' +
                     'a.async=1;a.src=g;' +
                 'm.parentNode.insertBefore(a,m)})(' +
-                "window,document,'script','//www.google-analytics.com/" +
-                    "analytics.js','ga');" +
+                `window,document,'script','//www.google-analytics.com/` +
+                    `analytics.js','ga');` +
                 `window.ga('create', '{1}', '{2}');
                 window.ga('set', 'anonymizeIp', true);
                 window.ga('send', 'pageview', {page: '{3}'});
             `,
-            sectionSwitch: "window.ga('send', 'pageview', {page: '{1}'});",
+            sectionSwitch: `window.ga('send', 'pageview', {page: '{1}'});`,
             event: `window.ga(
                 'send', 'event', eventCategory, eventAction, eventLabel,
                 eventValue, eventData);
             `
         }
-    ):Website {
+    ):Promise<Website> {
         this._parentOptions = parentOptions
         this.startUpAnimationIsComplete = startUpAnimationIsComplete
         this.viewportIsOnTop = viewportIsOnTop
@@ -264,38 +262,50 @@ export default class Website extends $.Tools.class {
         else
             this.currenSectionName = 'home'
         // Wrap event methods with debounceing handler.
+        // IgnoreTypeCheck
         this._onViewportMovesToTop = this.constructor.debounce(this.getMethod(
             this._onViewportMovesToTop))
+        // IgnoreTypeCheck
         this._onViewportMovesAwayFromTop = this.constructor.debounce(
             this.getMethod(this._onViewportMovesAwayFromTop))
         this._options = this.constructor.extendObject(
             true, {}, this._parentOptions, this._options)
         super.initialize(options)
         this.$domNodes = this.grabDomNode(this._options.domNode)
-        this.disableScrolling(
-        )._options.windowLoadingCoverHideAnimation[1].always = this.getMethod(
-            this._handleStartUpEffects)
-        this.$domNodes.windowLoadingSpinner.spin(
-            this._options.windowLoadingSpinner)
-        this._bindScrollEvents().$domNodes.parent.show()
-        if ('window' in this.$domNodes) {
-            const onLoaded:Function = ():void => {
-                if (!this.windowLoaded) {
-                    this.windowLoaded = true
-                    this._removeLoadingCover()
-                }
+        this.disableScrolling()
+        return new Promise((resolve:Function):void => {
+            this._options.windowLoadingCoverHideAnimation[1].always = (
+            ):void => {
+                this._handleStartUpEffects()
+                resolve(this)
             }
-            $(():number => setTimeout(onLoaded, this._options
-                .windowLoadedTimeoutAfterDocumentLoadedInMilliseconds))
-            this.on(this.$domNodes.window, 'load', onLoaded)
-        }
-        this._addNavigationEvents()._addMediaQueryChangeEvents(
-        )._triggerWindowResizeEvents()._handleAnalyticsInitialisation()
-        if (!this._options.language.logging)
-            this._options.language.logging = this._options.logging
-        if (this._options.activateLanguageSupport && !this.languageHandler)
-            this.languageHandler = $.Language(this._options.language)
-        return this
+            if (this.$domNodes.windowLoadingSpinner.length)
+                this.$domNodes.windowLoadingSpinner.spin(
+                    this._options.windowLoadingSpinner)
+            this._bindScrollEvents().$domNodes.parent.show()
+            if ('window' in this.$domNodes) {
+                const onLoaded:Function = ():void => {
+                    if (!this.windowLoaded) {
+                        this.windowLoaded = true
+                        this._removeLoadingCover()
+                    }
+                }
+                $(():Promise<boolean> => this.constructor.timeout(
+                    onLoaded, this._options
+                        .windowLoadedTimeoutAfterDocumentLoadedInMilliseconds))
+                this.on(this.$domNodes.window, 'load', onLoaded)
+            }
+            this._addNavigationEvents()._addMediaQueryChangeEvents(
+            )._triggerWindowResizeEvents()._handleAnalyticsInitialisation()
+            if (!this._options.language.logging)
+                this._options.language.logging = this._options.logging
+            if (this._options.activateLanguageSupport && !this.languageHandler)
+                $.Language(this._options.language).then((
+                    languageHandler:Language
+                ):void => {
+                    this.languageHandler = languageHandler
+                })
+        })
     }
     // endregion
     /**
@@ -322,7 +332,7 @@ export default class Website extends $.Tools.class {
                 {top: `-=${distanceToTopInPixel}`, left: '+=0'},
                 this._options.scrollToTop.options)
         } else
-            $(window).scrollTo(
+            this.$domNodes.window.scrollTo(
                 {top: 0, left: 0}, this._options.scrollToTop.options)
         return this
     }
@@ -347,24 +357,24 @@ export default class Website extends $.Tools.class {
     /**
      * Triggers an analytics event. All given arguments are forwarded to
      * configured analytics event code to defined their environment variables.
+     * @param parameter - All parameter will be forwarded to the analytics
+     * code.
      * @returns Returns the current instance.
      */
-    triggerAnalyticsEvent():Website {
+    triggerAnalyticsEvent(...parameter:Array<any>):Website {
         if (
-            this._options.trackingCode &&
-            this._options.trackingCode !== '__none__' &&
-            'location' in $.global &&
+            this._options.trackingCode && 'location' in $.global &&
             $.global.location.hostname !== 'localhost'
         ) {
             this.debug(
-                "Run analytics code: \"#{this._analyticsCode.event}\" with " +
+                'Run analytics code: "#{this._analyticsCode.event}" with ' +
                 'arguments:')
-            this.debug(arguments)
+            this.debug(parameter)
             try {
                 (new Function(
                     'eventCategory', 'eventAction', 'eventLabel', 'eventData',
                     'eventValue', this._analyticsCode.event
-                )).apply(this, arguments)
+                )).call(this, ...parameter)
             } catch (exception) {
                 this.warn(
                     'Problem in google analytics event code snippet: {1}',
@@ -517,9 +527,11 @@ export default class Website extends $.Tools.class {
     }
     /**
      * This method triggers if the responsive design switches its mode.
+     * @param parameter - All arguments will be appended to the event handler
+     * callbacks.
      * @returns Returns the current instance.
      */
-    _triggerWindowResizeEvents():Website {
+    _triggerWindowResizeEvents(...parameter:Array<any>):Website {
         for (
             const classNameMapping:string of
             this._options.mediaQueryClassNameIndicator
@@ -531,20 +543,15 @@ export default class Website extends $.Tools.class {
                 this.$domNodes.mediaQueryIndicator.is(':hidden') &&
                 classNameMapping[0] !== this.currentMediaQueryMode
             ) {
-                this.fireEvent.apply(
-                    this, [
-                        'changeMediaQueryMode', false, this,
-                        this.currentMediaQueryMode, classNameMapping[0]
-                    ].concat(this.constructor.arrayMake(arguments)))
-                this.fireEvent.apply(
-                    this, [
-                        this.constructor.stringFormat(
-                            `changeTo{1}Mode`,
-                            this.constructor.stringCapitalize(
-                                classNameMapping[0])
-                        ), false, this, this.currentMediaQueryMode,
-                        classNameMapping[0]
-                    ].concat(this.constructor.arrayMake(arguments)))
+                this.fireEvent(
+                    'changeMediaQueryMode', false, this,
+                    this.currentMediaQueryMode, classNameMapping[0],
+                    ...parameter)
+                this.fireEvent(this.constructor.stringFormat(
+                    `changeTo{1}Mode`, this.constructor.stringCapitalize(
+                        classNameMapping[0])),
+                    false, this, this.currentMediaQueryMode,
+                    classNameMapping[0], ...parameter)
                 this.currentMediaQueryMode = classNameMapping[0]
             }
             this.$domNodes.mediaQueryIndicator.removeClass(
@@ -554,9 +561,11 @@ export default class Website extends $.Tools.class {
     }
     /**
      * This method triggers if view port arrives at special areas.
+     * @param parameter - All arguments will be appended to the event handler
+     * callbacks.
      * @returns Returns the current instance.
      */
-    _bindScrollEvents():Website {
+    _bindScrollEvents(...parameter:Array<any>):Website {
         // Stop automatic scrolling if the user wants to scroll manually.
         if (!('window' in this.$domNodes))
             return this
@@ -572,27 +581,21 @@ export default class Website extends $.Tools.class {
             if (this.$domNodes.window.scrollTop()) {
                 if (this.viewportIsOnTop) {
                     this.viewportIsOnTop = false
-                    this.fireEvent.apply(this, [
-                        'viewportMovesAwayFromTop', false, this
-                    ].concat(this.constructor.arrayMake(arguments)))
+                    this.fireEvent(
+                        'viewportMovesAwayFromTop', false, this, ...parameter)
                 }
             } else if (!this.viewportIsOnTop) {
                 this.viewportIsOnTop = true
-                this.fireEvent.apply(this, [
-                    'viewportMovesToTop', false, this
-                ].concat(this.constructor.arrayMake(arguments)))
+                this.fireEvent('viewportMovesToTop', false, this, ...parameter)
             }
         })
         if (this.$domNodes.window.scrollTop()) {
             this.viewportIsOnTop = false
-            this.fireEvent.apply(this, [
-                'viewportMovesAwayFromTop', false, this
-            ].concat(this.constructor.arrayMake(arguments)))
+            this.fireEvent(
+                'viewportMovesAwayFromTop', false, this, ...parameter)
         } else {
             this.viewportIsOnTop = true
-            this.fireEvent.apply(this, [
-                'viewportMovesToTop', false, this
-            ].concat(this.constructor.arrayMake(arguments)))
+            this.fireEvent('viewportMovesToTop', false, this, ...parameter)
         }
         return this
     }
@@ -600,23 +603,21 @@ export default class Website extends $.Tools.class {
      * This method triggers after window is loaded.
      * @returns Returns the current instance.
      */
-    _removeLoadingCover():Website {
-        setTimeout(():void => {
-            // Hide startup animation dom nodes to show them step by step.
-            $(this.constructor.stringFormat(
-                '[class^="{1}"], [class*=" {1}"]',
-                this.sliceDomNodeSelectorPrefix(
-                    this._options.domNode.startUpAnimationClassPrefix
-                ).substr(1)
-            )).css(this._options.startUpHide)
-            if (this.$domNodes.windowLoadingCover.length)
-                this.enableScrolling().$domNodes.windowLoadingCover.animate
-                    .apply(
-                        this.$domNodes.windowLoadingCover,
-                        this._options.windowLoadingCoverHideAnimation)
-            else
-                this._options.windowLoadingCoverHideAnimation[1].always()
-        }, this._options.additionalPageLoadingTimeInMilliseconds)
+    async _removeLoadingCover():Promise<Website> {
+        await this.constructor.timeout(
+            this._options.additionalPageLoadingTimeInMilliseconds)
+        // Hide startup animation dom nodes to show them step by step.
+        $(this.constructor.stringFormat(
+            '[class^="{1}"], [class*=" {1}"]',
+            this.sliceDomNodeSelectorPrefix(
+                this._options.domNode.startUpAnimationClassPrefix
+            ).substr(1)
+        )).css(this._options.startUpHide)
+        if (this.$domNodes.windowLoadingCover.length)
+            this.enableScrolling().$domNodes.windowLoadingCover.animate(
+                ...this._options.windowLoadingCoverHideAnimation)
+        else
+            this._options.windowLoadingCoverHideAnimation[1].always()
         return this
     }
     /**
@@ -624,38 +625,35 @@ export default class Website extends $.Tools.class {
      * @param elementNumber - The current start up step.
      * @returns Returns the current instance.
      */
-    _handleStartUpEffects(elementNumber:number):Website {
+    async _handleStartUpEffects(elementNumber:number = 1):Promise<Website> {
         // Stop and delete spinner instance.
         this.$domNodes.windowLoadingCover.hide()
-        this.$domNodes.windowLoadingSpinner.spin(false)
-        if (!this.constructor.isNumeric(elementNumber))
-            elementNumber = 1
+        if (this.$domNodes.windowLoadingSpinner.length)
+            this.$domNodes.windowLoadingSpinner.spin(false)
         if ($(this.constructor.stringFormat(
             '[class^="{1}"], [class*=" {1}"]',
             this.sliceDomNodeSelectorPrefix(
                 this._options.domNode.startUpAnimationClassPrefix
             ).substr(1)
-        )).length)
-            setTimeout(():void => {
-                let lastElementTriggered:boolean = false
-                this._options.startUpShowAnimation[1].always = ():void => {
-                    if (lastElementTriggered)
-                        this.fireEvent('startUpAnimationComplete')
-                }
-                const $domNode:$DomNode = $(
-                    this._options.domNode.startUpAnimationClassPrefix +
-                        elementNumber)
-                $domNode.animate.apply(
-                    $domNode, this._options.startUpShowAnimation)
-                if ($(
-                    this._options.domNode.startUpAnimationClassPrefix +
-                    (elementNumber + 1)
-                ).length)
-                    this._handleStartUpEffects(elementNumber + 1)
-                else
-                    lastElementTriggered = true
-            }, this._options.startUpAnimationElementDelayInMiliseconds)
-        else
+        )).length) {
+            await this.constructor.timeout(
+                this._options.startUpAnimationElementDelayInMiliseconds)
+            let lastElementTriggered:boolean = false
+            this._options.startUpShowAnimation[1].always = ():void => {
+                if (lastElementTriggered)
+                    this.fireEvent('startUpAnimationComplete')
+            }
+            const $domNode:$DomNode = $(
+                this._options.domNode.startUpAnimationClassPrefix +
+                    elementNumber)
+            $domNode.animate(...this._options.startUpShowAnimation)
+            if ($(this._options.domNode.startUpAnimationClassPrefix + (
+                elementNumber + 1
+            )).length)
+                await this._handleStartUpEffects(elementNumber + 1)
+            else
+                lastElementTriggered = true
+        } else
             this.fireEvent('startUpAnimationComplete')
         return this
     }
@@ -728,9 +726,8 @@ export default class Website extends $.Tools.class {
     // endregion
 }
 // endregion
-$.Website = function():any {
-    return $.Tools().controller(Website, arguments)
-}
+$.Website = (...parameter:Array<any>):any => $.Tools().controller(
+    Website, parameter)
 $.Website.class = Website
 // region vim modline
 // vim: set tabstop=4 shiftwidth=4 expandtab:
