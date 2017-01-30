@@ -25,7 +25,6 @@ import 'jQuery-spin'
 import type {$DomNode} from 'clientnode'
 export const $:any = binding
 // endregion
-console.log('test', $, $.Language)
 // region types
 export type AnalyticsCode = {
     initial:string;
