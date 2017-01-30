@@ -1,7 +1,7 @@
 // @flow
 // #!/usr/bin/env node
 // -*- coding: utf-8 -*-
-/** @module website-untilities */
+/** @module website-utilities */
 'use strict'
 /* !
     region header
@@ -25,6 +25,7 @@ import 'jQuery-spin'
 import type {$DomNode} from 'clientnode'
 export const $:any = binding
 // endregion
+console.log('test', $, $.Language)
 // region types
 export type AnalyticsCode = {
     initial:string;
