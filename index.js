@@ -1,7 +1,7 @@
 // @flow
 // #!/usr/bin/env node
 // -*- coding: utf-8 -*-
-/** @module website-untilities */
+/** @module website-utilities */
 'use strict'
 /* !
     region header

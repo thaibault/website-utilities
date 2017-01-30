@@ -39,7 +39,7 @@
     "buildDLL": "webOptimizer buildDLL",
     "clear": "webOptimizer clear",
     "document": "webOptimizer document",
-    "export": "webOptimizer build '{development:{tool:false},module:{preprocessor:{javaScript:{configuration:{plugins:{__remove__:\"transform-runtime\"}}}}}}'",
+    "export": "webOptimizer build '{development:{tool:false},module:{preprocessor:{javaScript:{options:{plugins:{__remove__:\"transform-runtime\"}}}}}}'",
     "lint": "webOptimizer typeCheck && webOptimizer lint",
     "prepublish": "npm run build",
     "serve": "webOptimizer serve",
@@ -84,7 +84,7 @@
       },
       "internal": {
         "vendor": {
-          "__evaluate__": "self.debug && 2 < self.givenCommandLineArguments.length && ['buildDLL', 'serve', 'testInBrowser', 'watchDLL'].includes(self.givenCommandLineArguments[2]) ? ['babel-polyfill', 'clientnode', 'jQuery-spin', 'jQuery-scrollTo', 'internationalisation'].concat(self.givenCommandLineArguments[2] === 'serve' ? [] : ['script!qunitjs', 'weboptimizer/browserAPI']) : []"
+          "__evaluate__": "self.debug && 2 < self.givenCommandLineArguments.length && ['buildDLL', 'serve', 'testInBrowser', 'watchDLL'].includes(self.givenCommandLineArguments[2]) ? ['babel-polyfill', 'clientnode'].concat(self.givenCommandLineArguments[2] === 'serve' ? [] : ['script!qunitjs', 'weboptimizer/browserAPI']).concat(self.givenCommandLineArguments[2] === 'testInBrowser' ? [] : ['jQuery-spin', 'jQuery-scrollTo', 'internationalisation']) : []"
         }
       }
     },
@@ -106,7 +106,7 @@
       },
       "preprocessor": {
         "javaScript": {
-          "configuration": {
+          "options": {
             "presets": {
               "__evaluate__": "(self.target === 'node' ? ['es2017-node7'] : [['modern-browsers', {loose: true}], 'es2017']).concat('stage-0')"
             }
@@ -116,7 +116,7 @@
       "replacements": {
         "normal": {
           "^clientnode/test$": "clientnode/test.compiled.js",
-          "^jquery$": "jquery/dist/jquery.min.js",
+          "^NOTE: Nested jquery requests wont be overwritten jquery$": "jquery/dist/jquery.min.js",
           "^jQuery-scrollTo$": "jquery.scrollto/jquery.scrollTo.min.js",
           "^jQuery-spin$": "spin.js/jquery.spin.js",
           "^spin\\.js$": "spin.js/spin.min.js"
