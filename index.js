@@ -547,9 +547,10 @@ export default class Website extends $.Tools.class {
                     'changeMediaQueryMode', false, this,
                     this.currentMediaQueryMode, classNameMapping[0],
                     ...parameter)
-                this.fireEvent(this.constructor.stringFormat(
-                    `changeTo{1}Mode`, this.constructor.stringCapitalize(
-                        classNameMapping[0])),
+                this.fireEvent(
+                    this.constructor.stringFormat(
+                        `changeTo{1}Mode`, this.constructor.stringCapitalize(
+                            classNameMapping[0])),
                     false, this, this.currentMediaQueryMode,
                     classNameMapping[0], ...parameter)
                 this.currentMediaQueryMode = classNameMapping[0]
