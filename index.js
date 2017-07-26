@@ -35,9 +35,25 @@ export type AnalyticsCode = {
 // region plugins/classes
 /**
  * This plugin holds all needed methods to extend a whole website.###
- * @extends clientNode:Tools
  * @property static:_name - Defines this class name to allow retrieving them
  * after name mangling.
+ *
+ * @property currentMediaQueryMode - Saves current media query status depending
+ * on available space in current browser window.
+ * @property currentSectionName - Saves current section hash name.
+ * @property languageHandler - Reference to the language switcher instance.
+ * @property startUpAnimationIsComplete - Indicates whether start up animations
+ * has finished.
+ * @property viewportIsOnTop - Indicates whether current viewport is on top.
+ *
+ * @property _analyticsCode - Saves analytics code snippets to use for
+ * referenced situations.
+ * @property _analyticsCode.initial {string} - Initial string to use for
+ * analyses on.
+ * @property _analyticsCode.sectionSwitch {string} - Code to execute on each
+ * section switch. Current page is available via "{1}" string formatting.
+ * @property _analyticsCod.event {string} - Code to execute on each fired
+ * event.
  * @property _options - Options extended by the options given to the
  * initializer method.
  * @property _parentOptions - Saves default options to extend by options given
@@ -109,35 +125,18 @@ export type AnalyticsCode = {
  * top animation.
  * @property _parentOptions.domain {string} - Sets current domain name. If
  * "auto" is given it will be determined automatically.
- * @property startUpAnimationIsComplete - Indicates whether start up animations
- * has finished.
- * @property currentSectionName - Saves current section hash name.
- * @property viewportIsOnTop - Indicates whether current viewport is on top.
- * @property currentMediaQueryMode - Saves current media query status depending
- * on available space in current browser window.
- * @property languageHandler - Reference to the language switcher instance.
- * @property _analyticsCode - Saves analytics code snippets to use for
- * referenced situations.
- * @property _analyticsCode.initial {string} - Initial string to use for
- * analyses on.
- * @property _analyticsCode.sectionSwitch {string} - Code to execute on each
- * section switch. Current page is available via "{1}" string formatting.
- * @property _analyticsCod.event {string} - Code to execute on each fired
- * event.
  */
 export default class Website extends $.Tools.class {
-    // region static properties
     static _name:string = 'Website'
-    // endregion
-    // region dynamic properties
-    _parentOptions:Object
-    startUpAnimationIsComplete:boolean
-    currentSectionName:string
-    viewportIsOnTop:boolean
+
     currentMediaQueryMode:string
+    currentSectionName:string
     languageHandler:?Language
+    startUpAnimationIsComplete:boolean
+    viewportIsOnTop:boolean
+
     _analyticsCode:AnalyticsCode;
-    // endregion
+    _parentOptions:Object
     // region public methods
     // / region special
     /**
