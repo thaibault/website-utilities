@@ -38,6 +38,7 @@ export type AnalyticsCode = {
  * @property static:_name - Defines this class name to allow retrieving them
  * after name mangling.
  *
+ * @property $domNodes - Saves a set of references to all needed dom nodes.
  * @property currentMediaQueryMode - Saves current media query status depending
  * on available space in current browser window.
  * @property currentSectionName - Saves current section hash name.
@@ -129,6 +130,7 @@ export type AnalyticsCode = {
 export default class Website extends $.Tools.class {
     static _name:string = 'Website'
 
+    $domNodes:$DomNode
     currentMediaQueryMode:string
     currentSectionName:string
     languageHandler:?Language
