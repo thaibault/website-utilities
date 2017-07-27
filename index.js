@@ -137,7 +137,7 @@ export default class Website extends $.Tools.class {
     startUpAnimationIsComplete:boolean
     viewportIsOnTop:boolean
 
-    _analyticsCode:AnalyticsCode;
+    _analyticsCode:AnalyticsCode
     _parentOptions:Object
     // region public methods
     // / region special
