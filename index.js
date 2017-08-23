@@ -264,11 +264,11 @@ export default class Website extends $.Tools.class {
             this.currenSectionName = 'home'
         // Wrap event methods with debounceing handler.
         // IgnoreTypeCheck
-        this._onViewportMovesToTop = this.constructor.debounce(this.getMethod(
-            this._onViewportMovesToTop))
+        this._onViewportMovesToTop = this.constructor.debounce(
+            this._onViewportMovesToTop.bind(this)))
         // IgnoreTypeCheck
         this._onViewportMovesAwayFromTop = this.constructor.debounce(
-            this.getMethod(this._onViewportMovesAwayFromTop))
+            this._onViewportMovesAwayFromTop.bind(this))
         this._options = this.constructor.extendObject(
             true, {}, this._parentOptions, this._options)
         super.initialize(options)
@@ -522,8 +522,9 @@ export default class Website extends $.Tools.class {
      * @returns Returns the current instance.
      */
     _addMediaQueryChangeEvents():Website {
-        this.on(this.$domNodes.window, 'resize', this.getMethod(
-            this._triggerWindowResizeEvents))
+        this.on(
+            this.$domNodes.window, 'resize',
+            this._triggerWindowResizeEvents.bind(this)))
         return this
     }
     /**
