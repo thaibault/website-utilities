@@ -265,7 +265,7 @@ export default class Website extends $.Tools.class {
         // Wrap event methods with debounceing handler.
         // IgnoreTypeCheck
         this._onViewportMovesToTop = this.constructor.debounce(
-            this._onViewportMovesToTop.bind(this)))
+            this._onViewportMovesToTop.bind(this))
         // IgnoreTypeCheck
         this._onViewportMovesAwayFromTop = this.constructor.debounce(
             this._onViewportMovesAwayFromTop.bind(this))
@@ -524,7 +524,7 @@ export default class Website extends $.Tools.class {
     _addMediaQueryChangeEvents():Website {
         this.on(
             this.$domNodes.window, 'resize',
-            this._triggerWindowResizeEvents.bind(this)))
+            this._triggerWindowResizeEvents.bind(this))
         return this
     }
     /**
