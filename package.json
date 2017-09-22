@@ -53,10 +53,10 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "clientnode": "^1.0.225",
+    "clientnode": "^1.0.240",
     "jquery": "^3.2.1",
     "jquery.scrollto": "^2.1.2",
-    "internationalisation": "^1.0.21",
+    "internationalisation": "^1.0.23",
     "spin.js": "^2.3.2"
   },
   "devDependencies": {
@@ -73,7 +73,7 @@
     "jsdoc": "^3.5.2",
     "source-map-support": "^0.4.15",
     "stylelint": "^7.13.0",
-    "weboptimizer": "^1.0.347",
+    "weboptimizer": "^1.0.368",
     "webpack": "^3.2.0",
     "webpack-dev-server": "^2.5.1"
   },
@@ -115,7 +115,7 @@
     },
     "module": {
       "optimizer": {
-        "babili": null
+        "babelMinify": null
       },
       "preprocessor": {
         "javaScript": {
