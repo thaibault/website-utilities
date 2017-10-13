@@ -108,7 +108,7 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/bold-ialic/open-sans-bold-italic';
+    font-path: 'font/open-sans/bold-italic/open-sans-bold-italic';
     /* stylelint-enable property-no-unknown */
     font-weight: bold;
     font-style: italic;
