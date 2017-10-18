@@ -1,52 +1,49 @@
 'use strict';
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require('jQuery-scrollTo'), require('jQuery-spin'), require("clientnode"), require("internationalisation"));
+		module.exports = factory(require("clientnode"), require("internationalisation"), require('jQuery-scrollTo'), require('jQuery-spin'));
 	else if(typeof define === 'function' && define.amd)
-		define("website-utilities", ['jQuery-scrollTo', 'jQuery-spin', "clientnode", "internationalisation"], factory);
+		define("website-utilities", ["clientnode", "internationalisation", 'jQuery-scrollTo', 'jQuery-spin'], factory);
 	else if(typeof exports === 'object')
-		exports["website-utilities"] = factory(require('jQuery-scrollTo'), require('jQuery-spin'), require("clientnode"), require("internationalisation"));
+		exports["website-utilities"] = factory(require("clientnode"), require("internationalisation"), require('jQuery-scrollTo'), require('jQuery-spin'));
 	else
-		root['websiteUtilities'] = factory(root["$.fn.scrollTo"], root["$.fn.spin"], root["clientnode"], root["internationalisation"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_5__) {
+		root['websiteUtilities'] = factory(root["clientnode"], root["internationalisation"], root["$.fn.scrollTo"], root["$.fn.spin"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_5__, __WEBPACK_EXTERNAL_MODULE_6__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
 /******/ 			l: false,
 /******/ 			exports: {}
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
-/******/ 	// identity function for calling harmony imports with the correct context
-/******/ 	__webpack_require__.i = function(value) { return value; };
-
+/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -57,7 +54,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			});
 /******/ 		}
 /******/ 	};
-
+/******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -66,19 +63,33 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		__webpack_require__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
-
+/******/
 /******/ 	// Object.prototype.hasOwnProperty.call
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(1);
+module.exports = __webpack_require__(2);
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -98,15 +109,32 @@ return /******/ (function(modules) { // webpackBootstrap
     See http://creativecommons.org/licenses/by/3.0/deed.de
     endregion
 */// region imports
-exports.__esModule=true;exports.$=undefined;var _clientnode=__webpack_require__(4);var _internationalisation=__webpack_require__(5);var _internationalisation2=_interopRequireDefault(_internationalisation);__webpack_require__(2);__webpack_require__(3);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj}}function _asyncToGenerator(fn){return function(){var gen=fn.apply(this,arguments);return new Promise(function(resolve,reject){function step(key,arg){try{var info=gen[key](arg);var value=info.value}catch(error){reject(error);return}if(info.done){resolve(value)}else{return Promise.resolve(value).then(function(value){step('next',value)},function(err){step('throw',err)})}}return step('next')})}}const $=exports.$=_clientnode.$;// endregion
+exports.__esModule=true;exports.$=undefined;var _clientnode=__webpack_require__(3);var _internationalisation=__webpack_require__(4);var _internationalisation2=_interopRequireDefault(_internationalisation);__webpack_require__(5);__webpack_require__(6);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj}}function _asyncToGenerator(fn){return function(){var gen=fn.apply(this,arguments);return new Promise(function(resolve,reject){function step(key,arg){try{var info=gen[key](arg);var value=info.value}catch(error){reject(error);return}if(info.done){resolve(value)}else{return Promise.resolve(value).then(function(value){step('next',value)},function(err){step('throw',err)})}}return step('next')})}}const $=exports.$=_clientnode.$;// endregion
 // region types
 // endregion
 // region plugins/classes
 /**
  * This plugin holds all needed methods to extend a whole website.###
- * @extends clientNode:Tools
  * @property static:_name - Defines this class name to allow retrieving them
  * after name mangling.
+ *
+ * @property $domNodes - Saves a set of references to all needed dom nodes.
+ * @property currentMediaQueryMode - Saves current media query status depending
+ * on available space in current browser window.
+ * @property currentSectionName - Saves current section hash name.
+ * @property languageHandler - Reference to the language switcher instance.
+ * @property startUpAnimationIsComplete - Indicates whether start up animations
+ * has finished.
+ * @property viewportIsOnTop - Indicates whether current viewport is on top.
+ *
+ * @property _analyticsCode - Saves analytics code snippets to use for
+ * referenced situations.
+ * @property _analyticsCode.initial {string} - Initial string to use for
+ * analyses on.
+ * @property _analyticsCode.sectionSwitch {string} - Code to execute on each
+ * section switch. Current page is available via "{1}" string formatting.
+ * @property _analyticsCod.event {string} - Code to execute on each fired
+ * event.
  * @property _options - Options extended by the options given to the
  * initializer method.
  * @property _parentOptions - Saves default options to extend by options given
@@ -178,23 +206,7 @@ exports.__esModule=true;exports.$=undefined;var _clientnode=__webpack_require__(
  * top animation.
  * @property _parentOptions.domain {string} - Sets current domain name. If
  * "auto" is given it will be determined automatically.
- * @property startUpAnimationIsComplete - Indicates whether start up animations
- * has finished.
- * @property currentSectionName - Saves current section hash name.
- * @property viewportIsOnTop - Indicates whether current viewport is on top.
- * @property currentMediaQueryMode - Saves current media query status depending
- * on available space in current browser window.
- * @property languageHandler - Reference to the language switcher instance.
- * @property _analyticsCode - Saves analytics code snippets to use for
- * referenced situations.
- * @property _analyticsCode.initial {string} - Initial string to use for
- * analyses on.
- * @property _analyticsCode.sectionSwitch {string} - Code to execute on each
- * section switch. Current page is available via "{1}" string formatting.
- * @property _analyticsCod.event {string} - Code to execute on each fired
- * event.
- */class Website extends $.Tools.class{// endregion
-// region public methods
+ */class Website extends $.Tools.class{// region public methods
 // / region special
 /**
      * Initializes the interactive web application.
@@ -209,9 +221,7 @@ exports.__esModule=true;exports.$=undefined;var _clientnode=__webpack_require__(
      * @param languageHandler - Language handler instance to use.
      * @param analyticsCode - Analytic code snippet to use.
      * @returns Returns the current instance.
-     */// endregion
-// region dynamic properties
-initialize(options={},parentOptions={activateLanguageSupport:true,additionalPageLoadingTimeInMilliseconds:0,domain:'auto',domNode:{mediaQueryIndicator:'<div class="media-query-indicator">',top:'header',scrollToTopButton:'a[href="#top"]',startUpAnimationClassPrefix:'.website-start-up-animation-number-',windowLoadingCover:'.website-window-loading-cover',windowLoadingSpinner:'.website-window-loading-cover > div'},domNodeSelectorPrefix:'body.{1}',knownScrollEventNames:'scroll mousedown wheel DOMMouseScroll mousewheel keyup '+'touchmove',language:{},mediaQueryClassNameIndicator:[['extraSmall','xs'],['small','sm'],['medium','md'],['large','lg']],onViewportMovesToTop:Website.noop,onViewportMovesAwayFromTop:Website.noop,onChangeToLargeMode:Website.noop,onChangeToMediumMode:Website.noop,onChangeToSmallMode:Website.noop,onChangeToExtraSmallMode:Website.noop,onChangeMediaQueryMode:Website.noop,onSwitchSection:Website.noop,onStartUpAnimationComplete:Website.noop,startUpAnimationElementDelayInMiliseconds:100,startUpShowAnimation:[{opacity:1},{}],startUpHide:{opacity:0},switchToManualScrollingIndicator:function switchToManualScrollingIndicator(event){return event.which>0||event.type==='mousedown'||event.type==='mousewheel'||event.type==='touchmove'},scrollToTop:{inLinearTime:false,options:{duration:'normal'},button:{slideDistanceInPixel:30,showAnimation:{duration:'normal'},hideAnimation:{duration:'normal'}}},trackingCode:null,windowLoadingCoverHideAnimation:[{opacity:0},{}],windowLoadingSpinner:{lines:9,// The number of lines to draw
+     */initialize(options={},parentOptions={activateLanguageSupport:true,additionalPageLoadingTimeInMilliseconds:0,domain:'auto',domNode:{mediaQueryIndicator:'<div class="media-query-indicator">',top:'header',scrollToTopButton:'a[href="#top"]',startUpAnimationClassPrefix:'.website-start-up-animation-number-',windowLoadingCover:'.website-window-loading-cover',windowLoadingSpinner:'.website-window-loading-cover > div'},domNodeSelectorPrefix:'body.{1}',knownScrollEventNames:'scroll mousedown wheel DOMMouseScroll mousewheel keyup '+'touchmove',language:{},mediaQueryClassNameIndicator:[['extraSmall','xs'],['small','sm'],['medium','md'],['large','lg']],onViewportMovesToTop:Website.noop,onViewportMovesAwayFromTop:Website.noop,onChangeToLargeMode:Website.noop,onChangeToMediumMode:Website.noop,onChangeToSmallMode:Website.noop,onChangeToExtraSmallMode:Website.noop,onChangeMediaQueryMode:Website.noop,onSwitchSection:Website.noop,onStartUpAnimationComplete:Website.noop,startUpAnimationElementDelayInMiliseconds:100,startUpShowAnimation:[{opacity:1},{}],startUpHide:{opacity:0},switchToManualScrollingIndicator:function switchToManualScrollingIndicator(event){return event.which>0||event.type==='mousedown'||event.type==='mousewheel'||event.type==='touchmove'},scrollToTop:{inLinearTime:false,options:{duration:'normal'},button:{slideDistanceInPixel:30,showAnimation:{duration:'normal'},hideAnimation:{duration:'normal'}}},trackingCode:null,windowLoadingCoverHideAnimation:[{opacity:0},{}],windowLoadingSpinner:{lines:9,// The number of lines to draw
 length:23,// The length of each line
 width:11,// The line thickness
 radius:40,// The radius of the inner circle
@@ -235,14 +245,13 @@ left:'auto'// Left position relative to parent in px
                 eventValue, eventData);
             `}){var _this=this;this._parentOptions=parentOptions;this.startUpAnimationIsComplete=startUpAnimationIsComplete;this.viewportIsOnTop=viewportIsOnTop;this.currentMediaQueryMode=currentMediaQueryMode;this.languageHandler=languageHandler;this._analyticsCode=analyticsCode;if(currentSectionName)this.currentSectionName=currentSectionName;else if('location'in $.global&&$.global.location.hash)this.currentSectionName=$.global.location.hash.substring('#'.length);else this.currenSectionName='home';// Wrap event methods with debounceing handler.
 // IgnoreTypeCheck
-this._onViewportMovesToTop=this.constructor.debounce(this.getMethod(this._onViewportMovesToTop));// IgnoreTypeCheck
-this._onViewportMovesAwayFromTop=this.constructor.debounce(this.getMethod(this._onViewportMovesAwayFromTop));this._options=this.constructor.extendObject(true,{},this._parentOptions,this._options);super.initialize(options);this.$domNodes=this.grabDomNode(this._options.domNode);this.disableScrolling();return new Promise(function(resolve){_this._options.windowLoadingCoverHideAnimation[1].always=function(){_this._handleStartUpEffects();resolve(_this)};if(_this.$domNodes.windowLoadingSpinner.length)_this.$domNodes.windowLoadingSpinner.spin(_this._options.windowLoadingSpinner);_this._bindScrollEvents().$domNodes.parent.show();if('window'in _this.$domNodes){const onLoaded=function onLoaded(){if(!_this.windowLoaded){_this.windowLoaded=true;_this._removeLoadingCover()}};$(function(){return _this.constructor.timeout(onLoaded,_this._options.windowLoadedTimeoutAfterDocumentLoadedInMilliseconds)});_this.on(_this.$domNodes.window,'load',onLoaded)}_this._addNavigationEvents()._addMediaQueryChangeEvents()._triggerWindowResizeEvents()._handleAnalyticsInitialisation();if(!_this._options.language.logging)_this._options.language.logging=_this._options.logging;if(_this._options.activateLanguageSupport&&!_this.languageHandler)$.Language(_this._options.language).then(function(languageHandler){_this.languageHandler=languageHandler})})}// endregion
+this._onViewportMovesToTop=this.constructor.debounce(this._onViewportMovesToTop.bind(this));// IgnoreTypeCheck
+this._onViewportMovesAwayFromTop=this.constructor.debounce(this._onViewportMovesAwayFromTop.bind(this));this._options=this.constructor.extendObject(true,{},this._parentOptions,this._options);super.initialize(options);this.$domNodes=this.grabDomNode(this._options.domNode);this.disableScrolling();return new Promise(function(resolve){_this._options.windowLoadingCoverHideAnimation[1].always=function(){_this._handleStartUpEffects();resolve(_this)};if(_this.$domNodes.windowLoadingSpinner.length)_this.$domNodes.windowLoadingSpinner.spin(_this._options.windowLoadingSpinner);_this._bindScrollEvents().$domNodes.parent.show();if('window'in _this.$domNodes){const onLoaded=function onLoaded(){if(!_this.windowLoaded){_this.windowLoaded=true;_this._removeLoadingCover()}};$(function(){return _this.constructor.timeout(onLoaded,_this._options.windowLoadedTimeoutAfterDocumentLoadedInMilliseconds)});_this.on(_this.$domNodes.window,'load',onLoaded)}_this._addNavigationEvents()._addMediaQueryChangeEvents()._triggerWindowResizeEvents()._handleAnalyticsInitialisation();if(!_this._options.language.logging)_this._options.language.logging=_this._options.logging;if(_this._options.activateLanguageSupport&&!_this.languageHandler)$.Language(_this._options.language).then(function(languageHandler){_this.languageHandler=languageHandler})})}// endregion
 /**
      * Scrolls to top of page. Runs the given function after viewport arrives.
      * @param onAfter - Callback to call after effect has finished.
      * @returns Returns the current instance.
-     */// region static properties
-scrollToTop(onAfter=Website.noop){if(!('document'in $.global))return this;this._options.scrollToTop.options.onAfter=onAfter;/*
+     */scrollToTop(onAfter=Website.noop){if(!('document'in $.global))return this;this._options.scrollToTop.options.onAfter=onAfter;/*
             NOTE: This is a workaround to avoid a bug in "jQuery.scrollTo()"
             expecting this property exists.
         */Object.defineProperty($.global.document,'body',{value:$('body')[0]});if(this._options.scrollToTop.inLinearTime){const distanceToTopInPixel=this.$domNodes.window.scrollTop();// Scroll four times faster as we have distance to top.
@@ -305,7 +314,7 @@ this._options.scrollToTop.options.duration=distanceToTopInPixel/4;this.$domNodes
 /**
      * This method adds triggers for responsive design switches.
      * @returns Returns the current instance.
-     */_addMediaQueryChangeEvents(){this.on(this.$domNodes.window,'resize',this.getMethod(this._triggerWindowResizeEvents));return this}/**
+     */_addMediaQueryChangeEvents(){this.on(this.$domNodes.window,'resize',this._triggerWindowResizeEvents.bind(this));return this}/**
      * This method triggers if the responsive design switches its mode.
      * @param parameter - All arguments will be appended to the event handler
      * callbacks.
@@ -343,18 +352,6 @@ Website._name='Website';$.Website=function(...parameter){return $.Tools().contro
 // endregion
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
-
-/***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
@@ -374,11 +371,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-__webpack_require__(1);
-module.exports = __webpack_require__(0);
-
+module.exports = __WEBPACK_EXTERNAL_MODULE_6__;
 
 /***/ })
 /******/ ]);
