@@ -38,7 +38,7 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/Light/OpenSans-Light';
+    font-path: 'font/open-sans/light/open-sans-light';
     /* stylelint-enable property-no-unknown */
     font-weight: 300;
     font-style: normal;
@@ -48,7 +48,7 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/LightItalic/OpenSans-LightItalic';
+    font-path: 'font/open-sans/light-italic/open-sans-light-italic';
     /* stylelint-enable property-no-unknown */
     font-weight: 300;
     font-style: italic;
@@ -58,7 +58,7 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/Regular/OpenSans-Regular';
+    font-path: 'font/open-sans/regular/open-sans-regular';
     /* stylelint-enable property-no-unknown */
     font-weight: normal;
     font-style: normal;
@@ -68,27 +68,27 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/Italic/OpenSans-Italic';
+    font-path: 'font/open-sans/italic/open-sans-italic';
     /* stylelint-enable property-no-unknown */
     font-weight: normal;
     font-style: italic;
 }
 /*** endregion */
-/*** region semibold */
+/*** region semi-bold */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/Semibold/OpenSans-Semibold';
+    font-path: 'font/open-sans/semi-bold/open-sans-semi-bold';
     /* stylelint-enable property-no-unknown */
     font-weight: 600;
     font-style: normal;
 }
 /*** endregion */
-/*** region semibold italic */
+/*** region semi-bold italic */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/SemiboldItalic/OpenSans-SemiboldItalic';
+    font-path: 'font/open-sans/semi-bold-italic/open-sans-semi-bold-italic';
     /* stylelint-enable property-no-unknown */
     font-weight: 600;
     font-style: italic;
@@ -98,7 +98,7 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/Bold/OpenSans-Bold';
+    font-path: 'font/open-sans/bold/open-sans-bold';
     /* stylelint-enable property-no-unknown */
     font-weight: bold;
     font-style: normal;
@@ -108,7 +108,7 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/BoldItalic/OpenSans-BoldItalic';
+    font-path: 'font/open-sans/bold-italic/open-sans-bold-italic';
     /* stylelint-enable property-no-unknown */
     font-weight: bold;
     font-style: italic;
@@ -118,7 +118,7 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/ExtraBold/OpenSans-ExtraBold';
+    font-path: 'font/open-sans/extra-bold/open-sans-extra-bold';
     /* stylelint-enable property-no-unknown */
     font-weight: 800;
     font-style: normal;
@@ -128,7 +128,7 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/ExtraBoldItalic/OpenSans-ExtraBoldItalic';
+    font-path: 'font/open-sans/extra-bold-italic/open-sans-extra-bold-italic';
     /* stylelint-enable property-no-unknown */
     font-weight: 800;
     font-style: italic;
@@ -140,7 +140,7 @@ endregion */
 @font-face {
     font-family: open-sans-condensed;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans-condensed/CondensedBold/OpenSans-CondBold-webfont';
+    font-path: 'font/open-sans-condensed/condensed-bold/open-sans-condensed-bold';
     /* stylelint-enable property-no-unknown */
     font-weight: bold;
     font-style: normal;
@@ -150,7 +150,7 @@ endregion */
 @font-face {
     font-family: open-sans-condensed;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans-condensed/CondensedLight/OpenSans-CondLight-webfont';
+    font-path: 'font/open-sans-condensed/condensed-light/open-sans-condensed-light';
     /* stylelint-enable property-no-unknown */
     font-weight: 300;
     font-style: normal;
@@ -160,7 +160,7 @@ endregion */
 @font-face {
     font-family: open-sans-condensed;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans-condensed/CondensedLightItalic/OpenSans-CondLightItalic-webfont';
+    font-path: 'font/open-sans-condensed/condensed-light-italic/open-sans-condensed-light-italic';
     /* stylelint-enable property-no-unknown */
     font-weight: 300;
     font-style: italic;
