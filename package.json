@@ -53,8 +53,8 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "clientnode": "^1.0.252",
-    "internationalisation": "^1.0.28",
+    "clientnode": "^1.0.253",
+    "internationalisation": "^1.0.29",
     "jquery": "^3.2.1",
     "jquery.scrollto": "^2.1.2",
     "spin.js": "^2.3.2"
