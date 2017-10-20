@@ -59,6 +59,9 @@
     "jquery.scrollto": "^2.1.2",
     "spin.js": "^2.3.2"
   },
+  "peerDependencies": {
+    "babel-runtime": "*"
+  },
   "devDependencies": {
     "babel-eslint": "^8.0.1",
     "babel-plugin-transform-proto-to-assign": "^6.23.0",
@@ -121,7 +124,7 @@
         "javaScript": {
           "options": {
             "presets": {
-              "__evaluate__": "[['env', {targets: self.targetTechnology === 'node' ? {node: 'current'} : {browsers: 'last 2 versions'}}]].concat('stage-0')"
+              "__evaluate__": "[['env', {targets: self.targetTechnology === 'node' ? {node: 'current'} : {browsers: 'last 2 versions', node: 'current'}}]].concat('stage-0')"
             }
           }
         }
