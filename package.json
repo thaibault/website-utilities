@@ -53,8 +53,8 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "clientnode": "^1.0.253",
-    "internationalisation": "^1.0.29",
+    "clientnode": "^1.0.271",
+    "internationalisation": "^1.0.30",
     "jquery": "^3.2.1",
     "jquery.scrollto": "^2.1.2",
     "spin.js": "^2.3.2"
@@ -76,7 +76,7 @@
     "jsdoc": "^3.5.2",
     "source-map-support": "^0.5.0",
     "stylelint": "^8.2.0",
-    "weboptimizer": "^1.0.382",
+    "weboptimizer": "^1.0.396",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.2"
   },
