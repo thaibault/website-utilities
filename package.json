@@ -53,8 +53,8 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "clientnode": "^1.0.271",
-    "internationalisation": "^1.0.30",
+    "clientnode": "^1.0.276",
+    "internationalisation": "^1.0.32",
     "jquery": "^3.2.1",
     "jquery.scrollto": "^2.1.2",
     "spin.js": "^2.3.2"
@@ -72,11 +72,11 @@
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-flowtype": "^2.36.0",
     "eslint-plugin-jsdoc": "^3.1.1",
-    "flow-bin": "^0.57.3",
+    "flow-bin": "^0.58.0",
     "jsdoc": "^3.5.2",
     "source-map-support": "^0.5.0",
     "stylelint": "^8.2.0",
-    "weboptimizer": "^1.0.396",
+    "weboptimizer": "^1.0.405",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.2"
   },
