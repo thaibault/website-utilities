@@ -100,7 +100,7 @@
       },
       "internal": {
         "vendor": {
-          "__evaluate__": "self.debug && 2 < self.givenCommandLineArguments.length && ['build:dll', 'serve', 'test:browser', 'watch:dll'].includes(self.givenCommandLineArguments[2]) ? ['babel-polyfill', 'clientnode'].concat(self.givenCommandLineArguments[2] === 'serve' ? [] : ['script!qunitjs', 'weboptimizer/browserAPI']).concat(self.givenCommandLineArguments[2] === 'test:browser' ? [] : ['jQuery-spin', 'jQuery-scrollTo', 'internationalisation']) : []"
+          "__evaluate__": "self.debug && 2 < self.givenCommandLineArguments.length && ['build:dll', 'serve', 'test:browser', 'watch:dll'].includes(self.givenCommandLineArguments[2]) ? ['babel-polyfill', 'clientnode'].concat(self.givenCommandLineArguments[2] === 'serve' ? [] : ['script!qunit', 'weboptimizer/browserAPI']).concat(self.givenCommandLineArguments[2] === 'test:browser' ? [] : ['jQuery-spin', 'jQuery-scrollTo', 'internationalisation']) : []"
         }
       }
     },
