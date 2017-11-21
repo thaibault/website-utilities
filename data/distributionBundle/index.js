@@ -127,7 +127,7 @@ export type AnalyticsCode = {
  * @property _parentOptions.domain {string} - Sets current domain name. If
  * "auto" is given it will be determined automatically.
  */
-export default class Website extends $.Tools.class {
+export class Website extends $.Tools.class {
     static _name:string = 'Website'
 
     $domNodes:$DomNode
@@ -728,6 +728,7 @@ export default class Website extends $.Tools.class {
     // / endregion
     // endregion
 }
+export default Website
 // endregion
 $.Website = (...parameter:Array<any>):any => $.Tools().controller(
     Website, parameter)
