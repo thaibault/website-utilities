@@ -53,8 +53,8 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "clientnode": "^1.0.281",
-    "internationalisation": "^1.0.33",
+    "clientnode": "^1.0.282",
+    "internationalisation": "^1.0.34",
     "jquery": "^3.2.1",
     "jquery.scrollto": "^2.1.2",
     "spin.js": "^2.3.2"
@@ -72,12 +72,12 @@
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-flowtype": "^2.36.0",
     "eslint-plugin-jsdoc": "^3.2.0",
-    "flow-bin": "^0.58.0",
+    "flow-bin": "^0.59.0",
     "jsdoc": "^3.5.2",
     "qunit": "^2.4.1",
     "source-map-support": "^0.5.0",
     "stylelint": "^8.2.0",
-    "weboptimizer": "^1.0.413",
+    "weboptimizer": "^1.0.417",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.2"
   },
@@ -118,9 +118,6 @@
       }
     },
     "module": {
-      "optimizer": {
-        "babelMinify": null
-      },
       "preprocessor": {
         "javaScript": {
           "options": {
