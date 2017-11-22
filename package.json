@@ -77,7 +77,7 @@
     "qunit": "^2.4.1",
     "source-map-support": "^0.5.0",
     "stylelint": "^8.2.0",
-    "weboptimizer": "^1.0.420",
+    "weboptimizer": "^1.0.421",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.2"
   },
@@ -85,7 +85,6 @@
     "injection": {
       "external": {
         "aliases": {
-          "jquery": "jQuery",
           "jQuery-spin": "$.fn.spin",
           "jQuery-scrollTo": "$.fn.scrollTo"
         },
