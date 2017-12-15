@@ -53,8 +53,8 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "clientnode": "^1.0.290",
-    "internationalisation": "^1.0.38",
+    "clientnode": "^1.0.307",
+    "internationalisation": "^1.0.41",
     "jquery": "^3.2.1",
     "jquery.scrollto": "^2.1.2",
     "spin.js": "^2.3.2"
@@ -63,23 +63,23 @@
     "babel-runtime": "*"
   },
   "devDependencies": {
-    "babel-eslint": "^8.0.2",
+    "babel-eslint": "^8.0.3",
     "babel-plugin-transform-proto-to-assign": "^6.23.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "documentation-website": "^1.0.78",
-    "eslint": "^4.11.0",
+    "eslint": "^4.12.1",
     "eslint-config-google": "^0.9.1",
-    "eslint-plugin-flowtype": "^2.36.0",
+    "eslint-plugin-flowtype": "^2.40.1",
     "eslint-plugin-jsdoc": "^3.2.0",
-    "flow-bin": "^0.59.0",
+    "flow-bin": "^0.61.0",
     "jsdoc": "^3.5.2",
     "qunit": "^2.4.1",
     "source-map-support": "^0.5.0",
-    "stylelint": "^8.2.0",
+    "stylelint": "^8.3.1",
     "weboptimizer": "^1.0.422",
-    "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.2"
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.5"
   },
   "webOptimizer": {
     "injection": {
