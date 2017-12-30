@@ -22,7 +22,7 @@ import {$ as binding} from 'clientnode'
 import type {$DomNode} from 'clientnode'
 import Language from 'internationalisation'
 import 'jQuery-scrollTo'
-import 'spin.js'
+import {Spinner} from 'spin.js'
 export const $:any = binding
 // endregion
 // region types
@@ -46,6 +46,7 @@ export type AnalyticsCode = {
  * @property startUpAnimationIsComplete - Indicates whether start up animations
  * has finished.
  * @property viewportIsOnTop - Indicates whether current viewport is on top.
+ * @property windowLoadingSpinner - The window loading spinner instance.
  *
  * @property _analyticsCode - Saves analytics code snippets to use for
  * referenced situations.
@@ -136,6 +137,7 @@ export class Website extends $.Tools.class {
     languageHandler:?Language
     startUpAnimationIsComplete:boolean
     viewportIsOnTop:boolean
+    windowLoadingSpinner:?Spinner
 
     _analyticsCode:AnalyticsCode
     _parentOptions:Object
@@ -209,17 +211,22 @@ export class Website extends $.Tools.class {
                 length: 23, // The length of each line
                 width: 11, // The line thickness
                 radius: 40, // The radius of the inner circle
+                scale: 1, // Scales overall size of the spinner
                 corners: 1, // Corner roundness (0..1)
-                rotate: 75, // The rotation offset
+                rotate: 0, // The rotation offset
                 color: '#000', // #rgb or #rrggbb
+                fadeColor: 'transparent', // CSS color or array of colors
+                opacity: 1, // Opacity of the lines
                 speed: 1.1, // Rounds per second
+                direction: 1, // 1: clockwise, -1: counterclockwise
                 trail: 58, // Afterglow percentage
                 shadow: false, // Whether to render a shadow
                 hwaccel: false, // Whether to use hardware acceleration
                 className: 'spinner', // CSS class to assign to the spinner
                 zIndex: 2e9, // The z-index (defaults to 2000000000)
                 top: 'auto', // Top position relative to parent in px
-                left: 'auto' // Left position relative to parent in px
+                left: 'auto', // Left position relative to parent in px
+                position: 'absolute' // Element positioning
             },
             windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 2000
         }, startUpAnimationIsComplete:boolean = false,
@@ -280,9 +287,12 @@ export class Website extends $.Tools.class {
                 this._handleStartUpEffects()
                 resolve(this)
             }
-            if (this.$domNodes.windowLoadingSpinner.length)
-                this.$domNodes.windowLoadingSpinner.spin(
+            if (this.$domNodes.windowLoadingSpinner.length) {
+                this.windowLoadingSpinner = new Spinner(
                     this._options.windowLoadingSpinner)
+                this.windowLoadingSpinner.spin(
+                    this.$domNodes.windowLoadingSpinner[0])
+            }
             this._bindScrollEvents().$domNodes.parent.show()
             if ('window' in this.$domNodes) {
                 const onLoaded:Function = ():void => {
@@ -632,7 +642,7 @@ export class Website extends $.Tools.class {
         // Stop and delete spinner instance.
         this.$domNodes.windowLoadingCover.hide()
         if (this.$domNodes.windowLoadingSpinner.length)
-            this.$domNodes.windowLoadingSpinner.spin(false)
+            this.windowLoadingSpinner.stop()
         if ($(this.constructor.stringFormat(
             '[class^="{1}"], [class*=" {1}"]',
             this.sliceDomNodeSelectorPrefix(
