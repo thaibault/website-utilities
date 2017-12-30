@@ -216,7 +216,7 @@ export class Website extends $.Tools.class {
                 rotate: 0, // The rotation offset
                 color: '#000', // #rgb or #rrggbb
                 fadeColor: 'transparent', // CSS color or array of colors
-                opacity: 1, // Opacity of the lines
+                opacity: .2, // Opacity of the lines
                 speed: 1.1, // Rounds per second
                 direction: 1, // 1: clockwise, -1: counterclockwise
                 trail: 58, // Afterglow percentage
