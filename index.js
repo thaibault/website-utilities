@@ -19,10 +19,10 @@
 */
 // region imports
 import {$ as binding} from 'clientnode'
+import type {$DomNode} from 'clientnode'
 import Language from 'internationalisation'
 import 'jQuery-scrollTo'
-import 'jQuery-spin'
-import type {$DomNode} from 'clientnode'
+import 'spin.js'
 export const $:any = binding
 // endregion
 // region types
