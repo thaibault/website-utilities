@@ -128,7 +128,7 @@ module.exports = __webpack_require__(2);
     See http://creativecommons.org/licenses/by/3.0/deed.de
     endregion
 */// region imports
-exports.__esModule=true;exports.Website=exports.$=undefined;var _asyncToGenerator2=__webpack_require__(3);var _asyncToGenerator3=_interopRequireDefault(_asyncToGenerator2);var _promise=__webpack_require__(4);var _promise2=_interopRequireDefault(_promise);var _clientnode=__webpack_require__(5);var _internationalisation=__webpack_require__(6);var _internationalisation2=_interopRequireDefault(_internationalisation);__webpack_require__(7);__webpack_require__(8);function _interopRequireDefault(obj){return obj&amp;&amp;obj.__esModule?obj:{default:obj}}const $=exports.$=_clientnode.$;// endregion
+exports.__esModule=true;exports.Website=exports.$=undefined;var _asyncToGenerator2=__webpack_require__(3);var _asyncToGenerator3=_interopRequireDefault(_asyncToGenerator2);var _promise=__webpack_require__(4);var _promise2=_interopRequireDefault(_promise);var _clientnode=__webpack_require__(5);var _internationalisation=__webpack_require__(6);var _internationalisation2=_interopRequireDefault(_internationalisation);__webpack_require__(7);var _spin=__webpack_require__(8);function _interopRequireDefault(obj){return obj&amp;&amp;obj.__esModule?obj:{default:obj}}const $=exports.$=_clientnode.$;// endregion
 // region types
 // endregion
 // region plugins/classes
@@ -145,6 +145,7 @@ exports.__esModule=true;exports.Website=exports.$=undefined;var _asyncToGenerato
  * @property startUpAnimationIsComplete - Indicates whether start up animations
  * has finished.
  * @property viewportIsOnTop - Indicates whether current viewport is on top.
+ * @property windowLoadingSpinner - The window loading spinner instance.
  *
  * @property _analyticsCode - Saves analytics code snippets to use for
  * referenced situations.
@@ -244,17 +245,22 @@ exports.__esModule=true;exports.Website=exports.$=undefined;var _asyncToGenerato
 length:23,// The length of each line
 width:11,// The line thickness
 radius:40,// The radius of the inner circle
+scale:1,// Scales overall size of the spinner
 corners:1,// Corner roundness (0..1)
-rotate:75,// The rotation offset
+rotate:0,// The rotation offset
 color:'#000',// #rgb or #rrggbb
+fadeColor:'transparent',// CSS color or array of colors
+opacity:.2,// Opacity of the lines
 speed:1.1,// Rounds per second
+direction:1,// 1: clockwise, -1: counterclockwise
 trail:58,// Afterglow percentage
 shadow:false,// Whether to render a shadow
 hwaccel:false,// Whether to use hardware acceleration
 className:'spinner',// CSS class to assign to the spinner
 zIndex:2e9,// The z-index (defaults to 2000000000)
 top:'auto',// Top position relative to parent in px
-left:'auto'// Left position relative to parent in px
+left:'auto',// Left position relative to parent in px
+position:'absolute'// Element positioning
 },windowLoadedTimeoutAfterDocumentLoadedInMilliseconds:2000},startUpAnimationIsComplete=false,currentSectionName=null,viewportIsOnTop=false,currentMediaQueryMode='',languageHandler=null,analyticsCode={initial:`
                 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=`+'i[r]||function(){'+'(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*'+'new window.Date();'+'a=s.createElement(o),m=s.getElementsByTagName(o)[0];'+'a.async=1;a.src=g;'+'m.parentNode.insertBefore(a,m)})('+`window,document,'script','//www.google-analytics.com/`+`analytics.js','ga');`+`window.ga('create', '{1}', '{2}');
                 window.ga('set', 'anonymizeIp', true);
@@ -265,7 +271,7 @@ left:'auto'// Left position relative to parent in px
             `}){this._parentOptions=parentOptions;this.startUpAnimationIsComplete=startUpAnimationIsComplete;this.viewportIsOnTop=viewportIsOnTop;this.currentMediaQueryMode=currentMediaQueryMode;this.languageHandler=languageHandler;this._analyticsCode=analyticsCode;if(currentSectionName)this.currentSectionName=currentSectionName;else if('location'in $.global&amp;&amp;$.global.location.hash)this.currentSectionName=$.global.location.hash.substring('#'.length);else this.currenSectionName='home';// Wrap event methods with debounceing handler.
 // IgnoreTypeCheck
 this._onViewportMovesToTop=this.constructor.debounce(this._onViewportMovesToTop.bind(this));// IgnoreTypeCheck
-this._onViewportMovesAwayFromTop=this.constructor.debounce(this._onViewportMovesAwayFromTop.bind(this));this._options=this.constructor.extendObject(true,{},this._parentOptions,this._options);super.initialize(options);this.$domNodes=this.grabDomNode(this._options.domNode);this.disableScrolling();return new _promise2.default(resolve=>{this._options.windowLoadingCoverHideAnimation[1].always=()=>{this._handleStartUpEffects();resolve(this)};if(this.$domNodes.windowLoadingSpinner.length)this.$domNodes.windowLoadingSpinner.spin(this._options.windowLoadingSpinner);this._bindScrollEvents().$domNodes.parent.show();if('window'in this.$domNodes){const onLoaded=()=>{if(!this.windowLoaded){this.windowLoaded=true;this._removeLoadingCover()}};$(()=>this.constructor.timeout(onLoaded,this._options.windowLoadedTimeoutAfterDocumentLoadedInMilliseconds));this.on(this.$domNodes.window,'load',onLoaded)}this._addNavigationEvents()._addMediaQueryChangeEvents()._triggerWindowResizeEvents()._handleAnalyticsInitialisation();if(!this._options.language.logging)this._options.language.logging=this._options.logging;if(this._options.activateLanguageSupport&amp;&amp;!this.languageHandler)$.Language(this._options.language).then(languageHandler=>{this.languageHandler=languageHandler})})}// endregion
+this._onViewportMovesAwayFromTop=this.constructor.debounce(this._onViewportMovesAwayFromTop.bind(this));this._options=this.constructor.extendObject(true,{},this._parentOptions,this._options);super.initialize(options);this.$domNodes=this.grabDomNode(this._options.domNode);this.disableScrolling();return new _promise2.default(resolve=>{this._options.windowLoadingCoverHideAnimation[1].always=()=>{this._handleStartUpEffects();resolve(this)};if(this.$domNodes.windowLoadingSpinner.length){this.windowLoadingSpinner=new _spin.Spinner(this._options.windowLoadingSpinner);this.windowLoadingSpinner.spin(this.$domNodes.windowLoadingSpinner[0])}this._bindScrollEvents().$domNodes.parent.show();if('window'in this.$domNodes){const onLoaded=()=>{if(!this.windowLoaded){this.windowLoaded=true;this._removeLoadingCover()}};$(()=>this.constructor.timeout(onLoaded,this._options.windowLoadedTimeoutAfterDocumentLoadedInMilliseconds));this.on(this.$domNodes.window,'load',onLoaded)}this._addNavigationEvents()._addMediaQueryChangeEvents()._triggerWindowResizeEvents()._handleAnalyticsInitialisation();if(!this._options.language.logging)this._options.language.logging=this._options.logging;if(this._options.activateLanguageSupport&amp;&amp;!this.languageHandler)$.Language(this._options.language).then(languageHandler=>{this.languageHandler=languageHandler})})}// endregion
 /**
      * Scrolls to top of page. Runs the given function after viewport arrives.
      * @param onAfter - Callback to call after effect has finished.
@@ -353,7 +359,7 @@ $(_this.constructor.stringFormat('[class^="{1}"], [class*=" {1}"]',_this.sliceDo
      * @param elementNumber - The current start up step.
      * @returns Returns the current instance.
      */_handleStartUpEffects(elementNumber=1){var _this2=this;return(0,_asyncToGenerator3.default)(function*(){// Stop and delete spinner instance.
-_this2.$domNodes.windowLoadingCover.hide();if(_this2.$domNodes.windowLoadingSpinner.length)_this2.$domNodes.windowLoadingSpinner.spin(false);if($(_this2.constructor.stringFormat('[class^="{1}"], [class*=" {1}"]',_this2.sliceDomNodeSelectorPrefix(_this2._options.domNode.startUpAnimationClassPrefix).substr(1))).length){yield _this2.constructor.timeout(_this2._options.startUpAnimationElementDelayInMiliseconds);let lastElementTriggered=false;_this2._options.startUpShowAnimation[1].always=function(){if(lastElementTriggered)_this2.fireEvent('startUpAnimationComplete')};const $domNode=$(_this2._options.domNode.startUpAnimationClassPrefix+elementNumber);$domNode.animate(..._this2._options.startUpShowAnimation);if($(_this2._options.domNode.startUpAnimationClassPrefix+(elementNumber+1)).length)yield _this2._handleStartUpEffects(elementNumber+1);else lastElementTriggered=true}else _this2.fireEvent('startUpAnimationComplete');return _this2})()}/**
+_this2.$domNodes.windowLoadingCover.hide();if(_this2.$domNodes.windowLoadingSpinner.length)_this2.windowLoadingSpinner.stop();if($(_this2.constructor.stringFormat('[class^="{1}"], [class*=" {1}"]',_this2.sliceDomNodeSelectorPrefix(_this2._options.domNode.startUpAnimationClassPrefix).substr(1))).length){yield _this2.constructor.timeout(_this2._options.startUpAnimationElementDelayInMiliseconds);let lastElementTriggered=false;_this2._options.startUpShowAnimation[1].always=function(){if(lastElementTriggered)_this2.fireEvent('startUpAnimationComplete')};const $domNode=$(_this2._options.domNode.startUpAnimationClassPrefix+elementNumber);$domNode.animate(..._this2._options.startUpShowAnimation);if($(_this2._options.domNode.startUpAnimationClassPrefix+(elementNumber+1)).length)yield _this2._handleStartUpEffects(elementNumber+1);else lastElementTriggered=true}else _this2.fireEvent('startUpAnimationComplete');return _this2})()}/**
      * This method adds triggers to switch section.
      * @returns Returns the current instance.
      */_addNavigationEvents(){if('addEventListener'in $.global)$.global.addEventListener('hashchange',()=>{if(this.startUpAnimationIsComplete)this.fireEvent('switchSection',false,this,location.hash.substring('#'.length))},false);return this._handleScrollToTopButton()}/**
@@ -423,7 +429,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_8__;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Dec 15 2017 19:37:57 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Dec 30 2017 22:51:47 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>
