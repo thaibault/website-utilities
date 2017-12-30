@@ -53,8 +53,8 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "clientnode": "^1.0.316",
-    "internationalisation": "^1.0.45",
+    "clientnode": "^1.0.317",
+    "internationalisation": "^1.0.46",
     "jquery": "^3.2.1",
     "jquery.scrollto": "^2.1.2",
     "spin.js": "^3.1.0"
@@ -68,7 +68,7 @@
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "coveralls": "^3.0.0",
-    "documentation-website": "^1.0.86",
+    "documentation-website": "^1.0.88",
     "eslint": "^4.14.0",
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-flowtype": "^2.40.1",
