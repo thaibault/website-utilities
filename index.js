@@ -641,7 +641,7 @@ export class Website extends $.Tools.class {
     async _handleStartUpEffects(elementNumber:number = 1):Promise<Website> {
         // Stop and delete spinner instance.
         this.$domNodes.windowLoadingCover.hide()
-        if (this.$domNodes.windowLoadingSpinner.length)
+        if (this.windowLoadingSpinner)
             this.windowLoadingSpinner.stop()
         if ($(this.constructor.stringFormat(
             '[class^="{1}"], [class*=" {1}"]',
