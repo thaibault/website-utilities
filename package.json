@@ -44,8 +44,9 @@
     "prepare": "npm run build",
     "serve": "webOptimizer serve",
     "start": "npm run serve",
-    "test": "webOptimizer test",
+    "test": "nyc npm run test:plain",
     "test:browser": "webOptimizer test:browser",
+    "test:plain": "webOptimizer test",
     "update": "npm version patch && npm publish",
     "update:documentation": "documentationWebsite --log-level info",
     "watch": "webOptimizer build --watch",
@@ -73,7 +74,7 @@
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-flowtype": "^2.40.1",
     "eslint-plugin-jsdoc": "^3.3.0",
-    "flow-bin": "^0.63.1",
+    "flow-bin": "^0.64.0",
     "jsdoc": "^3.5.2",
     "nyc": "^11.4.1",
     "qunit": "^2.5.0",
@@ -123,6 +124,11 @@
           "module": {
             "mangle": false
           }
+        }
+      },
+      "preprocessor": {
+        "javaScript": {
+          "exclude": "!filePath.includes('spin.js') && isFilePathInDependencies(filePath)"
         }
       },
       "replacements": {

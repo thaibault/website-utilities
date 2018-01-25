@@ -10,12 +10,16 @@ This library written by Torben Sickert stand under a creative commons naming
 3.0 unported license. see http://creativecommons.org/licenses/by/3.0/deed.de
 endregion -->
 
+Project status
+--------------
+
 [![npm version](https://badge.fury.io/js/website-utilities.svg)](https://www.npmjs.com/package/website-utilities)
 [![downloads](https://img.shields.io/npm/dy/website-utilities.svg)](https://www.npmjs.com/package/website-utilities)
 [![build status](https://travis-ci.org/thaibault/websiteUtilities.svg?branch=master)](https://travis-ci.org/thaibault/websiteUtilities)
+[![code coverage](https://coveralls.io/repos/github/thaibault/websiteUtilitie/badge.svg)](https://coveralls.io/github/thaibault/websiteUtilities)
 [![dependencies](https://img.shields.io/david/thaibault/website-utilities.svg)](https://david-dm.org/thaibault/website-utilities)
-[![devDependencies](https://img.shields.io/david/dev/thaibault/website-utilities.svg)](https://david-dm.org/thaibault/website-utilities?type=dev)
-[![peerDependencies](https://img.shields.io/david/peer/thaibault/website-utilities.svg)](https://david-dm.org/thaibault/website-utilities?type=peer)
+[![development dependencies](https://img.shields.io/david/dev/thaibault/website-utilities.svg)](https://david-dm.org/thaibault/website-utilities?type=dev)
+[![peer dependencies](https://img.shields.io/david/peer/thaibault/website-utilities.svg)](https://david-dm.org/thaibault/website-utilities?type=peer)
 [![documentation-website](https://img.shields.io/website-up-down-green-red/http/torben.website/websiteUtilities.svg?label=documentation-website)](http://torben.website/websiteUtilities)
 
 <!--|deDE:Einsatzmöglichkeiten-->
