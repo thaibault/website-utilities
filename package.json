@@ -54,8 +54,8 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "clientnode": "^1.0.326",
-    "internationalisation": "^1.0.51",
+    "clientnode": "^1.0.329",
+    "internationalisation": "^1.0.52",
     "jquery": "^3.2.1",
     "jquery.scrollto": "^2.1.2",
     "spin.js": "^3.1.0"
@@ -70,7 +70,7 @@
     "babel-preset-env": "^1.6.1",
     "coveralls": "^3.0.0",
     "documentation-website": "^1.0.95",
-    "eslint": "^4.14.0",
+    "eslint": "^4.17.0",
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-flowtype": "^2.42.0",
     "eslint-plugin-jsdoc": "^3.3.0",
@@ -80,7 +80,7 @@
     "qunit": "^2.5.0",
     "source-map-support": "^0.5.3",
     "stylelint": "^8.3.1",
-    "weboptimizer": "^1.0.481",
+    "weboptimizer": "^1.0.489",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.1"
   },
