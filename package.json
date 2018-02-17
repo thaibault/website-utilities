@@ -54,8 +54,8 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "clientnode": "^1.0.334",
-    "internationalisation": "^1.0.53",
+    "clientnode": "^1.0.337",
+    "internationalisation": "^1.0.54",
     "jquery": "^3.2.1",
     "jquery.scrollto": "^2.1.2",
     "spin.js": "^3.1.0"
@@ -69,18 +69,18 @@
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "coveralls": "^3.0.0",
-    "documentation-website": "^1.0.96",
-    "eslint": "^4.17.0",
+    "documentation-website": "^1.0.97",
+    "eslint": "^4.18.0",
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-flowtype": "^2.44.0",
-    "eslint-plugin-jsdoc": "^3.4.0",
-    "flow-bin": "^0.65.0",
+    "eslint-plugin-jsdoc": "^3.4.1",
+    "flow-bin": "^0.66.0",
     "jsdoc": "^3.5.2",
     "nyc": "^11.5.0",
     "qunit": "^2.5.0",
     "source-map-support": "^0.5.3",
     "stylelint": "^8.3.1",
-    "weboptimizer": "^1.0.489",
+    "weboptimizer": "^1.0.508",
     "webpack": "^3.11.0",
     "webpack-dev-server": "^2.11.1"
   },
@@ -93,9 +93,14 @@
         "implicit": {
           "pattern": {
             "exclude": {
-              "__append__": {
-                "__evaluate__": "/^clientnode\\/test(?:\\.compiled)?(?:\\.js)?$/"
-              }
+              "__append__": [
+                {
+                  "__evaluate__": "/^clientnode\\/test(?:\\.compiled)?(?:\\.js)?$/"
+                },
+                {
+                  "__evaluate__": "/^spin\\.js$/"
+                }
+              ]
             }
           }
         }
