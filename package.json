@@ -80,7 +80,7 @@
     "qunit": "^2.5.0",
     "source-map-support": "^0.5.3",
     "stylelint": "^9.1.0",
-    "weboptimizer": "^1.0.527",
+    "weboptimizer": "^1.0.531",
     "webpack": "^3.11.0",
     "webpack-dev-server": "^2.11.1"
   },
