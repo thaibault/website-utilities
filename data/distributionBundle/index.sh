@@ -11,33 +11,38 @@
 exit 0
 # TODO implement in js.
 set -o errexit
-if [[ $(git branch | grep '* master') ]]; then
-    echo 'Build new web page.'
+if [[ "$(git branch | grep '* master')" != '' ]]; then
+    echo Build new web page.
     npm run build
     if [[ $(git branch | grep 'gh-pages') ]]; then
-        echo 'Checkout distribution branch.'
+        echo Checkout distribution branch.
         git checkout gh-pages
-        source='build/'
+        source=build/
     else
         source="../$(basename "$(pwd)")/build/"
         pushd "../$(ls ../ | grep '.github.io')"
     fi
-    echo 'Update page data.'
-    rsync "$source" ./ $ILU_RSYNC_DEFAULT_ARGUMENTS --exclude='.*' \
-        --exclude='node_modules' --exclude="$source" --exclude='CNAME' \
-        --exclude='readme.md'
+    echo Update page data.
+    rsync \
+        "$source" ./ \
+        $ILU_RSYNC_DEFAULT_ARGUMENTS \
+        --exclude=CNAME \
+        --exclude='.*' \
+        --exclude=node_modules \
+        --exclude=readme.md \
+        --exclude="$source"
     rm --recursive --force "$source"
-    echo 'Upload compiled webpage'
+    echo Upload compiled webpage
     git pull
     git add --all
     git commit --message 'Automatic page build update.'
     git push
-    if [[ $(git branch | grep 'gh-pages') ]]; then
-        echo 'Switch back to master branch.'
-        git checkout master
-    else
-        echo 'Switch back to source directory.'
+    if [ "$(git branch | grep 'gh-pages')" = '' ]; then
+        echo Switch back to source directory.
         popd
+    else
+        echo Switch back to master branch.
+        git checkout master
     fi
 fi
 set +o errexit

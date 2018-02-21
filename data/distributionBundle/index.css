@@ -9,29 +9,6 @@ License
 This library written by Torben Sickert stand under a creative commons naming
 3.0 unported license. see http://creativecommons.org/licenses/by/3.0/deed.de
 endregion */
-:root {
-    /* region constants */
-    /** region extra small dimension **/
-    @custom-media --extra-extra-small (min-width: 360px);
-    @custom-media --extra-small (min-width: 500px);
-    /** endregion */
-    /** region bootstrap default */
-    @custom-media --small (min-width: 768px);
-    @custom-media --medium (min-width: 992px);
-    @custom-media --large (min-width: 1200px);
-    /** endregion */
-    /** region color */
-    --backgroundColor: #fff;
-    --disabledColor: #eee;
-    --fontColor: #555;
-    --borderColor: #ccc;
-    /** endregion */
-    /** region font */
-    --fontFamily: 'Open Sans', open-sans, sans-serif;
-    --fontFamilyCondensed: 'Open Sans Condensed', open-sans-condensed, sans-serif;
-    /** endregion */
-    /* endregion */
-}
 /* region font */
 /** region open sans */
 /*** region light */
@@ -185,6 +162,27 @@ endregion */
 /** endregion */
 /* endregion */
 :root {
+    /* region constants */
+    /** region extra small dimension **/
+    @custom-media --extra-extra-small (min-width: 360px);
+    @custom-media --extra-small (min-width: 500px);
+    /** endregion */
+    /** region bootstrap default */
+    @custom-media --small (min-width: 768px);
+    @custom-media --medium (min-width: 992px);
+    @custom-media --large (min-width: 1200px);
+    /** endregion */
+    /** region color */
+    --backgroundColor: #fff;
+    --disabledColor: #eee;
+    --fontColor: #555;
+    --borderColor: #ccc;
+    /** endregion */
+    /** region font */
+    --fontFamily: 'Open Sans', open-sans, sans-serif;
+    --fontFamilyCondensed: 'Open Sans Condensed', open-sans-condensed, sans-serif;
+    /** endregion */
+    /* endregion */
     --website: {
         /* region bootstrap fixes */
         & .nested-labels() {
@@ -328,7 +326,7 @@ endregion */
                 color: #1d1d1b;
                 */
                 display: inline-block;
-                font: 24px/1em 'Glyphicons Social Regular';
+                font: 24px/1em 'Glyphicons Social Regular', sans-serif;
                 font-style: normal;
                 font-weight: normal;
                 left: 0;
