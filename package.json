@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "clientnode": "^3.0.5",
+    "clientnode": "^3.0.8",
     "internationalisation": "^1.0.66",
     "jquery": "^3.2.1",
     "jquery.scrollto": "^2.1.2",
@@ -69,7 +69,7 @@
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "coveralls": "^3.0.0",
-    "documentation-website": "^1.0.112",
+    "documentation-website": "^1.0.113",
     "eslint": "^4.18.2",
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-flowtype": "^2.46.1",
@@ -79,7 +79,7 @@
     "nyc": "^11.6.0",
     "qunit": "^2.5.1",
     "source-map-support": "^0.5.3",
-    "stylelint": "^9.1.1",
+    "stylelint": "^9.1.3",
     "weboptimizer": "^1.0.533",
     "webpack": "^3.11.0",
     "webpack-dev-server": "^2.11.2"
