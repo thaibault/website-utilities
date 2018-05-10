@@ -51,9 +51,8 @@
     "watch": "webOptimizer build --watch"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
-    "clientnode": "^3.0.56",
-    "internationalisation": "^1.0.86",
+    "clientnode": "^3.0.57",
+    "internationalisation": "^1.0.87",
     "jquery": "^3.2.1",
     "jquery.scrollto": "^2.1.2",
     "spin.js": "^4.0.0"
@@ -72,12 +71,12 @@
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-flowtype": "^2.46.3",
     "eslint-plugin-jsdoc": "^3.6.3",
-    "flow-bin": "^0.72.0",
+    "flow-bin": "*",
     "jsdoc": "^3.5.2",
     "nyc": "^11.7.3",
     "qunit": "^2.6.0",
     "stylelint": "^9.2.0",
-    "weboptimizer": "^2.0.126",
+    "weboptimizer": "^2.0.127",
     "webpack": "^4.8.1",
     "webpack-cli": "^2.1.3",
     "webpack-dev-server": "^3.1.4"
