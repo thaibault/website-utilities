@@ -414,41 +414,7 @@ endregion */
         /** endregion */
         /* endregion */
     }
-    /* region spinner animation */
-    @keyframes spinner-line-fade-more {
-        0%,
-        100% {
-            opacity: 0; /* minimum opacity */
-        }
 
-        1% {
-            opacity: 1;
-        }
-    }
-
-    @keyframes spinner-line-fade-quick {
-        0%,
-        39%,
-        100% {
-            opacity: 0.25; /* minimum opacity */
-        }
-
-        40% {
-            opacity: 1;
-        }
-    }
-
-    @keyframes spinner-line-fade-default {
-        0%,
-        100% {
-            opacity: 0.22; /* minimum opacity */
-        }
-
-        1% {
-            opacity: 1;
-        }
-    }
-    /* endregion */
     & .javascript .tools {
         /* Initially show javaScript dependent dom nodes. */
         &-visible-on-javascript-enabled { display: initial !important; }
@@ -463,6 +429,41 @@ endregion */
         &-hidden-on-javascript-disabled { display: none !important; }
     }
 }
+/* region spinner animation */
+@keyframes spinner-line-fade-more {
+    0%,
+    100% {
+        opacity: 0; /* minimum opacity */
+    }
+
+    1% {
+        opacity: 1;
+    }
+}
+
+@keyframes spinner-line-fade-quick {
+    0%,
+    39%,
+    100% {
+        opacity: 0.25; /* minimum opacity */
+    }
+
+    40% {
+        opacity: 1;
+    }
+}
+
+@keyframes spinner-line-fade-default {
+    0%,
+    100% {
+        opacity: 0.22; /* minimum opacity */
+    }
+
+    1% {
+        opacity: 1;
+    }
+}
+/* endregion */
 /* region vim modline
 vim: set tabstop=4 shiftwidth=4 expandtab:
 vim: foldmethod=marker foldmarker=region,endregion:
