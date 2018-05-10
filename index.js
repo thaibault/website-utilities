@@ -299,7 +299,6 @@ export class Website extends $.Tools.class {
                 resolve(this)
             }
             if (this.$domNodes.windowLoadingSpinner.length) {
-                console.log('B', this._options.windowLoadingSpinner)
                 this.windowLoadingSpinner = new Spinner(
                     this._options.windowLoadingSpinner)
                 this.windowLoadingSpinner.spin(
