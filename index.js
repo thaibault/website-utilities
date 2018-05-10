@@ -207,26 +207,37 @@ export class Website extends $.Tools.class {
             trackingCode: null,
             windowLoadingCoverHideAnimation: [{opacity: 0}, {}],
             windowLoadingSpinner: {
-                lines: 9, // The number of lines to draw
-                length: 23, // The length of each line
-                width: 11, // The line thickness
-                radius: 40, // The radius of the inner circle
-                scale: 1, // Scales overall size of the spinner
-                corners: 1, // Corner roundness (0..1)
-                rotate: 0, // The rotation offset
-                color: '#000', // #rgb or #rrggbb
-                fadeColor: 'transparent', // CSS color or array of colors
-                opacity: .2, // Opacity of the lines
-                speed: 1.1, // Rounds per second
-                direction: 1, // 1: clockwise, -1: counterclockwise
-                trail: 58, // Afterglow percentage
-                shadow: false, // Whether to render a shadow
-                hwaccel: false, // Whether to use hardware acceleration
-                className: 'spinner', // CSS class to assign to the spinner
-                zIndex: 2e9, // The z-index (defaults to 2000000000)
-                top: 'auto', // Top position relative to parent in px
-                left: 'auto', // Left position relative to parent in px
-                position: 'absolute' // Element positioning
+                animation: 'spinner-line-fade-quick',
+                className: 'spinner',
+                color: '#000',
+                // Corner roundness (0..1)
+                corners: 1,
+                // 1: clockwise, -1: counterclockwise
+                direction: 1,
+                // CSS color or array of colors
+                fadeColor: 'transparent',
+                // Left position relative to parent in px
+                left: 'auto',
+                // The length of each line
+                length: 23,
+                // The number of lines to draw
+                lines: 9,
+                position: 'absolute',
+                // The radius of the inner circle
+                radius: 40,
+                // The rotation offset
+                rotate: 0,
+                // Scales overall size of the spinner
+                scale: 1,
+                shadow: false,
+                // Rounds per second
+                speed: 1.1,
+                // Top position relative to parent in px
+                top: 'auto',
+                // The line thickness
+                width: 11,
+                // The z-index (defaults to 2000000000)
+                zIndex: 2e9
             },
             windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 2000
         }, startUpAnimationIsComplete:boolean = false,
