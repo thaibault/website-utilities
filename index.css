@@ -433,7 +433,7 @@ endregion */
 @keyframes spinner-line-fade-more {
     0%,
     100% {
-        opacity: 0; /* minimum opacity */
+        opacity: 0;
     }
 
     1% {
@@ -445,7 +445,7 @@ endregion */
     0%,
     39%,
     100% {
-        opacity: 0.25; /* minimum opacity */
+        opacity: 0.25;
     }
 
     40% {
@@ -456,7 +456,7 @@ endregion */
 @keyframes spinner-line-fade-default {
     0%,
     100% {
-        opacity: 0.22; /* minimum opacity */
+        opacity: 0.22;
     }
 
     1% {
