@@ -163,14 +163,21 @@ endregion */
 /* endregion */
 :root {
     /* region constants */
-    /** region extra small dimension **/
-    @custom-media --extra-extra-small (min-width: 360px);
-    @custom-media --extra-small (min-width: 500px);
-    /** endregion */
-    /** region default media query dimensions */
-    @custom-media --small (min-width: 768px);
-    @custom-media --medium (min-width: 992px);
-    @custom-media --large (min-width: 1200px);
+    /** region dimensions */
+    --extra-extra-small-width: 360px;
+    --extra-small-width: 500px;
+    --small-width: 768px;
+    --medium-width: 992px;
+    --large-width: 1200px;
+    /*** region extra small dimension */
+    @custom-media --extra-extra-small (min-width: var(--extra-extra-small-width));
+    @custom-media --extra-small (min-width: var(--extra-small-width));
+    /*** endregion */
+    /*** region default media query dimensions */
+    @custom-media --small (min-width: var(--small-width));
+    @custom-media --medium (min-width: var(--medium-width));
+    @custom-media --large (min-width: var(--large-width));
+    /*** endregion */
     /** endregion */
     /** region color */
     --background-color: #fff;
