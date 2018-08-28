@@ -1,6 +1,6 @@
 {
   "name": "website-utilities",
-  "version": "1.0.123",
+  "version": "1.0.124",
   "license": "CC-BY-3.0",
   "description": "extend your web app",
   "homepage": "https://torben.website/websiteUtilities",
@@ -61,10 +61,10 @@
     "@babel/runtime": "*"
   },
   "devDependencies": {
-    "babel-eslint": "*",
     "@babel/plugin-transform-proto-to-assign": "*",
     "@babel/polyfill": "*",
     "@babel/preset-env": "*",
+    "babel-eslint": "*",
     "coveralls": "*",
     "css-loader": "*",
     "cssnano": "*",
