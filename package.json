@@ -95,9 +95,6 @@
   },
   "webOptimizer": {
     "export": {
-      "development": {
-        "tool": false
-      },
       "module": {
         "preprocessor": {
           "javaScript": {
