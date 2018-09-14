@@ -58,7 +58,8 @@
     "spin.js": "*"
   },
   "peerDependencies": {
-    "@babel/runtime": "*"
+    "@babel/runtime": "*",
+    "postcss-mixins": "*"
   },
   "devDependencies": {
     "@babel/plugin-transform-proto-to-assign": "*",
@@ -81,6 +82,7 @@
     "postcss-fontpath": "*",
     "postcss-import": "*",
     "postcss-loader": "*",
+    "postcss-mixins": "*",
     "postcss-preset-env": "*",
     "postcss-sprites": "*",
     "postcss-url": "*",
@@ -149,6 +151,13 @@
         "jQuery-scrollTo$": "jquery.scrollto/jquery.scrollTo.min"
       },
       "preprocessor": {
+        "cascadingStyleSheet": {
+          "additional": {
+            "plugins": {
+              "pre": ["require('postcss-mixins')"]
+            }
+          }
+        },
         "javaScript": {
           "#": "We have to pre-process \"spin.js\" since it isn't a compatible ecma script.",
           "exclude": "!filePath.includes('spin.js') && isFilePathInDependencies(filePath)"
