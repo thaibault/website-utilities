@@ -155,7 +155,7 @@
           "additional": {
             "plugins": {
               "pre": [
-                "require('postcss-mixins')()"
+                "require('postcss-mixins')"
               ]
             }
           }
