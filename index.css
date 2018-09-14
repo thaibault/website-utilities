@@ -191,7 +191,7 @@ endregion */
     /** endregion */
     /* endregion */
     /* stylelint-disable at-rule-no-unknown */
-    @define-website-utilities {
+    @define-mixin website-utilities {
         margin: 0;
         font-family: var(--font-family);
         font-size: 14px;
