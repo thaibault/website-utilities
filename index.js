@@ -168,8 +168,8 @@ export class Website extends $.Tools.class {
                 scrollToTopButton: 'a[href="#top"]',
                 startUpAnimationClassPrefix:
                     '.website-start-up-animation-number-',
-                windowLoadingCover: '.website-window-loading-cover',
-                windowLoadingSpinner: '.website-window-loading-cover > div'
+                windowLoadingCover: '.website-utilities-window-loading-cover',
+                windowLoadingSpinner: '.website-utilities-window-loading-cover > div'
             },
             domNodeSelectorPrefix: 'body.{1}',
             knownScrollEventNames:
