@@ -169,7 +169,8 @@ export class Website extends $.Tools.class {
                 startUpAnimationClassPrefix:
                     '.website-start-up-animation-number-',
                 windowLoadingCover: '.website-utilities-window-loading-cover',
-                windowLoadingSpinner: '.website-utilities-window-loading-cover > div'
+                windowLoadingSpinner:
+                    '.website-utilities-window-loading-cover > div'
             },
             domNodeSelectorPrefix: 'body.{1}',
             knownScrollEventNames:

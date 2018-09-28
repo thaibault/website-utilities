@@ -188,7 +188,7 @@ endregion */
     @custom-media --large (min-width: 1200px);
     /*** endregion */
     /** endregion */
-     /** region color */
+    /** region color */
     --background-color: #fff;
     --disabled-color: #eee;
     --font-color: #555;
