@@ -163,6 +163,7 @@ endregion */
 /* endregion */
 :root {
     /* region constants */
+    --default-space: 20px;
     /** region dimensions */
     --extra-extra-small-width: 360px;
     --extra-small-width: 500px;
