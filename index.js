@@ -288,7 +288,7 @@ export class Website extends $.Tools.class {
         // IgnoreTypeCheck
         this._onViewportMovesAwayFromTop = this.constructor.debounce(
             this._onViewportMovesAwayFromTop.bind(this))
-        this._options = this.constructor.extendObject(
+        this._options = this.constructor.extend(
             true, {}, this._parentOptions, this._options)
         super.initialize(options)
         this.$domNodes = this.grabDomNode(this._options.domNode)
