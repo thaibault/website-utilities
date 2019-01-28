@@ -7,7 +7,7 @@ License
 -------
 
 This library written by Torben Sickert stand under a creative commons naming
-3.0 unported license. see http://creativecommons.org/licenses/by/3.0/deed.de
+3.0 unported license. See https://creativecommons.org/licenses/by/3.0/deed.de
 endregion -->
 
 Project status
@@ -20,7 +20,7 @@ Project status
 [![dependencies](https://img.shields.io/david/thaibault/website-utilities.svg)](https://david-dm.org/thaibault/website-utilities)
 [![development dependencies](https://img.shields.io/david/dev/thaibault/website-utilities.svg)](https://david-dm.org/thaibault/website-utilities?type=dev)
 [![peer dependencies](https://img.shields.io/david/peer/thaibault/website-utilities.svg)](https://david-dm.org/thaibault/website-utilities?type=peer)
-[![documentation-website](https://img.shields.io/website-up-down-green-red/http/torben.website/websiteUtilities.svg?label=documentation-website)](http://torben.website/websiteUtilities)
+[![documentation-website](https://img.shields.io/website-up-down-green-red/https/torben.website/websiteUtilities.svg?label=documentation-website)](https://torben.website/websiteUtilities)
 
 <!--|deDE:Einsatzmöglichkeiten-->
 Use cases
