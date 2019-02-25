@@ -36,7 +36,7 @@
   },
   "scripts": {
     "build": "webOptimizer build",
-    "build:export": "webOptimizer build '{__reference__: \"export\"}'",
+    "build:export": "webOptimizer build '{__reference__: \"target:export\"}'",
     "clear": "webOptimizer clear",
     "document": "webOptimizer document",
     "lint": "webOptimizer check:type; webOptimizer lint",
@@ -96,19 +96,6 @@
     "webpack-dev-server": "*"
   },
   "webOptimizer": {
-    "export": {
-      "module": {
-        "preprocessor": {
-          "javaScript": {
-            "options": {
-              "plugins": {
-                "__remove__": "@babel/plugin-transform-runtime"
-              }
-            }
-          }
-        }
-      }
-    },
     "injection": {
       "external": {
         "aliases": {
@@ -163,6 +150,19 @@
         "javaScript": {
           "#": "We have to pre-process \"spin.js\" since it isn't a compatible ecma script.",
           "exclude": "!filePath.includes('spin.js') && isFilePathInDependencies(filePath)"
+        }
+      }
+    },
+    "target:export": {
+      "module": {
+        "preprocessor": {
+          "javaScript": {
+            "options": {
+              "plugins": {
+                "__remove__": "@babel/plugin-transform-runtime"
+              }
+            }
+          }
         }
       }
     }
