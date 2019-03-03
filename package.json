@@ -1,6 +1,6 @@
 {
   "name": "website-utilities",
-  "version": "1.0.198",
+  "version": "1.0.199",
   "license": "CC-BY-3.0",
   "description": "extend your web app",
   "homepage": "https://torben.website/websiteUtilities",
@@ -101,7 +101,11 @@
         "aliases": {
           "jQuery-scrollTo": {
             "default": "jquery.scrollto/jquery.scrollTo.min",
-            "root": ["$", "fn", "scrollTo"]
+            "root": [
+              "$",
+              "fn",
+              "scrollTo"
+            ]
           }
         },
         "implicit": {
