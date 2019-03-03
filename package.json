@@ -99,15 +99,15 @@
     "injection": {
       "external": {
         "aliases": {
-          "jQuery-scrollTo": "$.fn.scrollTo"
+          "jQuery-scrollTo": {
+            "default": "jquery.scrollto/jquery.scrollTo.min",
+            "root": ["$", "fn", "scrollTo"]
+          }
         },
         "implicit": {
           "pattern": {
             "exclude": {
               "__append__": [
-                {
-                  "__evaluate__": "/^clientnode\\/test(?:\\.compiled)?(?:\\.js)?$/"
-                },
                 {
                   "__evaluate__": "/^spin\\.js$/"
                 }
@@ -131,7 +131,9 @@
     },
     "module": {
       "aliases": {
-        "clientnode/test$": "clientnode/test.compiled.js",
+        "#": "We need to process this file dynamically when testing different environments.",
+        "clientnode/test$": "clientnode/test",
+        "#0": "Ensure that all nested dependencies share the same (root level) instance.",
         "jquery$": {
           "__evaluate__": "path.resolve('./node_modules/jquery')"
         },
@@ -149,7 +151,7 @@
         },
         "javaScript": {
           "#": "We have to pre-process \"spin.js\" since it isn't a compatible ecma script.",
-          "exclude": "!filePath.includes('spin.js') && isFilePathInDependencies(filePath)"
+          "exclude": "!filePath.endsWith('/clientnode/test.js') && !filePath.endsWith('/spin.js') && isFilePathInDependencies(filePath)"
         }
       }
     },
