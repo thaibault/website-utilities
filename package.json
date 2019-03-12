@@ -137,10 +137,6 @@
       "aliases": {
         "#": "We need to process this file dynamically when testing different environments.",
         "clientnode/test$": "clientnode/test",
-        "#0": "Ensure that all nested dependencies share the same (root level) instance.",
-        "jquery$": {
-          "__evaluate__": "path.resolve('./node_modules/jquery')"
-        },
         "jQuery-scrollTo$": "jquery.scrollto/jquery.scrollTo.min"
       },
       "preprocessor": {
