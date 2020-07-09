@@ -3,13 +3,13 @@
   "version": "1.0.221",
   "license": "CC-BY-3.0",
   "description": "extend your web app",
-  "homepage": "https://torben.website/websiteUtilities",
+  "homepage": "https://torben.website/website-utilities",
   "documentationWebsite": {
     "languages": [
       "deDE",
       "enUS"
     ],
-    "name": "websiteUtilities",
+    "name": "website-utilities",
     "tagline": "extend your web app<!--deDE:erweitere deine Webanwendung-->",
     "trackingCode": "UA-40192634-5"
   },
@@ -28,27 +28,27 @@
   ],
   "main": "index.compiled.js",
   "bin": {
-    "websiteUtilities": "index.sh"
+    "website-utilities": "index.sh"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/thaibault/websiteUtilities"
+    "url": "https://github.com/thaibault/website-utilities"
   },
   "scripts": {
-    "build": "webOptimizer build",
-    "build:export": "webOptimizer build '{__reference__: \"target:export\"}'",
-    "clear": "webOptimizer clear",
-    "document": "webOptimizer document",
-    "lint": "webOptimizer check:type; webOptimizer lint",
+    "build": "weboptimizer build",
+    "build:export": "weboptimizer build '{__reference__: \"target:export\"}'",
+    "clear": "weboptimizer clear",
+    "document": "weboptimizer document",
+    "lint": "weboptimizer check:type; weboptimizer lint",
     "prepare": "yarn build",
-    "serve": "webOptimizer serve",
+    "serve": "weboptimizer serve",
     "start": "yarn serve",
     "test": "nyc yarn test:plain",
-    "test:browser": "webOptimizer test:browser",
-    "test:plain": "webOptimizer test",
+    "test:browser": "weboptimizer test:browser",
+    "test:plain": "weboptimizer test",
     "update": "yarn version --patch && yarn publish",
     "update:documentation": "documentationWebsite --log-level info",
-    "watch": "webOptimizer build --watch"
+    "watch": "weboptimizer build --watch"
   },
   "dependencies": {
     "clientnode": "*",
