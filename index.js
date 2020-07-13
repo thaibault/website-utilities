@@ -1,4 +1,3 @@
-// @flow
 // #!/usr/bin/env node
 // -*- coding: utf-8 -*-
 /** @module website-utilities */
@@ -129,7 +128,7 @@ export type AnalyticsCode = {
  * "auto" is given it will be determined automatically.
  */
 export class Website extends $.Tools.class {
-    static _name:string = 'Website'
+    static readonly _name:'Website' = 'Website'
 
     $domNodes:$DomNode
     currentMediaQueryMode:string
