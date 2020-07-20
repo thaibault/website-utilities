@@ -17,19 +17,13 @@
     endregion
 */
 // region imports
-import {$ as binding} from 'clientnode'
-import type {$DomNode} from 'clientnode'
-import Language from 'internationalisation'
+import Tools, {$} from 'clientnode'
+import {$DomNode} from 'clientnode/type'
+import Internationalisation from 'internationalisation'
 import 'jQuery-scrollTo'
 import {Spinner} from 'spin.js'
-export const $:any = binding
-// endregion
-// region types
-export type AnalyticsCode = {
-    initial:string;
-    sectionSwitch:string;
-    event:string;
-}
+
+import {Options} from './type'
 // endregion
 // region plugins/classes
 /**
@@ -49,103 +43,186 @@ export type AnalyticsCode = {
  *
  * @property _analyticsCode - Saves analytics code snippets to use for
  * referenced situations.
- * @property _analyticsCode.initial {string} - Initial string to use for
- * analyses on.
- * @property _analyticsCode.sectionSwitch {string} - Code to execute on each
- * section switch. Current page is available via "{1}" string formatting.
- * @property _analyticsCod.event {string} - Code to execute on each fired
- * event.
+ * @property _analyticsCode.initial - Initial string to use for analyses.
+ * @property _analyticsCode.sectionSwitch - Code to execute on each section
+ * switch. Current page is available via "{1}" string formatting.
+ * @property _analyticsCod.event - Code to execute on each fired event.
  * @property _options - Options extended by the options given to the
  * initializer method.
- * @property _parentOptions - Saves default options to extend by options given
- * to the initializer method.
- * @property _parentOptions.domNodeSelectorPrefix {string} - Selector prefix
- * for all nodes to take into account.
- * @property _parantOptions.onViewportMovesToTop {Function} - Callback to
- * trigger when viewport arrives at top.
- * @property _parantOptions.onViewportMovesAwayFromTop {Function} - Callback to
- * trigger when viewport moves away from top.
- * @property _parentOptions.onChangeToLargeMode {Function} - Callback to
- * trigger if media query mode changes to large mode.
- * @property _parentOptions.onChangeToMediumMode {Function} - Callback to
- * trigger if media query mode changes to medium mode.
- * @property _parentOptions.onChangeToSmallMode {Function} - Callback to
- * trigger if media query mode changes to small mode.
- * @property _parentOptions.onChangeToExtraSmallMode {Function} - Callback to
- * trigger if media query mode changes to extra small mode.
- * @property _parentOptions.onChangeMediaQueryMode {Function} - Callback to
- * trigger if media query mode changes.
- * @property _parentOptions.onSwitchSection {Function} - Callback to trigger if
- * current section switches.
- * @property _parentOptions.onStartUpAnimationComplete {Function} - Callback to
- * trigger if all start up animations has finished.
- * @property _parentOptions.knownScrollEventNames {string} - Saves all known
- * scroll events in a space separated string.
- * @property _parentOption.switchToManualScrollingIndicator {Function} -
- * Indicator function to stop currently running scroll animations to let the
- * user get control of current scrolling behavior. Given callback gets an event
- * object. If the function returns "true" current animated scrolls will be
- * stopped.
- * @property _parentOptions.additionalPageLoadingTimeInMilliseconds {Number} -
- * Additional time to wait until page will be indicated as loaded.
- * @property _parentOptions.trackingCode - Analytic tracking code to collect
- * user behavior data.
- * @property _parentOptions.mediaQueryClassNameIndicator
- * {Array.Array.<string>} - Mapping of media query class indicator names to
- * internal event names.
- * @property _parentOptions.domNode {Object.<string, string>} - Mapping of
- * dom node descriptions to their corresponding selectors.
- * @property _parentOptions.domNode.mediaQueryIndicator {string} - Selector
- * for indicator dom node to use to trigger current media query mode.
- * @property _parentOptions.domNode.top {string} - Selector to indicate that
- * viewport is currently on top.
- * @property _parentOptions.domNode.scrollToTopButton {string} - Selector for
- * starting an animated scroll to top.
- * @property _parentOption.domNode.startUpAnimationClassPrefix {string} -
- * Class name selector prefix for all dom nodes to appear during start up
- * animations.
- * @property _parentOptions.domNode.windowLoadingCover {string} - Selector
- * to the full window loading cover dom node.
- * @property _parentOptions.domNode.windowLoadingSpinner {string} - Selector
- * to the window loading spinner (on top of the window loading cover).
- * @property _parentOption.startUpShowAnimation {Object} - Options for startup
- * show in animation.
- * @property _parentOption.startUpHide {Object} - Options for initially hiding
- * dom nodes showing on startup later.
- * @property _parentOptions.windowLoadingCoverHideAnimation {Object} - Options
- * for startup loading cover hide animation.
- * @property _parentOptions.startUpAnimationElementDelayInMiliseconds {number}
- * - Delay between two startup animated dom nodes in order.
- * @property _parentOptions.windowLoadingSpinner {Object} - Options for the
- * window loading cover spinner.
- * @property _parentOptions.activateLanguageSupport {boolean} - Indicates
- * whether language support should be used or not.
- * @property _parentOptions.language {Object} - Options for client side
- * internationalisation handler.
- * @property _parentOptions.scrollTop {Object} - Options for automated scroll
- * top animation.
- * @property _parentOptions.domain {string} - Sets current domain name. If
- * "auto" is given it will be determined automatically.
+ * @property _options.domNodeSelectorPrefix - Selector prefix for all nodes to
+ * take into account.
+ * @property _options.onViewportMovesToTop - Callback to trigger when viewport
+ * arrives at top.
+ * @property _options.onViewportMovesAwayFromTop - Callback to trigger when
+ * viewport moves away from top.
+ * @property _options.onChangeToLargeMode - Callback to trigger if media query
+ * mode changes to large mode.
+ * @property _options.onChangeToMediumMode - Callback to trigger if media query
+ * mode changes to medium mode.
+ * @property _options.onChangeToSmallMode - Callback to trigger if media query
+ * mode changes to small mode.
+ * @property _options.onChangeToExtraSmallMode - Callback to trigger if media
+ * query mode changes to extra small mode.
+ * @property _options.onChangeMediaQueryMode - Callback to trigger if media
+ * query mode changes.
+ * @property _options.onSwitchSection - Callback to trigger if current section
+ * switches.
+ * @property _options.onStartUpAnimationComplete - Callback to trigger if all
+ * start up animations has finished.
+ * @property _options.knownScrollEventNames - Saves all known scroll events in
+ * a space separated string.
+ * @property _option.switchToManualScrollingIndicator - Indicator function to
+ * stop currently running scroll animations to let the user get control of
+ * current scrolling behavior. Given callback gets an event object. If the
+ * function returns "true" current animated scrolls will be stopped.
+ * @property _options.additionalPageLoadingTimeInMilliseconds - Additional time
+ * to wait until page will be indicated as loaded.
+ * @property _options.trackingCode - Analytic tracking code to collect user
+ * behavior data.
+ * @property _options.mediaQueryClassNameIndicator - Mapping of media query
+ * class indicator names to internal event names.
+ * @property _options.domNode - Mapping of dom node descriptions to their
+ * corresponding selectors.
+ * @property _options.domNode.mediaQueryIndicator - Selector for indicator dom
+ * node to use to trigger current media query mode.
+ * @property _options.domNode.top - Selector to indicate that viewport is
+ * currently on top.
+ * @property _options.domNode.scrollToTopButton - Selector for starting an
+ * animated scroll to top.
+ * @property _options.domNode.startUpAnimationClassPrefix - Class name selector
+ * prefix for all dom nodes to appear during start up animations.
+ * @property _options.domNode.windowLoadingCover - Selector to the full window
+ * loading cover dom node.
+ * @property _options.domNode.windowLoadingSpinner - Selector to the window
+ * loading spinner (on top of the window loading cover).
+ * @property _options.startUpShowAnimation - Options for startup show in
+ * animation.
+ * @property _options.startUpHide - Options for initially hiding dom nodes
+ * showing on startup later.
+ * @property _options.windowLoadingCoverHideAnimation - Options for startup
+ * loading cover hide animation.
+ * @property _options.startUpAnimationElementDelayInMiliseconds - Delay between
+ * two startup animated dom nodes in order.
+ * @property _options.windowLoadingSpinner - Options for the window loading
+ * cover spinner.
+ * @property _options.activateLanguageSupport - Indicates whether language
+ * support should be used or not.
+ * @property _options.language - Options for client side internationalisation
+ * handler.
+ * @property _options.scrollTop - Options for automated scroll top animation.
  */
-export class Website extends $.Tools.class {
-    static readonly _name:'Website' = 'Website'
+export class WebsiteUtilities extends Tools {
+    static readonly _name:'WebsiteUtilities' = 'WebsiteUtilities'
 
-    $domNodes:$DomNode
+    $domNodes:Mapping<$DomNode> = {}
     currentMediaQueryMode:string
     currentSectionName:string
-    languageHandler:?Language
+    languageHandler:?Internationalisation
+    readonly self:typeof WebsiteUtilities = WebsiteUtilities
     startUpAnimationIsComplete:boolean
     viewportIsOnTop:boolean
     windowLoadingSpinner:?Spinner
 
     _analyticsCode:AnalyticsCode
-    _parentOptions:Object
+    _options:Options = {
+        activateLanguageSupport: true,
+        additionalPageLoadingTimeInMilliseconds: 0,
+        domain: 'auto',
+        domNode: {
+            mediaQueryIndicator: '<div class="media-query-indicator">',
+            top: 'header',
+            scrollToTopButton: 'a[href="#top"]',
+            startUpAnimationClassPrefix: '.website-start-up-animation-number-',
+            windowLoadingCover: '.website-utilities-window-loading-cover',
+            windowLoadingSpinner:
+                '.website-utilities-window-loading-cover > div'
+        },
+        domNodeSelectorPrefix: 'body.{1}',
+        knownScrollEventNames: [
+            'DOMMouseScroll',
+            'keyup',
+            'mousedown',
+            'mousewheel',
+            'scroll',
+            'touchmove',
+            'wheel'
+        ],
+        language: {},
+        mediaQueryClassNameIndicator: [
+            ['extraSmall', 'xs'],
+            ['small', 'sm'],
+            ['medium', 'md'],
+            ['large', 'lg']
+        ],
+        onViewportMovesToTop: Tools.noop,
+        onViewportMovesAwayFromTop: Tools.noop,
+        onChangeToLargeMode: Tools.noop,
+        onChangeToMediumMode: Tools.noop,
+        onChangeToSmallMode: Tools.noop,
+        onChangeToExtraSmallMode: Tools.noop,
+        onChangeMediaQueryMode: Tools.noop,
+        onSwitchSection: Tools.noop,
+        onStartUpAnimationComplete: Tools.noop,
+        startUpAnimationElementDelayInMiliseconds: 100,
+        startUpShowAnimation: [{opacity: 1}, {}],
+        startUpHide: {opacity: 0},
+        switchToManualScrollingIndicator: (event:Object):boolean => (
+            event.which > 0 ||
+            event.type === 'mousedown' ||
+            event.type === 'mousewheel' ||
+            event.type === 'touchmove'
+        ),
+        scrollToTop: {
+            inLinearTime: false,
+            options: {duration: 'normal'},
+            button: {
+                slideDistanceInPixel: 30,
+                showAnimation: {duration: 'normal'},
+                hideAnimation: {duration: 'normal'}
+            }
+        },
+        trackingCode: null,
+        windowLoadingCoverHideAnimation: [{opacity: 0}, {}],
+        windowLoadingSpinner: {
+            animation: 'spinner-line-fade-quick',
+            className: 'spinner',
+            color: '#000',
+            // Corner roundness (0..1)
+            corners: 1,
+            // 1: clockwise, -1: counterclockwise
+            direction: 1,
+            // CSS color or array of colors
+            fadeColor: 'transparent',
+            // Left position relative to parent in px
+            left: 'auto',
+            // The length of each line
+            length: 23,
+            // The number of lines to draw
+            lines: 9,
+            position: 'absolute',
+            // The radius of the inner circle
+            radius: 40,
+            // The rotation offset
+            rotate: 0,
+            // Scales overall size of the spinner
+            scale: 1,
+            shadow: false,
+            // Rounds per second
+            speed: 1.1,
+            // Top position relative to parent in px
+            top: 'auto',
+            // The line thickness
+            width: 11,
+            // The z-index (defaults to 2000000000)
+            zIndex: 2e9
+        },
+        windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 2000
+    }
     // region public methods
     // / region special
     /**
      * Initializes the interactive web application.
      * @param options - An options object.
-     * @param parentOptions - A default options object.
      * @param startUpAnimationIsComplete - If set to "true", no start up
      * animation will be performed.
      * @param currentSectionName - Initial section name to use.
@@ -157,117 +234,36 @@ export class Website extends $.Tools.class {
      * @returns Returns the current instance.
      */
     initialize(
-        options:Object = {}, parentOptions:Object = {
-            activateLanguageSupport: true,
-            additionalPageLoadingTimeInMilliseconds: 0,
-            domain: 'auto',
-            domNode: {
-                mediaQueryIndicator: '<div class="media-query-indicator">',
-                top: 'header',
-                scrollToTopButton: 'a[href="#top"]',
-                startUpAnimationClassPrefix:
-                    '.website-start-up-animation-number-',
-                windowLoadingCover: '.website-utilities-window-loading-cover',
-                windowLoadingSpinner:
-                    '.website-utilities-window-loading-cover > div'
-            },
-            domNodeSelectorPrefix: 'body.{1}',
-            knownScrollEventNames:
-                'scroll mousedown wheel DOMMouseScroll mousewheel keyup ' +
-                'touchmove',
-            language: {},
-            mediaQueryClassNameIndicator: [
-                ['extraSmall', 'xs'], ['small', 'sm'], ['medium', 'md'],
-                ['large', 'lg']
-            ],
-            onViewportMovesToTop: Website.noop,
-            onViewportMovesAwayFromTop: Website.noop,
-            onChangeToLargeMode: Website.noop,
-            onChangeToMediumMode: Website.noop,
-            onChangeToSmallMode: Website.noop,
-            onChangeToExtraSmallMode: Website.noop,
-            onChangeMediaQueryMode: Website.noop,
-            onSwitchSection: Website.noop,
-            onStartUpAnimationComplete: Website.noop,
-            startUpAnimationElementDelayInMiliseconds: 100,
-            startUpShowAnimation: [{opacity: 1}, {}],
-            startUpHide: {opacity: 0},
-            switchToManualScrollingIndicator: (event:Object):boolean => (
-                event.which > 0 || event.type === 'mousedown' ||
-                event.type === 'mousewheel' || event.type === 'touchmove'),
-            scrollToTop: {
-                inLinearTime: false,
-                options: {duration: 'normal'},
-                button: {
-                    slideDistanceInPixel: 30,
-                    showAnimation: {duration: 'normal'},
-                    hideAnimation: {duration: 'normal'}
-                }
-            },
-            trackingCode: null,
-            windowLoadingCoverHideAnimation: [{opacity: 0}, {}],
-            windowLoadingSpinner: {
-                animation: 'spinner-line-fade-quick',
-                className: 'spinner',
-                color: '#000',
-                // Corner roundness (0..1)
-                corners: 1,
-                // 1: clockwise, -1: counterclockwise
-                direction: 1,
-                // CSS color or array of colors
-                fadeColor: 'transparent',
-                // Left position relative to parent in px
-                left: 'auto',
-                // The length of each line
-                length: 23,
-                // The number of lines to draw
-                lines: 9,
-                position: 'absolute',
-                // The radius of the inner circle
-                radius: 40,
-                // The rotation offset
-                rotate: 0,
-                // Scales overall size of the spinner
-                scale: 1,
-                shadow: false,
-                // Rounds per second
-                speed: 1.1,
-                // Top position relative to parent in px
-                top: 'auto',
-                // The line thickness
-                width: 11,
-                // The z-index (defaults to 2000000000)
-                zIndex: 2e9
-            },
-            windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 2000
-        }, startUpAnimationIsComplete:boolean = false,
+        options:object = {},
+        startUpAnimationIsComplete:boolean = false,
         currentSectionName:?string = null,
         viewportIsOnTop:boolean = false,
         currentMediaQueryMode:string = '',
-        languageHandler:?Language = null,
+        languageHandler:Internationalisation|null = null,
         analyticsCode:AnalyticsCode = {
             initial: `
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=` +
-                    'i[r]||function(){' +
-                '(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*' +
-                    'new window.Date();' +
-                'a=s.createElement(o),m=s.getElementsByTagName(o)[0];' +
-                    'a.async=1;a.src=g;' +
-                'm.parentNode.insertBefore(a,m)})(' +
-                `window,document,'script','//www.google-analytics.com/` +
-                    `analytics.js','ga');` +
-                `window.ga('create', '{1}', '{2}');
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=
+                    i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*
+                    new window.Date();
+                a=s.createElement(o),m=s.getElementsByTagName(o)[0];
+                    a.async=1;a.src=g;
+                m.parentNode.insertBefore(a,m)})(
+                window,document,'script','//www.google-analytics.com/
+                    analytics.js','ga');
+                window.ga('create', '{1}', '{2}');
                 window.ga('set', 'anonymizeIp', true);
                 window.ga('send', 'pageview', {page: '{3}'});
             `,
             sectionSwitch: `window.ga('send', 'pageview', {page: '{1}'});`,
-            event: `window.ga(
-                'send', 'event', eventCategory, eventAction, eventLabel,
-                eventValue, eventData);
+            event: `
+                window.ga(
+                    'send', 'event', eventCategory, eventAction, eventLabel,
+                    eventValue, eventData
+                );
             `
         }
-    ):Promise<Website> {
-        this._parentOptions = parentOptions
+    ):Promise<WebsiteUtilities> {
         this.startUpAnimationIsComplete = startUpAnimationIsComplete
         this.viewportIsOnTop = viewportIsOnTop
         this.currentMediaQueryMode = currentMediaQueryMode
@@ -277,14 +273,13 @@ export class Website extends $.Tools.class {
             this.currentSectionName = currentSectionName
         else if ('location' in $.global && $.global.location.hash)
             this.currentSectionName = $.global.location.hash.substring(
-                '#'.length)
+                '#'.length
+            )
         else
             this.currenSectionName = 'home'
-        // Wrap event methods with debounceing handler.
-        // IgnoreTypeCheck
+        // Wrap event methods with debounce handler.
         this._onViewportMovesToTop = this.constructor.debounce(
             this._onViewportMovesToTop.bind(this))
-        // IgnoreTypeCheck
         this._onViewportMovesAwayFromTop = this.constructor.debounce(
             this._onViewportMovesAwayFromTop.bind(this))
         this._options = this.constructor.extend(
@@ -323,7 +318,7 @@ export class Website extends $.Tools.class {
                 this._options.language.logging = this._options.logging
             if (this._options.activateLanguageSupport && !this.languageHandler)
                 $.Language(this._options.language).then((
-                    languageHandler:Language
+                    languageHandler:Internationalisation
                 ):void => {
                     this.languageHandler = languageHandler
                 })
@@ -335,7 +330,7 @@ export class Website extends $.Tools.class {
      * @param onAfter - Callback to call after effect has finished.
      * @returns Returns the current instance.
      */
-    scrollToTop(onAfter:Function = Website.noop):Website {
+    scrollToTop(onAfter:Function = Tools.noop):WebsiteUtilities {
         if (!('document' in $.global))
             return this
         this._options.scrollToTop.options.onAfter = onAfter
@@ -362,7 +357,7 @@ export class Website extends $.Tools.class {
      * This method disables scrolling on the given web view.
      * @returns Returns the current instance.
      */
-    disableScrolling():Website {
+    disableScrolling():WebsiteUtilities {
         this.$domNodes.parent.addClass('disable-scrolling').on(
             'touchmove', (event:Object):void => event.preventDefault())
         return this
@@ -371,7 +366,7 @@ export class Website extends $.Tools.class {
      * This method disables scrolling on the given web view.
      * @returns Returns the current instance.
      */
-    enableScrolling():Website {
+    enableScrolling():WebsiteUtilities {
         this.off(this.$domNodes.parent.removeClass(
             'disable-scrolling', 'touchmove'))
         return this
@@ -383,7 +378,7 @@ export class Website extends $.Tools.class {
      * code.
      * @returns Returns the current instance.
      */
-    triggerAnalyticsEvent(...parameter:Array<any>):Website {
+    triggerAnalyticsEvent(...parameter:Array<any>):WebsiteUtilities {
         if (
             this._options.trackingCode && 'location' in $.global &&
             $.global.location.hostname !== 'localhost'
@@ -412,7 +407,7 @@ export class Website extends $.Tools.class {
      * This method triggers if the viewport moves to top.
      * @returns Returns the current instance.
      */
-    _onViewportMovesToTop():Website {
+    _onViewportMovesToTop():void {
         if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
             this.$domNodes.scrollToTopButton.css('opacity', 0)
         else {
@@ -428,13 +423,12 @@ export class Website extends $.Tools.class {
                 opacity: 0
             }, this._options.scrollToTop.button.hideAnimation)
         }
-        return this
     }
     /**
      * This method triggers if the viewport moves away from top.
      * @returns Returns the current instance.
      */
-    _onViewportMovesAwayFromTop():Website {
+    _onViewportMovesAwayFromTop():void {
         if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
             this.$domNodes.scrollToTopButton.css('opacity', 1)
         else
@@ -449,7 +443,6 @@ export class Website extends $.Tools.class {
                 queue: false,
                 opacity: 1
             }, this._options.scrollToTop.button.showAnimation)
-        return this
     }
     /* eslint-disable no-unused-vars */
     /**
@@ -458,8 +451,7 @@ export class Website extends $.Tools.class {
      * @param newMode - Saves the new mode.
      * @returns Returns the current instance.
      */
-    _onChangeMediaQueryMode(oldMode:string, newMode:string):Website {
-        return this
+    _onChangeMediaQueryMode(oldMode:string, newMode:string):void {
     }
     /**
      * This method triggers if the responsive design switches to large mode.
@@ -467,8 +459,7 @@ export class Website extends $.Tools.class {
      * @param newMode - Saves the new mode.
      * @returns Returns the current instance.
      */
-    _onChangeToLargeMode(oldMode:string, newMode:string):Website {
-        return this
+    _onChangeToLargeMode(oldMode:string, newMode:string):void {
     }
     /**
      * This method triggers if the responsive design switches to medium mode.
@@ -476,8 +467,7 @@ export class Website extends $.Tools.class {
      * @param newMode - Saves the new mode.
      * @returns Returns the current instance.
      */
-    _onChangeToMediumMode(oldMode:string, newMode:string):Website {
-        return this
+    _onChangeToMediumMode(oldMode:string, newMode:string):void {
     }
     /**
      * This method triggers if the responsive design switches to small mode.
@@ -485,8 +475,7 @@ export class Website extends $.Tools.class {
      * @param newMode - Saves the new mode.
      * @returns Returns the current instance.
      */
-    _onChangeToSmallMode(oldMode:string, newMode:string):Website {
-        return this
+    _onChangeToSmallMode(oldMode:string, newMode:string):void {
     }
     /**
      * This method triggers if the responsive design switches to extra small
@@ -495,8 +484,7 @@ export class Website extends $.Tools.class {
      * @param newMode - Saves the new mode.
      * @returns Returns the current instance.
      */
-    _onChangeToExtraSmallMode(oldMode:string, newMode:string):Website {
-        return this
+    _onChangeToExtraSmallMode(oldMode:string, newMode:string):void {
     }
     /* eslint-enable no-unused-vars */
     /**
@@ -504,7 +492,7 @@ export class Website extends $.Tools.class {
      * @param sectionName - Contains the new section name.
      * @returns Returns the current instance.
      */
-    _onSwitchSection(sectionName:string):Website {
+    _onSwitchSection(sectionName:string):void {
         if (
             this._options.trackingCode &&
             this._options.trackingCode !== '__none__' &&
@@ -526,15 +514,13 @@ export class Website extends $.Tools.class {
                     exception)
             }
         }
-        return this
     }
     /**
      * This method is complete if last startup animation was initialized.
      * @returns Returns the current instance.
      */
-    _onStartUpAnimationComplete():Website {
+    _onStartUpAnimationComplete():void {
         this.startUpAnimationIsComplete = true
-        return this
     }
     // endregion
     // / region helper
@@ -542,11 +528,12 @@ export class Website extends $.Tools.class {
      * This method adds triggers for responsive design switches.
      * @returns Returns the current instance.
      */
-    _addMediaQueryChangeEvents():Website {
+    _addMediaQueryChangeEvents():void {
         this.on(
-            this.$domNodes.window, 'resize',
-            this._triggerWindowResizeEvents.bind(this))
-        return this
+            this.$domNodes.window,
+            'resize',
+            this._triggerWindowResizeEvents.bind(this)
+        )
     }
     /**
      * This method triggers if the responsive design switches its mode.
@@ -554,7 +541,7 @@ export class Website extends $.Tools.class {
      * callbacks.
      * @returns Returns the current instance.
      */
-    _triggerWindowResizeEvents(...parameter:Array<any>):Website {
+    _triggerWindowResizeEvents(...parameter:Array<any>):void {
         for (
             const classNameMapping:string of
             this._options.mediaQueryClassNameIndicator
@@ -581,7 +568,6 @@ export class Website extends $.Tools.class {
             this.$domNodes.mediaQueryIndicator.removeClass(
                 `hidden-${classNameMapping[1]}`)
         }
-        return this
     }
     /**
      * This method triggers if view port arrives at special areas.
@@ -589,13 +575,13 @@ export class Website extends $.Tools.class {
      * callbacks.
      * @returns Returns the current instance.
      */
-    _bindScrollEvents(...parameter:Array<any>):Website {
+    _bindScrollEvents(...parameter:Array<any>):void {
         // Stop automatic scrolling if the user wants to scroll manually.
         if (!('window' in this.$domNodes))
             return this
         const $scrollTarget:$DomNode = $('body, html').add(
             this.$domNodes.window)
-        $scrollTarget.on(this._options.knownScrollEventNames, (
+        $scrollTarget.on(this._options.knownScrollEventNames.join(' '), (
             event:Object
         ):void => {
             if (this._options.switchToManualScrollingIndicator(event))
@@ -621,13 +607,12 @@ export class Website extends $.Tools.class {
             this.viewportIsOnTop = true
             this.fireEvent('viewportMovesToTop', false, this, ...parameter)
         }
-        return this
     }
     /**
      * This method triggers after window is loaded.
      * @returns Returns the current instance.
      */
-    async _removeLoadingCover():Promise<Website> {
+    async _removeLoadingCover():Promise<void> {
         await this.constructor.timeout(
             this._options.additionalPageLoadingTimeInMilliseconds)
         // Hide startup animation dom nodes to show them step by step.
@@ -642,14 +627,13 @@ export class Website extends $.Tools.class {
                 ...this._options.windowLoadingCoverHideAnimation)
         else
             this._options.windowLoadingCoverHideAnimation[1].always()
-        return this
     }
     /**
      * This method handles the given start up effect step.
      * @param elementNumber - The current start up step.
      * @returns Returns the current instance.
      */
-    async _handleStartUpEffects(elementNumber:number = 1):Promise<Website> {
+    async _handleStartUpEffects(elementNumber:number = 1):Promise<void> {
         // Stop and delete spinner instance.
         this.$domNodes.windowLoadingCover.hide()
         if (this.windowLoadingSpinner)
@@ -679,13 +663,12 @@ export class Website extends $.Tools.class {
                 lastElementTriggered = true
         } else
             this.fireEvent('startUpAnimationComplete')
-        return this
     }
     /**
      * This method adds triggers to switch section.
      * @returns Returns the current instance.
      */
-    _addNavigationEvents():Website {
+    _addNavigationEvents():void {
         if ('addEventListener' in $.global)
             $.global.addEventListener('hashchange', ():void => {
                 if (this.startUpAnimationIsComplete)
@@ -693,26 +676,25 @@ export class Website extends $.Tools.class {
                         'switchSection', false, this, location.hash.substring(
                             '#'.length))
             }, false)
-        return this._handleScrollToTopButton()
+        this._handleScrollToTopButton()
     }
     /**
      * Adds trigger to scroll top buttons.
      * @returns Returns the current instance.
      */
-    _handleScrollToTopButton():Website {
+    _handleScrollToTopButton():void {
         this.on(this.$domNodes.scrollToTopButton, 'click', (
             event:Object
         ):void => {
             event.preventDefault()
             this.scrollToTop()
         })
-        return this
     }
     /**
      * Executes the page tracking code.
      * @returns Returns the current instance.
      */
-    _handleAnalyticsInitialisation():Website {
+    _handleAnalyticsInitialisation():void {
         if (
             this._options.trackingCode &&
             this._options.trackingCode !== '__none__' &&
@@ -744,16 +726,15 @@ export class Website extends $.Tools.class {
                     ) || 1)
             })
         }
-        return this
     }
     // / endregion
     // endregion
 }
-export default Website
+export default WebsiteUtilities
 // endregion
-$.Website = (...parameter:Array<any>):any => $.Tools().controller(
-    Website, parameter)
-$.Website.class = Website
+$.WebsiteUtilities = (...parameter:Array<any>):any => $.Tools().controller(
+    WebsiteUtilities, parameter)
+$.WebsiteUtilities.class = WebsiteUtilities
 // region vim modline
 // vim: set tabstop=4 shiftwidth=4 expandtab:
 // vim: foldmethod=marker foldmarker=region,endregion:
