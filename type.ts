@@ -16,8 +16,13 @@
     endregion
 */
 // region imports
-import {ExtendableOptions as BaseOptions} from 'clientnode/type'
-import {Scope as BaseScope} from 'internationalisation'
+import {
+    $DomNode, ExtendableOptions as BaseOptions, Mapping
+} from 'clientnode/type'
+import {
+    Options as InternationalisationOptions, Scope as BaseScope
+} from 'internationalisation/type'
+import {SpinnerOptions} from 'spin.js'
 // endregion
 // region exports
 export type WebsiteUtilitiesFunction = (...parameter:Array<any>) => any
@@ -27,12 +32,55 @@ export interface Scope extends BaseScope {
 declare global {
     interface JQuery extends Scope {}
 }
+export type DomNodes<Type = string> = {
+    mediaQueryIndicator:Type;
+    scrollToTopButton:Type;
+    startUpAnimationClassPrefix:Type;
+    top:Type;
+    windowLoadingCover:Type;
+    windowLoadingSpinner:Type;
+}
+export type $DomNodes = DomNodes<$DomNode>
 export type Options = BaseOptions & {
+    activateLanguageSupport:boolean;
+    additionalPageLoadingTimeInMilliseconds:number;
+    domain:string;
+    domNode:DomNodes;
+    domNodeSelectorPrefix:string;
+    knownScrollEventNames:Array<string>;
+    language:InternationalisationOptions;
+    mediaQueryClassNameIndicator:Array<Array<string>>;
+    onChangeMediaQueryMode:Function;
+    onChangeToExtraSmallMode:Function;
+    onChangeToLargeMode:Function;
+    onChangeToMediumMode:Function;
+    onChangeToSmallMode:Function;
+    onStartUpAnimationComplete:Function;
+    onSwitchSection:Function;
+    onViewportMovesAwayFromTop:Function;
+    onViewportMovesToTop:Function;
+    scrollToTop:{
+        button:{
+            slideDistanceInPixel:number;
+            showAnimation:{duration:number|string};
+            hideAnimation:{duration:number|string};
+        },
+        inLinearTime:boolean;
+        options:{duration:number|string};
+    },
+    startUpAnimationElementDelayInMiliseconds:number;
+    startUpHide:Mapping;
+    startUpShowAnimation:[Mapping, Mapping];
+    switchToManualScrollingIndicator:(event:Event) => boolean;
+    trackingCode?:null|string;
+    windowLoadingCoverHideAnimation:[Mapping, Mapping];
+    windowLoadingSpinner:SpinnerOptions;
+    windowLoadedTimeoutAfterDocumentLoadedInMilliseconds:number;
 }
 export type AnalyticsCode = {
+    event:string;
     initial:string;
     sectionSwitch:string;
-    event:string;
 }
 // endregion
 // region vim modline
