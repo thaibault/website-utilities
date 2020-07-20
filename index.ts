@@ -17,8 +17,8 @@
     endregion
 */
 // region imports
-import Tools, {$} from 'clientnode'
-import {$DomNode} from 'clientnode/type'
+import Tools, {$, globalContext} from 'clientnode'
+import {$DomNode, TimeoutPromise} from 'clientnode/type'
 import Internationalisation from 'internationalisation'
 import 'jQuery-scrollTo'
 import {Spinner} from 'spin.js'
@@ -41,12 +41,6 @@ import {$DomNodes, Options} from './type'
  * @property viewportIsOnTop - Indicates whether current viewport is on top.
  * @property windowLoadingSpinner - The window loading spinner instance.
  *
- * @property _analyticsCode - Saves analytics code snippets to use for
- * referenced situations.
- * @property _analyticsCode.event - Code to execute on each fired event.
- * @property _analyticsCode.initial - Initial string to use for analyses.
- * @property _analyticsCode.sectionSwitch - Code to execute on each section
- * switch. Current page is available via "{1}" string formatting.
  * @property _options - Options extended by the options given to the
  * initializer method.
  * @property _options.activateLanguageSupport - Indicates whether language
@@ -69,6 +63,7 @@ import {$DomNodes, Options} from './type'
  * loading spinner (on top of the window loading cover).
  * @property _options.domNodeSelectorPrefix - Selector prefix for all nodes to
  * take into account.
+ * @property _options.initialSectionName - Pre-selected section name.
  * @property _options.knownScrollEventNames - Saves all known scroll events in
  * a space separated string.
  * @property _optionsnpm i @types/spin.js.language - Options for client side internationalisation
@@ -104,8 +99,13 @@ import {$DomNodes, Options} from './type'
  * stop currently running scroll animations to let the user get control of
  * current scrolling behavior. Given callback gets an event object. If the
  * function returns "true" current animated scrolls will be stopped.
- * @property _options.trackingCode - Analytic tracking code to collect user
+ * @property _options.tracking - Tracking configuration to collect user's
  * behavior data.
+ * @property _options.tracking.event - Function to call an events.
+ * @property _options.tracking.initial - Function to initialize tracker.
+ * @property _options.tracking.key - Key to identify tracking account.
+ * @property _options.tracking.sectionSwitch - Function to call on section
+ * switches.
  * @property _options.windowLoadingCoverHideAnimation - Options for startup
  * loading cover hide animation.
  * @property _options.windowLoadingSpinner - Options for the window loading
@@ -115,15 +115,14 @@ import {$DomNodes, Options} from './type'
  */
 export class WebsiteUtilities extends Tools {
     $domNodes:$DomNodes
-    currentMediaQueryMode:string
-    currentSectionName:string
-    languageHandler:?Internationalisation
+    currentMediaQueryMode:string = ''
+    currentSectionName:string = 'home'
+    languageHandler:Internationalisation|null = null
     readonly self:typeof WebsiteUtilities = WebsiteUtilities
-    startUpAnimationIsComplete:boolean
-    viewportIsOnTop:boolean
-    windowLoadingSpinner:?Spinner
+    startUpAnimationIsComplete:boolean = false
+    viewportIsOnTop:boolean = false
+    windowLoadingSpinner:null|Spinner = null
 
-    _analyticsCode:AnalyticsCode
     static readonly _name:'WebsiteUtilities' = 'WebsiteUtilities'
     _options:Options = {
         activateLanguageSupport: true,
@@ -139,6 +138,7 @@ export class WebsiteUtilities extends Tools {
                 '.website-utilities-window-loading-cover > div'
         },
         domNodeSelectorPrefix: 'body.{1}',
+        initialSectionName: 'home',
         knownScrollEventNames: [
             'DOMMouseScroll',
             'keyup',
@@ -182,6 +182,26 @@ export class WebsiteUtilities extends Tools {
             event.type === 'mousewheel' ||
             event.type === 'touchmove'
         ),
+        tracking: {
+            event: (
+                category:string,
+                action:string,
+                label:string,
+                value:any,
+                data:any
+            ):void => {
+                if (!globalContext.dataLayer)
+                    globalContext.dataLayer = []
+                globalContext.dataLayer.push({
+                    category, action, label, value, data
+                })
+            },
+            sectionSwitch: function(sectionName:string):void {
+                this._options.tracking.event(
+                    'sectionSwitch', 'sectionSwitch', sectionName
+                )
+            }
+        }
         windowLoadingCoverHideAnimation: [{opacity: 0}, {}],
         windowLoadingSpinner: {
             animation: 'spinner-line-fade-quick',
@@ -223,75 +243,35 @@ export class WebsiteUtilities extends Tools {
     /**
      * Initializes the interactive web application.
      * @param options - An options object.
-     * @param startUpAnimationIsComplete - If set to "true", no start up
-     * animation will be performed.
-     * @param currentSectionName - Initial section name to use.
-     * @param viewportIsOnTop - Indicates whether viewport is on top initially.
-     * @param currentMediaQueryMode - Initial media query mode to use (until
-     * first window resize event could trigger a change).
-     * @param languageHandler - Language handler instance to use.
-     * @param analyticsCode - Analytic code snippet to use.
      * @returns Returns the current instance.
      */
-    initialize(
-        options:object = {},
-        startUpAnimationIsComplete:boolean = false,
-        currentSectionName:?string = null,
-        viewportIsOnTop:boolean = false,
-        currentMediaQueryMode:string = '',
-        languageHandler:Internationalisation|null = null,
-        analyticsCode:AnalyticsCode = {
-            event: `
-                window.ga(
-                    'send', 'event', eventCategory, eventAction, eventLabel,
-                    eventValue, eventData
-                );
-            `,
-            initial: `
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=
-                    i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*
-                    new window.Date();
-                a=s.createElement(o),m=s.getElementsByTagName(o)[0];
-                    a.async=1;a.src=g;
-                m.parentNode.insertBefore(a,m)})(
-                window,document,'script','//www.google-analytics.com/
-                    analytics.js','ga');
-                window.ga('create', '{1}', '{2}');
-                window.ga('set', 'anonymizeIp', true);
-                window.ga('send', 'pageview', {page: '{3}'});
-            `,
-            sectionSwitch: `window.ga('send', 'pageview', {page: '{1}'});`
-        }
-    ):Promise<WebsiteUtilities> {
-        this.startUpAnimationIsComplete = startUpAnimationIsComplete
-        this.viewportIsOnTop = viewportIsOnTop
-        this.currentMediaQueryMode = currentMediaQueryMode
-        this.languageHandler = languageHandler
-        this._analyticsCode = analyticsCode
-        if (currentSectionName)
-            this.currentSectionName = currentSectionName
-        else if ('location' in $.global && $.global.location.hash)
-            this.currentSectionName = $.global.location.hash.substring(
+    initialize(options:object = {}):Promise<WebsiteUtilities> {
+        super.initialize(options)
+        if (this._options.initialSectionName)
+            this.currentSectionName = this._options.initialSectionName
+        else if (
+            globalContext.window &&
+            globalContext.window.location &&
+            globalContext.window.location.hash
+        )
+            this.currentSectionName = globalContext.location.hash.substring(
                 '#'.length
             )
-        else
-            this.currenSectionName = 'home'
         // Wrap event methods with debounce handler.
-        this._onViewportMovesAwayFromTop = this.constructor.debounce(
-            this._onViewportMovesAwayFromTop.bind(this))
-        this._onViewportMovesToTop = this.constructor.debounce(
+        this._onViewportMovesAwayFromTop = Tools.debounce(
+            this._onViewportMovesAwayFromTop.bind(this)
+        )
+        this._onViewportMovesToTop = Tools.debounce(
             this._onViewportMovesToTop.bind(this)
         )
-        super.initialize(options)
         this.$domNodes = this.grabDomNode(this._options.domNode)
         this.disableScrolling()
         return new Promise(async (resolve:Function):Promise<void> => {
-            this._options.windowLoadingCoverHideAnimation[1].always = (
-            ):void => {
-                this._handleStartUpEffects()
-                resolve(this)
-            }
+            this._options.windowLoadingCoverHideAnimation[1].always =
+                ():void => {
+                    this._handleStartUpEffects()
+                    resolve(this)
+                }
             if (this.$domNodes.windowLoadingSpinner.length) {
                 this.windowLoadingSpinner =
                     new Spinner(this._options.windowLoadingSpinner)
@@ -299,22 +279,23 @@ export class WebsiteUtilities extends Tools {
                     this.$domNodes.windowLoadingSpinner[0]
                 )
             }
-            this._bindScrollEvents().$domNodes.parent.show()
-            if ('window' in this.$domNodes) {
+            this._bindScrollEvents()
+            this.$domNodes.parent.show()
+            if (this.$domNodes.window) {
                 const onLoaded:Function = ():void => {
                     if (!this.windowLoaded) {
                         this.windowLoaded = true
                         this._removeLoadingCover()
                     }
                 }
-                $(():Promise<boolean> => this.constructor.timeout(
+                $(():TimeoutPromise => Tools.timeout(
                     onLoaded,
                     this._options
                         .windowLoadedTimeoutAfterDocumentLoadedInMilliseconds
                 ))
                 this.on(this.$domNodes.window, 'load', onLoaded)
             }
-            this._handleAnalyticsInitialisation()
+            this._initializeTracking()
             if (!this._options.language.logging)
                 this._options.language.logging = this._options.logging
             if (this._options.activateLanguageSupport && !this.languageHandler)
@@ -333,14 +314,16 @@ export class WebsiteUtilities extends Tools {
      * @returns Returns the current instance.
      */
     scrollToTop(onAfter:Function = Tools.noop):WebsiteUtilities {
-        if (!('document' in $.global))
+        if (!(globalContext.window && globalContext.document))
             return this
         this._options.scrollToTop.options.onAfter = onAfter
         /*
             NOTE: This is a workaround to avoid a bug in "jQuery.scrollTo()"
             expecting this property exists.
         */
-        Object.defineProperty($.global.document, 'body', {value: $('body')[0]})
+        Object.defineProperty(
+            globalContext.window.document, 'body', {value: $('body')[0]}
+        )
         if (this._options.scrollToTop.inLinearTime) {
             const distanceToTopInPixel:number =
                 this.$domNodes.window.scrollTop()
@@ -380,35 +363,33 @@ export class WebsiteUtilities extends Tools {
     /**
      * Triggers an analytics event. All given arguments are forwarded to
      * configured analytics event code to defined their environment variables.
-     * @param parameter - All parameter will be forwarded to the analytics
-     * code.
+     * @param parameter - All parameter will be forwarded to the tracker.
      * @returns Returns the current instance.
      */
-    triggerAnalyticsEvent(...parameter:Array<any>):WebsiteUtilities {
+    trackEvent(
+        category:string = 'event',
+        action:string = 'event',
+        label?:string,
+        value?:any,
+        data?:any
+    ):WebsiteUtilities {
         if (
-            this._options.trackingCode &&
-            $.global.window &&
-            $.global.window.location &&
-            $.global.window.location.hostname !== 'localhost'
+            this._options.tracking.key &&
+            globalContext.window &&
+            globalContext.window.location &&
+            globalContext.window.location.hostname !== 'localhost'
         ) {
-            this.debug(
-                'Run analytics code: "#{this._analyticsCode.event}" with ' +
-                'arguments:'
-            )
+            if (!label)
+                label = this.currentSectionName
+            this.debug('Run tracking code: "event" with arguments:')
             this.debug(parameter)
             try {
-                (new Function(
-                    'eventCategory',
-                    'eventAction',
-                    'eventLabel',
-                    'eventData',
-                    'eventValue',
-                    this._analyticsCode.event
-                )).call(this, ...parameter)
+                this._options.tracking.event.call(
+                    this, category, action, label, value, data
+                )
             } catch (error) {
                 this.warn(
-                    'Problem in google analytics event code snippet: ' +
-                    Tools.represent(error)
+                    `Problem in tracking event: ${Tools.represent(error)}`
                 )
             }
         }
@@ -495,8 +476,7 @@ export class WebsiteUtilities extends Tools {
      * @param newMode - Saves the new mode.
      * @returns Nothing.
      */
-    _onChangeToSmallMode(oldMode:string, newMode:string):void {
-    }
+    _onChangeToSmallMode(oldMode:string, newMode:string):void {}
     /**
      * This method triggers if the responsive design switches to extra small
      * mode.
@@ -504,8 +484,7 @@ export class WebsiteUtilities extends Tools {
      * @param newMode - Saves the new mode.
      * @returns Nothing.
      */
-    _onChangeToExtraSmallMode(oldMode:string, newMode:string):void {
-    }
+    _onChangeToExtraSmallMode(oldMode:string, newMode:string):void {}
     /* eslint-enable no-unused-vars */
     /**
      * This method triggers if we change the current section.
@@ -514,26 +493,25 @@ export class WebsiteUtilities extends Tools {
      */
     _onSwitchSection(sectionName:string):void {
         if (
-            this._options.trackingCode &&
-            this._options.trackingCode !== '__none__' &&
-            $.global.window &&
-            $.global.window.location &&
-            $.global.window.location.hostname !== 'localhost' &&
+            this._options.tracking.key &&
+            globalContext.window &&
+            globalContext.window.location &&
+            globalContext.window.location.hostname !== 'localhost' &&
             this.currentSectionName !== sectionName
         ) {
             this.currentSectionName = sectionName
             this.debug(
-                `Run analytics code: "${this._analyticsCode.sectionSwitch}"`,
-                this.currentSectionName
+                'Run section switch tracking on section "' +
+                `${this.currentSectionName}".`
             )
             try {
-                (new Function(this.constructor.stringFormat(
-                    this._analyticsCode.sectionSwitch, this.currentSectionName
-                )))()
+                this._options.tracking.sectionSwitch.call(
+                    this, this.currentSectionName
+                )
             } catch (error) {
                 this.warn(
-                    'Problem in analytics section switch code snippet: ' +
-                    Tools.represent(error)
+                    'Problem due to track section switch to "' +
+                    `${this.currentSectionName}": ${Tools.represent(error)}`
                 )
             }
         }
@@ -569,7 +547,8 @@ export class WebsiteUtilities extends Tools {
             const classNameMapping of
                 this._options.mediaQueryClassNameIndicator
         ) {
-            this.$domNodes.mediaQueryIndicator
+            this.$domNodes
+                .mediaQueryIndicator
                 .prependTo(this.$domNodes.parent)
                 .addClass(`hidden-${classNameMapping[1]}`)
             if (
@@ -610,7 +589,7 @@ export class WebsiteUtilities extends Tools {
      */
     _bindScrollEvents(...parameter:Array<any>):void {
         // Stop automatic scrolling if the user wants to scroll manually.
-        if (!('window' in this.$domNodes))
+        if (!this.$domNodes.window)
             return this
         const $scrollTarget:$DomNode =
             $('body, html').add(this.$domNodes.window)
@@ -721,8 +700,8 @@ export class WebsiteUtilities extends Tools {
      * @returns Nothing.
      */
     _addNavigationEvents():void {
-        if ($.global.window && $.global.window.addEventListener)
-            $.global.window.addEventListener(
+        if (globalContext.window && globalContext.window.addEventListener)
+            globalContext.window.addEventListener(
                 'hashchange',
                 ():void => {
                     if (this.startUpAnimationIsComplete)
@@ -755,28 +734,26 @@ export class WebsiteUtilities extends Tools {
      * Executes the page tracking code.
      * @returns Nothing.
      */
-    _handleAnalyticsInitialisation():void {
+    _initializeTracking():void {
         if (
-            this._options.trackingCode &&
-            this._options.trackingCode !== '__none__' &&
-            $.global.window &&
-            $.global.window.location &&
-            $.global.window.location.hostname !== 'localhost'
+            this._options.tracking.initial &&
+            this._options.tracking.key &&
+            globalContext.window &&
+            globalContext.window.location &&
+            globalContext.window.location.hostname !== 'localhost'
         ) {
             this.debug(
-                `Run analytics code: "${this._analyticsCode.initial}"`,
-                this._options.trackingCode,
-                this._options.domain,
-                this.currentSectionName
+                'Initialize tracking with key: "' + 
+                `${this._options.tracking.key}" on section "` +
+                `${this.currentSectioName}".`
             )
             try {
-                (new Function(this.constructor.stringFormat(
-                    this._analyticsCode.initial, this._options.trackingCode,
-                    this._options.domain, this.currentSectionName
-                )))()
+                this._options.tracking.initial.call(
+                    this, this._options.tracking.key, this.currentSectionName
+                )
             } catch (error) {
                 this.warn(
-                    'Problem in analytics initial code snippet: ' +
+                    'Problem due to initialize track: ' +
                     Tools.represent(error)
                 )
             }

@@ -47,6 +47,7 @@ export type Options = BaseOptions & {
     domain:string;
     domNode:DomNodes;
     domNodeSelectorPrefix:string;
+    initialSectionName:string;
     knownScrollEventNames:Array<string>;
     language:InternationalisationOptions;
     mediaQueryClassNameIndicator:Array<Array<string>>;
@@ -72,15 +73,17 @@ export type Options = BaseOptions & {
     startUpHide:Mapping;
     startUpShowAnimation:[Mapping, Mapping];
     switchToManualScrollingIndicator:(event:Event) => boolean;
-    trackingCode?:null|string;
+    tracking:{
+        event:(
+            category:string, action:string, label:string, value:any, data:any
+        ) => void;
+        initial?:null|((key:string, sectionName:string) => void);
+        key?:null|string;
+        sectionSwitch:(sectionName:string) => void;
+    };
     windowLoadingCoverHideAnimation:[Mapping, Mapping];
     windowLoadingSpinner:SpinnerOptions;
     windowLoadedTimeoutAfterDocumentLoadedInMilliseconds:number;
-}
-export type AnalyticsCode = {
-    event:string;
-    initial:string;
-    sectionSwitch:string;
 }
 // endregion
 // region vim modline
