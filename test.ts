@@ -14,80 +14,95 @@
     endregion
 */
 // region imports
-import registerTest from 'clientnode/test'
-import type Website from './index'
+import WebsiteUtilities from './index'
 // endregion
-registerTest(async function(
-    roundType:string, targetTechnology:?string, $:any
-):Promise<void> {
+describe(WebsiteUtilities._name, ():void => {
     require('./index')
-    const website:Website = await $.Website()
+    const websiteUtilties:WebsiteUtilities = await $.WebsiteUtilties()
     // region tests
     // / region public methods
     // // region special
-    this.test('initialize', (assert:Object):void => assert.ok(website))
+    test('initialize', ():void => assert.ok(websiteUtilities))
     // // endregion
-    this.test('scrollToTop', (assert:Object):void => assert.strictEqual(
-        website.scrollToTop(), website))
-    this.test('disableScrolling|enableScrolling', (assert:Object):void => {
-        assert.strictEqual(website.disableScrolling(), website)
-        assert.strictEqual(website.enableScrolling(), website)
+    test('scrollToTop', ():void =>
+        expect(websiteUtilities.scrollToTop()).toStrictEqual(websiteUtilities)
+    )
+    test('disableScrolling|enableScrolling', ():void => {
+        expect(websiteUtilities.disableScrolling())
+            .toStrictEqual(websiteUtilities)
+        expect(websiteUtilities.enableScrolling())
+            .toStrictEqual(websiteUtilities)
     })
     // / endregion
     // / region protected methods
     // // region event
-    this.test('_onViewportMovesToTop', (assert:Object):void => {
-        website._onViewportMovesToTop()
+    test('_onViewportMovesToTop', ():void => {
+        websiteUtilities._onViewportMovesToTop()
         // NOTE: Returns timeout id because of debounceing.
         assert.ok(website._onViewportMovesToTop().hasOwnProperty('clear'))
     })
-    this.test('_onViewportMovesAwayFromTop', (assert:Object):void => {
+    test('_onViewportMovesAwayFromTop', ():void => {
         website._onViewportMovesAwayFromTop()
         // NOTE: Returns timeout id because of debounceing.
         assert.ok(website._onViewportMovesAwayFromTop().hasOwnProperty(
             'clear'))
     })
-    this.test('_onChangeMediaQueryMode', (assert:Object):void =>
+    test('_onChangeMediaQueryMode', ():void =>
         assert.strictEqual(
-            website._onChangeMediaQueryMode('old', 'new'), website))
-    this.test('_onChangeToLargeMode', (assert:Object):void =>
+            website._onChangeMediaQueryMode('old', 'new'), website)
+    )
+    test('_onChangeToLargeMode', ():void =>
         assert.strictEqual(
-            website._onChangeToLargeMode('old', 'new'), website))
-    this.test('_onChangeToMediumMode', (assert:Object):void =>
+            website._onChangeToLargeMode('old', 'new'), website)
+    )
+    test('_onChangeToMediumMode', ():void =>
         assert.strictEqual(
-            website._onChangeToMediumMode('old', 'new'), website))
-    this.test('_onChangeToSmallMode', (assert:Object):void =>
+            website._onChangeToMediumMode('old', 'new'), website)
+    )
+    test('_onChangeToSmallMode', ():void =>
         assert.strictEqual(
-            website._onChangeToSmallMode('old', 'new'), website))
-    this.test('_onChangeToExtraSmallMode', (assert:Object):void =>
+            website._onChangeToSmallMode('old', 'new'), website)
+    )
+    test('_onChangeToExtraSmallMode', ():void =>
         assert.strictEqual(
-            website._onChangeToExtraSmallMode('old', 'new'), website))
-    this.test('_onSwitchSection', (assert:Object):void => assert.strictEqual(
-        website._onSwitchSection('newSectionName'), website))
-    this.test('_onStartUpAnimationComplete', (assert:Object):void =>
-        assert.strictEqual(website._onStartUpAnimationComplete(), website))
+            website._onChangeToExtraSmallMode('old', 'new'), website)
+    )
+    test('_onSwitchSection', ():void =>
+        assert.strictEqual(website._onSwitchSection('newSectionName'), website)
+    )
+    test('_onStartUpAnimationComplete', ():void =>
+        assert.strictEqual(website._onStartUpAnimationComplete(), website)
+    )
     // // endregion
     // // region helper
-    this.test('_addMediaQueryChangeEvents', (assert:Object):void =>
-        assert.strictEqual(website._addMediaQueryChangeEvents(), website))
-    this.test('_triggerWindowResizeEvents', (assert:Object):void =>
-        assert.strictEqual(website._triggerWindowResizeEvents(), website))
-    this.test('_bindScrollEvents', (assert:Object):void => assert.strictEqual(
-        website._bindScrollEvents(), website))
-    this.test('_removeLoadingCover', async (assert:Object):Promise<void> =>
-        assert.strictEqual(await website._removeLoadingCover(), website))
-    this.test('_handleStartUpEffects', async (assert:Object):Promise<void> =>
-        assert.strictEqual(await website._handleStartUpEffects(10), website))
-    this.test('_addNavigationEvents', (assert:Object):void =>
-        assert.strictEqual(website._addNavigationEvents(), website))
-    this.test('_handleScrollToTopButton', (assert:Object):void =>
-        assert.strictEqual(website._handleScrollToTopButton(), website))
-    this.test('_handleAnalyticsInitialisation', (assert:Object):void =>
-        assert.strictEqual(website._handleAnalyticsInitialisation(), website))
+    test('_addMediaQueryChangeEvents', ():void =>
+        assert.strictEqual(website._addMediaQueryChangeEvents(), website)
+    )
+    test('_triggerWindowResizeEvents', ():void =>
+        assert.strictEqual(website._triggerWindowResizeEvents(), website)
+    )
+    test('_bindScrollEvents', ():void => assert.strictEqual(
+        website._bindScrollEvents(), website)
+    )
+    test('_removeLoadingCover', async ():Promise<void> =>
+        assert.strictEqual(await website._removeLoadingCover(), website)
+    )
+    test('_handleStartUpEffects', async ():Promise<void> =>
+        assert.strictEqual(await website._handleStartUpEffects(10), website)
+    )
+    test('_addNavigationEvents', ():void =>
+        assert.strictEqual(website._addNavigationEvents(), website)
+    )
+    test('_handleScrollToTopButton', ():void =>
+        assert.strictEqual(website._handleScrollToTopButton(), website)
+    )
+    test('_handleAnalyticsInitialisation', ():void =>
+        assert.strictEqual(website._handleAnalyticsInitialisation(), website)
+    )
     // // endregion
     // / endregion
     // endregion
-}, 'full')
+})
 // region vim modline
 // vim: set tabstop=4 shiftwidth=4 expandtab:
 // vim: foldmethod=marker foldmarker=region,endregion:
