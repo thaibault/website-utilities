@@ -3293,9 +3293,9 @@ clean-stack@^2.0.0:
   integrity sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A==
 
 clientnode@*:
-  version "3.0.495"
-  resolved "https://registry.yarnpkg.com/clientnode/-/clientnode-3.0.495.tgz#d312c32f4b5b5ee6dcfb5a9153a0e75777720d85"
-  integrity sha512-2D1LWJVk0NjF1uogJC1COBtGVJgS+cCyOcEBg6eDj+NAF+ZGAleST0RkJkCrXEkmffJyuTWP4MAygo0UwEQ2Dg==
+  version "3.0.496"
+  resolved "https://registry.yarnpkg.com/clientnode/-/clientnode-3.0.496.tgz#1daa14f4993298961c986c1a822158e4fbfa56c8"
+  integrity sha512-UTp9BG2lfxXgnQNTm7aa6lYFBvbhAkcQRDuuInj4qaGvLm+1yX2LBc2Rnsb9nwKwOc70uGytWkXjAIM9nEViLA==
 
 cliui@^4.0.0:
   version "4.1.0"
@@ -6098,9 +6098,9 @@ internal-ip@^4.3.0:
     ipaddr.js "^1.9.0"
 
 internationalisation@*:
-  version "1.0.205"
-  resolved "https://registry.yarnpkg.com/internationalisation/-/internationalisation-1.0.205.tgz#bbc274090ca84448cb8f71e3e00afadc2417f4e2"
-  integrity sha512-XHPwG9xpqLI9uvm1gaKgmMq8Fk0ABQWiV5ke/VYkI9bwL+fAp0D5l+XKjU6VRJxxgH0LXC1TYVq9JC0KQuddnQ==
+  version "1.0.206"
+  resolved "https://registry.yarnpkg.com/internationalisation/-/internationalisation-1.0.206.tgz#efdc95adf34ca8cd8e35bf27b015b4aa84c6ed28"
+  integrity sha512-j4e2AIgImKu5NHfAvbx7Fgiu51pXSxM6eatb+NQzublCRc07r8uGmzjjGq/QIY1OXR3TtLFMziSziccSCa4t0g==
 
 interpret@^1.4.0:
   version "1.4.0"
