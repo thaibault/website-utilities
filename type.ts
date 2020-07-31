@@ -16,7 +16,9 @@
     endregion
 */
 // region imports
-import {$DomNode, Options as BaseOptions, Mapping} from 'clientnode/type'
+import {
+    $DomNode, DomNodes as BaseDomNodes, Options as BaseOptions, Mapping
+} from 'clientnode/type'
 import {
     Options as InternationalisationOptions, Scope as BaseScope
 } from 'internationalisation/type'
@@ -30,7 +32,7 @@ export interface Scope extends BaseScope {
 declare global {
     interface JQuery extends Scope {}
 }
-export type DomNodes<Type = string> = {
+export type DomNodes<Type = string> = BaseDomNodes & {
     mediaQueryIndicator:Type;
     scrollToTopButton:Type;
     startUpAnimationClassPrefix:Type;
@@ -38,12 +40,12 @@ export type DomNodes<Type = string> = {
     windowLoadingCover:Type;
     windowLoadingSpinner:Type;
 }
-export type $DomNodes = DomNodes<$DomNode>
+export type $DomNodes = $DomNodes & DomNodes<$DomNode>
 export type Options = Partial<BaseOptions> & {
     activateLanguageSupport:boolean;
     additionalPageLoadingTimeInMilliseconds:number;
     domain:string;
-    domNode:DomNodes;
+    domNodes:DomNodes;
     domNodeSelectorPrefix:string;
     initialSectionName:string;
     knownScrollEventNames:Array<string>;

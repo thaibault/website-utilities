@@ -47,19 +47,19 @@ import {$DomNodes, Options} from './type'
  * support should be used or not.
  * @property _options.additionalPageLoadingTimeInMilliseconds - Additional time
  * to wait until page will be indicated as loaded.
- * @property _options.domNode - Mapping of dom node descriptions to their
+ * @property _options.domNodes - Mapping of dom node descriptions to their
  * corresponding selectors.
- * @property _options.domNode.mediaQueryIndicator - Selector for indicator dom
+ * @property _options.domNodes.mediaQueryIndicator - Selector for indicator dom
  * node to use to trigger current media query mode.
- * @property _options.domNode.top - Selector to indicate that viewport is
+ * @property _options.domNodes.top - Selector to indicate that viewport is
  * currently on top.
- * @property _options.domNode.scrollToTopButton - Selector for starting an
+ * @property _options.domNodes.scrollToTopButton - Selector for starting an
  * animated scroll to top.
- * @property _options.domNode.startUpAnimationClassPrefix - Class name selector
- * prefix for all dom nodes to appear during start up animations.
- * @property _options.domNode.windowLoadingCover - Selector to the full window
+ * @property _options.domNodes.startUpAnimationClassPrefix - Class name
+ * selector prefix for all dom nodes to appear during start up animations.
+ * @property _options.domNodes.windowLoadingCover - Selector to the full window
  * loading cover dom node.
- * @property _options.domNode.windowLoadingSpinner - Selector to the window
+ * @property _options.domNodes.windowLoadingSpinner - Selector to the window
  * loading spinner (on top of the window loading cover).
  * @property _options.domNodeSelectorPrefix - Selector prefix for all nodes to
  * take into account.
@@ -264,7 +264,7 @@ export class WebsiteUtilities extends Tools {
         this._onViewportMovesToTop = Tools.debounce(
             this._onViewportMovesToTop.bind(this)
         )
-        this.$domNodes = this.grabDomNode(this._options.domNode)
+        this.$domNodes = this.grabDomNode(this._options.domNodes)
         this.disableScrolling()
         return new Promise(async (resolve:Function):Promise<void> => {
             this._options.windowLoadingCoverHideAnimation[1].always =
@@ -645,7 +645,7 @@ export class WebsiteUtilities extends Tools {
         $(Tools.stringFormat(
             '[class^="{1}"], [class*=" {1}"]',
             this.sliceDomNodeSelectorPrefix(
-                this._options.domNode.startUpAnimationClassPrefix
+                this._options.domNodes.startUpAnimationClassPrefix
             ).substr(1)
         )).css(this._options.startUpHide)
         if (this.$domNodes.windowLoadingCover.length) {
@@ -670,7 +670,7 @@ export class WebsiteUtilities extends Tools {
         if ($(this.constructor.stringFormat(
             '[class^="{1}"], [class*=" {1}"]',
             this.sliceDomNodeSelectorPrefix(
-                this._options.domNode.startUpAnimationClassPrefix
+                this._options.domNodes.startUpAnimationClassPrefix
             ).substr(1)
         )).length) {
             await this.constructor.timeout(
@@ -682,13 +682,15 @@ export class WebsiteUtilities extends Tools {
                     this.fireEvent('startUpAnimationComplete')
             }
             const $domNode:$DomNode = $(
-                this._options.domNode.startUpAnimationClassPrefix +
+                this._options.domNodes.startUpAnimationClassPrefix +
                 elementNumber
             )
             $domNode.animate(...this._options.startUpShowAnimation)
-            if ($(this._options.domNode.startUpAnimationClassPrefix + (
-                elementNumber + 1
-            )).length)
+            if ($(
+                this._options.domNodes.startUpAnimationClassPrefix +
+                elementNumber +
+                1
+            ).length)
                 await this._handleStartUpEffects(elementNumber + 1)
             else
                 lastElementTriggered = true
