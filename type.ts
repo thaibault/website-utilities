@@ -16,9 +16,7 @@
     endregion
 */
 // region imports
-import {
-    $DomNode, ExtendableOptions as BaseOptions, Mapping
-} from 'clientnode/type'
+import {$DomNode, Options as BaseOptions, Mapping} from 'clientnode/type'
 import {
     Options as InternationalisationOptions, Scope as BaseScope
 } from 'internationalisation/type'
@@ -41,7 +39,7 @@ export type DomNodes<Type = string> = {
     windowLoadingSpinner:Type;
 }
 export type $DomNodes = DomNodes<$DomNode>
-export type Options = BaseOptions & {
+export type Options = Partial<BaseOptions> & {
     activateLanguageSupport:boolean;
     additionalPageLoadingTimeInMilliseconds:number;
     domain:string;

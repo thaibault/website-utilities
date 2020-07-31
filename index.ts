@@ -245,7 +245,7 @@ export class WebsiteUtilities extends Tools {
      * @param options - An options object.
      * @returns Returns the current instance.
      */
-    initialize(options:object = {}):Promise<WebsiteUtilities> {
+    initialize(options:Partial<Options> = {}):Promise<WebsiteUtilities> {
         super.initialize(options)
         if (this._options.initialSectionName)
             this.currentSectionName = this._options.initialSectionName
