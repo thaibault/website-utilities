@@ -201,7 +201,7 @@ export class WebsiteUtilities extends Tools {
                     'sectionSwitch', 'sectionSwitch', sectionName
                 )
             }
-        }
+        },
         windowLoadingCoverHideAnimation: [{opacity: 0}, {}],
         windowLoadingSpinner: {
             animation: 'spinner-line-fade-quick',

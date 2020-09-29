@@ -27,63 +27,63 @@ import {SpinnerOptions} from 'spin.js'
 // region exports
 export type WebsiteUtilitiesFunction = (...parameter:Array<any>) => any
 export interface Scope extends BaseScope {
-    WebsiteUtilities:WebsiteUtilitiesFunction;
+    WebsiteUtilities:WebsiteUtilitiesFunction
 }
 declare global {
     interface JQuery extends Scope {}
 }
 export type DomNodes<Type = string> = BaseDomNodes & {
-    mediaQueryIndicator:Type;
-    scrollToTopButton:Type;
-    startUpAnimationClassPrefix:Type;
-    top:Type;
-    windowLoadingCover:Type;
-    windowLoadingSpinner:Type;
+    mediaQueryIndicator:Type
+    scrollToTopButton:Type
+    startUpAnimationClassPrefix:Type
+    top:Type
+    windowLoadingCover:Type
+    windowLoadingSpinner:Type
 }
 export type $DomNodes = $DomNodes & DomNodes<$DomNode>
 export type Options = Partial<BaseOptions> & {
-    activateLanguageSupport:boolean;
-    additionalPageLoadingTimeInMilliseconds:number;
-    domain:string;
-    domNodes:DomNodes;
-    domNodeSelectorPrefix:string;
-    initialSectionName:string;
-    knownScrollEventNames:Array<string>;
-    language:InternationalisationOptions;
-    mediaQueryClassNameIndicator:Array<Array<string>>;
-    onChangeMediaQueryMode:Function;
-    onChangeToExtraSmallMode:Function;
-    onChangeToLargeMode:Function;
-    onChangeToMediumMode:Function;
-    onChangeToSmallMode:Function;
-    onStartUpAnimationComplete:Function;
-    onSwitchSection:Function;
-    onViewportMovesAwayFromTop:Function;
-    onViewportMovesToTop:Function;
+    activateLanguageSupport:boolean
+    additionalPageLoadingTimeInMilliseconds:number
+    domain:string
+    domNodes:DomNodes
+    domNodeSelectorPrefix:string
+    initialSectionName:string
+    knownScrollEventNames:Array<string>
+    language:InternationalisationOptions
+    mediaQueryClassNameIndicator:Array<Array<string>>
+    onChangeMediaQueryMode:Function
+    onChangeToExtraSmallMode:Function
+    onChangeToLargeMode:Function
+    onChangeToMediumMode:Function
+    onChangeToSmallMode:Function
+    onStartUpAnimationComplete:Function
+    onSwitchSection:Function
+    onViewportMovesAwayFromTop:Function
+    onViewportMovesToTop:Function
     scrollToTop:{
         button:{
-            slideDistanceInPixel:number;
-            showAnimation:{duration:number|string};
-            hideAnimation:{duration:number|string};
+            slideDistanceInPixel:number
+            showAnimation:{duration:number|string}
+            hideAnimation:{duration:number|string}
         },
-        inLinearTime:boolean;
-        options:{duration:number|string};
+        inLinearTime:boolean
+        options:{duration:number|string}
     },
-    startUpAnimationElementDelayInMiliseconds:number;
-    startUpHide:Mapping;
-    startUpShowAnimation:[Mapping, Mapping];
-    switchToManualScrollingIndicator:(event:Event) => boolean;
+    startUpAnimationElementDelayInMiliseconds:number
+    startUpHide:Mapping
+    startUpShowAnimation:[Mapping, Mapping]
+    switchToManualScrollingIndicator:(event:Event) => boolean
     tracking:{
         event:(
             category:string, action:string, label:string, value:any, data:any
-        ) => void;
-        initial?:null|((key:string, sectionName:string) => void);
-        key?:null|string;
-        sectionSwitch:(sectionName:string) => void;
-    };
-    windowLoadingCoverHideAnimation:[Mapping, Mapping];
-    windowLoadingSpinner:SpinnerOptions;
-    windowLoadedTimeoutAfterDocumentLoadedInMilliseconds:number;
+        ) => void
+        initial?:null|((key:string, sectionName:string) => void)
+        key?:null|string
+        sectionSwitch:(sectionName:string) => void
+    }
+    windowLoadingCoverHideAnimation:[Mapping, Mapping]
+    windowLoadingSpinner:SpinnerOptions
+    windowLoadedTimeoutAfterDocumentLoadedInMilliseconds:number
 }
 // endregion
 // region vim modline
