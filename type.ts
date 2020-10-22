@@ -32,7 +32,7 @@ export interface Scope extends BaseScope {
 declare global {
     interface JQuery extends Scope {}
 }
-export type DomNodes<Type = string> = BaseDomNodes & {
+export type DomNodes<Type = string> = BaseDomNodes<Type> & {
     mediaQueryIndicator:Type
     scrollToTopButton:Type
     startUpAnimationClassPrefix:Type
@@ -40,7 +40,7 @@ export type DomNodes<Type = string> = BaseDomNodes & {
     windowLoadingCover:Type
     windowLoadingSpinner:Type
 }
-export type $DomNodes = $DomNodes & DomNodes<$DomNode>
+export type $DomNodes = DomNodes<$DomNode>
 export type Options = Partial<BaseOptions> & {
     activateLanguageSupport:boolean
     additionalPageLoadingTimeInMilliseconds:number

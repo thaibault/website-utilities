@@ -114,7 +114,9 @@ import {$DomNodes, Options} from './type'
  * Duration after loading cover should be removed.
  */
 export class WebsiteUtilities extends Tools {
-    $domNodes:$DomNodes
+    static readonly _name:'WebsiteUtilities' = 'WebsiteUtilities'
+
+    $domNodes:$DomNodes = null as unknown as $DomNodes
     currentMediaQueryMode:string = ''
     currentSectionName:string = 'home'
     languageHandler:Internationalisation|null = null
@@ -123,7 +125,6 @@ export class WebsiteUtilities extends Tools {
     viewportIsOnTop:boolean = false
     windowLoadingSpinner:null|Spinner = null
 
-    static readonly _name:'WebsiteUtilities' = 'WebsiteUtilities'
     _options:Options = {
         activateLanguageSupport: true,
         additionalPageLoadingTimeInMilliseconds: 0,

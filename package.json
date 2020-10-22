@@ -80,7 +80,7 @@
     "postcss-fontpath": "*",
     "postcss-import": "<=12",
     "postcss-loader": "*",
-    "postcss-mixins": "*",
+    "postcss-mixins": "<=6",
     "postcss-preset-env": "*",
     "postcss-sprites": "*",
     "postcss-url": "*",
