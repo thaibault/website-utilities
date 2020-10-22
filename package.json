@@ -78,7 +78,7 @@
     "jsdoc": "*",
     "mini-css-extract-plugin": "*",
     "postcss-fontpath": "*",
-    "postcss-import": "*",
+    "postcss-import": "<=12",
     "postcss-loader": "*",
     "postcss-mixins": "*",
     "postcss-preset-env": "*",
