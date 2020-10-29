@@ -89,8 +89,6 @@
     "stylelint": "*",
     "stylelint-config-standard": "*",
     "weboptimizer": "*",
-    "webpack": "*",
-    "webpack-cli": "*",
     "webpack-dev-server": "*"
   },
   "peerDependencies": {
