@@ -83,7 +83,7 @@
     "postcss-mixins": "<=6",
     "postcss-preset-env": "*",
     "postcss-sprites": "*",
-    "postcss-url": "*",
+    "postcss-url": "<=9",
     "spin.js": "*",
     "style-loader": "*",
     "stylelint": "*",
