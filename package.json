@@ -164,7 +164,7 @@
         },
         "javaScript": {
           "#": "We have to pre-process \"spin.js\" since it isn't a compatible ecma script.",
-          "exclude": "!(filePath.endsWith('/clientnode/test.js') || filePath.endsWith('/spin.js')) && isFilePathInDependencies(filePath)"
+          "exclude": "!filePath.endsWith('/spin.js') && isFilePathInDependencies(filePath)"
         }
       }
     },

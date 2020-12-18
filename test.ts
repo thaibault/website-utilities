@@ -14,10 +14,11 @@
     endregion
 */
 // region imports
+import {$} from 'clientnode'
+
 import WebsiteUtilities from './index'
 // endregion
-describe(WebsiteUtilities._name, ():void => {
-    require('./index')
+describe(WebsiteUtilities._name, async ():Promise<void> => {
     const websiteUtilties:WebsiteUtilities = await $.WebsiteUtilties()
     // region tests
     // / region public methods
