@@ -18,8 +18,11 @@ import {$} from 'clientnode'
 
 import WebsiteUtilities from './index'
 // endregion
-describe(WebsiteUtilities._name, async ():Promise<void> => {
-    const websiteUtilties:WebsiteUtilities = await $.WebsiteUtilties()
+describe(WebsiteUtilities._name, ():void => {
+    let websiteUtilties:WebsiteUtilities
+    beforeAll(async ():Promise<void> => {
+        websiteUtilities = await $.WebsiteUtilties()
+    })
     // region tests
     // / region public methods
     // // region special
