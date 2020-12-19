@@ -1291,6 +1291,13 @@
     jest-diff "^26.0.0"
     pretty-format "^26.0.0"
 
+"@types/jquery.scrollto@*":
+  version "1.4.28"
+  resolved "https://registry.yarnpkg.com/@types/jquery.scrollto/-/jquery.scrollto-1.4.28.tgz#5436791fe8fdfdb6eb0ece6fbf5463301ed032d7"
+  integrity sha512-jDMvrQx9tv2pT9G+NaVIMROLf8wee6vML+2uDu1sj2VwDMwtloXy8gb8Xt67+mnurspO88FsQzzEBL2zqbyvmw==
+  dependencies:
+    "@types/jquery" "*"
+
 "@types/jquery@*":
   version "3.5.5"
   resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.5.5.tgz#2c63f47c9c8d96693d272f5453602afd8338c903"

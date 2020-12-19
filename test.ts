@@ -19,14 +19,14 @@ import {$} from 'clientnode'
 import WebsiteUtilities from './index'
 // endregion
 describe(WebsiteUtilities._name, ():void => {
-    let websiteUtilties:WebsiteUtilities
+    let websiteUtilities:WebsiteUtilities
     beforeAll(async ():Promise<void> => {
-        websiteUtilities = await $.WebsiteUtilties()
+        websiteUtilities = await $.WebsiteUtilities()
     })
     // region tests
     // / region public methods
     // // region special
-    test('initialize', ():void => assert.ok(websiteUtilities))
+    test('initialize', ():void => expect(websiteUtilities).toBeDefined())
     // // endregion
     test('scrollToTop', ():void =>
         expect(websiteUtilities.scrollToTop()).toStrictEqual(websiteUtilities)
@@ -42,66 +42,77 @@ describe(WebsiteUtilities._name, ():void => {
     // // region event
     test('_onViewportMovesToTop', ():void => {
         websiteUtilities._onViewportMovesToTop()
-        // NOTE: Returns timeout id because of debounceing.
-        assert.ok(website._onViewportMovesToTop().hasOwnProperty('clear'))
+        // NOTE: Returns timeout id because of debouncing.
+        expect(websiteUtilities._onViewportMovesToTop())
+            .toHaveProperty('clear')
     })
     test('_onViewportMovesAwayFromTop', ():void => {
-        website._onViewportMovesAwayFromTop()
-        // NOTE: Returns timeout id because of debounceing.
-        assert.ok(website._onViewportMovesAwayFromTop().hasOwnProperty(
-            'clear'))
+        websiteUtilities._onViewportMovesAwayFromTop()
+        // NOTE: Returns timeout id because of debouncing.
+        expect(websiteUtilities._onViewportMovesAwayFromTop())
+            .toHaveProperty('clear')
     })
     test('_onChangeMediaQueryMode', ():void =>
-        assert.strictEqual(
-            website._onChangeMediaQueryMode('old', 'new'), website)
+        expect(websiteUtilities._onChangeMediaQueryMode('old', 'new'))
+            .toStrictEqual(websiteUtilities)
     )
     test('_onChangeToLargeMode', ():void =>
-        assert.strictEqual(
-            website._onChangeToLargeMode('old', 'new'), website)
+        expect(websiteUtilities._onChangeToLargeMode('old', 'new'))
+            .toStrictEqual(websiteUtilities)
     )
     test('_onChangeToMediumMode', ():void =>
-        assert.strictEqual(
-            website._onChangeToMediumMode('old', 'new'), website)
+        expect(websiteUtilities._onChangeToMediumMode('old', 'new'))
+            .toStrictEqual(websiteUtilities)
     )
     test('_onChangeToSmallMode', ():void =>
-        assert.strictEqual(
-            website._onChangeToSmallMode('old', 'new'), website)
+        expect(websiteUtilities._onChangeToSmallMode('old', 'new'))
+            .toStrictEqual(websiteUtilities)
     )
     test('_onChangeToExtraSmallMode', ():void =>
-        assert.strictEqual(
-            website._onChangeToExtraSmallMode('old', 'new'), website)
+        expect(websiteUtilities._onChangeToExtraSmallMode('old', 'new'))
+            .toStrictEqual(websiteUtilities)
     )
     test('_onSwitchSection', ():void =>
-        assert.strictEqual(website._onSwitchSection('newSectionName'), website)
+        expect(websiteUtilities._onSwitchSection('newSectionName'))
+            .toStrictEqual(websiteUtilities)
     )
     test('_onStartUpAnimationComplete', ():void =>
-        assert.strictEqual(website._onStartUpAnimationComplete(), website)
+        expect(websiteUtilities._onStartUpAnimationComplete())
+            .toStrictEqual(websiteUtilities)
     )
     // // endregion
     // // region helper
     test('_addMediaQueryChangeEvents', ():void =>
-        assert.strictEqual(website._addMediaQueryChangeEvents(), website)
+        expect(websiteUtilities._addMediaQueryChangeEvents())
+            .toStrictEqual(websiteUtilities)
     )
     test('_triggerWindowResizeEvents', ():void =>
-        assert.strictEqual(website._triggerWindowResizeEvents(), website)
+        expect(websiteUtilities._triggerWindowResizeEvents())
+            .toStrictEqual(websiteUtilities)
     )
-    test('_bindScrollEvents', ():void => assert.strictEqual(
-        website._bindScrollEvents(), website)
+    test('_bindScrollEvents', ():void =>
+        expect(websiteUtilities._bindScrollEvents())
+            .toStrictEqual(websiteUtilities)
     )
     test('_removeLoadingCover', async ():Promise<void> =>
-        assert.strictEqual(await website._removeLoadingCover(), website)
+        expect(websiteUtilities._removeLoadingCover())
+            .resolves.toStrictEqual(websiteUtilities)
     )
     test('_handleStartUpEffects', async ():Promise<void> =>
-        assert.strictEqual(await website._handleStartUpEffects(10), website)
+        expect(websiteUtilities._handleStartUpEffects(10))
+            .resolves.toStrictEqual(websiteUtilities)
     )
     test('_addNavigationEvents', ():void =>
-        assert.strictEqual(website._addNavigationEvents(), website)
+        expect(websiteUtilities._addNavigationEvents())
+            .toStrictEqual(websiteUtilities)
     )
     test('_handleScrollToTopButton', ():void =>
-        assert.strictEqual(website._handleScrollToTopButton(), website)
+        expect(websiteUtilities._handleScrollToTopButton())
+            .toStrictEqual(websiteUtilities)
     )
-    test('_handleAnalyticsInitialisation', ():void =>
-        assert.strictEqual(website._handleAnalyticsInitialisation(), website)
+    test('_initializeTracking', ():void =>
+        expect(websiteUtilities._initializeTracking())
+            .toStrictEqual(websiteUtilities)
     )
     // // endregion
     // / endregion

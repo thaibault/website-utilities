@@ -18,7 +18,7 @@
 */
 // region imports
 import Tools, {$, globalContext} from 'clientnode'
-import {$DomNode, TimeoutPromise} from 'clientnode/type'
+import {FirstParameter, TimeoutPromise, $DomNode} from 'clientnode/type'
 import Internationalisation from 'internationalisation'
 import 'jQuery-scrollTo'
 import {Spinner} from 'spin.js'
@@ -66,7 +66,7 @@ import {$DomNodes, Options} from './type'
  * @property _options.initialSectionName - Pre-selected section name.
  * @property _options.knownScrollEventNames - Saves all known scroll events in
  * a space separated string.
- * @property _optionsnpm i @types/spin.js.language - Options for client side internationalisation
+ * @property _options.language - Options for client side internationalisation
  * handler.
  * @property _options.mediaQueryClassNameIndicator - Mapping of media query
  * class indicator names to internal event names.
@@ -129,15 +129,15 @@ export class WebsiteUtilities extends Tools {
         activateLanguageSupport: true,
         additionalPageLoadingTimeInMilliseconds: 0,
         domain: 'auto',
-        domNode: {
+        domNodes: {
             mediaQueryIndicator: '<div class="media-query-indicator">',
-            top: 'header',
             scrollToTopButton: 'a[href="#top"]',
             startUpAnimationClassPrefix: '.website-start-up-animation-number-',
+            top: 'header',
             windowLoadingCover: '.website-utilities-window-loading-cover',
             windowLoadingSpinner:
                 '.website-utilities-window-loading-cover > div'
-        },
+        } as unknown as Options['domNodes'],
         domNodeSelectorPrefix: 'body.{1}',
         initialSectionName: 'home',
         knownScrollEventNames: [
@@ -167,17 +167,21 @@ export class WebsiteUtilities extends Tools {
         onStartUpAnimationComplete: Tools.noop,
         scrollToTop: {
             button: {
-                slideDistanceInPixel: 30,
+                hideAnimation: {duration: 'normal'},
                 showAnimation: {duration: 'normal'},
-                hideAnimation: {duration: 'normal'}
+                slideDistanceInPixel: 30
             },
             inLinearTime: false,
             options: {duration: 'normal'}
         },
         startUpAnimationElementDelayInMiliseconds: 100,
-        startUpHide: {opacity: 0},
-        startUpShowAnimation: [{opacity: 1}, {}],
-        switchToManualScrollingIndicator: (event:Object):boolean => (
+        startUpHide: {opacity: 0} as
+            unknown as
+            FirstParameter<$DomNode['css']>,
+        startUpShowAnimation: [{opacity: 1}, {}] as
+            unknown as
+            Parameters<$DomNode['animate']>,
+        switchToManualScrollingIndicator: (event:Event):boolean => (
             event.which > 0 ||
             event.type === 'mousedown' ||
             event.type === 'mousewheel' ||
@@ -197,13 +201,17 @@ export class WebsiteUtilities extends Tools {
                     category, action, label, value, data
                 })
             },
-            sectionSwitch: function(sectionName:string):void {
+            sectionSwitch: function(
+                this:WebsiteUtilities, sectionName:string
+            ):void {
                 this._options.tracking.event(
                     'sectionSwitch', 'sectionSwitch', sectionName
                 )
             }
         },
-        windowLoadingCoverHideAnimation: [{opacity: 0}, {}],
+        windowLoadingCoverHideAnimation: [{opacity: 0}, {}] as
+            unknown as
+            Parameters<$DomNode['animate']>,
         windowLoadingSpinner: {
             animation: 'spinner-line-fade-quick',
             className: 'spinner',
@@ -250,25 +258,18 @@ export class WebsiteUtilities extends Tools {
         super.initialize(options)
         if (this._options.initialSectionName)
             this.currentSectionName = this._options.initialSectionName
-        else if (
-            globalContext.window &&
-            globalContext.window.location &&
-            globalContext.window.location.hash
-        )
-            this.currentSectionName = globalContext.location.hash.substring(
-                '#'.length
-            )
+        else if (globalContext.window?.location?.hash)
+            this.currentSectionName =
+                globalContext.location.hash.substring('#'.length)
         // Wrap event methods with debounce handler.
-        this._onViewportMovesAwayFromTop = Tools.debounce(
-            this._onViewportMovesAwayFromTop.bind(this)
-        )
-        this._onViewportMovesToTop = Tools.debounce(
-            this._onViewportMovesToTop.bind(this)
-        )
-        this.$domNodes = this.grabDomNode(this._options.domNodes)
+        this._onViewportMovesAwayFromTop =
+            Tools.debounce(this._onViewportMovesAwayFromTop)
+        this._onViewportMovesToTop =
+            Tools.debounce(this._onViewportMovesToTop)
+        this.$domNodes = this.grabDomNode(this._options.domNodes) as $DomNodes
         this.disableScrolling()
         return new Promise(async (resolve:Function):Promise<void> => {
-            this._options.windowLoadingCoverHideAnimation[1].always =
+            this._options.windowLoadingCoverHideAnimation[1]!.always =
                 ():void => {
                     this._handleStartUpEffects()
                     resolve(this)
@@ -300,8 +301,9 @@ export class WebsiteUtilities extends Tools {
             if (!this._options.language.logging)
                 this._options.language.logging = this._options.logging
             if (this._options.activateLanguageSupport && !this.languageHandler)
-                this.languageHandler = (await $(this.$domNodes.parent)
-                    .Internationalisation(this._options.internationalisation)
+                this.languageHandler = (
+                    await $(this.$domNodes.parent)
+                        .Internationalisation(this._options.language)
                 ).data(Internationalisation._name)
             this._addNavigationEvents()
             this._addMediaQueryChangeEvents()
@@ -364,7 +366,7 @@ export class WebsiteUtilities extends Tools {
     /**
      * Triggers an analytics event. All given arguments are forwarded to
      * configured analytics event code to defined their environment variables.
-     * @param parameter - All parameter will be forwarded to the tracker.
+     * TODO
      * @returns Returns the current instance.
      */
     trackEvent(
@@ -376,14 +378,13 @@ export class WebsiteUtilities extends Tools {
     ):WebsiteUtilities {
         if (
             this._options.tracking.key &&
-            globalContext.window &&
-            globalContext.window.location &&
+            globalContext.window?.location &&
             globalContext.window.location.hostname !== 'localhost'
         ) {
             if (!label)
                 label = this.currentSectionName
             this.debug('Run tracking code: "event" with arguments:')
-            this.debug(parameter)
+            this.debug(category, action, label, value, data)
             try {
                 this._options.tracking.event.call(
                     this, category, action, label, value, data
@@ -403,7 +404,7 @@ export class WebsiteUtilities extends Tools {
      * This method triggers if the viewport moves to top.
      * @returns Nothing.
      */
-    _onViewportMovesToTop():void {
+    _onViewportMovesToTop = ():void => {
         if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
             this.$domNodes.scrollToTopButton.css('opacity', 0)
         else {
@@ -427,7 +428,7 @@ export class WebsiteUtilities extends Tools {
      * This method triggers if the viewport moves away from top.
      * @returns Nothing.
      */
-    _onViewportMovesAwayFromTop():void {
+    _onViewportMovesAwayFromTop = ():void => {
         if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
             this.$domNodes.scrollToTopButton.css('opacity', 1)
         else
@@ -591,7 +592,7 @@ export class WebsiteUtilities extends Tools {
     _bindScrollEvents(...parameter:Array<any>):void {
         // Stop automatic scrolling if the user wants to scroll manually.
         if (!this.$domNodes.window)
-            return this
+            return
         const $scrollTarget:$DomNode =
             $('body, html').add(this.$domNodes.window)
         $scrollTarget.on(
@@ -668,7 +669,7 @@ export class WebsiteUtilities extends Tools {
         this.$domNodes.windowLoadingCover.hide()
         if (this.windowLoadingSpinner)
             this.windowLoadingSpinner.stop()
-        if ($(this.constructor.stringFormat(
+        if ($(Tools.stringFormat(
             '[class^="{1}"], [class*=" {1}"]',
             this.sliceDomNodeSelectorPrefix(
                 this._options.domNodes.startUpAnimationClassPrefix
@@ -741,8 +742,7 @@ export class WebsiteUtilities extends Tools {
         if (
             this._options.tracking.initial &&
             this._options.tracking.key &&
-            globalContext.window &&
-            globalContext.window.location &&
+            globalContext.window?.location &&
             globalContext.window.location.hostname !== 'localhost'
         ) {
             this.debug(

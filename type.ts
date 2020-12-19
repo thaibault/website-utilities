@@ -17,7 +17,12 @@
 */
 // region imports
 import {
-    $DomNode, DomNodes as BaseDomNodes, Options as BaseOptions, Mapping
+    DomNodes as BaseDomNodes,
+    FirstParameter,
+    Mapping,
+    Options as BaseOptions,
+    ProcedureFunction,
+    $DomNode
 } from 'clientnode/type'
 import {
     Options as InternationalisationOptions, Scope as BaseScope
@@ -31,6 +36,7 @@ export interface Scope extends BaseScope {
 }
 declare global {
     interface JQuery extends Scope {}
+    const dataLayer:Array<any>
 }
 export type DomNodes<Type = string> = BaseDomNodes<Type> & {
     mediaQueryIndicator:Type
@@ -49,39 +55,39 @@ export type Options = Partial<BaseOptions> & {
     domNodeSelectorPrefix:string
     initialSectionName:string
     knownScrollEventNames:Array<string>
-    language:InternationalisationOptions
+    language:Partial<InternationalisationOptions>
     mediaQueryClassNameIndicator:Array<Array<string>>
-    onChangeMediaQueryMode:Function
-    onChangeToExtraSmallMode:Function
-    onChangeToLargeMode:Function
-    onChangeToMediumMode:Function
-    onChangeToSmallMode:Function
-    onStartUpAnimationComplete:Function
-    onSwitchSection:Function
-    onViewportMovesAwayFromTop:Function
-    onViewportMovesToTop:Function
+    onChangeMediaQueryMode:ProcedureFunction
+    onChangeToExtraSmallMode:ProcedureFunction
+    onChangeToLargeMode:ProcedureFunction
+    onChangeToMediumMode:ProcedureFunction
+    onChangeToSmallMode:ProcedureFunction
+    onStartUpAnimationComplete:ProcedureFunction
+    onSwitchSection:ProcedureFunction
+    onViewportMovesAwayFromTop:ProcedureFunction
+    onViewportMovesToTop:ProcedureFunction
     scrollToTop:{
         button:{
-            slideDistanceInPixel:number
-            showAnimation:{duration:number|string}
             hideAnimation:{duration:number|string}
+            showAnimation:{duration:number|string}
+            slideDistanceInPixel:number
         },
         inLinearTime:boolean
-        options:{duration:number|string}
+        options:ScrollToOptions
     },
     startUpAnimationElementDelayInMiliseconds:number
-    startUpHide:Mapping
-    startUpShowAnimation:[Mapping, Mapping]
+    startUpHide:FirstParameter<$DomNode['css']>
+    startUpShowAnimation:Parameters<$DomNode['animate']>
     switchToManualScrollingIndicator:(event:Event) => boolean
     tracking:{
         event:(
-            category:string, action:string, label:string, value:any, data:any
+            category:string, action:string, label:string, value?:any, data?:any
         ) => void
         initial?:null|((key:string, sectionName:string) => void)
         key?:null|string
         sectionSwitch:(sectionName:string) => void
     }
-    windowLoadingCoverHideAnimation:[Mapping, Mapping]
+    windowLoadingCoverHideAnimation:Parameters<$DomNode['animate']>
     windowLoadingSpinner:SpinnerOptions
     windowLoadedTimeoutAfterDocumentLoadedInMilliseconds:number
 }

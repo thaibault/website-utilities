@@ -61,6 +61,7 @@
     "@types/jsdom": "*",
     "@types/loader-utils": "*",
     "@types/node": "*",
+    "@types/jquery.scrollto": "*",
     "@types/workbox-webpack-plugin": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
