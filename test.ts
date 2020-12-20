@@ -50,13 +50,16 @@ describe(WebsiteUtilities._name, ():void => {
     // / endregion
     // / region protected methods
     // // region event
-    test('_onViewportMovesToTop', ():void => {
-        expect(websiteUtilities._onViewportMovesToTop()).not.toBeDefined()
-    })
-    test('_onViewportMovesAwayFromTop', ():void => {
+    test('_onViewportMovesToTop', ():void =>
+        // NOTE: Method is wrapped by the higher order debounce method.
+        expect(websiteUtilities._onViewportMovesToTop())
+            .toHaveProperty('clear')
+    )
+    test('_onViewportMovesAwayFromTop', ():void =>
+        // NOTE: Method is wrapped by the higher order debounce method.
         expect(websiteUtilities._onViewportMovesAwayFromTop())
-            .not.toBeDefined()
-    })
+            .toHaveProperty('clear')
+    )
     test('_onChangeMediaQueryMode', ():void =>
         expect(websiteUtilities._onChangeMediaQueryMode('old', 'new'))
             .not.toBeDefined()
