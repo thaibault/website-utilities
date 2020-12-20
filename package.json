@@ -61,7 +61,6 @@
     "@types/jsdom": "*",
     "@types/loader-utils": "*",
     "@types/node": "*",
-    "@types/jquery.scrollto": "*",
     "@types/workbox-webpack-plugin": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
@@ -76,7 +75,6 @@
     "internationalisation": "*",
     "jest": "*",
     "jquery": "*",
-    "jquery.scrollto": "*",
     "jsdoc": "*",
     "mini-css-extract-plugin": "*",
     "postcss-fontpath": "*",
@@ -98,7 +96,6 @@
     "clientnode": "*",
     "internationalisation": "*",
     "jquery": "*",
-    "jquery.scrollto": "*",
     "postcss-mixins": "*",
     "spin.js": "*"
   },
@@ -114,16 +111,6 @@
     },
     "injection": {
       "external": {
-        "aliases": {
-          "jQuery-scrollTo": {
-            "default": "jquery.scrollto/jquery.scrollTo.min",
-            "root": [
-              "$",
-              "fn",
-              "scrollTo"
-            ]
-          }
-        },
         "implicit": {
           "pattern": {
             "exclude": {
@@ -150,9 +137,6 @@
       }
     },
     "module": {
-      "aliases": {
-        "jQuery-scrollTo$": "jquery.scrollto/jquery.scrollTo.min"
-      },
       "preprocessor": {
         "cascadingStyleSheet": {
           "additional": {

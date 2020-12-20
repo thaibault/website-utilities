@@ -28,6 +28,8 @@ import {
     Options as InternationalisationOptions, Scope as BaseScope
 } from 'internationalisation/type'
 import {SpinnerOptions} from 'spin.js'
+
+import WebsiteUtilities from './index'
 // endregion
 // region exports
 export type WebsiteUtilitiesFunction = (...parameter:Array<any>) => any
@@ -68,28 +70,49 @@ export type Options = Partial<BaseOptions> & {
     onViewportMovesToTop:ProcedureFunction
     scrollToTop:{
         button:{
-            hideAnimation:{duration:number|string}
-            showAnimation:{duration:number|string}
+            hideAnimationOptions:JQuery.EffectsOptions<HTMLElement>
+            showAnimationOptions:JQuery.EffectsOptions<HTMLElement>
             slideDistanceInPixel:number
         },
-        inLinearTime:boolean
-        options:ScrollToOptions
+        options:JQuery.EffectsOptions<HTMLElement>
     },
     startUpAnimationElementDelayInMiliseconds:number
-    startUpHide:FirstParameter<$DomNode['css']>
-    startUpShowAnimation:Parameters<$DomNode['animate']>
-    switchToManualScrollingIndicator:(event:Event) => boolean
-    tracking:{
-        event:(
-            category:string, action:string, label:string, value?:any, data?:any
+    /*
+        NOTE: We cannot use type helper "Parameters" (or "FirstParameter" which
+        is based on "Parameters") since this grabs always last (often wrong)
+        overloaded signature.
+    */
+    startUpHide:Mapping<number|string>
+    startUpShowAnimation:FirstParameter<$DomNode['animate']>
+    switchToManualScrollingIndicator:(event:JQuery.Event) => boolean
+    tracking?:{
+        buttonClick?:(
+            this:WebsiteUtilities,
+            $link:$DomNode<HTMLButtonElement>,
+            event:JQuery.Event
         ) => void
-        initial?:null|((key:string, sectionName:string) => void)
-        key?:null|string
-        sectionSwitch:(sectionName:string) => void
+        linkClick?:(
+            this:WebsiteUtilities,
+            $link:$DomNode<HTMLLinkElement>,
+            event:JQuery.Event
+        ) => void
+        sectionSwitch?:(this:WebsiteUtilities, sectionName:string) => void
+        track:(item:TrackingItem) => void
     }
-    windowLoadingCoverHideAnimation:Parameters<$DomNode['animate']>
+    windowLoadingCoverHideAnimation:FirstParameter<$DomNode['animate']>
     windowLoadingSpinner:SpinnerOptions
     windowLoadedTimeoutAfterDocumentLoadedInMilliseconds:number
+}
+export type TrackingItem = {
+    context:string
+    event:string
+    eventType:string
+    icon?:string
+    label:string
+    reference:string
+    subject:string
+    value:number
+    userInteraction:boolean
 }
 // endregion
 // region vim modline

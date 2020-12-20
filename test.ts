@@ -31,6 +31,16 @@ describe(WebsiteUtilities._name, ():void => {
     test('scrollToTop', ():void =>
         expect(websiteUtilities.scrollToTop()).toStrictEqual(websiteUtilities)
     )
+    test('track', ():void =>
+        expect(websiteUtilities.track({
+            event: 'event',
+            eventType: 'eventType',
+            label: 'label',
+            reference: 'reference',
+            subject: 'subject',
+            userInteraction: false
+        })).toStrictEqual(websiteUtilities)
+    )
     test('disableScrolling|enableScrolling', ():void => {
         expect(websiteUtilities.disableScrolling())
             .toStrictEqual(websiteUtilities)
@@ -41,78 +51,68 @@ describe(WebsiteUtilities._name, ():void => {
     // / region protected methods
     // // region event
     test('_onViewportMovesToTop', ():void => {
-        websiteUtilities._onViewportMovesToTop()
-        // NOTE: Returns timeout id because of debouncing.
-        expect(websiteUtilities._onViewportMovesToTop())
-            .toHaveProperty('clear')
+        expect(websiteUtilities._onViewportMovesToTop()).not.toBeDefined()
     })
     test('_onViewportMovesAwayFromTop', ():void => {
-        websiteUtilities._onViewportMovesAwayFromTop()
-        // NOTE: Returns timeout id because of debouncing.
         expect(websiteUtilities._onViewportMovesAwayFromTop())
-            .toHaveProperty('clear')
+            .not.toBeDefined()
     })
     test('_onChangeMediaQueryMode', ():void =>
         expect(websiteUtilities._onChangeMediaQueryMode('old', 'new'))
-            .toStrictEqual(websiteUtilities)
+            .not.toBeDefined()
     )
     test('_onChangeToLargeMode', ():void =>
         expect(websiteUtilities._onChangeToLargeMode('old', 'new'))
-            .toStrictEqual(websiteUtilities)
+            .not.toBeDefined()
     )
     test('_onChangeToMediumMode', ():void =>
         expect(websiteUtilities._onChangeToMediumMode('old', 'new'))
-            .toStrictEqual(websiteUtilities)
+            .not.toBeDefined()
     )
     test('_onChangeToSmallMode', ():void =>
         expect(websiteUtilities._onChangeToSmallMode('old', 'new'))
-            .toStrictEqual(websiteUtilities)
+            .not.toBeDefined()
     )
     test('_onChangeToExtraSmallMode', ():void =>
         expect(websiteUtilities._onChangeToExtraSmallMode('old', 'new'))
-            .toStrictEqual(websiteUtilities)
+            .not.toBeDefined()
     )
     test('_onSwitchSection', ():void =>
         expect(websiteUtilities._onSwitchSection('newSectionName'))
-            .toStrictEqual(websiteUtilities)
+            .not.toBeDefined()
     )
     test('_onStartUpAnimationComplete', ():void =>
         expect(websiteUtilities._onStartUpAnimationComplete())
-            .toStrictEqual(websiteUtilities)
+            .not.toBeDefined()
     )
     // // endregion
     // // region helper
-    test('_addMediaQueryChangeEvents', ():void =>
-        expect(websiteUtilities._addMediaQueryChangeEvents())
-            .toStrictEqual(websiteUtilities)
+    test('_bindMediaQueryChangeEvents', ():void =>
+        expect(websiteUtilities._bindMediaQueryChangeEvents())
+            .not.toBeDefined()
     )
     test('_triggerWindowResizeEvents', ():void =>
-        expect(websiteUtilities._triggerWindowResizeEvents())
-            .toStrictEqual(websiteUtilities)
+        expect(websiteUtilities._triggerWindowResizeEvents()).not.toBeDefined()
     )
     test('_bindScrollEvents', ():void =>
-        expect(websiteUtilities._bindScrollEvents())
-            .toStrictEqual(websiteUtilities)
+        expect(websiteUtilities._bindScrollEvents()).not.toBeDefined()
     )
     test('_removeLoadingCover', async ():Promise<void> =>
         expect(websiteUtilities._removeLoadingCover())
-            .resolves.toStrictEqual(websiteUtilities)
+            .resolves.not.toBeDefined()
     )
-    test('_handleStartUpEffects', async ():Promise<void> =>
-        expect(websiteUtilities._handleStartUpEffects(10))
-            .resolves.toStrictEqual(websiteUtilities)
+    test('_performStartUpEffects', async ():Promise<void> =>
+        expect(websiteUtilities._performStartUpEffects(10))
+            .resolves.not.toBeDefined()
     )
-    test('_addNavigationEvents', ():void =>
-        expect(websiteUtilities._addNavigationEvents())
-            .toStrictEqual(websiteUtilities)
+    test('_bindNavigationEvents', ():void =>
+        expect(websiteUtilities._bindNavigationEvents()).not.toBeDefined()
     )
-    test('_handleScrollToTopButton', ():void =>
-        expect(websiteUtilities._handleScrollToTopButton())
-            .toStrictEqual(websiteUtilities)
+    test('_bindScrollToTopButton', ():void =>
+        expect(websiteUtilities._bindScrollToTopButton()).not.toBeDefined()
     )
-    test('_initializeTracking', ():void =>
-        expect(websiteUtilities._initializeTracking())
-            .toStrictEqual(websiteUtilities)
+    test('_bindClickTracking', ():void =>
+        expect(websiteUtilities._bindClickTracking()).not.toBeDefined()
     )
     // // endregion
     // / endregion
