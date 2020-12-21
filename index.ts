@@ -16,7 +16,7 @@
     See https://creativecommons.org/licenses/by/3.0/deed.de
     endregion
 */
-// region imports
+// region importsregion
 import Tools, {$, globalContext} from 'clientnode'
 import {
     FirstParameter, ProcedureFunction, TimeoutPromise, $DomNode
@@ -24,9 +24,11 @@ import {
 import Internationalisation from 'internationalisation'
 import {Spinner} from 'spin.js'
 
-import {$DomNodes, Options, TrackingItem} from './type'
+import {
+    $DomNodes, Options, TrackingItem, WebsiteUtilitiesFunction
+} from './type'
 // endregion
-// region plugins/classes
+// region plugins/classesendregion
 /**
  * This plugin holds all needed methods to extend a whole website.###
  * @property static:_name - Defines this class name to allow retrieving them
@@ -246,7 +248,7 @@ export class WebsiteUtilities extends Tools {
                     eventType: 'sectionSwitch',
                     label: sectionName,
                     reference:
-                        `${globalContext.window?.location.pathname}#` +
+                        `${globalContext.window.location.pathname}#` +
                         sectionName,
                     subject: 'url',
                     userInteraction: false
@@ -304,7 +306,7 @@ export class WebsiteUtilities extends Tools {
 
         if (this._options.initialSectionName)
             this.currentSectionName = this._options.initialSectionName
-        else if (globalContext.window?.location?.hash)
+        else if (globalContext.window.location?.hash)
             this.currentSectionName =
                 globalContext.location.hash.substring('#'.length)
 
@@ -332,22 +334,20 @@ export class WebsiteUtilities extends Tools {
 
             this.$domNodes.parent!.show()
 
-            if (this.$domNodes.window) {
-                const onLoaded:ProcedureFunction = async ():Promise<void> => {
-                    if (!this.windowLoaded) {
-                        this.windowLoaded = true
-                        await this._removeLoadingCover()
-                        this._performStartUpEffects()
-                        resolve(this)
-                    }
+            const onLoaded:ProcedureFunction = async ():Promise<void> => {
+                if (!this.windowLoaded) {
+                    this.windowLoaded = true
+                    await this._removeLoadingCover()
+                    this._performStartUpEffects()
+                    resolve(this)
                 }
-                $(():TimeoutPromise => Tools.timeout(
-                    onLoaded,
-                    this._options
-                        .windowLoadedTimeoutAfterDocumentLoadedInMilliseconds
-                ))
-                this.on(this.$domNodes.window, 'load', onLoaded)
             }
+            $(():TimeoutPromise => Tools.timeout(
+                onLoaded,
+                this._options
+                    .windowLoadedTimeoutAfterDocumentLoadedInMilliseconds
+            ))
+            this.on(this.$domNodes.window, 'load', onLoaded)
 
             this._bindClickTracking()
 
@@ -362,9 +362,6 @@ export class WebsiteUtilities extends Tools {
             this._bindNavigationEvents()
             this._bindMediaQueryChangeEvents()
             this._triggerWindowResizeEvents()
-
-            if (!this.$domNodes.window)
-                resolve(this)
         })
     }
     // endregion
@@ -373,8 +370,8 @@ export class WebsiteUtilities extends Tools {
      * @returns Returns the current instance.
      */
     scrollToTop():WebsiteUtilities {
-        if (globalContext.window && globalContext.document)
-            this.$domNodes.window!
+        if (globalContext.document)
+            this.$domNodes.window
                 .stop()
                 .animate({scrollTop: 0}, this._options.scrollToTop.options)
 
@@ -413,10 +410,10 @@ export class WebsiteUtilities extends Tools {
             value?:number
         }
     ):WebsiteUtilities {
-        if (globalContext.window?.location && this._options.tracking) {
+        if (globalContext.window.location && this._options.tracking) {
             const trackingItem:TrackingItem = {
                 context:
-                    `${globalContext.window?.location.pathname}#` +
+                    `${globalContext.window.location.pathname}#` +
                     this.currentSectionName,
                 ...(properties as Omit<TrackingItem, 'context'>)
             }
@@ -539,7 +536,7 @@ export class WebsiteUtilities extends Tools {
      */
     _onSwitchSection(sectionName:string):void {
         if (
-            globalContext.window?.location &&
+            globalContext.window.location &&
             this._options.tracking?.sectionSwitch &&
             this.currentSectionName !== sectionName
         ) {
@@ -636,15 +633,15 @@ export class WebsiteUtilities extends Tools {
      * @returns Nothing.
      */
     _bindScrollEvents(...parameter:Array<any>):void {
-        // Stop automatic scrolling if the user wants to scroll manually.
-        if (!this.$domNodes.window)
-            return
-
         const $scrollTarget:$DomNode =
             $('body, html').add(this.$domNodes.window)
         $scrollTarget.on(
             this._options.knownScrollEventNames.join(' '),
             (event:JQuery.Event):void => {
+                /*
+                    NOTE: Stop automatic scrolling if the user wants to scroll
+                    manually.
+                */
                 if (this._options.switchToManualScrollingIndicator(event))
                     $scrollTarget.stop(true)
             }
@@ -654,7 +651,7 @@ export class WebsiteUtilities extends Tools {
             this.$domNodes.window,
             'scroll',
             ():void => {
-                if (this.$domNodes.window!.scrollTop()) {
+                if (this.$domNodes.window.scrollTop()) {
                     if (this.viewportIsOnTop) {
                         this.viewportIsOnTop = false
 
@@ -769,20 +766,19 @@ export class WebsiteUtilities extends Tools {
      * @returns Nothing.
      */
     _bindNavigationEvents():void {
-        if (globalContext.window?.addEventListener)
-            globalContext.window.addEventListener(
-                'hashchange',
-                ():void => {
-                    if (this.startUpAnimationIsComplete)
-                        this.fireEvent(
-                            'switchSection',
-                            false,
-                            this,
-                            location.hash.substring('#'.length)
-                        )
-                },
-                false
-            )
+        globalContext.window.addEventListener(
+            'hashchange',
+            ():void => {
+                if (this.startUpAnimationIsComplete)
+                    this.fireEvent(
+                        'switchSection',
+                        false,
+                        this,
+                        location.hash.substring('#'.length)
+                    )
+            },
+            false
+        )
 
         this._bindScrollToTopButton()
     }
@@ -805,7 +801,7 @@ export class WebsiteUtilities extends Tools {
      * @returns Nothing.
      */
     _bindClickTracking():void {
-        if (globalContext.window?.location && this._options.tracking) {
+        if (this._options.tracking) {
             if (this._options.tracking.linkClick)
                 this.on(
                     this.$domNodes.parent!.find('a'),
@@ -831,8 +827,9 @@ export class WebsiteUtilities extends Tools {
 }
 export default WebsiteUtilities
 // endregion
-$.WebsiteUtilities = (...parameter:Array<any>):any =>
+$.WebsiteUtilities = ((...parameter:Array<any>):any =>
     $.Tools().controller(WebsiteUtilities, parameter)
+) as WebsiteUtilitiesFunction
 $.WebsiteUtilities.class = WebsiteUtilities
 // region vim modline
 // vim: set tabstop=4 shiftwidth=4 expandtab:

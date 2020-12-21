@@ -22,22 +22,25 @@ import {
     Mapping,
     Options as BaseOptions,
     ProcedureFunction,
+    StaticScope as BaseStaticScope,
     $DomNode
 } from 'clientnode/type'
 import {
-    Options as InternationalisationOptions, Scope as BaseScope
+    Options as InternationalisationOptions
 } from 'internationalisation/type'
 import {SpinnerOptions} from 'spin.js'
 
 import WebsiteUtilities from './index'
 // endregion
 // region exports
-export type WebsiteUtilitiesFunction = (...parameter:Array<any>) => any
-export interface Scope extends BaseScope {
+export type WebsiteUtilitiesFunction =
+    ((...parameter:Array<any>) => any) &
+    {class:typeof WebsiteUtilities}
+export interface StaticScope extends BaseStaticScope {
     WebsiteUtilities:WebsiteUtilitiesFunction
 }
 declare global {
-    interface JQuery extends Scope {}
+    interface JQueryStatic extends StaticScope {}
     const dataLayer:Array<any>
 }
 export type DomNodes<Type = string> = BaseDomNodes<Type> & {
@@ -48,7 +51,10 @@ export type DomNodes<Type = string> = BaseDomNodes<Type> & {
     windowLoadingCover:Type
     windowLoadingSpinner:Type
 }
-export type $DomNodes = DomNodes<$DomNode>
+export type $DomNodes = DomNodes<$DomNode> & {
+    parent:$DomNode<HTMLElement>
+    window:$DomNode<Window>
+}
 export type Options = Partial<BaseOptions> & {
     activateLanguageSupport:boolean
     additionalPageLoadingTimeInMilliseconds:number
