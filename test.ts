@@ -14,18 +14,32 @@
     endregion
 */
 // region imports
+import {$} from 'clientnode'
+
 import WebsiteUtilities from './index'
 // endregion
 describe(WebsiteUtilities._name, ():void => {
-    require('./index')
-    const websiteUtilties:WebsiteUtilities = await $.WebsiteUtilties()
+    let websiteUtilities:WebsiteUtilities
+    beforeAll(async ():Promise<void> => {
+        websiteUtilities = await $.WebsiteUtilities()
+    })
     // region tests
     // / region public methods
     // // region special
-    test('initialize', ():void => assert.ok(websiteUtilities))
+    test('initialize', ():void => expect(websiteUtilities).toBeDefined())
     // // endregion
     test('scrollToTop', ():void =>
         expect(websiteUtilities.scrollToTop()).toStrictEqual(websiteUtilities)
+    )
+    test('track', ():void =>
+        expect(websiteUtilities.track({
+            event: 'event',
+            eventType: 'eventType',
+            label: 'label',
+            reference: 'reference',
+            subject: 'subject',
+            userInteraction: false
+        })).toStrictEqual(websiteUtilities)
     )
     test('disableScrolling|enableScrolling', ():void => {
         expect(websiteUtilities.disableScrolling())
@@ -36,68 +50,72 @@ describe(WebsiteUtilities._name, ():void => {
     // / endregion
     // / region protected methods
     // // region event
-    test('_onViewportMovesToTop', ():void => {
-        websiteUtilities._onViewportMovesToTop()
-        // NOTE: Returns timeout id because of debounceing.
-        assert.ok(website._onViewportMovesToTop().hasOwnProperty('clear'))
-    })
-    test('_onViewportMovesAwayFromTop', ():void => {
-        website._onViewportMovesAwayFromTop()
-        // NOTE: Returns timeout id because of debounceing.
-        assert.ok(website._onViewportMovesAwayFromTop().hasOwnProperty(
-            'clear'))
-    })
+    test('_onViewportMovesToTop', ():void =>
+        // NOTE: Method is wrapped by the higher order debounce method.
+        expect(websiteUtilities._onViewportMovesToTop())
+            .toHaveProperty('clear')
+    )
+    test('_onViewportMovesAwayFromTop', ():void =>
+        // NOTE: Method is wrapped by the higher order debounce method.
+        expect(websiteUtilities._onViewportMovesAwayFromTop())
+            .toHaveProperty('clear')
+    )
     test('_onChangeMediaQueryMode', ():void =>
-        assert.strictEqual(
-            website._onChangeMediaQueryMode('old', 'new'), website)
+        expect(websiteUtilities._onChangeMediaQueryMode('old', 'new'))
+            .not.toBeDefined()
     )
     test('_onChangeToLargeMode', ():void =>
-        assert.strictEqual(
-            website._onChangeToLargeMode('old', 'new'), website)
+        expect(websiteUtilities._onChangeToLargeMode('old', 'new'))
+            .not.toBeDefined()
     )
     test('_onChangeToMediumMode', ():void =>
-        assert.strictEqual(
-            website._onChangeToMediumMode('old', 'new'), website)
+        expect(websiteUtilities._onChangeToMediumMode('old', 'new'))
+            .not.toBeDefined()
     )
     test('_onChangeToSmallMode', ():void =>
-        assert.strictEqual(
-            website._onChangeToSmallMode('old', 'new'), website)
+        expect(websiteUtilities._onChangeToSmallMode('old', 'new'))
+            .not.toBeDefined()
     )
     test('_onChangeToExtraSmallMode', ():void =>
-        assert.strictEqual(
-            website._onChangeToExtraSmallMode('old', 'new'), website)
+        expect(websiteUtilities._onChangeToExtraSmallMode('old', 'new'))
+            .not.toBeDefined()
     )
     test('_onSwitchSection', ():void =>
-        assert.strictEqual(website._onSwitchSection('newSectionName'), website)
+        expect(websiteUtilities._onSwitchSection('newSectionName'))
+            .not.toBeDefined()
     )
     test('_onStartUpAnimationComplete', ():void =>
-        assert.strictEqual(website._onStartUpAnimationComplete(), website)
+        expect(websiteUtilities._onStartUpAnimationComplete())
+            .not.toBeDefined()
     )
     // // endregion
     // // region helper
-    test('_addMediaQueryChangeEvents', ():void =>
-        assert.strictEqual(website._addMediaQueryChangeEvents(), website)
+    test('_bindMediaQueryChangeEvents', ():void =>
+        expect(websiteUtilities._bindMediaQueryChangeEvents())
+            .not.toBeDefined()
     )
     test('_triggerWindowResizeEvents', ():void =>
-        assert.strictEqual(website._triggerWindowResizeEvents(), website)
+        expect(websiteUtilities._triggerWindowResizeEvents()).not.toBeDefined()
     )
-    test('_bindScrollEvents', ():void => assert.strictEqual(
-        website._bindScrollEvents(), website)
+    test('_bindScrollEvents', ():void =>
+        expect(websiteUtilities._bindScrollEvents()).not.toBeDefined()
     )
     test('_removeLoadingCover', async ():Promise<void> =>
-        assert.strictEqual(await website._removeLoadingCover(), website)
+        expect(websiteUtilities._removeLoadingCover())
+            .resolves.not.toBeDefined()
     )
-    test('_handleStartUpEffects', async ():Promise<void> =>
-        assert.strictEqual(await website._handleStartUpEffects(10), website)
+    test('_performStartUpEffects', async ():Promise<void> =>
+        expect(websiteUtilities._performStartUpEffects(10))
+            .resolves.not.toBeDefined()
     )
-    test('_addNavigationEvents', ():void =>
-        assert.strictEqual(website._addNavigationEvents(), website)
+    test('_bindNavigationEvents', ():void =>
+        expect(websiteUtilities._bindNavigationEvents()).not.toBeDefined()
     )
-    test('_handleScrollToTopButton', ():void =>
-        assert.strictEqual(website._handleScrollToTopButton(), website)
+    test('_bindScrollToTopButton', ():void =>
+        expect(websiteUtilities._bindScrollToTopButton()).not.toBeDefined()
     )
-    test('_handleAnalyticsInitialisation', ():void =>
-        assert.strictEqual(website._handleAnalyticsInitialisation(), website)
+    test('_bindClickTracking', ():void =>
+        expect(websiteUtilities._bindClickTracking()).not.toBeDefined()
     )
     // // endregion
     // / endregion

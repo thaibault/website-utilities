@@ -61,6 +61,7 @@
     "@types/jsdom": "*",
     "@types/loader-utils": "*",
     "@types/node": "*",
+    "@types/workbox-webpack-plugin": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
     "babel-eslint": "*",
@@ -74,7 +75,6 @@
     "internationalisation": "*",
     "jest": "*",
     "jquery": "*",
-    "jquery.scrollto": "*",
     "jsdoc": "*",
     "mini-css-extract-plugin": "*",
     "postcss-fontpath": "*",
@@ -96,7 +96,6 @@
     "clientnode": "*",
     "internationalisation": "*",
     "jquery": "*",
-    "jquery.scrollto": "*",
     "postcss-mixins": "*",
     "spin.js": "*"
   },
@@ -105,23 +104,12 @@
     "commandLine": {
       "test": {
         "environments": [
-          "jsdom",
-          "node"
+          "jsdom"
         ]
       }
     },
     "injection": {
       "external": {
-        "aliases": {
-          "jQuery-scrollTo": {
-            "default": "jquery.scrollto/jquery.scrollTo.min",
-            "root": [
-              "$",
-              "fn",
-              "scrollTo"
-            ]
-          }
-        },
         "implicit": {
           "pattern": {
             "exclude": {
@@ -148,9 +136,6 @@
       }
     },
     "module": {
-      "aliases": {
-        "jQuery-scrollTo$": "jquery.scrollto/jquery.scrollTo.min"
-      },
       "preprocessor": {
         "cascadingStyleSheet": {
           "additional": {
@@ -163,7 +148,7 @@
         },
         "javaScript": {
           "#": "We have to pre-process \"spin.js\" since it isn't a compatible ecma script.",
-          "exclude": "!(filePath.endsWith('/clientnode/test.js') || filePath.endsWith('/spin.js')) && isFilePathInDependencies(filePath)"
+          "exclude": "!filePath.endsWith('/spin.js') && isFilePathInDependencies(filePath)"
         }
       }
     },

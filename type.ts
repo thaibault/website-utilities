@@ -17,20 +17,31 @@
 */
 // region imports
 import {
-    $DomNode, DomNodes as BaseDomNodes, Options as BaseOptions, Mapping
+    DomNodes as BaseDomNodes,
+    FirstParameter,
+    Mapping,
+    Options as BaseOptions,
+    ProcedureFunction,
+    StaticScope as BaseStaticScope,
+    $DomNode
 } from 'clientnode/type'
 import {
-    Options as InternationalisationOptions, Scope as BaseScope
+    Options as InternationalisationOptions
 } from 'internationalisation/type'
 import {SpinnerOptions} from 'spin.js'
+
+import WebsiteUtilities from './index'
 // endregion
 // region exports
-export type WebsiteUtilitiesFunction = (...parameter:Array<any>) => any
-export interface Scope extends BaseScope {
+export type WebsiteUtilitiesFunction =
+    ((...parameter:Array<any>) => any) &
+    {class:typeof WebsiteUtilities}
+export interface StaticScope extends BaseStaticScope {
     WebsiteUtilities:WebsiteUtilitiesFunction
 }
 declare global {
-    interface JQuery extends Scope {}
+    interface JQueryStatic extends StaticScope {}
+    const dataLayer:Array<any>
 }
 export type DomNodes<Type = string> = BaseDomNodes<Type> & {
     mediaQueryIndicator:Type
@@ -40,7 +51,10 @@ export type DomNodes<Type = string> = BaseDomNodes<Type> & {
     windowLoadingCover:Type
     windowLoadingSpinner:Type
 }
-export type $DomNodes = DomNodes<$DomNode>
+export type $DomNodes = DomNodes<$DomNode> & {
+    parent:$DomNode<HTMLElement>
+    window:$DomNode<Window>
+}
 export type Options = Partial<BaseOptions> & {
     activateLanguageSupport:boolean
     additionalPageLoadingTimeInMilliseconds:number
@@ -49,41 +63,62 @@ export type Options = Partial<BaseOptions> & {
     domNodeSelectorPrefix:string
     initialSectionName:string
     knownScrollEventNames:Array<string>
-    language:InternationalisationOptions
+    language:Partial<InternationalisationOptions>
     mediaQueryClassNameIndicator:Array<Array<string>>
-    onChangeMediaQueryMode:Function
-    onChangeToExtraSmallMode:Function
-    onChangeToLargeMode:Function
-    onChangeToMediumMode:Function
-    onChangeToSmallMode:Function
-    onStartUpAnimationComplete:Function
-    onSwitchSection:Function
-    onViewportMovesAwayFromTop:Function
-    onViewportMovesToTop:Function
+    onChangeMediaQueryMode:ProcedureFunction
+    onChangeToExtraSmallMode:ProcedureFunction
+    onChangeToLargeMode:ProcedureFunction
+    onChangeToMediumMode:ProcedureFunction
+    onChangeToSmallMode:ProcedureFunction
+    onStartUpAnimationComplete:ProcedureFunction
+    onSwitchSection:ProcedureFunction
+    onViewportMovesAwayFromTop:ProcedureFunction
+    onViewportMovesToTop:ProcedureFunction
     scrollToTop:{
         button:{
+            hideAnimationOptions:JQuery.EffectsOptions<HTMLElement>
+            showAnimationOptions:JQuery.EffectsOptions<HTMLElement>
             slideDistanceInPixel:number
-            showAnimation:{duration:number|string}
-            hideAnimation:{duration:number|string}
         },
-        inLinearTime:boolean
-        options:{duration:number|string}
+        options:JQuery.EffectsOptions<HTMLElement>
     },
     startUpAnimationElementDelayInMiliseconds:number
-    startUpHide:Mapping
-    startUpShowAnimation:[Mapping, Mapping]
-    switchToManualScrollingIndicator:(event:Event) => boolean
-    tracking:{
-        event:(
-            category:string, action:string, label:string, value:any, data:any
+    /*
+        NOTE: We cannot use type helper "Parameters" (or "FirstParameter" which
+        is based on "Parameters") since this grabs always last (often wrong)
+        overloaded signature.
+    */
+    startUpHide:Mapping<number|string>
+    startUpShowAnimation:FirstParameter<$DomNode['animate']>
+    switchToManualScrollingIndicator:(event:JQuery.Event) => boolean
+    tracking?:{
+        buttonClick?:(
+            this:WebsiteUtilities,
+            $link:$DomNode<HTMLButtonElement>,
+            event:JQuery.Event
         ) => void
-        initial?:null|((key:string, sectionName:string) => void)
-        key?:null|string
-        sectionSwitch:(sectionName:string) => void
+        linkClick?:(
+            this:WebsiteUtilities,
+            $link:$DomNode<HTMLLinkElement>,
+            event:JQuery.Event
+        ) => void
+        sectionSwitch?:(this:WebsiteUtilities, sectionName:string) => void
+        track:(item:TrackingItem) => void
     }
-    windowLoadingCoverHideAnimation:[Mapping, Mapping]
+    windowLoadingCoverHideAnimation:FirstParameter<$DomNode['animate']>
     windowLoadingSpinner:SpinnerOptions
     windowLoadedTimeoutAfterDocumentLoadedInMilliseconds:number
+}
+export type TrackingItem = {
+    context:string
+    event:string
+    eventType:string
+    icon?:string
+    label:string
+    reference:string
+    subject:string
+    value:number
+    userInteraction:boolean
 }
 // endregion
 // region vim modline
