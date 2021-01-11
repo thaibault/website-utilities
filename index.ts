@@ -4,7 +4,7 @@
 'use strict'
 /* !
     region header
-    [Project page](https://torben.website/websiteUtilities)
+    [Project page](https://torben.website/website-utilities)
 
     Copyright Torben Sickert (info["~at~"]torben.website) 16.12.2012
 
@@ -16,10 +16,10 @@
     See https://creativecommons.org/licenses/by/3.0/deed.de
     endregion
 */
-// region importsregion
-import Tools, {$, globalContext} from 'clientnode'
+// region imports
+import Tools, {globalContext, $} from 'clientnode'
 import {
-    FirstParameter, ProcedureFunction, TimeoutPromise, $DomNode
+    FirstParameter, Mapping, ProcedureFunction, TimeoutPromise, $DomNode
 } from 'clientnode/type'
 import Internationalisation from 'internationalisation'
 import {Spinner} from 'spin.js'
@@ -28,9 +28,9 @@ import {
     $DomNodes, Options, TrackingItem, WebsiteUtilitiesFunction
 } from './type'
 // endregion
-// region plugins/classesendregion
+// region plugins/classes
 /**
- * This plugin holds all needed methods to extend a whole website.###
+ * This plugin holds all needed methods to extend a whole website.
  * @property static:_name - Defines this class name to allow retrieving them
  * after name mangling.
  *
