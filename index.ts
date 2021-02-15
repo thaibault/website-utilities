@@ -25,7 +25,7 @@ import Internationalisation from 'internationalisation'
 import {Spinner} from 'spin.js'
 
 import {
-    $DomNodes, Options, TrackingItem, WebsiteUtilitiesFunction
+    Options, TrackingItem, WebsiteUtilitiesFunction, $DomNodes
 } from './type'
 // endregion
 // region plugins/classes
