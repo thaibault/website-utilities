@@ -68,7 +68,7 @@
     "babel-eslint": "*",
     "clientnode": "*",
     "css-loader": "*",
-    "cssnano": "*",
+    "cssnano": "<=4",
     "documentation-website": "*",
     "eslint": "*",
     "eslint-config-google": "*",
