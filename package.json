@@ -19,15 +19,15 @@
     "utilities"
   ],
   "files": [
-    "index.ts",
+    "index.d.ts",
+    "index.js",
     "index.css",
     "index.compiled.css",
     "index.sh",
     "font",
     "font.compiled",
-    "type.ts"
+    "type.d.ts"
   ],
-  "main": "index.js",
   "bin": {
     "website-utilities": "index.sh"
   },
