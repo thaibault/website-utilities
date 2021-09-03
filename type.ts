@@ -51,10 +51,6 @@ export type DomNodes<Type = string> = BaseDomNodes<Type> & {
     windowLoadingCover:Type
     windowLoadingSpinner:Type
 }
-export type $DomNodes = DomNodes<$DomNode> & {
-    parent:$DomNode<HTMLElement>
-    window:$DomNode<Window>
-}
 export type Options = Partial<BaseOptions> & {
     activateLanguageSupport:boolean
     additionalPageLoadingTimeInMilliseconds:number

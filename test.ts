@@ -53,12 +53,12 @@ describe(WebsiteUtilities._name, ():void => {
     test('_onViewportMovesToTop', ():void =>
         // NOTE: Method is wrapped by the higher order debounce method.
         expect(websiteUtilities._onViewportMovesToTop())
-            .toHaveProperty('clear')
+            .toBeInstanceOf(Promise)
     )
     test('_onViewportMovesAwayFromTop', ():void =>
         // NOTE: Method is wrapped by the higher order debounce method.
         expect(websiteUtilities._onViewportMovesAwayFromTop())
-            .toHaveProperty('clear')
+            .toBeInstanceOf(Promise)
     )
     test('_onChangeMediaQueryMode', ():void =>
         expect(websiteUtilities._onChangeMediaQueryMode('old', 'new'))

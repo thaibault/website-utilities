@@ -19,14 +19,17 @@
 // region imports
 import Tools, {globalContext, $} from 'clientnode'
 import {
-    FirstParameter, Mapping, ProcedureFunction, TimeoutPromise, $DomNode
+    FirstParameter,
+    Mapping,
+    ProcedureFunction,
+    TimeoutPromise,
+    $DomNode,
+    $DomNodes
 } from 'clientnode/type'
 import Internationalisation from 'internationalisation'
 import {Spinner} from 'spin.js'
 
-import {
-    Options, TrackingItem, WebsiteUtilitiesFunction, $DomNodes
-} from './type'
+import {Options, TrackingItem, WebsiteUtilitiesFunction} from './type'
 // endregion
 // region plugins/classes
 /**
@@ -370,7 +373,7 @@ export class WebsiteUtilities extends Tools {
      */
     scrollToTop():WebsiteUtilities {
         if (globalContext.document)
-            this.$domNodes.window
+            this.$domNodes.window!
                 .stop()
                 .animate({scrollTop: 0}, this._options.scrollToTop.options)
 
@@ -633,7 +636,7 @@ export class WebsiteUtilities extends Tools {
      */
     _bindScrollEvents(...parameter:Array<any>):void {
         const $scrollTarget:$DomNode =
-            $('body, html').add(this.$domNodes.window)
+            $('body, html').add(this.$domNodes.window!)
         $scrollTarget.on(
             this._options.knownScrollEventNames.join(' '),
             (event:JQuery.Event):void => {
@@ -650,7 +653,7 @@ export class WebsiteUtilities extends Tools {
             this.$domNodes.window,
             'scroll',
             ():void => {
-                if (this.$domNodes.window.scrollTop()) {
+                if (this.$domNodes.window!.scrollTop()) {
                     if (this.viewportIsOnTop) {
                         this.viewportIsOnTop = false
 
@@ -671,7 +674,7 @@ export class WebsiteUtilities extends Tools {
             }
         )
 
-        if (this.$domNodes.window.scrollTop()) {
+        if (this.$domNodes.window!.scrollTop()) {
             this.viewportIsOnTop = false
             this.fireEvent(
                 'viewportMovesAwayFromTop', false, this, ...parameter
