@@ -3283,9 +3283,9 @@ cli-table3@^0.5.0:
     colors "^1.1.2"
 
 clientnode@*:
-  version "3.0.802"
-  resolved "https://registry.yarnpkg.com/clientnode/-/clientnode-3.0.802.tgz#57e3e06fcf70baada8d8979d30f986949af672fa"
-  integrity sha512-voOU9nL0Hys5rs6swkvw+IOcB0r+QfnCAOM3eoqecm8aJQHbcvNuEaZfzPoX+a/DPdr/bGKOwCApcqdSVP4kBA==
+  version "3.0.803"
+  resolved "https://registry.yarnpkg.com/clientnode/-/clientnode-3.0.803.tgz#8a0261581c1c323d2182d352eb1ec7d5f4680132"
+  integrity sha512-xeXQCU6lJ6dLX4fGAZIo10XGPJ/JL5FjORVZwXChmmin/groznMpgzgw0Hqor2SbQtiQah9zo2lPXLik6jV+fg==
   dependencies:
     "@types/webpack" "https://registry.yarnpkg.com/@favware/skip-dependency/-/skip-dependency-1.1.0.tgz"
 
@@ -5634,9 +5634,9 @@ internal-slot@^1.0.3:
     side-channel "^1.0.4"
 
 internationalisation@*:
-  version "1.0.234"
-  resolved "https://registry.yarnpkg.com/internationalisation/-/internationalisation-1.0.234.tgz#8347661802fb86b5cd9ebb5ae46fea8d42379584"
-  integrity sha512-Qb8UnPaswZe8eHCsA+OcqDbOVsO3q4ge4IcSe3UqWsH5zXqBnPHS/+9rrJ79dLYHunqmJLUkLQRcRX9JZItLPw==
+  version "1.0.235"
+  resolved "https://registry.yarnpkg.com/internationalisation/-/internationalisation-1.0.235.tgz#14e8a992d630a9195ac54092e9b9857215f11432"
+  integrity sha512-Axb0NrxT7yT38tGxhOzkIo9YyLjyTUyJ+PWEUY5928vCUoXeHA9C/JiWeCMLWOTkZ2jcfApr4uCEr0q6X2lXTg==
   dependencies:
     "@types/webpack" "https://registry.yarnpkg.com/@favware/skip-dependency/-/skip-dependency-1.1.0.tgz"
 
