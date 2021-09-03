@@ -316,8 +316,7 @@ export class WebsiteUtilities extends Tools {
         this._onViewportMovesToTop =
             Tools.debounce(this._onViewportMovesToTop)
 
-        this.$domNodes = this.grabDomNode(this._options.domNodes as Mapping) as
-            $DomNodes
+        this.$domNodes = this.grabDomNode(this._options.domNodes as Mapping)
 
         this.disableScrolling()
 
