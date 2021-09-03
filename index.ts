@@ -272,7 +272,7 @@ export class WebsiteUtilities extends Tools {
             direction: 1,
             // CSS color or array of colors
             fadeColor: 'transparent',
-            // Left position relative to parent in px
+            // Left position relative to parent in pixel
             left: 'auto',
             // The length of each line
             length: 23,
@@ -288,7 +288,7 @@ export class WebsiteUtilities extends Tools {
             shadow: false,
             // Rounds per second
             speed: 1.1,
-            // Top position relative to parent in px
+            // Top position relative to parent in pixel
             top: 'auto',
             // The line thickness
             width: 11,
