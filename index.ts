@@ -130,7 +130,7 @@ import {Options, TrackingItem, WebsiteUtilitiesFunction} from './type'
  * Duration after loading cover should be removed.
  */
 export class WebsiteUtilities extends Tools {
-    static readonly _name:'WebsiteUtilities' = 'WebsiteUtilities'
+    static readonly _name:string = 'WebsiteUtilities'
 
     $domNodes:$DomNodes = null as unknown as $DomNodes
     currentMediaQueryMode:string = ''
