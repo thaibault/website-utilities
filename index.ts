@@ -122,6 +122,8 @@ import {
  * @property static:_defaultOptions.windowLoadingTimeoutAfterDocumentLoadedInMilliseconds -
  * Duration after loading cover should be removed.
  *
+ * @property options - Finally configured given options.
+ *
  * @property $domNodes - Saves a set of references to all needed dom nodes.
  * @property currentMediaQueryMode - Saves current media query status depending
  * on available space in current browser window.
