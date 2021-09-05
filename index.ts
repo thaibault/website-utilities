@@ -29,13 +29,98 @@ import {
 import Internationalisation from 'internationalisation'
 import {Spinner} from 'spin.js'
 
-import {Options, TrackingItem, WebsiteUtilitiesFunction} from './type'
+import {
+    DefaultOptions, Options, TrackingItem, WebsiteUtilitiesFunction
+} from './type'
 // endregion
 // region plugins/classes
 /**
  * This plugin holds all needed methods to extend a whole website.
- * @property static:_name - Defines this class name to allow retrieving them
- * after name mangling.
+ * @property static:_defaultOptions - Options extended by the options given to
+ * the initializer method.
+ * @property static:_defaultOptions.activateLanguageSupport - Indicates whether
+ * language support should be used or not.
+ * @property static:_defaultOptions.additionalPageLoadingTimeInMilliseconds -
+ * Additional time to wait until page will be indicated as loaded.
+ * @property static:_defaultOptions.domNodes - Mapping of dom node descriptions
+ * to their corresponding selectors.
+ * @property static:_defaultOptions.domNodes.mediaQueryIndicator - Selector for
+ * indicator dom node to use to trigger current media query mode.
+ * @property static:_defaultOptions.domNodes.top - Selector to indicate that
+ * viewport is currently on top.
+ * @property static:_defaultOptions.domNodes.scrollToTopButton - Selector for
+ * starting an animated scroll to top.
+ * @property static:_defaultOptions.domNodes.startUpAnimationClassPrefix -
+ * Class name selector prefix for all dom nodes to appear during start up
+ * animations.
+ * @property static:_defaultOptions.domNodes.windowLoadingCover - Selector to
+ * the full window loading cover dom node.
+ * @property static:_defaultOptions.domNodes.windowLoadingSpinner - Selector to
+ * the window loading spinner (on top of the window loading cover).
+ * @property static:_defaultOptions.domNodeSelectorPrefix - Selector prefix for
+ * all nodes to take into account.
+ * @property static:_defaultOptions.initialSectionName - Pre-selected section
+ * name.
+ * @property static:_defaultOptions.knownScrollEventNames - Saves all known
+ * scroll events in a space separated string.
+ * @property static:_defaultOptions.language - Options for client side
+ * internationalisation handler.
+ * @property static:_defaultOptions.mediaQueryClassNameIndicator - Mapping of
+ * media query class indicator names to internal event names.
+ * @property static:_defaultOptions.onChangeMediaQueryMode - Callback to
+ * trigger if media query mode changes.
+ * @property static:_defaultOptions.onChangeToExtraSmallMode - Callback to
+ * trigger if media query mode changes to extra small mode.
+ * @property static:_defaultOptions.onChangeToLargeMode - Callback to trigger
+ * if media query mode changes to large mode.
+ * @property static:_defaultOptions.onChangeToMediumMode - Callback to trigger
+ * if media query mode changes to medium mode.
+ * @property static:_defaultOptions.onChangeToSmallMode - Callback to trigger
+ * if media query mode changes to small mode.
+ * @property static:_defaultOptions.onStartUpAnimationComplete - Callback to
+ * trigger if all start up animations has finished.
+ * @property static:_defaultOptions.onSwitchSection - Callback to trigger if
+ * current section switches.
+ * @property static:_defaultOptions.onViewportMovesAwayFromTop - Callback to
+ * trigger when viewport moves away from top.
+ * @property static:_defaultOptions.onViewportMovesToTop - Callback to trigger
+ * when viewport arrives at top.
+ * @property static:_defaultOptions.scrollToTop - Options for automated scroll
+ * top animation.
+ * @property static:_defaultOptions.scrollToTop.button - To top scroll button
+ * behavior configuration.
+ * @property static:_defaultOptions.scrollToTop.button.hideAnimationOptions -
+ * Configures hide animation.
+ * @property static:_defaultOptions.scrollToTop.button.showAnimationOptions -
+ * Configures show animation.
+ * @property static:_defaultOptions.scrollToTop.options - Scrolling animation
+ * options.
+ * @property static:_defaultOptions.startUpAnimationElementDelayInMiliseconds -
+ * Delay between two startup animated dom nodes in order.
+ * @property static:_defaultOptions.startUpHide - Options for initially hiding
+ * dom nodes showing on startup later.
+ * @property static:_defaultOptions.startUpShowAnimation - Options for startup
+ * show in animation.
+ * @property static:_defaultOptions.switchToManualScrollingIndicator -
+ * Indicator function to stop currently running scroll animations to let the
+ * user get control of current scrolling behavior. Given callback gets an event
+ * object. If the function returns "true" current animated scrolls will be
+ * stopped.
+ * @property static:_defaultOptions.tracking - Tracking configuration to
+ * collect user's behavior data.
+ * @property static:_defaultOptions.tracking.buttonClick - Function to call on
+ * button click events.
+ * @property static:_defaultOptions.tracking.linkClick - Function to call on
+ * link click events.
+ * @property static:_defaultOptions.tracking.sectionSwitch - Function to call
+ * on section switches.
+ * @property static:_defaultOptions.tracking.track - Tracker call itself.
+ * @property static:_defaultOptions.windowLoadingCoverHideAnimation - Options
+ * for startup loading cover hide animation.
+ * @property static:_defaultOptions.windowLoadingSpinner - Options for the
+ * window loading cover spinner.
+ * @property static:_defaultOptions.windowLoadingTimeoutAfterDocumentLoadedInMilliseconds -
+ * Duration after loading cover should be removed.
  *
  * @property $domNodes - Saves a set of references to all needed dom nodes.
  * @property currentMediaQueryMode - Saves current media query status depending
@@ -47,102 +132,9 @@ import {Options, TrackingItem, WebsiteUtilitiesFunction} from './type'
  * @property viewportIsOnTop - Indicates whether current viewport is on top.
  * @property windowLoaded - Indicates whether window is already loaded.
  * @property windowLoadingSpinner - The window loading spinner instance.
- *
- * @property _options - Options extended by the options given to the
- * initializer method.
- * @property _options.activateLanguageSupport - Indicates whether language
- * support should be used or not.
- * @property _options.additionalPageLoadingTimeInMilliseconds - Additional time
- * to wait until page will be indicated as loaded.
- * @property _options.domNodes - Mapping of dom node descriptions to their
- * corresponding selectors.
- * @property _options.domNodes.mediaQueryIndicator - Selector for indicator dom
- * node to use to trigger current media query mode.
- * @property _options.domNodes.top - Selector to indicate that viewport is
- * currently on top.
- * @property _options.domNodes.scrollToTopButton - Selector for starting an
- * animated scroll to top.
- * @property _options.domNodes.startUpAnimationClassPrefix - Class name
- * selector prefix for all dom nodes to appear during start up animations.
- * @property _options.domNodes.windowLoadingCover - Selector to the full window
- * loading cover dom node.
- * @property _options.domNodes.windowLoadingSpinner - Selector to the window
- * loading spinner (on top of the window loading cover).
- * @property _options.domNodeSelectorPrefix - Selector prefix for all nodes to
- * take into account.
- * @property _options.initialSectionName - Pre-selected section name.
- * @property _options.knownScrollEventNames - Saves all known scroll events in
- * a space separated string.
- * @property _options.language - Options for client side internationalisation
- * handler.
- * @property _options.mediaQueryClassNameIndicator - Mapping of media query
- * class indicator names to internal event names.
- * @property _options.onChangeMediaQueryMode - Callback to trigger if media
- * query mode changes.
- * @property _options.onChangeToExtraSmallMode - Callback to trigger if media
- * query mode changes to extra small mode.
- * @property _options.onChangeToLargeMode - Callback to trigger if media query
- * mode changes to large mode.
- * @property _options.onChangeToMediumMode - Callback to trigger if media query
- * mode changes to medium mode.
- * @property _options.onChangeToSmallMode - Callback to trigger if media query
- * mode changes to small mode.
- * @property _options.onStartUpAnimationComplete - Callback to trigger if all
- * start up animations has finished.
- * @property _options.onSwitchSection - Callback to trigger if current section
- * switches.
- * @property _options.onViewportMovesAwayFromTop - Callback to trigger when
- * viewport moves away from top.
- * @property _options.onViewportMovesToTop - Callback to trigger when viewport
- * arrives at top.
- * @property _options.scrollToTop - Options for automated scroll top animation.
- * @property _options.scrollToTop.button - To top scroll button behavior
- * configuration.
- * @property _options.scrollToTop.button.hideAnimationOptions - Configures hide
- * animation.
- * @property _options.scrollToTop.button.showAnimationOptions - Configures show
- * animation.
- * @property _options.scrollToTop.options - Scrolling animation options.
- * @property _options.startUpAnimationElementDelayInMiliseconds - Delay between
- * two startup animated dom nodes in order.
- * @property _options.startUpHide - Options for initially hiding dom nodes
- * showing on startup later.
- * @property _options.startUpShowAnimation - Options for startup show in
- * animation.
- * @property _options.switchToManualScrollingIndicator - Indicator function to
- * stop currently running scroll animations to let the user get control of
- * current scrolling behavior. Given callback gets an event object. If the
- * function returns "true" current animated scrolls will be stopped.
- * @property _options.tracking - Tracking configuration to collect user's
- * behavior data.
- * @property _options.tracking.buttonClick - Function to call on button click
- * events.
- * @property _options.tracking.linkClick - Function to call on link click
- * events.
- * @property _options.tracking.sectionSwitch - Function to call on section
- * switches.
- * @property _options.tracking.track - Tracker call itself.
- * @property _options.windowLoadingCoverHideAnimation - Options for startup
- * loading cover hide animation.
- * @property _options.windowLoadingSpinner - Options for the window loading
- * cover spinner.
- * @property _options.windowLoadingTimeoutAfterDocumentLoadedInMilliseconds -
- * Duration after loading cover should be removed.
  */
 export class WebsiteUtilities extends Tools {
-    static readonly _name:string = 'WebsiteUtilities'
-
-    $domNodes:$DomNodes = null as unknown as $DomNodes
-    currentMediaQueryMode:string = ''
-    currentSectionName:string = 'home'
-    languageHandler:Internationalisation|null = null
-    readonly self:typeof WebsiteUtilities = WebsiteUtilities
-    startUpAnimationIsComplete:boolean = false
-    viewportIsOnTop:boolean = false
-    windowLoaded:boolean = false
-    windowLoadingSpinner:null|Spinner = null
-
-    _options:Options = {
+    static _defaultOptions:DefaultOptions = {
         activateLanguageSupport: true,
         additionalPageLoadingTimeInMilliseconds: 0,
         domain: 'auto',
@@ -173,6 +165,7 @@ export class WebsiteUtilities extends Tools {
             ['medium', 'md'],
             ['large', 'lg']
         ],
+        name: 'WebsiteUtilities',
         onChangeMediaQueryMode: Tools.noop,
         onChangeToExtraSmallMode: Tools.noop,
         onChangeToLargeMode: Tools.noop,
@@ -297,6 +290,23 @@ export class WebsiteUtilities extends Tools {
         },
         windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 2000
     }
+
+    options:Options = null as unknown as Options
+
+    $domNodes:$DomNodes = null as unknown as $DomNodes
+
+    currentMediaQueryMode:string = ''
+    currentSectionName:string = 'home'
+
+    languageHandler:Internationalisation|null = null
+
+    startUpAnimationIsComplete:boolean = false
+
+    viewportIsOnTop:boolean = false
+    windowLoaded:boolean = false
+
+    windowLoadingSpinner:null|Spinner = null
+
     // region public methods
     // / region special
     /**
@@ -305,10 +315,12 @@ export class WebsiteUtilities extends Tools {
      * @returns Returns the current instance.
      */
     initialize(options:Partial<Options> = {}):Promise<WebsiteUtilities> {
-        super.initialize(options)
+        super.initialize(Tools.extend(
+            true, {} as Options, WebsiteUtilities._defaultOptions, options
+        ))
 
-        if (this._options.initialSectionName)
-            this.currentSectionName = this._options.initialSectionName
+        if (this.options.initialSectionName)
+            this.currentSectionName = this.options.initialSectionName
         else if (globalContext.window.location?.hash)
             this.currentSectionName =
                 globalContext.location.hash.substring('#'.length)
@@ -319,14 +331,14 @@ export class WebsiteUtilities extends Tools {
         this._onViewportMovesToTop =
             Tools.debounce(this._onViewportMovesToTop)
 
-        this.$domNodes = this.grabDomNode(this._options.domNodes as Mapping)
+        this.$domNodes = this.grabDomNode(this.options.domNodes as Mapping)
 
         this.disableScrolling()
 
         return new Promise(async (resolve:Function):Promise<void> => {
             if (this.$domNodes.windowLoadingSpinner.length) {
                 this.windowLoadingSpinner =
-                    new Spinner(this._options.windowLoadingSpinner)
+                    new Spinner(this.options.windowLoadingSpinner)
                 this.windowLoadingSpinner.spin(
                     this.$domNodes.windowLoadingSpinner[0]
                 )
@@ -346,20 +358,20 @@ export class WebsiteUtilities extends Tools {
             }
             $(():TimeoutPromise => Tools.timeout(
                 onLoaded,
-                this._options
+                this.options
                     .windowLoadedTimeoutAfterDocumentLoadedInMilliseconds
             ))
             this.on(this.$domNodes.window, 'load', onLoaded)
 
             this._bindClickTracking()
 
-            if (!this._options.language.logging)
-                this._options.language.logging = this._options.logging
-            if (this._options.activateLanguageSupport && !this.languageHandler)
+            if (!this.options.language.logging)
+                this.options.language.logging = this.options.logging
+            if (this.options.activateLanguageSupport && !this.languageHandler)
                 this.languageHandler = (
                     await $(this.$domNodes.parent)
-                        .Internationalisation(this._options.language)
-                ).data(Internationalisation._name)
+                        .Internationalisation(this.options.language)
+                ).data(this.options.name)
 
             this._bindNavigationEvents()
             this._bindMediaQueryChangeEvents()
@@ -375,7 +387,7 @@ export class WebsiteUtilities extends Tools {
         if (globalContext.document)
             this.$domNodes.window!
                 .stop()
-                .animate({scrollTop: 0}, this._options.scrollToTop.options)
+                .animate({scrollTop: 0}, this.options.scrollToTop.options)
 
         return this
     }
@@ -412,7 +424,7 @@ export class WebsiteUtilities extends Tools {
             value?:number
         }
     ):WebsiteUtilities {
-        if (globalContext.window.location && this._options.tracking) {
+        if (globalContext.window.location && this.options.tracking) {
             const trackingItem:TrackingItem = {
                 context:
                     `${globalContext.window.location.pathname}#` +
@@ -429,7 +441,7 @@ export class WebsiteUtilities extends Tools {
             this.debug(trackingItem)
 
             try {
-                this._options.tracking.track(trackingItem)
+                this.options.tracking.track(trackingItem)
             } catch (error) {
                 this.warn(
                     `Problem in tracking "${Tools.represent(trackingItem)}":` +
@@ -437,6 +449,7 @@ export class WebsiteUtilities extends Tools {
                 )
             }
         }
+
         return this
     }
     // endregion
@@ -450,19 +463,19 @@ export class WebsiteUtilities extends Tools {
         if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
             this.$domNodes.scrollToTopButton.css('opacity', 0)
         else {
-            this._options.scrollToTop.button.hideAnimationOptions.always = (
+            this.options.scrollToTop.button.hideAnimationOptions.always = (
             ):$DomNode => this.$domNodes.scrollToTopButton.css({
                 bottom:
-                `-=${this._options.scrollToTop.button.slideDistanceInPixel}`,
+                `-=${this.options.scrollToTop.button.slideDistanceInPixel}`,
                 display: 'none'
             })
             this.$domNodes.scrollToTopButton.finish().animate(
                 {
                     bottom: '+=' +
-                        this._options.scrollToTop.button.slideDistanceInPixel,
+                        this.options.scrollToTop.button.slideDistanceInPixel,
                     opacity: 0
                 },
-                this._options.scrollToTop.button.hideAnimationOptions
+                this.options.scrollToTop.button.hideAnimationOptions
             )
         }
     }
@@ -478,19 +491,19 @@ export class WebsiteUtilities extends Tools {
                 .finish()
                 .css({
                     bottom: '+=' +
-                        this._options.scrollToTop.button.slideDistanceInPixel,
+                        this.options.scrollToTop.button.slideDistanceInPixel,
                     display: 'block',
                     opacity: 0
                 })
                 .animate(
                     {
                         bottom: '-=' +
-                            this._options.scrollToTop.button
+                            this.options.scrollToTop.button
                                 .slideDistanceInPixel,
                         queue: false,
                         opacity: 1
                     },
-                    this._options.scrollToTop.button.showAnimationOptions
+                    this.options.scrollToTop.button.showAnimationOptions
                 )
     }
     /* eslint-disable no-unused-vars */
@@ -539,7 +552,7 @@ export class WebsiteUtilities extends Tools {
     _onSwitchSection(sectionName:string):void {
         if (
             globalContext.window.location &&
-            this._options.tracking?.sectionSwitch &&
+            this.options.tracking?.sectionSwitch &&
             this.currentSectionName !== sectionName
         ) {
             this.currentSectionName = sectionName
@@ -550,7 +563,7 @@ export class WebsiteUtilities extends Tools {
             )
 
             try {
-                this._options.tracking.sectionSwitch.call(
+                this.options.tracking.sectionSwitch.call(
                     this, this.currentSectionName
                 )
             } catch (error) {
@@ -590,7 +603,7 @@ export class WebsiteUtilities extends Tools {
     _triggerWindowResizeEvents(...parameters:Array<any>):void {
         for (
             const classNameMapping of
-                this._options.mediaQueryClassNameIndicator
+                this.options.mediaQueryClassNameIndicator
         ) {
             this.$domNodes
                 .mediaQueryIndicator
@@ -638,13 +651,13 @@ export class WebsiteUtilities extends Tools {
         const $scrollTarget:$DomNode =
             $('body, html').add(this.$domNodes.window!)
         $scrollTarget.on(
-            this._options.knownScrollEventNames.join(' '),
+            this.options.knownScrollEventNames.join(' '),
             (event:JQuery.Event):void => {
                 /*
                     NOTE: Stop automatic scrolling if the user wants to scroll
                     manually.
                 */
-                if (this._options.switchToManualScrollingIndicator(event))
+                if (this.options.switchToManualScrollingIndicator(event))
                     $scrollTarget.stop(true)
             }
         )
@@ -691,22 +704,22 @@ export class WebsiteUtilities extends Tools {
      */
     async _removeLoadingCover():Promise<void> {
         await Tools.timeout(
-            this._options.additionalPageLoadingTimeInMilliseconds
+            this.options.additionalPageLoadingTimeInMilliseconds
         )
 
         // Hide startup animation dom nodes to show them step by step.
         $(Tools.stringFormat(
             '[class^="{1}"], [class*=" {1}"]',
             this.sliceDomNodeSelectorPrefix(
-                this._options.domNodes.startUpAnimationClassPrefix
+                this.options.domNodes.startUpAnimationClassPrefix
             ).substr(1)
-        )).css(this._options.startUpHide)
+        )).css(this.options.startUpHide)
 
         await new Promise((resolve:ProcedureFunction):void => {
             if (this.$domNodes.windowLoadingCover.length) {
                 this.enableScrolling()
                 this.$domNodes.windowLoadingCover.animate(
-                    this._options.windowLoadingCoverHideAnimation,
+                    this.options.windowLoadingCoverHideAnimation,
                     {always: resolve}
                 )
             } else
@@ -729,21 +742,21 @@ export class WebsiteUtilities extends Tools {
         if ($(Tools.stringFormat(
             '[class^="{1}"], [class*=" {1}"]',
             this.sliceDomNodeSelectorPrefix(
-                this._options.domNodes.startUpAnimationClassPrefix
+                this.options.domNodes.startUpAnimationClassPrefix
             ).substr(1)
         )).length) {
             await Tools.timeout(
-                this._options.startUpAnimationElementDelayInMiliseconds
+                this.options.startUpAnimationElementDelayInMiliseconds
             )
 
             let lastElementTriggered:boolean = false
 
             const $domNode:$DomNode = $(
-                this._options.domNodes.startUpAnimationClassPrefix +
+                this.options.domNodes.startUpAnimationClassPrefix +
                 elementNumber
             )
             $domNode.animate(
-                this._options.startUpShowAnimation,
+                this.options.startUpShowAnimation,
                 {
                     always: ():void => {
                         if (lastElementTriggered)
@@ -753,7 +766,7 @@ export class WebsiteUtilities extends Tools {
             )
 
             if ($(
-                this._options.domNodes.startUpAnimationClassPrefix +
+                this.options.domNodes.startUpAnimationClassPrefix +
                 elementNumber +
                 1
             ).length)
@@ -803,22 +816,22 @@ export class WebsiteUtilities extends Tools {
      * @returns Nothing.
      */
     _bindClickTracking():void {
-        if (this._options.tracking) {
-            if (this._options.tracking.linkClick)
+        if (this.options.tracking) {
+            if (this.options.tracking.linkClick)
                 this.on(
                     this.$domNodes.parent!.find('a'),
                     'click',
                     (event:JQuery.Event & {target:HTMLLinkElement}):void =>
-                        this._options.tracking!.linkClick!.call(
+                        this.options.tracking!.linkClick!.call(
                             this, $(event.target), event
                         )
                 )
-            if (this._options.tracking.buttonClick)
+            if (this.options.tracking.buttonClick)
                 this.on(
                     this.$domNodes.parent!.find('button'),
                     'click',
                     (event:JQuery.Event & {target:HTMLButtonElement}):void =>
-                        this._options.tracking!.buttonClick!.call(
+                        this.options.tracking!.buttonClick!.call(
                             this, $(event.target), event
                         )
                 )
@@ -829,10 +842,12 @@ export class WebsiteUtilities extends Tools {
 }
 export default WebsiteUtilities
 // endregion
-$.WebsiteUtilities = ((...parameter:Array<any>):any =>
-    $.Tools().controller(WebsiteUtilities, parameter)
+// region handle $ extending
+$.WebsiteUtilities = ((...parameter:Array<unknown>):unknown =>
+    Tools.controller(WebsiteUtilities, parameter)
 ) as WebsiteUtilitiesFunction
 $.WebsiteUtilities.class = WebsiteUtilities
+// endregion
 // region vim modline
 // vim: set tabstop=4 shiftwidth=4 expandtab:
 // vim: foldmethod=marker foldmarker=region,endregion:

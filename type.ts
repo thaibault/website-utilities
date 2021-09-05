@@ -51,7 +51,7 @@ export type DomNodes<Type = string> = BaseDomNodes<Type> & {
     windowLoadingCover:Type
     windowLoadingSpinner:Type
 }
-export type Options = Partial<BaseOptions> & {
+export interface DefaultOptions {
     activateLanguageSupport:boolean
     additionalPageLoadingTimeInMilliseconds:number
     domain:string
@@ -61,6 +61,7 @@ export type Options = Partial<BaseOptions> & {
     knownScrollEventNames:Array<string>
     language:Partial<InternationalisationOptions>
     mediaQueryClassNameIndicator:Array<Array<string>>
+    name:string
     onChangeMediaQueryMode:ProcedureFunction
     onChangeToExtraSmallMode:ProcedureFunction
     onChangeToLargeMode:ProcedureFunction
@@ -105,6 +106,7 @@ export type Options = Partial<BaseOptions> & {
     windowLoadingSpinner:SpinnerOptions
     windowLoadedTimeoutAfterDocumentLoadedInMilliseconds:number
 }
+export type Options = BaseOptions & DefaultOptions
 export type TrackingItem = {
     context:string
     event:string

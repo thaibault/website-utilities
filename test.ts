@@ -18,8 +18,13 @@ import {$} from 'clientnode'
 
 import WebsiteUtilities from './index'
 // endregion
-describe(WebsiteUtilities._name, ():void => {
+describe('WebsiteUtilities', ():void => {
     let websiteUtilities:WebsiteUtilities
+    /*
+        NOTE: Import plugin with side effects (augmenting "$" scope /
+        registering plugin) when other imports are only used as type.
+    */
+    require('./index')
     beforeAll(async ():Promise<void> => {
         websiteUtilities = await $.WebsiteUtilities()
     })
