@@ -21,9 +21,10 @@ import WebsiteUtilities from './index'
 describe('WebsiteUtilities', ():void => {
     let websiteUtilities:WebsiteUtilities
     /*
-        NOTE: Import plugin with side effects (augmenting "$" scope /
+        NOTE: Import plugins with side effects (augmenting "$" scope /
         registering plugin) when other imports are only used as type.
     */
+    require('internationalisation')
     require('./index')
     beforeAll(async ():Promise<void> => {
         websiteUtilities = await $.WebsiteUtilities()
