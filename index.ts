@@ -125,14 +125,18 @@ import {
  * @property options - Finally configured given options.
  *
  * @property $domNodes - Saves a set of references to all needed dom nodes.
+ *
  * @property currentMediaQueryMode - Saves current media query status depending
  * on available space in current browser window.
  * @property currentSectionName - Saves current section hash name.
+ *
  * @property languageHandler - Reference to the language switcher instance.
+ *
  * @property startUpAnimationIsComplete - Indicates whether start up animations
  * has finished.
  * @property viewportIsOnTop - Indicates whether current viewport is on top.
  * @property windowLoaded - Indicates whether window is already loaded.
+ *
  * @property windowLoadingSpinner - The window loading spinner instance.
  */
 export class WebsiteUtilities extends Tools {

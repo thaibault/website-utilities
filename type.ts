@@ -41,7 +41,7 @@ export interface StaticScope extends BaseStaticScope {
 }
 declare global {
     interface JQueryStatic extends StaticScope {}
-    const dataLayer:Array<any>
+    const dataLayer:Array<unknown>
 }
 export type DomNodes<Type = string> = BaseDomNodes<Type> & {
     mediaQueryIndicator:Type
