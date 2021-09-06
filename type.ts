@@ -43,6 +43,7 @@ declare global {
     interface JQueryStatic extends StaticScope {}
     const dataLayer:Array<unknown>
 }
+
 export type DomNodes<Type = string> = BaseDomNodes<Type> & {
     mediaQueryIndicator:Type
     scrollToTopButton:Type
@@ -51,6 +52,7 @@ export type DomNodes<Type = string> = BaseDomNodes<Type> & {
     windowLoadingCover:Type
     windowLoadingSpinner:Type
 }
+
 export interface DefaultOptions {
     activateLanguageSupport:boolean
     additionalPageLoadingTimeInMilliseconds:number
@@ -107,6 +109,7 @@ export interface DefaultOptions {
     windowLoadedTimeoutAfterDocumentLoadedInMilliseconds:number
 }
 export type Options = BaseOptions & DefaultOptions
+
 export type TrackingItem = {
     context:string
     event:string
