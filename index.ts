@@ -23,8 +23,8 @@ import {
     Mapping,
     ProcedureFunction,
     TimeoutPromise,
-    $DomNode,
-    $DomNodes
+    $DomNodes,
+    $T
 } from 'clientnode/type'
 import Internationalisation from 'internationalisation'
 import {Spinner} from 'spin.js'
@@ -201,7 +201,7 @@ export class WebsiteUtilities extends Tools {
         tracking: {
             buttonClick: function(
                 this:WebsiteUtilities,
-                $button:$DomNode<HTMLButtonElement>,
+                $button:$T<HTMLButtonElement>,
                 event:JQuery.Event
             ):void {
                 this.track({
@@ -222,7 +222,7 @@ export class WebsiteUtilities extends Tools {
             },
             linkClick: function(
                 this:WebsiteUtilities,
-                $link:$DomNode<HTMLLinkElement>,
+                $link:$T<HTMLLinkElement>,
                 event:JQuery.Event
             ):void {
                 this.track({
@@ -375,8 +375,9 @@ export class WebsiteUtilities extends Tools {
                 this.options.language.logging = this.options.logging
             if (this.options.activateLanguageSupport && !this.languageHandler)
                 this.languageHandler = (
-                    await $(this.$domNodes.parent)
-                        .Internationalisation(this.options.language)
+                    await $(
+                        this.$domNodes.parent as unknown as HTMLBodyElement
+                    ).Internationalisation(this.options.language)
                 ).data(this.options.name)
 
             this._bindNavigationEvents()
@@ -470,7 +471,7 @@ export class WebsiteUtilities extends Tools {
             this.$domNodes.scrollToTopButton.css('opacity', 0)
         else {
             this.options.scrollToTop.button.hideAnimationOptions.always = (
-            ):$DomNode => this.$domNodes.scrollToTopButton.css({
+            ):$T => this.$domNodes.scrollToTopButton.css({
                 bottom:
                 `-=${this.options.scrollToTop.button.slideDistanceInPixel}`,
                 display: 'none'
@@ -654,7 +655,7 @@ export class WebsiteUtilities extends Tools {
      * @returns Nothing.
      */
     _bindScrollEvents(...parameter:Array<any>):void {
-        const $scrollTarget:$DomNode =
+        const $scrollTarget:$T =
             $('body, html').add(this.$domNodes.window!)
         $scrollTarget.on(
             this.options.knownScrollEventNames.join(' '),
@@ -757,7 +758,7 @@ export class WebsiteUtilities extends Tools {
 
             let lastElementTriggered:boolean = false
 
-            const $domNode:$DomNode = $(
+            const $domNode:$T = $(
                 this.options.domNodes.startUpAnimationClassPrefix +
                 elementNumber
             )

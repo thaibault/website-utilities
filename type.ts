@@ -22,8 +22,8 @@ import {
     Mapping,
     Options as BaseOptions,
     ProcedureFunction,
-    StaticScope as BaseStaticScope,
-    $DomNode
+    $TStatic,
+    $T
 } from 'clientnode/type'
 import {
     Options as InternationalisationOptions
@@ -34,13 +34,13 @@ import WebsiteUtilities from './index'
 // endregion
 // region exports
 export type WebsiteUtilitiesFunction =
-    ((...parameter:Array<any>) => any) &
+    ((..._parameters:Array<unknown>) => any) &
     {class:typeof WebsiteUtilities}
-export interface StaticScope extends BaseStaticScope {
-    WebsiteUtilities:WebsiteUtilitiesFunction
-}
 declare global {
-    interface JQueryStatic extends StaticScope {}
+    interface JQueryStatic {
+        WebsiteUtilities:WebsiteUtilitiesFunction
+    }
+
     const dataLayer:Array<unknown>
 }
 
@@ -88,23 +88,23 @@ export interface DefaultOptions {
         overloaded signature.
     */
     startUpHide:Mapping<number|string>
-    startUpShowAnimation:FirstParameter<$DomNode['animate']>
+    startUpShowAnimation:FirstParameter<$T['animate']>
     switchToManualScrollingIndicator:(event:JQuery.Event) => boolean
     tracking?:{
         buttonClick?:(
             this:WebsiteUtilities,
-            $link:$DomNode<HTMLButtonElement>,
+            $link:$T<HTMLButtonElement>,
             event:JQuery.Event
         ) => void
         linkClick?:(
             this:WebsiteUtilities,
-            $link:$DomNode<HTMLLinkElement>,
+            $link:$T<HTMLLinkElement>,
             event:JQuery.Event
         ) => void
         sectionSwitch?:(this:WebsiteUtilities, sectionName:string) => void
         track:(item:TrackingItem) => void
     }
-    windowLoadingCoverHideAnimation:FirstParameter<$DomNode['animate']>
+    windowLoadingCoverHideAnimation:FirstParameter<$T['animate']>
     windowLoadingSpinner:SpinnerOptions
     windowLoadedTimeoutAfterDocumentLoadedInMilliseconds:number
 }
