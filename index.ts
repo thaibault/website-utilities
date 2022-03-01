@@ -22,6 +22,7 @@ import {
     FirstParameter,
     Mapping,
     ProcedureFunction,
+    RecursivePartial,
     TimeoutPromise,
     $DomNodes,
     $T
@@ -318,9 +319,12 @@ export class WebsiteUtilities extends Tools {
     /**
      * Initializes the interactive web application.
      * @param options - An options object.
-     * @returns Returns the current instance.
+     *
+     * @returns Returns a promise containing the current instance.
      */
-    initialize(options:Partial<Options> = {}):Promise<WebsiteUtilities> {
+    initialize<R = Promise<WebsiteUtilities>>(
+        options:RecursivePartial<Options> = {}
+    ):R {
         super.initialize(Tools.extend(
             true, {} as Options, WebsiteUtilities._defaultOptions, options
         ))
@@ -341,7 +345,9 @@ export class WebsiteUtilities extends Tools {
 
         this.disableScrolling()
 
-        return new Promise(async (resolve:Function):Promise<void> => {
+        return new Promise<WebsiteUtilities>(async (resolve:(
+            value:WebsiteUtilities
+        ) => void):Promise<void> => {
             if (this.$domNodes.windowLoadingSpinner.length) {
                 this.windowLoadingSpinner =
                     new Spinner(this.options.windowLoadingSpinner)
@@ -383,7 +389,7 @@ export class WebsiteUtilities extends Tools {
             this._bindNavigationEvents()
             this._bindMediaQueryChangeEvents()
             this._triggerWindowResizeEvents()
-        })
+        }) as unknown as R
     }
     // endregion
     /**
