@@ -315,7 +315,7 @@ export class WebsiteUtilities extends Tools {
     windowLoadingSpinner:null|Spinner = null
 
     // region public methods
-    // / region special
+    /// region special
     /**
      * Initializes the interactive web application.
      * @param options - An options object.
@@ -467,7 +467,7 @@ export class WebsiteUtilities extends Tools {
     }
     // endregion
     // region protected methods
-    // / region event
+    /// region event
     /**
      * This method triggers if the viewport moves to top.
      * @returns Nothing.
@@ -593,7 +593,7 @@ export class WebsiteUtilities extends Tools {
         this.startUpAnimationIsComplete = true
     }
     // endregion
-    // / region helper
+    /// region helper
     /**
      * This method adds triggers for responsive design switches.
      * @returns Nothing.
@@ -848,7 +848,7 @@ export class WebsiteUtilities extends Tools {
                 )
         }
     }
-    // / endregion
+    /// endregion
     // endregion
 }
 export default WebsiteUtilities
