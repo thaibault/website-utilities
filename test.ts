@@ -30,10 +30,10 @@ describe('WebsiteUtilities', ():void => {
         websiteUtilities = await $.WebsiteUtilities()
     })
     // region tests
-    // / region public methods
-    // // region special
+    /// region public methods
+    //// region special
     test('initialize', ():void => expect(websiteUtilities).toBeDefined())
-    // // endregion
+    //// endregion
     test('scrollToTop', ():void =>
         expect(websiteUtilities.scrollToTop()).toStrictEqual(websiteUtilities)
     )
@@ -53,9 +53,9 @@ describe('WebsiteUtilities', ():void => {
         expect(websiteUtilities.enableScrolling())
             .toStrictEqual(websiteUtilities)
     })
-    // / endregion
-    // / region protected methods
-    // // region event
+    /// endregion
+    /// region protected methods
+    //// region event
     test('_onViewportMovesToTop', ():void =>
         // NOTE: Method is wrapped by the higher order debounce method.
         expect(websiteUtilities._onViewportMovesToTop())
@@ -94,8 +94,8 @@ describe('WebsiteUtilities', ():void => {
         expect(websiteUtilities._onStartUpAnimationComplete())
             .not.toBeDefined()
     )
-    // // endregion
-    // // region helper
+    //// endregion
+    //// region helper
     test('_bindMediaQueryChangeEvents', ():void =>
         expect(websiteUtilities._bindMediaQueryChangeEvents())
             .not.toBeDefined()
@@ -123,8 +123,8 @@ describe('WebsiteUtilities', ():void => {
     test('_bindClickTracking', ():void =>
         expect(websiteUtilities._bindClickTracking()).not.toBeDefined()
     )
-    // // endregion
-    // / endregion
+    //// endregion
+    /// endregion
     // endregion
 })
 // region vim modline

@@ -315,7 +315,7 @@ export class WebsiteUtilities extends Tools {
     windowLoadingSpinner:null|Spinner = null
 
     // region public methods
-    // / region special
+    /// region special
     /**
      * Initializes the interactive web application.
      * @param options - An options object.
@@ -467,7 +467,7 @@ export class WebsiteUtilities extends Tools {
     }
     // endregion
     // region protected methods
-    // / region event
+    /// region event
     /**
      * This method triggers if the viewport moves to top.
      * @returns Nothing.
@@ -519,35 +519,34 @@ export class WebsiteUtilities extends Tools {
                     this.options.scrollToTop.button.showAnimationOptions
                 )
     }
-    /* eslint-disable no-unused-vars */
     /**
      * This method triggers if the responsive design switches to another mode.
      * @param oldMode - Saves the previous mode.
      * @param newMode - Saves the new mode.
      * @returns Nothing.
      */
-    _onChangeMediaQueryMode(oldMode:string, newMode:string):void {}
+    _onChangeMediaQueryMode(_oldMode:string, _newMode:string):void {}
     /**
      * This method triggers if the responsive design switches to large mode.
      * @param oldMode - Saves the previous mode.
      * @param newMode - Saves the new mode.
      * @returns Nothing.
      */
-    _onChangeToLargeMode(oldMode:string, newMode:string):void {}
+    _onChangeToLargeMode(_oldMode:string, _newMode:string):void {}
     /**
      * This method triggers if the responsive design switches to medium mode.
      * @param oldMode - Saves the previous mode.
      * @param newMode - Saves the new mode.
      * @returns Nothing.
      */
-    _onChangeToMediumMode(oldMode:string, newMode:string):void {}
+    _onChangeToMediumMode(_oldMode:string, _newMode:string):void {}
     /**
      * This method triggers if the responsive design switches to small mode.
      * @param oldMode - Saves the previous mode.
      * @param newMode - Saves the new mode.
      * @returns Nothing.
      */
-    _onChangeToSmallMode(oldMode:string, newMode:string):void {}
+    _onChangeToSmallMode(_oldMode:string, _newMode:string):void {}
     /**
      * This method triggers if the responsive design switches to extra small
      * mode.
@@ -555,8 +554,7 @@ export class WebsiteUtilities extends Tools {
      * @param newMode - Saves the new mode.
      * @returns Nothing.
      */
-    _onChangeToExtraSmallMode(oldMode:string, newMode:string):void {}
-    /* eslint-enable no-unused-vars */
+    _onChangeToExtraSmallMode(_oldMode:string, _newMode:string):void {}
     /**
      * This method triggers if we change the current section.
      * @param sectionName - Contains the new section name.
@@ -595,7 +593,7 @@ export class WebsiteUtilities extends Tools {
         this.startUpAnimationIsComplete = true
     }
     // endregion
-    // / region helper
+    /// region helper
     /**
      * This method adds triggers for responsive design switches.
      * @returns Nothing.
@@ -850,7 +848,7 @@ export class WebsiteUtilities extends Tools {
                 )
         }
     }
-    // / endregion
+    /// endregion
     // endregion
 }
 export default WebsiteUtilities
