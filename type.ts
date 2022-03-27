@@ -22,7 +22,6 @@ import {
     Mapping,
     Options as BaseOptions,
     ProcedureFunction,
-    $TStatic,
     $T
 } from 'clientnode/type'
 import {

@@ -19,7 +19,6 @@
 // region imports
 import Tools, {globalContext, $} from 'clientnode'
 import {
-    FirstParameter,
     Mapping,
     ProcedureFunction,
     RecursivePartial,
@@ -203,7 +202,7 @@ export class WebsiteUtilities extends Tools {
             buttonClick: function(
                 this:WebsiteUtilities,
                 $button:$T<HTMLButtonElement>,
-                event:JQuery.Event
+                _event:JQuery.Event
             ):void {
                 this.track({
                     event: 'buttonClick',
@@ -224,7 +223,7 @@ export class WebsiteUtilities extends Tools {
             linkClick: function(
                 this:WebsiteUtilities,
                 $link:$T<HTMLLinkElement>,
-                event:JQuery.Event
+                _event:JQuery.Event
             ):void {
                 this.track({
                     event: 'linkClick',
@@ -302,15 +301,15 @@ export class WebsiteUtilities extends Tools {
 
     $domNodes:$DomNodes = null as unknown as $DomNodes
 
-    currentMediaQueryMode:string = ''
-    currentSectionName:string = 'home'
+    currentMediaQueryMode = ''
+    currentSectionName = 'home'
 
     languageHandler:Internationalisation|null = null
 
-    startUpAnimationIsComplete:boolean = false
+    startUpAnimationIsComplete = false
 
-    viewportIsOnTop:boolean = false
-    windowLoaded:boolean = false
+    viewportIsOnTop = false
+    windowLoaded = false
 
     windowLoadingSpinner:null|Spinner = null
 
@@ -484,8 +483,12 @@ export class WebsiteUtilities extends Tools {
             })
             this.$domNodes.scrollToTopButton.finish().animate(
                 {
-                    bottom: '+=' +
-                        this.options.scrollToTop.button.slideDistanceInPixel,
+                    bottom:
+                        '+=' +
+                        String(
+                            this.options.scrollToTop.button
+                                .slideDistanceInPixel
+                        ),
                     opacity: 0
                 },
                 this.options.scrollToTop.button.hideAnimationOptions

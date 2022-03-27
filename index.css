@@ -15,7 +15,7 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/light/open-sans-light';
+    font-path: "font/open-sans/light/open-sans-light";
     /* stylelint-enable property-no-unknown */
     font-weight: 300;
     font-style: normal;
@@ -25,7 +25,7 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/light-italic/open-sans-light-italic';
+    font-path: "font/open-sans/light-italic/open-sans-light-italic";
     /* stylelint-enable property-no-unknown */
     font-weight: 300;
     font-style: italic;
@@ -35,7 +35,7 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/regular/open-sans-regular';
+    font-path: "font/open-sans/regular/open-sans-regular";
     /* stylelint-enable property-no-unknown */
     font-weight: normal;
     font-style: normal;
@@ -45,7 +45,7 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/italic/open-sans-italic';
+    font-path: "font/open-sans/italic/open-sans-italic";
     /* stylelint-enable property-no-unknown */
     font-weight: normal;
     font-style: italic;
@@ -55,7 +55,7 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/semi-bold/open-sans-semi-bold';
+    font-path: "font/open-sans/semi-bold/open-sans-semi-bold";
     /* stylelint-enable property-no-unknown */
     font-weight: 600;
     font-style: normal;
@@ -65,7 +65,7 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/semi-bold-italic/open-sans-semi-bold-italic';
+    font-path: "font/open-sans/semi-bold-italic/open-sans-semi-bold-italic";
     /* stylelint-enable property-no-unknown */
     font-weight: 600;
     font-style: italic;
@@ -75,7 +75,7 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/bold/open-sans-bold';
+    font-path: "font/open-sans/bold/open-sans-bold";
     /* stylelint-enable property-no-unknown */
     font-weight: bold;
     font-style: normal;
@@ -85,7 +85,7 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/bold-italic/open-sans-bold-italic';
+    font-path: "font/open-sans/bold-italic/open-sans-bold-italic";
     /* stylelint-enable property-no-unknown */
     font-weight: bold;
     font-style: italic;
@@ -95,7 +95,7 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/extra-bold/open-sans-extra-bold';
+    font-path: "font/open-sans/extra-bold/open-sans-extra-bold";
     /* stylelint-enable property-no-unknown */
     font-weight: 800;
     font-style: normal;
@@ -105,7 +105,7 @@ endregion */
 @font-face {
     font-family: open-sans;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans/extra-bold-italic/open-sans-extra-bold-italic';
+    font-path: "font/open-sans/extra-bold-italic/open-sans-extra-bold-italic";
     /* stylelint-enable property-no-unknown */
     font-weight: 800;
     font-style: italic;
@@ -117,7 +117,7 @@ endregion */
 @font-face {
     font-family: open-sans-condensed;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans-condensed/condensed-bold/open-sans-condensed-bold';
+    font-path: "font/open-sans-condensed/condensed-bold/open-sans-condensed-bold";
     /* stylelint-enable property-no-unknown */
     font-weight: bold;
     font-style: normal;
@@ -127,7 +127,7 @@ endregion */
 @font-face {
     font-family: open-sans-condensed;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans-condensed/condensed-light/open-sans-condensed-light';
+    font-path: "font/open-sans-condensed/condensed-light/open-sans-condensed-light";
     /* stylelint-enable property-no-unknown */
     font-weight: 300;
     font-style: normal;
@@ -137,7 +137,7 @@ endregion */
 @font-face {
     font-family: open-sans-condensed;
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/open-sans-condensed/condensed-light-italic/open-sans-condensed-light-italic';
+    font-path: "font/open-sans-condensed/condensed-light-italic/open-sans-condensed-light-italic";
     /* stylelint-enable property-no-unknown */
     font-weight: 300;
     font-style: italic;
@@ -146,17 +146,17 @@ endregion */
 /** endregion */
 /** region glyphicons halflings */
 @font-face {
-    font-family: 'Glyphicons Halflings';
+    font-family: "Glyphicons Halflings";
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/glyphicons-halflings/glyphicons-halflings-regular';
+    font-path: "font/glyphicons-halflings/glyphicons-halflings-regular";
     /* stylelint-enable property-no-unknown */
 }
 /** endregion */
 /** region glyphicons social regular */
 @font-face {
-    font-family: 'Glyphicons Social Regular';
+    font-family: "Glyphicons Social Regular";
     /* stylelint-disable property-no-unknown */
-    font-path: 'font/glyphicons-halflings/glyphicons-halflings-social-regular';
+    font-path: "font/glyphicons-halflings/glyphicons-halflings-social-regular";
     /* stylelint-enable property-no-unknown */
 }
 /** endregion */
@@ -196,8 +196,8 @@ endregion */
     --border-color: #ccc;
     /** endregion */
     /** region font */
-    --font-family: 'Open Sans', open-sans, sans-serif;
-    --font-family-condensed: 'Open Sans Condensed', open-sans-condensed, sans-serif;
+    --font-family: "Open Sans", open-sans, sans-serif;
+    --font-family-condensed: "Open Sans Condensed", open-sans-condensed, sans-serif;
     /** endregion */
     /* endregion */
     /* stylelint-disable at-rule-no-unknown */
@@ -280,7 +280,7 @@ endregion */
                 color: #1d1d1b;
                 */
                 display: inline-block;
-                font: 24px/1em 'Glyphicons Social Regular', sans-serif;
+                font: 24px/1em "Glyphicons Social Regular", sans-serif;
                 font-style: normal;
                 font-weight: normal;
                 left: 0;
@@ -364,10 +364,7 @@ endregion */
                 position: initial !important;
                 padding-left: 7px !important;
                 padding-right: 25px !important;
-                /* hide default down arrow in webkit */
-                -webkit-appearance: none;
-                /* hide arrow in firefox */
-                @-moz-document url-prefix() { -moz-appearance: none; }
+
                 /* hide default down arrow in IE10 */
                 &::-ms-expand { display: none; }
             }
@@ -459,7 +456,6 @@ endregion */
         opacity: 1;
     }
 }
-
 @keyframes spinner-line-fade-quick {
     0%,
     39%,
@@ -471,7 +467,6 @@ endregion */
         opacity: 1;
     }
 }
-
 @keyframes spinner-line-fade-default {
     0%,
     100% {
