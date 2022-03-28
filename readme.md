@@ -13,14 +13,23 @@ endregion -->
 Project status
 --------------
 
-[![npm version](https://badge.fury.io/js/website-utilities.svg)](https://www.npmjs.com/package/website-utilities)
-[![downloads](https://img.shields.io/npm/dy/website-utilities.svg)](https://www.npmjs.com/package/website-utilities)
-[![build status](https://travis-ci.org/thaibault/websiteUtilities.svg?branch=master)](https://travis-ci.org/thaibault/websiteUtilities)
-[![code coverage](https://coveralls.io/repos/github/thaibault/websiteUtilitie/badge.svg)](https://coveralls.io/github/thaibault/websiteUtilities)
+[![npm](https://img.shields.io/npm/v/website-utilities?color=%23d55e5d&label=npm%20package%20version&logoColor=%23d55e5d)](https://www.npmjs.com/package/website-utilities)
+[![npm downloads](https://img.shields.io/npm/dy/website-utilities.svg)](https://www.npmjs.com/package/website-utilities)
+
+[![<LABEL>](https://github.com/thaibault/website-utilities/actions/workflows/build.yaml/badge.svg)](https://github.com/thaibault/website-utilities/actions/workflows/build.yaml)
+[![<LABEL>](https://github.com/thaibault/website-utilities/actions/workflows/test.yaml/badge.svg)](https://github.com/thaibault/website-utilities/actions/workflows/test.yaml)
+[![<LABEL>](https://github.com/thaibault/website-utilities/actions/workflows/test:coverage:report.yaml/badge.svg)](https://github.com/thaibault/website-utilities/actions/workflows/test:coverage:report.yaml)
+[![<LABEL>](https://github.com/thaibault/website-utilities/actions/workflows/check:types.yaml/badge.svg)](https://github.com/thaibault/website-utilities/actions/workflows/check:types.yaml)
+[![<LABEL>](https://github.com/thaibault/website-utilities/actions/workflows/lint.yaml/badge.svg)](https://github.com/thaibault/website-utilities/actions/workflows/lint.yaml)
+
+[![code coverage](https://coveralls.io/repos/github/thaibault/website-utilities/badge.svg)](https://coveralls.io/github/thaibault/website-utilities)
+
+<!-- Too unstable yet
 [![dependencies](https://img.shields.io/david/thaibault/website-utilities.svg)](https://david-dm.org/thaibault/website-utilities)
 [![development dependencies](https://img.shields.io/david/dev/thaibault/website-utilities.svg)](https://david-dm.org/thaibault/website-utilities?type=dev)
 [![peer dependencies](https://img.shields.io/david/peer/thaibault/website-utilities.svg)](https://david-dm.org/thaibault/website-utilities?type=peer)
-[![documentation-website](https://img.shields.io/website-up-down-green-red/https/torben.website/websiteUtilities.svg?label=documentation-website)](https://torben.website/websiteUtilities)
+-->
+[![documentation website](https://img.shields.io/website-up-down-green-red/https/torben.website/website-utilities.svg?label=documentation-website)](https://torben.website/website-utilities)
 
 <!--|deDE:Einsatzmöglichkeiten-->
 Use cases

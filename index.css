@@ -364,7 +364,6 @@ endregion */
                 position: initial !important;
                 padding-left: 7px !important;
                 padding-right: 25px !important;
-
                 /* hide default down arrow in IE10 */
                 &::-ms-expand { display: none; }
             }

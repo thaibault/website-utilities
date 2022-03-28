@@ -19,12 +19,7 @@
 // region imports
 import Tools, {globalContext, $} from 'clientnode'
 import {
-    Mapping,
-    ProcedureFunction,
-    RecursivePartial,
-    TimeoutPromise,
-    $DomNodes,
-    $T
+    Mapping, ProcedureFunction, RecursivePartial, $DomNodes, $T
 } from 'clientnode/type'
 import Internationalisation from 'internationalisation'
 import {Spinner} from 'spin.js'
@@ -119,7 +114,7 @@ import {
  * for startup loading cover hide animation.
  * @property static:_defaultOptions.windowLoadingSpinner - Options for the
  * window loading cover spinner.
- * @property static:_defaultOptions.windowLoadingTimeoutAfterDocumentLoadedInMilliseconds -
+ * @property static:_defaultOptions.windowLoadedTimeoutAfterDocLoadedInMSec -
  * Duration after loading cover should be removed.
  *
  * @property options - Finally configured given options.
@@ -294,7 +289,7 @@ export class WebsiteUtilities extends Tools {
             // The z-index (defaults to 2000000000)
             zIndex: 2e9
         },
-        windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 2000
+        windowLoadedTimeoutAfterDocLoadedInMSec: 2000
     }
 
     options:Options = null as unknown as Options
@@ -344,9 +339,9 @@ export class WebsiteUtilities extends Tools {
 
         this.disableScrolling()
 
-        return new Promise<WebsiteUtilities>(async (resolve:(
-            value:WebsiteUtilities
-        ) => void):Promise<void> => {
+        return new Promise<WebsiteUtilities>((
+            resolve:(value:WebsiteUtilities) => void
+        ):void => {
             if (this.$domNodes.windowLoadingSpinner.length) {
                 this.windowLoadingSpinner =
                     new Spinner(this.options.windowLoadingSpinner)
@@ -359,19 +354,21 @@ export class WebsiteUtilities extends Tools {
 
             this.$domNodes.parent!.show()
 
-            const onLoaded:ProcedureFunction = async ():Promise<void> => {
+            const onLoaded = ():void => {
                 if (!this.windowLoaded) {
                     this.windowLoaded = true
-                    await this._removeLoadingCover()
-                    this._performStartUpEffects()
-                    resolve(this)
+                    void this._removeLoadingCover().then(():void => {
+                        void this._performStartUpEffects()
+                        resolve(this)
+                    })
                 }
             }
-            $(():TimeoutPromise => Tools.timeout(
-                onLoaded,
-                this.options
-                    .windowLoadedTimeoutAfterDocumentLoadedInMilliseconds
-            ))
+            $(():void => {
+                Tools.timeout(
+                    onLoaded,
+                    this.options.windowLoadedTimeoutAfterDocLoadedInMSec
+                )
+            })
             this.on(this.$domNodes.window, 'load', onLoaded)
 
             this._bindClickTracking()
@@ -379,11 +376,11 @@ export class WebsiteUtilities extends Tools {
             if (!this.options.language.logging)
                 this.options.language.logging = this.options.logging
             if (this.options.activateLanguageSupport && !this.languageHandler)
-                this.languageHandler = (
-                    await $(
-                        this.$domNodes.parent as unknown as HTMLBodyElement
-                    ).Internationalisation(this.options.language)
-                ).data(this.options.name)
+                $(this.$domNodes.parent as unknown as HTMLBodyElement)
+                    .Internationalisation(this.options.language)
+                    .then((domNode:Internationalisation):void => {
+                        this.languageHandler = domNode.data(this.options.name)
+                    })
 
             this._bindNavigationEvents()
             this._bindMediaQueryChangeEvents()
@@ -428,6 +425,7 @@ export class WebsiteUtilities extends Tools {
      * Triggers an analytics event. All given arguments are forwarded to
      * configured analytics event code to defined their environment variables.
      * @param properties - Event tracking informations.
+     *
      * @returns Returns the current instance.
      */
     track(
@@ -506,16 +504,23 @@ export class WebsiteUtilities extends Tools {
             this.$domNodes.scrollToTopButton
                 .finish()
                 .css({
-                    bottom: '+=' +
-                        this.options.scrollToTop.button.slideDistanceInPixel,
+                    bottom:
+                        '+=' +
+                        String(
+                            this.options.scrollToTop.button
+                                .slideDistanceInPixel
+                        ),
                     display: 'block',
                     opacity: 0
                 })
                 .animate(
                     {
-                        bottom: '-=' +
-                            this.options.scrollToTop.button
-                                .slideDistanceInPixel,
+                        bottom:
+                            '-=' +
+                            String(
+                                this.options.scrollToTop.button
+                                    .slideDistanceInPixel
+                            ),
                         queue: false,
                         opacity: 1
                     },
@@ -526,6 +531,7 @@ export class WebsiteUtilities extends Tools {
      * This method triggers if the responsive design switches to another mode.
      * @param oldMode - Saves the previous mode.
      * @param newMode - Saves the new mode.
+     *
      * @returns Nothing.
      */
     _onChangeMediaQueryMode(_oldMode:string, _newMode:string):void {}
@@ -533,6 +539,7 @@ export class WebsiteUtilities extends Tools {
      * This method triggers if the responsive design switches to large mode.
      * @param oldMode - Saves the previous mode.
      * @param newMode - Saves the new mode.
+     *
      * @returns Nothing.
      */
     _onChangeToLargeMode(_oldMode:string, _newMode:string):void {}
@@ -540,6 +547,7 @@ export class WebsiteUtilities extends Tools {
      * This method triggers if the responsive design switches to medium mode.
      * @param oldMode - Saves the previous mode.
      * @param newMode - Saves the new mode.
+     *
      * @returns Nothing.
      */
     _onChangeToMediumMode(_oldMode:string, _newMode:string):void {}
@@ -547,6 +555,7 @@ export class WebsiteUtilities extends Tools {
      * This method triggers if the responsive design switches to small mode.
      * @param oldMode - Saves the previous mode.
      * @param newMode - Saves the new mode.
+     *
      * @returns Nothing.
      */
     _onChangeToSmallMode(_oldMode:string, _newMode:string):void {}
@@ -555,12 +564,14 @@ export class WebsiteUtilities extends Tools {
      * mode.
      * @param oldMode - Saves the previous mode.
      * @param newMode - Saves the new mode.
+     *
      * @returns Nothing.
      */
     _onChangeToExtraSmallMode(_oldMode:string, _newMode:string):void {}
     /**
      * This method triggers if we change the current section.
      * @param sectionName - Contains the new section name.
+     *
      * @returns Nothing.
      */
     _onSwitchSection(sectionName:string):void {
@@ -612,6 +623,7 @@ export class WebsiteUtilities extends Tools {
      * This method triggers if the responsive design switches its mode.
      * @param parameter - All arguments will be appended to the event handler
      * callbacks.
+     *
      * @returns Nothing.
      */
     _triggerWindowResizeEvents(...parameters:Array<any>):void {
@@ -659,6 +671,7 @@ export class WebsiteUtilities extends Tools {
      * This method triggers if view port arrives at special areas.
      * @param parameter - All arguments will be appended to the event handler
      * callbacks.
+     *
      * @returns Nothing.
      */
     _bindScrollEvents(...parameter:Array<any>):void {
@@ -743,6 +756,7 @@ export class WebsiteUtilities extends Tools {
     /**
      * This method handles the given start up effect step.
      * @param elementNumber - The current start up step.
+     *
      * @returns Promise resolving to nothing when start up effects have been
      * finished.
      */

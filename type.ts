@@ -105,7 +105,7 @@ export interface DefaultOptions {
     }
     windowLoadingCoverHideAnimation:FirstParameter<$T['animate']>
     windowLoadingSpinner:SpinnerOptions
-    windowLoadedTimeoutAfterDocumentLoadedInMilliseconds:number
+    windowLoadedTimeoutAfterDocLoadedInMSec:number
 }
 export type Options = BaseOptions & DefaultOptions
 
