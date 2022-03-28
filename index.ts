@@ -18,15 +18,7 @@
 */
 // region imports
 import Tools, {globalContext, $} from 'clientnode'
-import {
-    FirstParameter,
-    Mapping,
-    ProcedureFunction,
-    RecursivePartial,
-    TimeoutPromise,
-    $DomNodes,
-    $T
-} from 'clientnode/type'
+import {Mapping, RecursivePartial, $DomNodes, $T} from 'clientnode/type'
 import Internationalisation from 'internationalisation'
 import {Spinner} from 'spin.js'
 
@@ -120,7 +112,7 @@ import {
  * for startup loading cover hide animation.
  * @property static:_defaultOptions.windowLoadingSpinner - Options for the
  * window loading cover spinner.
- * @property static:_defaultOptions.windowLoadingTimeoutAfterDocumentLoadedInMilliseconds -
+ * @property static:_defaultOptions.windowLoadedTimeoutAfterDocLoadedInMSec -
  * Duration after loading cover should be removed.
  *
  * @property options - Finally configured given options.
@@ -203,7 +195,7 @@ export class WebsiteUtilities extends Tools {
             buttonClick: function(
                 this:WebsiteUtilities,
                 $button:$T<HTMLButtonElement>,
-                event:JQuery.Event
+                _event:JQuery.Event
             ):void {
                 this.track({
                     event: 'buttonClick',
@@ -224,7 +216,7 @@ export class WebsiteUtilities extends Tools {
             linkClick: function(
                 this:WebsiteUtilities,
                 $link:$T<HTMLLinkElement>,
-                event:JQuery.Event
+                _event:JQuery.Event
             ):void {
                 this.track({
                     event: 'linkClick',
@@ -295,22 +287,22 @@ export class WebsiteUtilities extends Tools {
             // The z-index (defaults to 2000000000)
             zIndex: 2e9
         },
-        windowLoadedTimeoutAfterDocumentLoadedInMilliseconds: 2000
+        windowLoadedTimeoutAfterDocLoadedInMSec: 2000
     }
 
     options:Options = null as unknown as Options
 
     $domNodes:$DomNodes = null as unknown as $DomNodes
 
-    currentMediaQueryMode:string = ''
-    currentSectionName:string = 'home'
+    currentMediaQueryMode = ''
+    currentSectionName = 'home'
 
     languageHandler:Internationalisation|null = null
 
-    startUpAnimationIsComplete:boolean = false
+    startUpAnimationIsComplete = false
 
-    viewportIsOnTop:boolean = false
-    windowLoaded:boolean = false
+    viewportIsOnTop = false
+    windowLoaded = false
 
     windowLoadingSpinner:null|Spinner = null
 
@@ -335,19 +327,13 @@ export class WebsiteUtilities extends Tools {
             this.currentSectionName =
                 globalContext.location.hash.substring('#'.length)
 
-        // Wrap event methods with debounce handler.
-        this._onViewportMovesAwayFromTop =
-            Tools.debounce(this._onViewportMovesAwayFromTop)
-        this._onViewportMovesToTop =
-            Tools.debounce(this._onViewportMovesToTop)
-
         this.$domNodes = this.grabDomNodes(this.options.domNodes as Mapping)
 
         this.disableScrolling()
 
-        return new Promise<WebsiteUtilities>(async (resolve:(
-            value:WebsiteUtilities
-        ) => void):Promise<void> => {
+        return new Promise<WebsiteUtilities>((
+            resolve:(value:WebsiteUtilities) => void
+        ):void => {
             if (this.$domNodes.windowLoadingSpinner.length) {
                 this.windowLoadingSpinner =
                     new Spinner(this.options.windowLoadingSpinner)
@@ -360,19 +346,21 @@ export class WebsiteUtilities extends Tools {
 
             this.$domNodes.parent!.show()
 
-            const onLoaded:ProcedureFunction = async ():Promise<void> => {
+            const onLoaded = ():void => {
                 if (!this.windowLoaded) {
                     this.windowLoaded = true
-                    await this._removeLoadingCover()
-                    this._performStartUpEffects()
-                    resolve(this)
+                    void this._removeLoadingCover().then(():void => {
+                        void this._performStartUpEffects()
+                        resolve(this)
+                    })
                 }
             }
-            $(():TimeoutPromise => Tools.timeout(
-                onLoaded,
-                this.options
-                    .windowLoadedTimeoutAfterDocumentLoadedInMilliseconds
-            ))
+            $(():void => {
+                void Tools.timeout(
+                    onLoaded,
+                    this.options.windowLoadedTimeoutAfterDocLoadedInMSec
+                )
+            })
             this.on(this.$domNodes.window, 'load', onLoaded)
 
             this._bindClickTracking()
@@ -380,11 +368,13 @@ export class WebsiteUtilities extends Tools {
             if (!this.options.language.logging)
                 this.options.language.logging = this.options.logging
             if (this.options.activateLanguageSupport && !this.languageHandler)
-                this.languageHandler = (
-                    await $(
-                        this.$domNodes.parent as unknown as HTMLBodyElement
-                    ).Internationalisation(this.options.language)
-                ).data(this.options.name)
+                void $(this.$domNodes.parent as unknown as HTMLBodyElement)
+                    .Internationalisation(this.options.language)
+                    .then(($domNode:$T<HTMLBodyElement>):void => {
+                        this.languageHandler =
+                            $domNode.data(this.options.name) as
+                                Internationalisation<HTMLBodyElement>
+                    })
 
             this._bindNavigationEvents()
             this._bindMediaQueryChangeEvents()
@@ -429,6 +419,7 @@ export class WebsiteUtilities extends Tools {
      * Triggers an analytics event. All given arguments are forwarded to
      * configured analytics event code to defined their environment variables.
      * @param properties - Event tracking informations.
+     *
      * @returns Returns the current instance.
      */
     track(
@@ -472,7 +463,7 @@ export class WebsiteUtilities extends Tools {
      * This method triggers if the viewport moves to top.
      * @returns Nothing.
      */
-    _onViewportMovesToTop = ():void => {
+    _onViewportMovesToTop = Tools.debounce(():void => {
         if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
             this.$domNodes.scrollToTopButton.css('opacity', 0)
         else {
@@ -484,80 +475,99 @@ export class WebsiteUtilities extends Tools {
             })
             this.$domNodes.scrollToTopButton.finish().animate(
                 {
-                    bottom: '+=' +
-                        this.options.scrollToTop.button.slideDistanceInPixel,
+                    bottom:
+                        '+=' +
+                        String(
+                            this.options.scrollToTop.button
+                                .slideDistanceInPixel
+                        ),
                     opacity: 0
                 },
                 this.options.scrollToTop.button.hideAnimationOptions
             )
         }
-    }
+    })
     /**
      * This method triggers if the viewport moves away from top.
      * @returns Nothing.
      */
-    _onViewportMovesAwayFromTop = ():void => {
+    _onViewportMovesAwayFromTop = Tools.debounce(():void => {
         if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
             this.$domNodes.scrollToTopButton.css('opacity', 1)
         else
             this.$domNodes.scrollToTopButton
                 .finish()
                 .css({
-                    bottom: '+=' +
-                        this.options.scrollToTop.button.slideDistanceInPixel,
+                    bottom:
+                        '+=' +
+                        String(
+                            this.options.scrollToTop.button
+                                .slideDistanceInPixel
+                        ),
                     display: 'block',
                     opacity: 0
                 })
                 .animate(
                     {
-                        bottom: '-=' +
-                            this.options.scrollToTop.button
-                                .slideDistanceInPixel,
+                        bottom:
+                            '-=' +
+                            String(
+                                this.options.scrollToTop.button
+                                    .slideDistanceInPixel
+                            ),
                         queue: false,
                         opacity: 1
                     },
                     this.options.scrollToTop.button.showAnimationOptions
                 )
-    }
+    })
+    /* eslint-disable @typescript-eslint/no-empty-function */
     /**
      * This method triggers if the responsive design switches to another mode.
-     * @param oldMode - Saves the previous mode.
-     * @param newMode - Saves the new mode.
+     * @param _oldMode - Saves the previous mode.
+     * @param _newMode - Saves the new mode.
+     *
      * @returns Nothing.
      */
     _onChangeMediaQueryMode(_oldMode:string, _newMode:string):void {}
     /**
      * This method triggers if the responsive design switches to large mode.
-     * @param oldMode - Saves the previous mode.
-     * @param newMode - Saves the new mode.
+     * @param _oldMode - Saves the previous mode.
+     * @param _newMode - Saves the new mode.
+     *
      * @returns Nothing.
      */
     _onChangeToLargeMode(_oldMode:string, _newMode:string):void {}
     /**
      * This method triggers if the responsive design switches to medium mode.
-     * @param oldMode - Saves the previous mode.
-     * @param newMode - Saves the new mode.
+     * @param _oldMode - Saves the previous mode.
+     * @param _newMode - Saves the new mode.
+     *
      * @returns Nothing.
      */
     _onChangeToMediumMode(_oldMode:string, _newMode:string):void {}
     /**
      * This method triggers if the responsive design switches to small mode.
-     * @param oldMode - Saves the previous mode.
-     * @param newMode - Saves the new mode.
+     * @param _oldMode - Saves the previous mode.
+     * @param _newMode - Saves the new mode.
+     *
      * @returns Nothing.
      */
     _onChangeToSmallMode(_oldMode:string, _newMode:string):void {}
     /**
      * This method triggers if the responsive design switches to extra small
      * mode.
-     * @param oldMode - Saves the previous mode.
-     * @param newMode - Saves the new mode.
+     * @param _oldMode - Saves the previous mode.
+     * @param _newMode - Saves the new mode.
+     *
      * @returns Nothing.
      */
     _onChangeToExtraSmallMode(_oldMode:string, _newMode:string):void {}
+    /* eslint-enable @typescript-eslint/no-empty-function */
     /**
      * This method triggers if we change the current section.
      * @param sectionName - Contains the new section name.
+     *
      * @returns Nothing.
      */
     _onSwitchSection(sectionName:string):void {
@@ -607,14 +617,15 @@ export class WebsiteUtilities extends Tools {
     }
     /**
      * This method triggers if the responsive design switches its mode.
-     * @param parameter - All arguments will be appended to the event handler
+     * @param parameters - All arguments will be appended to the event handler
      * callbacks.
+     *
      * @returns Nothing.
      */
-    _triggerWindowResizeEvents(...parameters:Array<any>):void {
+    _triggerWindowResizeEvents(...parameters:Array<unknown>):void {
         for (
             const classNameMapping of
-                this.options.mediaQueryClassNameIndicator
+            this.options.mediaQueryClassNameIndicator
         ) {
             this.$domNodes
                 .mediaQueryIndicator
@@ -654,11 +665,12 @@ export class WebsiteUtilities extends Tools {
     }
     /**
      * This method triggers if view port arrives at special areas.
-     * @param parameter - All arguments will be appended to the event handler
+     * @param parameters - All arguments will be appended to the event handler
      * callbacks.
+     *
      * @returns Nothing.
      */
-    _bindScrollEvents(...parameter:Array<any>):void {
+    _bindScrollEvents(...parameters:Array<unknown>):void {
         const $scrollTarget:$T =
             $('body, html').add(this.$domNodes.window!)
         $scrollTarget.on(
@@ -685,14 +697,14 @@ export class WebsiteUtilities extends Tools {
                             'viewportMovesAwayFromTop',
                             false,
                             this,
-                            ...parameter
+                            ...parameters
                         )
                     }
                 } else if (!this.viewportIsOnTop) {
                     this.viewportIsOnTop = true
 
                     this.fireEvent(
-                        'viewportMovesToTop', false, this, ...parameter
+                        'viewportMovesToTop', false, this, ...parameters
                     )
                 }
             }
@@ -701,11 +713,11 @@ export class WebsiteUtilities extends Tools {
         if (this.$domNodes.window!.scrollTop()) {
             this.viewportIsOnTop = false
             this.fireEvent(
-                'viewportMovesAwayFromTop', false, this, ...parameter
+                'viewportMovesAwayFromTop', false, this, ...parameters
             )
         } else {
             this.viewportIsOnTop = true
-            this.fireEvent('viewportMovesToTop', false, this, ...parameter)
+            this.fireEvent('viewportMovesToTop', false, this, ...parameters)
         }
     }
     /**
@@ -726,7 +738,7 @@ export class WebsiteUtilities extends Tools {
             ).substr(1)
         )).css(this.options.startUpHide)
 
-        await new Promise((resolve:ProcedureFunction):void => {
+        await new Promise<void>((resolve:() => void):void => {
             if (this.$domNodes.windowLoadingCover.length) {
                 this.enableScrolling()
                 this.$domNodes.windowLoadingCover.animate(
@@ -740,10 +752,11 @@ export class WebsiteUtilities extends Tools {
     /**
      * This method handles the given start up effect step.
      * @param elementNumber - The current start up step.
+     *
      * @returns Promise resolving to nothing when start up effects have been
      * finished.
      */
-    async _performStartUpEffects(elementNumber:number = 1):Promise<void> {
+    async _performStartUpEffects(elementNumber = 1):Promise<void> {
         // Stop and delete spinner instance.
         this.$domNodes.windowLoadingCover.hide()
 
@@ -760,11 +773,11 @@ export class WebsiteUtilities extends Tools {
                 this.options.startUpAnimationElementDelayInMiliseconds
             )
 
-            let lastElementTriggered:boolean = false
+            let lastElementTriggered = false
 
             const $domNode:$T = $(
                 this.options.domNodes.startUpAnimationClassPrefix +
-                elementNumber
+                `${elementNumber}`
             )
             $domNode.animate(
                 this.options.startUpShowAnimation,
@@ -778,8 +791,7 @@ export class WebsiteUtilities extends Tools {
 
             if ($(
                 this.options.domNodes.startUpAnimationClassPrefix +
-                elementNumber +
-                1
+                `${elementNumber + 1}`
             ).length)
                 await this._performStartUpEffects(elementNumber + 1)
             else
@@ -854,8 +866,8 @@ export class WebsiteUtilities extends Tools {
 export default WebsiteUtilities
 // endregion
 // region handle $ extending
-$.WebsiteUtilities = ((...parameter:Array<unknown>):unknown =>
-    Tools.controller(WebsiteUtilities, parameter)
+$.WebsiteUtilities = ((...parameters:Array<unknown>):unknown =>
+    Tools.controller(WebsiteUtilities, parameters)
 ) as WebsiteUtilitiesFunction
 $.WebsiteUtilities.class = WebsiteUtilities
 // endregion

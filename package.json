@@ -1,23 +1,23 @@
 {
   "name": "website-utilities",
   "version": "1.0.256",
-  "license": "CC-BY-3.0",
   "description": "extend your web app",
-  "homepage": "https://torben.website/website-utilities",
-  "documentationWebsite": {
-    "languages": [
-      "deDE",
-      "enUS"
-    ],
-    "name": "website-utilities",
-    "tagline": "extend your web app<!--deDE:erweitere deine Webanwendung-->",
-    "trackingCode": "UA-40192634-5"
-  },
   "keywords": [
     "jquery",
     "website",
     "utilities"
   ],
+  "homepage": "https://torben.website/website-utilities",
+  "bugs": {
+    "email": "info@torben.website",
+    "url": "https://github.com/thaibault/website-utilities/issues"
+  },
+  "license": "CC-BY-3.0",
+  "author": {
+    "name": "Torben Sickert",
+    "email": "info@torben.website",
+    "url": "https://torben.website"
+  },
   "files": [
     "index.d.ts",
     "index.js",
@@ -36,22 +36,28 @@
     "url": "https://github.com/thaibault/website-utilities"
   },
   "scripts": {
-    "build": "weboptimizer build",
+    "build": "yarn build:types; yarn build:plain",
     "build:export": "weboptimizer build '{__reference__: \"target:export\"}'",
+    "build:plain": "weboptimizer build",
+    "build:types": "weboptimizer build:types",
     "check": "yarn check:types; yarn lint",
     "check:types": "weboptimizer check:types",
     "clear": "weboptimizer clear",
     "document": "weboptimizer document",
     "lint": "weboptimizer lint",
     "prepare": "yarn build",
-    "report:coverage": "nyc report --reporter=text-lcov | coveralls",
     "serve": "weboptimizer serve",
     "start": "yarn serve",
     "test": "weboptimizer test",
     "test:browser": "weboptimizer test:browser",
+    "test:coverage": "weboptimizer test:coverage",
+    "test:coverage:report": "weboptimizer test:coverage:report",
     "update": "yarn version --patch && yarn publish",
     "update:documentation": "documentationWebsite --log-level info",
     "watch": "weboptimizer build --watch"
+  },
+  "dependencies": {
+    "@types/webpack": "https://registry.yarnpkg.com/@favware/skip-dependency/-/skip-dependency-1.1.1.tgz"
   },
   "devDependencies": {
     "@babel/eslint-parser": "*",
@@ -109,11 +115,24 @@
       "optional": true
     }
   },
+  "engines": {
+    "node": ">=17",
+    "npm": ">=7"
+  },
   "resolutions": {
     "@types/webpack": "https://registry.yarnpkg.com/@favware/skip-dependency/-/skip-dependency-1.1.1.tgz",
     "colors": "1.4.0"
   },
   "sideEffects": false,
+  "documentationWebsite": {
+    "languages": [
+      "deDE",
+      "enUS"
+    ],
+    "name": "website-utilities",
+    "tagline": "extend your web app<!--deDE:erweitere deine Webanwendung-->",
+    "trackingCode": "UA-40192634-5"
+  },
   "webOptimizer": {
     "commandLine": {
       "test": {
@@ -180,8 +199,5 @@
         }
       }
     }
-  },
-  "dependencies": {
-    "@types/webpack": "https://registry.yarnpkg.com/@favware/skip-dependency/-/skip-dependency-1.1.1.tgz"
   }
 }

@@ -22,7 +22,6 @@ import {
     Mapping,
     Options as BaseOptions,
     ProcedureFunction,
-    $TStatic,
     $T
 } from 'clientnode/type'
 import {
@@ -34,7 +33,7 @@ import WebsiteUtilities from './index'
 // endregion
 // region exports
 export type WebsiteUtilitiesFunction =
-    ((..._parameters:Array<unknown>) => any) &
+    ((..._parameters:Array<unknown>) => unknown) &
     {class:typeof WebsiteUtilities}
 declare global {
     interface JQueryStatic {
@@ -106,7 +105,7 @@ export interface DefaultOptions {
     }
     windowLoadingCoverHideAnimation:FirstParameter<$T['animate']>
     windowLoadingSpinner:SpinnerOptions
-    windowLoadedTimeoutAfterDocumentLoadedInMilliseconds:number
+    windowLoadedTimeoutAfterDocLoadedInMSec:number
 }
 export type Options = BaseOptions & DefaultOptions
 
