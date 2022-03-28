@@ -27,7 +27,7 @@ describe('WebsiteUtilities', ():void => {
     require('internationalisation')
     require('./index')
     beforeAll(async ():Promise<void> => {
-        websiteUtilities = await $.WebsiteUtilities()
+        websiteUtilities = (await $.WebsiteUtilities()) as WebsiteUtilities
     })
     // region tests
     /// region public methods

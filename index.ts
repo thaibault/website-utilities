@@ -18,9 +18,7 @@
 */
 // region imports
 import Tools, {globalContext, $} from 'clientnode'
-import {
-    Mapping, ProcedureFunction, RecursivePartial, $DomNodes, $T
-} from 'clientnode/type'
+import {Mapping, RecursivePartial, $DomNodes, $T} from 'clientnode/type'
 import Internationalisation from 'internationalisation'
 import {Spinner} from 'spin.js'
 
@@ -329,12 +327,6 @@ export class WebsiteUtilities extends Tools {
             this.currentSectionName =
                 globalContext.location.hash.substring('#'.length)
 
-        // Wrap event methods with debounce handler.
-        this._onViewportMovesAwayFromTop =
-            Tools.debounce(this._onViewportMovesAwayFromTop)
-        this._onViewportMovesToTop =
-            Tools.debounce(this._onViewportMovesToTop)
-
         this.$domNodes = this.grabDomNodes(this.options.domNodes as Mapping)
 
         this.disableScrolling()
@@ -364,7 +356,7 @@ export class WebsiteUtilities extends Tools {
                 }
             }
             $(():void => {
-                Tools.timeout(
+                void Tools.timeout(
                     onLoaded,
                     this.options.windowLoadedTimeoutAfterDocLoadedInMSec
                 )
@@ -376,10 +368,12 @@ export class WebsiteUtilities extends Tools {
             if (!this.options.language.logging)
                 this.options.language.logging = this.options.logging
             if (this.options.activateLanguageSupport && !this.languageHandler)
-                $(this.$domNodes.parent as unknown as HTMLBodyElement)
+                void $(this.$domNodes.parent as unknown as HTMLBodyElement)
                     .Internationalisation(this.options.language)
-                    .then((domNode:Internationalisation):void => {
-                        this.languageHandler = domNode.data(this.options.name)
+                    .then(($domNode:$T<HTMLBodyElement>):void => {
+                        this.languageHandler =
+                            $domNode.data(this.options.name) as
+                                Internationalisation<HTMLBodyElement>
                     })
 
             this._bindNavigationEvents()
@@ -469,7 +463,7 @@ export class WebsiteUtilities extends Tools {
      * This method triggers if the viewport moves to top.
      * @returns Nothing.
      */
-    _onViewportMovesToTop = ():void => {
+    _onViewportMovesToTop = Tools.debounce(():void => {
         if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
             this.$domNodes.scrollToTopButton.css('opacity', 0)
         else {
@@ -492,12 +486,12 @@ export class WebsiteUtilities extends Tools {
                 this.options.scrollToTop.button.hideAnimationOptions
             )
         }
-    }
+    })
     /**
      * This method triggers if the viewport moves away from top.
      * @returns Nothing.
      */
-    _onViewportMovesAwayFromTop = ():void => {
+    _onViewportMovesAwayFromTop = Tools.debounce(():void => {
         if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
             this.$domNodes.scrollToTopButton.css('opacity', 1)
         else
@@ -526,35 +520,36 @@ export class WebsiteUtilities extends Tools {
                     },
                     this.options.scrollToTop.button.showAnimationOptions
                 )
-    }
+    })
+    /* eslint-disable @typescript-eslint/no-empty-function */
     /**
      * This method triggers if the responsive design switches to another mode.
-     * @param oldMode - Saves the previous mode.
-     * @param newMode - Saves the new mode.
+     * @param _oldMode - Saves the previous mode.
+     * @param _newMode - Saves the new mode.
      *
      * @returns Nothing.
      */
     _onChangeMediaQueryMode(_oldMode:string, _newMode:string):void {}
     /**
      * This method triggers if the responsive design switches to large mode.
-     * @param oldMode - Saves the previous mode.
-     * @param newMode - Saves the new mode.
+     * @param _oldMode - Saves the previous mode.
+     * @param _newMode - Saves the new mode.
      *
      * @returns Nothing.
      */
     _onChangeToLargeMode(_oldMode:string, _newMode:string):void {}
     /**
      * This method triggers if the responsive design switches to medium mode.
-     * @param oldMode - Saves the previous mode.
-     * @param newMode - Saves the new mode.
+     * @param _oldMode - Saves the previous mode.
+     * @param _newMode - Saves the new mode.
      *
      * @returns Nothing.
      */
     _onChangeToMediumMode(_oldMode:string, _newMode:string):void {}
     /**
      * This method triggers if the responsive design switches to small mode.
-     * @param oldMode - Saves the previous mode.
-     * @param newMode - Saves the new mode.
+     * @param _oldMode - Saves the previous mode.
+     * @param _newMode - Saves the new mode.
      *
      * @returns Nothing.
      */
@@ -562,12 +557,13 @@ export class WebsiteUtilities extends Tools {
     /**
      * This method triggers if the responsive design switches to extra small
      * mode.
-     * @param oldMode - Saves the previous mode.
-     * @param newMode - Saves the new mode.
+     * @param _oldMode - Saves the previous mode.
+     * @param _newMode - Saves the new mode.
      *
      * @returns Nothing.
      */
     _onChangeToExtraSmallMode(_oldMode:string, _newMode:string):void {}
+    /* eslint-enable @typescript-eslint/no-empty-function */
     /**
      * This method triggers if we change the current section.
      * @param sectionName - Contains the new section name.
@@ -621,15 +617,15 @@ export class WebsiteUtilities extends Tools {
     }
     /**
      * This method triggers if the responsive design switches its mode.
-     * @param parameter - All arguments will be appended to the event handler
+     * @param parameters - All arguments will be appended to the event handler
      * callbacks.
      *
      * @returns Nothing.
      */
-    _triggerWindowResizeEvents(...parameters:Array<any>):void {
+    _triggerWindowResizeEvents(...parameters:Array<unknown>):void {
         for (
             const classNameMapping of
-                this.options.mediaQueryClassNameIndicator
+            this.options.mediaQueryClassNameIndicator
         ) {
             this.$domNodes
                 .mediaQueryIndicator
@@ -669,12 +665,12 @@ export class WebsiteUtilities extends Tools {
     }
     /**
      * This method triggers if view port arrives at special areas.
-     * @param parameter - All arguments will be appended to the event handler
+     * @param parameters - All arguments will be appended to the event handler
      * callbacks.
      *
      * @returns Nothing.
      */
-    _bindScrollEvents(...parameter:Array<any>):void {
+    _bindScrollEvents(...parameters:Array<unknown>):void {
         const $scrollTarget:$T =
             $('body, html').add(this.$domNodes.window!)
         $scrollTarget.on(
@@ -701,14 +697,14 @@ export class WebsiteUtilities extends Tools {
                             'viewportMovesAwayFromTop',
                             false,
                             this,
-                            ...parameter
+                            ...parameters
                         )
                     }
                 } else if (!this.viewportIsOnTop) {
                     this.viewportIsOnTop = true
 
                     this.fireEvent(
-                        'viewportMovesToTop', false, this, ...parameter
+                        'viewportMovesToTop', false, this, ...parameters
                     )
                 }
             }
@@ -717,11 +713,11 @@ export class WebsiteUtilities extends Tools {
         if (this.$domNodes.window!.scrollTop()) {
             this.viewportIsOnTop = false
             this.fireEvent(
-                'viewportMovesAwayFromTop', false, this, ...parameter
+                'viewportMovesAwayFromTop', false, this, ...parameters
             )
         } else {
             this.viewportIsOnTop = true
-            this.fireEvent('viewportMovesToTop', false, this, ...parameter)
+            this.fireEvent('viewportMovesToTop', false, this, ...parameters)
         }
     }
     /**
@@ -742,7 +738,7 @@ export class WebsiteUtilities extends Tools {
             ).substr(1)
         )).css(this.options.startUpHide)
 
-        await new Promise((resolve:ProcedureFunction):void => {
+        await new Promise<void>((resolve:() => void):void => {
             if (this.$domNodes.windowLoadingCover.length) {
                 this.enableScrolling()
                 this.$domNodes.windowLoadingCover.animate(
@@ -760,7 +756,7 @@ export class WebsiteUtilities extends Tools {
      * @returns Promise resolving to nothing when start up effects have been
      * finished.
      */
-    async _performStartUpEffects(elementNumber:number = 1):Promise<void> {
+    async _performStartUpEffects(elementNumber = 1):Promise<void> {
         // Stop and delete spinner instance.
         this.$domNodes.windowLoadingCover.hide()
 
@@ -777,11 +773,11 @@ export class WebsiteUtilities extends Tools {
                 this.options.startUpAnimationElementDelayInMiliseconds
             )
 
-            let lastElementTriggered:boolean = false
+            let lastElementTriggered = false
 
             const $domNode:$T = $(
                 this.options.domNodes.startUpAnimationClassPrefix +
-                elementNumber
+                `${elementNumber}`
             )
             $domNode.animate(
                 this.options.startUpShowAnimation,
@@ -795,8 +791,7 @@ export class WebsiteUtilities extends Tools {
 
             if ($(
                 this.options.domNodes.startUpAnimationClassPrefix +
-                elementNumber +
-                1
+                `${elementNumber + 1}`
             ).length)
                 await this._performStartUpEffects(elementNumber + 1)
             else
@@ -871,8 +866,8 @@ export class WebsiteUtilities extends Tools {
 export default WebsiteUtilities
 // endregion
 // region handle $ extending
-$.WebsiteUtilities = ((...parameter:Array<unknown>):unknown =>
-    Tools.controller(WebsiteUtilities, parameter)
+$.WebsiteUtilities = ((...parameters:Array<unknown>):unknown =>
+    Tools.controller(WebsiteUtilities, parameters)
 ) as WebsiteUtilitiesFunction
 $.WebsiteUtilities.class = WebsiteUtilities
 // endregion
