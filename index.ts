@@ -23,7 +23,7 @@ import Internationalisation from 'internationalisation'
 import {Spinner} from 'spin.js'
 
 import {
-    DefaultOptions, Options, TrackingItem, WebsiteUtilitiesFunction
+    DefaultOptions, DomNodes, Options, TrackingItem, WebsiteUtilitiesFunction
 } from './type'
 // endregion
 // region plugins/classes
@@ -145,7 +145,7 @@ export class WebsiteUtilities extends Tools {
             windowLoadingCover: '.website-utilities-window-loading-cover',
             windowLoadingSpinner:
                 '.website-utilities-window-loading-cover > div'
-        } as unknown as Options['domNodes'],
+        } as unknown as DomNodes,
         domNodeSelectorPrefix: 'body.{1}',
         initialSectionName: 'home',
         knownScrollEventNames: [
@@ -305,7 +305,6 @@ export class WebsiteUtilities extends Tools {
     windowLoaded = false
 
     windowLoadingSpinner:null|Spinner = null
-
     // region public methods
     /// region special
     /**
