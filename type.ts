@@ -43,14 +43,20 @@ declare global {
     const dataLayer:Array<unknown>
 }
 
-export type DomNodes<Type = string> = BaseDomNodes<Type> & {
-    mediaQueryIndicator:Type
-    scrollToTopButton:Type
-    startUpAnimationClassPrefix:Type
-    top:Type
-    windowLoadingCover:Type
-    windowLoadingSpinner:Type
-}
+export type DomNodes<Type = string> =
+    BaseDomNodes<Type> &
+    {
+        mediaQueryIndicator:Type
+
+        scrollToTopButton:Type
+
+        startUpAnimationClassPrefix:Type
+
+        top:Type
+
+        windowLoadingCover:Type
+        windowLoadingSpinner:Type
+    }
 
 export interface DefaultOptions {
     activateLanguageSupport:boolean
