@@ -100,7 +100,6 @@ after needed dependencies:
     <script src="https://goo.gl/HEL97d"></script>
     <script src="https://goo.gl/3Axp2L"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
     <!--Inject downloaded file:-->
     <script src="index.compiled.js"></script>
     <!--Or integrate via cdn:
