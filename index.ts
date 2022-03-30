@@ -371,7 +371,7 @@ export class WebsiteUtilities extends Tools {
                     .Internationalisation(this.options.language)
                     .then(($domNode:$T<HTMLBodyElement>):void => {
                         this.languageHandler =
-                            $domNode.data(this.options.name) as
+                            $domNode.data('Internationalisation') as
                                 Internationalisation<HTMLBodyElement>
                     })
 
