@@ -200,8 +200,7 @@ endregion */
     --font-family-condensed: "Open Sans Condensed", open-sans-condensed, sans-serif;
     /** endregion */
     /* endregion */
-    /* stylelint-disable at-rule-no-unknown */
-    @define-mixin website-utilities {
+    & .website-utilities {
         margin: 0;
         font-family: var(--font-family);
         font-size: 14px;

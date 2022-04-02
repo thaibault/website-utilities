@@ -85,7 +85,6 @@
     "postcss-fontpath": "*",
     "postcss-import": "<=12",
     "postcss-loader": "*",
-    "postcss-mixins": "<=6",
     "postcss-preset-env": "*",
     "postcss-sprites": "*",
     "postcss-url": "<=9",
@@ -101,7 +100,6 @@
     "clientnode": "*",
     "internationalisation": "*",
     "jquery": "*",
-    "postcss-mixins": "*",
     "spin.js": "*"
   },
   "peerDependenciesMeta": {
@@ -171,15 +169,6 @@
     "module": {
       "enforceDeduplication": true,
       "preprocessor": {
-        "cascadingStyleSheet": {
-          "additional": {
-            "plugins": {
-              "pre": [
-                "require('postcss-mixins')"
-              ]
-            }
-          }
-        },
         "javaScript": {
           "#": "We have to pre-process \"spin.js\" since it isn't a compatible ECMAScript.",
           "exclude": "!filePath.endsWith('/spin.js') && isFilePathInDependencies(filePath)"
