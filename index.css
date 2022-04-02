@@ -161,7 +161,7 @@ endregion */
 }
 /** endregion */
 /* endregion */
-:root {
+.wu {
     /* region constants */
     --default-space: 20px;
     /** region dimensions */
@@ -200,248 +200,244 @@ endregion */
     --font-family-condensed: "Open Sans Condensed", open-sans-condensed, sans-serif;
     /** endregion */
     /* endregion */
-    & .website-utilities {
-        margin: 0;
-        font-family: var(--font-family);
-        font-size: 14px;
-        /* stylelint-disable selector-type-no-unknown */
-        & langreplacement { display: none; }
-        /* stylelint-enable selector-type-no-unknown */
-        /* region generic dom nodes */
-        /** region headline */
-        & h1,
-        & h2,
-        & h3,
-        & h4,
-        & h5,
-        & h6,
-        & .h1,
-        & .h2,
-        & .h3,
-        & .h4,
-        & .h5,
-        & .h6 {
-            font-family: var(--font-family);
-        }
+    margin: 0;
 
-        & h1,
-        & h2 {
-            font-family: var(--font-family-condensed);
-            font-weight: normal;
-            font-size: 3em;
-        }
-        & h2 { font-size: 2em; }
-        /** endregion */
-        /** region link */
-        & a,
-        & a:hover,
-        & a:focus,
-        & a:visited {
-            outline: none;
-            text-decoration: none;
-        }
-        /** endregion */
-        /* endregion */
-        /* region generic classes */
-        /* Disables and hides a scrolling and scrollbar. */
-        & .tools-disable-scrolling {
-            height: 100% !important;
-            overflow: hidden !important;
-        }
-        & .website-utilities-action { cursor: pointer; }
-        /* Overlay the whole page till everything is loaded completely. */
-        & .website-utilities-window-loading-cover {
-            background-color: var(--background-color);
-            /* always cover full viewport */
-            position: fixed;
-            height: 100%;
-            width: 100%;
-            z-index: 1002 !important;
-            /* Positioning the loading spinner in center in the loading overlay. */
-            & > div {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-            }
-        }
-        /** region glyphicon-social */
-        & .glyphicon-social {
-            color: #1d1d1b;
-            display: inline-block;
-            padding-left: 30px;
-            position: relative;
-            text-decoration: none;
-            vertical-align: middle;
-            zoom: 1;
+    font-family: var(--font-family);
+    font-size: 14px;
+}
 
-            &::before {
-                /* Edited to enable hover effects.
-                color: #1d1d1b;
-                */
-                display: inline-block;
-                font: 24px/1em "Glyphicons Social Regular", sans-serif;
-                font-style: normal;
-                font-weight: normal;
-                left: 0;
-                margin: 0 5px 0 0;
-                position: absolute;
-                text-transform: none;
-                top: 0;
-                zoom: 1;
-            }
-            &-white::before { color: #fff; }
-            &-pinterest::before { content: "\E001"; }
-            &-dropbox::before { content: "\E002"; }
-            &-google_plus::before { content: "\E003"; }
-            &-jolicloud::before { content: "\E004"; }
-            &-yahoo::before { content: "\E005"; }
-            &-blogger::before { content: "\E006"; }
-            &-picasa::before { content: "\E007"; }
-            &-amazon::before { content: "\E008"; }
-            &-tumblr::before { content: "\E009"; }
-            &-wordpress::before { content: "\E010"; }
-            &-instapaper::before { content: "\E011"; }
-            &-evernote::before { content: "\E012"; }
-            &-xing::before { content: "\E013"; }
-            &-zootool::before { content: "\E014"; }
-            &-dribbble::before { content: "\E015"; }
-            &-deviantart::before { content: "\E016"; }
-            &-read_it_later::before { content: "\E017"; }
-            &-linked_in::before { content: "\E018"; }
-            &-forrst::before { content: "\E019"; }
-            &-pinboard::before { content: "\E020"; }
-            &-behance::before { content: "\E021"; }
-            &-github::before { content: "\E022"; }
-            &-youtube::before { content: "\E023"; }
-            &-skitch::before { content: "\E024"; }
-            &-foursquare::before { content: "\E025"; }
-            &-quora::before { content: "\E026"; }
-            &-badoo::before { content: "\E027"; }
-            &-spotify::before { content: "\E028"; }
-            &-stumbleupon::before { content: "\E029"; }
-            &-readability::before { content: "\E030"; }
-            &-facebook::before { content: "\E031"; }
-            &-twitter::before { content: "\E032"; }
-            &-instagram::before { content: "\E033"; }
-            &-posterous_spaces::before { content: "\E034"; }
-            &-vimeo::before { content: "\E035"; }
-            &-flickr::before { content: "\E036"; }
-            &-last_fm::before { content: "\E037"; }
-            &-rss::before { content: "\E038"; }
-            &-skype::before { content: "\E039"; }
-            &-e-mail::before { content: "\E040"; }
-            &-vine::before { content: "\E041"; }
-            &-myspace::before { content: "\E042"; }
-            &-goodreads::before { content: "\E043"; }
-            &-apple::before { content: "\F8FF"; }
-            &-windows::before { content: "\E045"; }
-            &-yelp::before { content: "\E046"; }
-            &-playstation::before { content: "\E047"; }
-            &-xbox::before { content: "\E048"; }
-            &-android::before { content: "\E049"; }
-            &-ios::before { content: "\E050"; }
+/* stylelint-disable selector-type-no-unknown */
+.wu langreplacement { display: none; }
+/* stylelint-enable selector-type-no-unknown */
+
+/* region generic dom nodes */
+/** region headline */
+.wu h1, .wu-h1,
+.wu h2, .wu-h2,
+.wu h3, .wu-h3,
+.wu h4, .wu-h4,
+.wu h5, .wu-h5,
+.wu h6, .wu-h6 {
+    font-family: var(--font-family);
+}
+
+.wu h1, .wu-h1,
+.wu h2, .wu-h2 {
+    font-family: var(--font-family-condensed);
+    font-weight: normal;
+    font-size: 3em;
+}
+.wu-h2 { font-size: 2em; }
+/** endregion */
+/** region link */
+.wu a, a.wu-a,
+.wu a:hover, a.wu-a:hover,
+.wu a:focus, a.wu-a:focus,
+.wu a:visited, a.wu-a:visited {
+    outline: none;
+    text-decoration: none;
+}
+/** endregion */
+/* endregion */
+/* region generic classes */
+/* Disables and hides a scrolling and scrollbar. */
+& .tools-disable-scrolling {
+    height: 100% !important;
+    overflow: hidden !important;
+}
+& .wu-action { cursor: pointer; }
+/* Overlay the whole page till everything is loaded completely. */
+& .wu-window-loading-cover {
+    background-color: var(--background-color);
+    /* always cover full viewport */
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 1002 !important;
+}
+& .wu-window-loading-cover div {
+    /* Positioning the loading spinner in center in the loading overlay. */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+/** region glyphicon-social */
+& .glyphicon-social {
+    color: #1d1d1b;
+    display: inline-block;
+    padding-left: 30px;
+    position: relative;
+    text-decoration: none;
+    vertical-align: middle;
+    zoom: 1;
+
+    &::before {
+        /* Edited to enable hover effects.
+        color: #1d1d1b;
+        */
+        display: inline-block;
+        font: 24px/1em "Glyphicons Social Regular", sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        left: 0;
+        margin: 0 5px 0 0;
+        position: absolute;
+        text-transform: none;
+        top: 0;
+        zoom: 1;
+    }
+    &-white::before { color: #fff; }
+    &-pinterest::before { content: "\E001"; }
+    &-dropbox::before { content: "\E002"; }
+    &-google_plus::before { content: "\E003"; }
+    &-jolicloud::before { content: "\E004"; }
+    &-yahoo::before { content: "\E005"; }
+    &-blogger::before { content: "\E006"; }
+    &-picasa::before { content: "\E007"; }
+    &-amazon::before { content: "\E008"; }
+    &-tumblr::before { content: "\E009"; }
+    &-wordpress::before { content: "\E010"; }
+    &-instapaper::before { content: "\E011"; }
+    &-evernote::before { content: "\E012"; }
+    &-xing::before { content: "\E013"; }
+    &-zootool::before { content: "\E014"; }
+    &-dribbble::before { content: "\E015"; }
+    &-deviantart::before { content: "\E016"; }
+    &-read_it_later::before { content: "\E017"; }
+    &-linked_in::before { content: "\E018"; }
+    &-forrst::before { content: "\E019"; }
+    &-pinboard::before { content: "\E020"; }
+    &-behance::before { content: "\E021"; }
+    &-github::before { content: "\E022"; }
+    &-youtube::before { content: "\E023"; }
+    &-skitch::before { content: "\E024"; }
+    &-foursquare::before { content: "\E025"; }
+    &-quora::before { content: "\E026"; }
+    &-badoo::before { content: "\E027"; }
+    &-spotify::before { content: "\E028"; }
+    &-stumbleupon::before { content: "\E029"; }
+    &-readability::before { content: "\E030"; }
+    &-facebook::before { content: "\E031"; }
+    &-twitter::before { content: "\E032"; }
+    &-instagram::before { content: "\E033"; }
+    &-posterous_spaces::before { content: "\E034"; }
+    &-vimeo::before { content: "\E035"; }
+    &-flickr::before { content: "\E036"; }
+    &-last_fm::before { content: "\E037"; }
+    &-rss::before { content: "\E038"; }
+    &-skype::before { content: "\E039"; }
+    &-e-mail::before { content: "\E040"; }
+    &-vine::before { content: "\E041"; }
+    &-myspace::before { content: "\E042"; }
+    &-goodreads::before { content: "\E043"; }
+    &-apple::before { content: "\F8FF"; }
+    &-windows::before { content: "\E045"; }
+    &-yelp::before { content: "\E046"; }
+    &-playstation::before { content: "\E047"; }
+    &-xbox::before { content: "\E048"; }
+    &-android::before { content: "\E049"; }
+    &-ios::before { content: "\E050"; }
+}
+/** endregion */
+/** region form */
+/*** region styled select */
+& .select-styled-wrapper {
+    position: relative;
+
+    & > .select-styled-arrow {
+        position: absolute;
+        top: 3px;
+        right: 15px;
+        pointer-events: none;
+
+        & span {
+            vertical-align: bottom;
+            font-size: 10px;
         }
-        /** endregion */
-        /** region form */
-        /*** region styled select */
-        & .select-styled-wrapper {
-            position: relative;
+    }
 
-            & > .select-styled-arrow {
-                position: absolute;
-                top: 3px;
-                right: 15px;
-                pointer-events: none;
+    & > select {
+        position: initial !important;
+        padding-left: 7px !important;
+        padding-right: 25px !important;
 
-                & span {
-                    vertical-align: bottom;
-                    font-size: 10px;
-                }
-            }
+        /* hide default down arrow in IE10 */
+        &::-ms-expand { display: none; }
+    }
+}
+/*** endregion */
+/*** region styled checkbox */
+& .checkbox,
+& .form-horizontal .checkbox {
+    margin-top: 2px;
+    padding-top: 3px;
 
-            & > select {
-                position: initial !important;
-                padding-left: 7px !important;
-                padding-right: 25px !important;
-                /* hide default down arrow in IE10 */
-                &::-ms-expand { display: none; }
-            }
-        }
-        /*** endregion */
-        /*** region styled checkbox */
-        & .checkbox,
-        & .form-horizontal .checkbox {
-            margin-top: 2px;
-            padding-top: 3px;
+    & label {
+        padding-left: 40px;
 
-            & label {
-                padding-left: 40px;
+        & .checkbox-styled-wrapper {
+            margin-top: -2px;
+            margin-left: -40px;
+            position: absolute;
 
-                & .checkbox-styled-wrapper {
-                    margin-top: -2px;
-                    margin-left: -40px;
+            & > .checkbox-styled {
+                border-radius: 4px;
+                border: 2px solid var(--border-color);
+                cursor: pointer;
+                float: right;
+                height: 25px;
+                padding: 0;
+                width: 25px;
+
+                & > .checkbox-styled-checked {
+                    background: transparent;
+                    border: 3px solid var(--font-color);
+                    border-top: none;
+                    border-right: none;
+                    height: 8px;
+                    left: 4px;
+                    opacity: 0;
                     position: absolute;
+                    top: 5px;
+                    transform: rotate(-45deg);
+                    width: 13px;
+                }
+            }
 
-                    & > .checkbox-styled {
-                        border-radius: 4px;
-                        border: 2px solid var(--border-color);
-                        cursor: pointer;
-                        float: right;
-                        height: 25px;
-                        padding: 0;
-                        width: 25px;
+            & > input[type="checkbox"] {
+                display: none;
 
-                        & > .checkbox-styled-checked {
-                            background: transparent;
-                            border: 3px solid var(--font-color);
-                            border-top: none;
-                            border-right: none;
-                            height: 8px;
-                            left: 4px;
-                            opacity: 0;
-                            position: absolute;
-                            top: 5px;
-                            transform: rotate(-45deg);
-                            width: 13px;
-                        }
+                &:checked ~ span.checkbox-styled > span {
+                    &.checkbox-styled-checked {
+                        opacity: 1;
                     }
+                }
 
-                    & > input[type="checkbox"] {
-                        display: none;
-
-                        &:checked ~ span.checkbox-styled > span {
-                            &.checkbox-styled-checked {
-                                opacity: 1;
-                            }
-                        }
-
-                        &:disabled ~ span.checkbox-styled {
-                            background-color: var(--disabled-color);
-                        }
-                    }
+                &:disabled ~ span.checkbox-styled {
+                    background-color: var(--disabled-color);
                 }
             }
         }
-        & form:not(.form-horizontal) .checkbox { margin-bottom: 20px; }
-        /*** endregion */
-        /** endregion */
-        /* endregion */
     }
-    /* stylelint-enable at-rule-no-unknown */
+}
+& form:not(.form-horizontal) .checkbox { margin-bottom: 20px; }
+/*** endregion */
+/** endregion */
+/* endregion */
 
-    & .javascript .tools {
-        /* Initially show javaScript dependent dom nodes. */
-        &-hidden-on-javascript-enabled { display: none !important; }
-        /* Initially show javaScript dependent dom nodes. */
-        &-visible-on-javascript-enabled { display: initial !important; }
-    }
+& .javascript .tools {
+    /* Initially show javaScript dependent dom nodes. */
+    &-hidden-on-javascript-enabled { display: none !important; }
+    /* Initially show javaScript dependent dom nodes. */
+    &-visible-on-javascript-enabled { display: initial !important; }
+}
 
-    & .no-javascript .tools {
-        /* Initially show none javaScript dependent dom nodes. */
-        &-hidden-on-javascript-disabled { display: none !important; }
-        /* Initially show none javaScript dependent dom nodes. */
-        &-visible-on-javascript-disabled { display: initial !important; }
-    }
+& .no-javascript .tools {
+    /* Initially show none javaScript dependent dom nodes. */
+    &-hidden-on-javascript-disabled { display: none !important; }
+    /* Initially show none javaScript dependent dom nodes. */
+    &-visible-on-javascript-disabled { display: initial !important; }
+}
 }
 /* region spinner animation */
 @keyframes spinner-line-fade-more {
