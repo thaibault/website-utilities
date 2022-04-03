@@ -138,13 +138,14 @@ export class WebsiteUtilities extends Tools {
         additionalPageLoadingTimeInMilliseconds: 0,
         domain: 'auto',
         domNodes: {
-            mediaQueryIndicator: '<div class="media-query-indicator">',
+            mediaQueryIndicator: '<div class="wu-media-query-indicator">',
             scrollToTopButton: 'a[href="#top"]',
-            startUpAnimationClassPrefix: '.website-start-up-animation-number-',
+            startUpAnimationClassPrefix: '.wu-start-up-animation-number-',
             top: 'header',
-            windowLoadingCover: '.website-utilities-window-loading-cover',
+            windowLoadingCover:
+                '.wu .window-loading-cover, .wu-window-loading-cover',
             windowLoadingSpinner:
-                '.website-utilities-window-loading-cover > div'
+                '.wu .windowloading-cover, .wu-window-loading-cover > div'
         } as unknown as DomNodes,
         domNodeSelectorPrefix: 'body.{1}',
         initialSectionName: 'home',
