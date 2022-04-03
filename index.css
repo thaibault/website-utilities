@@ -206,34 +206,50 @@ endregion */
     font-size: 14px;
 }
 
-/* stylelint-disable selector-type-no-unknown */
-.wu langreplacement { display: none; }
-/* stylelint-enable selector-type-no-unknown */
-
-/* region generic dom nodes */
+.wu-lang-replacement,
+.wu lang-replacement {
+    display: none;
+}
+/* region  generic dom nodes */
 /** region headline */
-.wu h1, .wu-h1,
-.wu h2, .wu-h2,
-.wu h3, .wu-h3,
-.wu h4, .wu-h4,
-.wu h5, .wu-h5,
-.wu h6, .wu-h6 {
+.wu-h1,
+.wu h1,
+.wu-h2,
+.wu h2,
+.wu-h3,
+.wu h3,
+.wu-h4,
+.wu h4,
+.wu-h5,
+.wu h5,
+.wu-h6,
+.wu h6 {
     font-family: var(--font-family);
 }
 
-.wu h1, .wu-h1,
-.wu h2, .wu-h2 {
+.wu-h1,
+.wu h1,
+.wu-h2,
+.wu h2 {
     font-family: var(--font-family-condensed);
     font-weight: normal;
     font-size: 3em;
 }
-.wu-h2 { font-size: 2em; }
+
+.wu-h2,
+.wu h2 {
+    font-size: 2em;
+}
 /** endregion */
-/** region link */
-.wu a, a.wu-a,
-.wu a:hover, a.wu-a:hover,
-.wu a:focus, a.wu-a:focus,
-.wu a:visited, a.wu-a:visited {
+/** region  link */
+a.wu-a,
+.wu a,
+a.wu-a:hover,
+.wu a:hover,
+a.wu-a:focus,
+.wu a:focus,
+a.wu-a:visited,
+.wu a:visited {
     outline: none;
     text-decoration: none;
 }
@@ -241,28 +257,35 @@ endregion */
 /* endregion */
 /* region generic classes */
 /* Disables and hides a scrolling and scrollbar. */
-& .tools-disable-scrolling {
+.tools-disable-scrolling {
     height: 100% !important;
     overflow: hidden !important;
 }
-& .wu-action { cursor: pointer; }
+
+.wu-action,
+.wu .action {
+    cursor: pointer;
+}
 /* Overlay the whole page till everything is loaded completely. */
-& .wu-window-loading-cover {
+.wu-window-loading-cover,
+.wu .window-loading-cover {
     background-color: var(--background-color);
     /* always cover full viewport */
     position: fixed;
     height: 100%;
     width: 100%;
     z-index: 1002 !important;
-}
-& .wu-window-loading-cover div {
-    /* Positioning the loading spinner in center in the loading overlay. */
-    position: absolute;
-    top: 50%;
-    left: 50%;
+
+    & > div {
+        /* Positioning the loading spinner in center in the loading overlay. */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+    }
 }
 /** region glyphicon-social */
-& .glyphicon-social {
+.wu-icon-social,
+.wu .glyphicon-social {
     color: #1d1d1b;
     display: inline-block;
     padding-left: 30px;
@@ -286,6 +309,7 @@ endregion */
         top: 0;
         zoom: 1;
     }
+
     &-white::before { color: #fff; }
     &-pinterest::before { content: "\E001"; }
     &-dropbox::before { content: "\E002"; }
@@ -341,10 +365,11 @@ endregion */
 /** endregion */
 /** region form */
 /*** region styled select */
-& .select-styled-wrapper {
+.wu-select,
+.wu .select {
     position: relative;
 
-    & > .select-styled-arrow {
+    &__arrow {
         position: absolute;
         top: 3px;
         right: 15px;
@@ -356,31 +381,30 @@ endregion */
         }
     }
 
-    & > select {
+    & select {
         position: initial !important;
         padding-left: 7px !important;
         padding-right: 25px !important;
-
         /* hide default down arrow in IE10 */
         &::-ms-expand { display: none; }
     }
 }
 /*** endregion */
 /*** region styled checkbox */
-& .checkbox,
-& .form-horizontal .checkbox {
+.wu-checkbox,
+.wu .checkbox {
     margin-top: 2px;
     padding-top: 3px;
 
     & label {
         padding-left: 40px;
 
-        & .checkbox-styled-wrapper {
+        & .checkbox__wrapper {
             margin-top: -2px;
             margin-left: -40px;
             position: absolute;
 
-            & > .checkbox-styled {
+            & .checkbox__wrapper__styled {
                 border-radius: 4px;
                 border: 2px solid var(--border-color);
                 cursor: pointer;
@@ -389,7 +413,7 @@ endregion */
                 padding: 0;
                 width: 25px;
 
-                & > .checkbox-styled-checked {
+                & .checkbox__wrapper__styled__checked {
                     background: transparent;
                     border: 3px solid var(--font-color);
                     border-top: none;
@@ -404,7 +428,7 @@ endregion */
                 }
             }
 
-            & > input[type="checkbox"] {
+            & input[type="checkbox"] {
                 display: none;
 
                 &:checked ~ span.checkbox-styled > span {
@@ -420,25 +444,13 @@ endregion */
         }
     }
 }
-& form:not(.form-horizontal) .checkbox { margin-bottom: 20px; }
 /*** endregion */
 /** endregion */
 /* endregion */
-
-& .javascript .tools {
-    /* Initially show javaScript dependent dom nodes. */
-    &-hidden-on-javascript-enabled { display: none !important; }
-    /* Initially show javaScript dependent dom nodes. */
-    &-visible-on-javascript-enabled { display: initial !important; }
-}
-
-& .no-javascript .tools {
-    /* Initially show none javaScript dependent dom nodes. */
-    &-hidden-on-javascript-disabled { display: none !important; }
-    /* Initially show none javaScript dependent dom nodes. */
-    &-visible-on-javascript-disabled { display: initial !important; }
-}
-}
+/* Initially show javaScript dependent dom nodes. */
+.tools-hidden-on-javascript-enabled { display: none !important; }
+/* Initially show javaScript dependent dom nodes. */
+.tools-visible-on-javascript-enabled { display: initial !important; }
 /* region spinner animation */
 @keyframes spinner-line-fade-more {
     0%,
