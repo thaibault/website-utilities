@@ -50,6 +50,8 @@ import {
  * the full window loading cover dom node.
  * @property static:_defaultOptions.domNodes.windowLoadingSpinner - Selector to
  * the window loading spinner (on top of the window loading cover).
+ * @property static:_defaultOptions.domNodeSelectorInfix - Selector infix for
+ * all nodes to take into account.
  * @property static:_defaultOptions.domNodeSelectorPrefix - Selector prefix for
  * all nodes to take into account.
  * @property static:_defaultOptions.initialSectionName - Pre-selected section
@@ -143,10 +145,11 @@ export class WebsiteUtilities extends Tools {
             startUpAnimationClassPrefix: '.wu-start-up-animation-number-',
             top: 'header',
             windowLoadingCover:
-                '.wu .window-loading-cover, .wu-window-loading-cover',
+                '.window-loading-cover, .wu-window-loading-cover',
             windowLoadingSpinner:
-                '.wu .windowloading-cover, .wu-window-loading-cover > div'
+                '.window-loading-cover > div, .wu-window-loading-cover > div'
         } as unknown as DomNodes,
+        domNodeSelectorInfix: 'wu',
         domNodeSelectorPrefix: 'body.{1}',
         initialSectionName: 'home',
         knownScrollEventNames: [

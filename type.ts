@@ -63,6 +63,7 @@ export interface DefaultOptions {
     additionalPageLoadingTimeInMilliseconds:number
     domain:string
     domNodes:DomNodes
+    domNodeSelectorInfix:null|string
     domNodeSelectorPrefix:string
     initialSectionName:string
     knownScrollEventNames:Array<string>
