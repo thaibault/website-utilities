@@ -352,8 +352,10 @@ export class WebsiteUtilities extends Tools {
             const onLoaded = ():void => {
                 if (!this.windowLoaded) {
                     this.windowLoaded = true
+
                     void this._removeLoadingCover().then(():void => {
                         void this._performStartUpEffects()
+
                         resolve(this)
                     })
                 }
@@ -391,7 +393,7 @@ export class WebsiteUtilities extends Tools {
      */
     scrollToTop():WebsiteUtilities {
         if (globalContext.document)
-            this.$domNodes.window!
+            $('html, body')
                 .stop()
                 .animate({scrollTop: 0}, this.options.scrollToTop.options)
 
@@ -744,9 +746,10 @@ export class WebsiteUtilities extends Tools {
         await new Promise<void>((resolve:() => void):void => {
             if (this.$domNodes.windowLoadingCover.length) {
                 this.enableScrolling()
+
                 this.$domNodes.windowLoadingCover.animate(
                     this.options.windowLoadingCoverHideAnimation,
-                    {always: resolve}
+                    {always: () => resolve()}
                 )
             } else
                 resolve()
@@ -833,6 +836,7 @@ export class WebsiteUtilities extends Tools {
             'click',
             (event:Event):void => {
                 event.preventDefault()
+
                 this.scrollToTop()
             }
         )

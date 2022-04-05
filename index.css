@@ -285,6 +285,7 @@ a.wu-a:visited,
 }
 /** region glyphicon-social */
 .wu-icon-social,
+.wu .icon-social,
 .wu .glyphicon-social {
     color: #1d1d1b;
     display: inline-block;
@@ -447,10 +448,9 @@ a.wu-a:visited,
 /*** endregion */
 /** endregion */
 /* endregion */
-/* Initially show javaScript dependent dom nodes. */
-.tools-hidden-on-javascript-enabled { display: none !important; }
-/* Initially show javaScript dependent dom nodes. */
-.tools-visible-on-javascript-enabled { display: initial !important; }
+/* Initially hide/show javaScript dependent dom nodes. */
+.tools-hidden-on-javascript-enabled { display: none; }
+.tools-visible-on-javascript-enabled { display: initial; }
 /* region spinner animation */
 @keyframes spinner-line-fade-more {
     0%,
