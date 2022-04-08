@@ -17,7 +17,7 @@
     endregion
 */
 // region imports
-import {ChildProcess, execSync} from 'child_process'
+import {execSync} from 'child_process'
 import {basename, resolve} from 'path'
 // endregion
 const run = (command:string, options = {}):string =>
@@ -27,7 +27,7 @@ if (run('git branch').includes('* master')) {
     console.info('Build new web page.')
     run('yarn build')
 
-    let currentWorkingDirectoryPath:string = run('pwd')
+    const currentWorkingDirectoryPath:string = run('pwd')
     const parentWebsitePath:string = resolve(
         currentWorkingDirectoryPath,
         '../',
