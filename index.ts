@@ -324,12 +324,6 @@ export class WebsiteUtilities extends Tools {
             true, {} as Options, WebsiteUtilities._defaultOptions, options
         ))
 
-        if (this.options.initialSectionName)
-            this.currentSectionName = this.options.initialSectionName
-        else if (globalContext.window.location?.hash)
-            this.currentSectionName =
-                globalContext.location.hash.substring('#'.length)
-
         this.$domNodes = this.grabDomNodes(this.options.domNodes as Mapping)
 
         this.disableScrolling()
@@ -813,13 +807,14 @@ export class WebsiteUtilities extends Tools {
         globalContext.window.addEventListener(
             'hashchange',
             ():void => {
-                if (this.startUpAnimationIsComplete)
+                if (this.startUpAnimationIsComplete) {
                     this.fireEvent(
                         'switchSection',
                         false,
                         this,
                         location.hash.substring('#'.length)
                     )
+                }
             },
             false
         )

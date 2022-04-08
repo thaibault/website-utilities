@@ -295,29 +295,28 @@ a.wu-a:visited,
 
     line-height: 1;
 
-    color: #1d1d1b;
     display: inline-block;
-    padding-left: 30px;
     position: relative;
+
     text-decoration: none;
+
     top: 1px;
     vertical-align: middle;
+
     zoom: 1;
 
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
     &::before {
-        /* Edited to enable hover effects.
-        color: #1d1d1b;
-        */
+        font-family: "Glyphicons Halflings", sans-serif;
+
         display: inline-block;
-        font: 24px/1em "Glyphicons Social Regular", sans-serif;
-        font-style: normal;
-        font-weight: normal;
+
         left: 0;
         margin: 0 5px 0 0;
         position: absolute;
-        text-transform: none;
         top: 0;
-        zoom: 1;
     }
 }
 
@@ -328,6 +327,10 @@ a.wu-a:visited,
 
 .wu-icon-social,
 .wu .icon-social {
+    &::before {
+        font: 24px/1em "Glyphicons Social Regular", sans-serif;
+    }
+
     &-white::before { color: #fff; }
     &-pinterest::before { content: "\E001"; }
     &-dropbox::before { content: "\E002"; }
