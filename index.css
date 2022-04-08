@@ -319,12 +319,13 @@ a.wu-a:visited,
         top: 0;
         zoom: 1;
     }
-
 }
+
 .wu-icon,
 .wu .icon {
     &-arrow-left::before { content: "\E091"; }
 }
+
 .wu-icon-social,
 .wu .icon-social {
     &-white::before { color: #fff; }
