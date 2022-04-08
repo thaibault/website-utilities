@@ -323,9 +323,7 @@ a.wu-a:visited,
 }
 .wu-icon,
 .wu .icon {
-    &-arrow-left {
-        &::before { content: "\E091"; }
-    }
+    &-arrow-left::before { content: "\E091"; }
 }
 .wu-icon-social,
 .wu .icon-social {
