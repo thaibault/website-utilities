@@ -807,14 +807,13 @@ export class WebsiteUtilities extends Tools {
         globalContext.window.addEventListener(
             'hashchange',
             ():void => {
-                if (this.startUpAnimationIsComplete) {
+                if (this.startUpAnimationIsComplete)
                     this.fireEvent(
                         'switchSection',
                         false,
                         this,
                         location.hash.substring('#'.length)
                     )
-                }
             },
             false
         )
