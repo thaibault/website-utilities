@@ -86,6 +86,7 @@
     "postcss-fontpath": "*",
     "postcss-import": "<=12",
     "postcss-loader": "*",
+    "postcss-nested": "*",
     "postcss-preset-env": "*",
     "postcss-sprites": "*",
     "postcss-url": "<=9",
@@ -170,6 +171,15 @@
     "module": {
       "enforceDeduplication": true,
       "preprocessor": {
+        "cascadingStyleSheet": {
+          "additional": {
+            "plugins": {
+              "pre": {
+                "__append__": "require('postcss-nested')"
+              }
+            }
+          }
+        },
         "javaScript": {
           "#": "We have to pre-process \"spin.js\" since it isn't a compatible ECMAScript.",
           "exclude": "!filePath.endsWith('/spin.js') && isFilePathInDependencies(filePath)"
