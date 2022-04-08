@@ -19,30 +19,33 @@
     "url": "https://torben.website"
   },
   "files": [
+    "deploy.d.ts",
+    "deploy.js",
     "index.d.ts",
     "index.js",
     "index.css",
     "index.compiled.css",
-    "index.sh",
     "font",
     "font.compiled",
     "type.d.ts"
   ],
   "bin": {
-    "website-utilities": "index.sh"
+    "website-utilities": "deploy.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/thaibault/website-utilities"
   },
   "scripts": {
-    "build": "yarn build:types; yarn build:plain",
+    "build": "yarn build:types; yarn build:deploy; yarn build:web",
+    "build:deploy": "weboptimizer build '{__reference__: \"target:deploy\"}'",
     "build:export": "weboptimizer build '{__reference__: \"target:export\"}'",
-    "build:plain": "weboptimizer build",
     "build:types": "weboptimizer build:types",
+    "build:web": "weboptimizer build",
     "check": "yarn check:types; yarn lint",
     "check:types": "weboptimizer check:types",
     "clear": "weboptimizer clear",
+    "deploy": "./deploy.js",
     "document": "weboptimizer document",
     "lint": "weboptimizer lint",
     "prepare": "yarn build",
@@ -142,6 +145,9 @@
       }
     },
     "injection": {
+      "autoExclude": {
+        "__append__": "./deploy.ts"
+      },
       "external": {
         "implicit": {
           "pattern": {
@@ -184,6 +190,46 @@
           "#": "We have to pre-process \"spin.js\" since it isn't a compatible ECMAScript.",
           "exclude": "!filePath.endsWith('/spin.js') && isFilePathInDependencies(filePath)"
         }
+      }
+    },
+    "target:deploy": {
+      "assetPattern": {
+        "javaScript": {
+          "pattern": {
+            "#": "This is how we can make our test artefact executable.",
+            "__evaluate__": "`#!/usr/bin/env node\n// -*- coding: utf-8 -*-\n${self.generic.assetPattern.javaScript.pattern}{1}`"
+          }
+        }
+      },
+      "exportFormat": {
+        "external": "commonjs2",
+        "self": "commonjs2"
+      },
+      "generic": {
+        "isWeb": false
+      },
+      "injection": {
+        "entry": {
+          "deploy": "./deploy"
+        }
+      },
+      "module": {
+        "optimizer": {
+          "babelMinify": {
+            "bundle": {
+              "transform": {
+                "removeConsole": false
+              }
+            },
+            "module": {
+              "removeConsole": false
+            }
+          }
+        }
+      },
+      "targetTechnology": {
+        "boilerplate": "node",
+        "payload": "node"
       }
     },
     "target:export": {
