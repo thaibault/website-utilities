@@ -779,6 +779,7 @@ export class WebsiteUtilities extends Tools {
                 this.options.domNodes.startUpAnimationClassPrefix +
                 `${elementNumber}`
             )
+
             $domNode.animate(
                 this.options.startUpShowAnimation,
                 {
@@ -850,6 +851,7 @@ export class WebsiteUtilities extends Tools {
                             this, $(event.target), event
                         )
                 )
+
             if (this.options.tracking.buttonClick)
                 this.on(
                     this.$domNodes.parent!.find('button'),
