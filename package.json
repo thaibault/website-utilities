@@ -176,6 +176,12 @@
     },
     "module": {
       "enforceDeduplication": true,
+      "optimizer": {
+        "babelMinify": {
+          "#": "TODO find culprit features: Avoids wrong this binding in some callbacks with class bound closure (e.g. in \"performStartUpEffects -> animate -> always\".",
+          "module": null
+        }
+      },
       "preprocessor": {
         "cascadingStyleSheet": {
           "additional": {
