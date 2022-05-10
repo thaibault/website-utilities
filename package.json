@@ -67,7 +67,6 @@
     "@babel/plugin-transform-proto-to-assign": "*",
     "@types/ejs": "*",
     "@types/html-minifier": "*",
-    "@types/jest": "*",
     "@types/jquery": "*",
     "@types/jsdom": "*",
     "@types/node": "*",

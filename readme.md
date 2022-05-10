@@ -73,12 +73,11 @@ Use cases
     <li>Handle google tracking.<!--deDE:Verbindung zu google tracking.--></li>
 </ul>
 
-<!--|deDE:Inhalt-->
-Content
--------
-
 <!--Place for automatic generated table of contents.-->
-[TOC]
+<div class="doc-toc" style="display:none">
+    <!--|deDE:Inhalt-->
+    <h2 id="content">Content</h2>
+</div>
 
 <!--|deDE:Installation-->
 Installation
