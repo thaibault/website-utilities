@@ -39,7 +39,8 @@
   "scripts": {
     "build": "yarn build:types; yarn build:deploy; yarn build:web",
     "build:deploy": "weboptimizer build '{__reference__: \"target:deploy\"}'",
-    "build:export": "weboptimizer build '{__reference__: \"target:export\"}'",
+    "build:export": "yarn build:types; yarn build:deploy; yarn build:export:web",
+    "build:export:web": "weboptimizer build '{__reference__: \"target:export\"}'",
     "build:types": "weboptimizer build:types",
     "build:web": "weboptimizer build",
     "check": "yarn check:types; yarn lint",
