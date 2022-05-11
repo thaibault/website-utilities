@@ -807,13 +807,14 @@ export class WebsiteUtilities extends Tools {
     _bindNavigationEvents():void {
         globalContext.window.addEventListener(
             'hashchange',
-            ():void => {
+            (event:Event):void => {
                 if (this.startUpAnimationIsComplete)
                     this.fireEvent(
                         'switchSection',
                         false,
                         this,
-                        location.hash.substring('#'.length)
+                        location.hash.substring('#'.length),
+                        event
                     )
             },
             false
