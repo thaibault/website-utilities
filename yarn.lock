@@ -4100,9 +4100,9 @@ doctrine@^3.0.0:
     esutils "^2.0.2"
 
 documentation-website@*:
-  version "1.0.268"
-  resolved "https://registry.yarnpkg.com/documentation-website/-/documentation-website-1.0.268.tgz#c435dece96eb76420d03566c15801901b1c9baf6"
-  integrity sha512-rEAJ5/T3g9Lt7q+CJnRbpe7HRNTrADyKp+eol/ibhaSp4hgzf66pvKOTH5F690j5seoMgHN2P/YWDjY/xTmdlQ==
+  version "1.0.269"
+  resolved "https://registry.yarnpkg.com/documentation-website/-/documentation-website-1.0.269.tgz#239e8eb109686c8e6e668127a8af6683ccd4a34f"
+  integrity sha512-C2HqhajolxeCKR/JEXB2X31wec6uOipBSu/FSC5mBOYei1fVXcHvkNqDOM0eucvfRKtDRz79lhAxnnDK6Vvm6Q==
   dependencies:
     "@types/webpack" "https://registry.yarnpkg.com/@favware/skip-dependency/-/skip-dependency-1.1.1.tgz"
 
