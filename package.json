@@ -39,8 +39,8 @@
   "scripts": {
     "build": "yarn build:types; yarn build:deploy; yarn build:web",
     "build:deploy": "weboptimizer build '{__reference__: \"target:deploy\"}'",
-    "build:export": "yarn build:types; yarn build:deploy; yarn build:export:web",
-    "build:export:web": "weboptimizer build '{__reference__: \"target:export\"}'",
+    "build:bundle": "yarn build:types; yarn build:deploy; yarn build:bundle:web",
+    "build:bundle:web": "weboptimizer build '{__reference__: \"target:bundle\"}'",
     "build:types": "weboptimizer build:types",
     "build:web": "weboptimizer build",
     "check": "yarn check:types; yarn lint",
@@ -238,7 +238,13 @@
         "payload": "node"
       }
     },
-    "target:export": {
+    "target:bundle": {
+      "inPlace": {
+        "externalLibrary": {
+          "dynamic": true,
+          "normal": true
+        }
+      },
       "module": {
         "preprocessor": {
           "javaScript": {
