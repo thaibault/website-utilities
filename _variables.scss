@@ -1,0 +1,74 @@
+$theme-background: #fff;
+
+$theme-primary: #76b82a;
+$theme-on-primary: #f0f6fc;
+
+$theme-secondary: #238636;
+$theme-on-secondary: #d6e9da;
+
+$theme-error: #723637;
+$theme-on-error: #fff;
+
+$theme-surface: #21262d;
+$theme-on-surface: #bbc2ca;
+
+/*
+    NOTE: Browser has default "font-size" of "16px". We shouldn't overwrite
+    this behaviour.
+
+    Fallback order:
+
+    Arial
+    Helvetica
+    Lucida Sans
+    Tahoma
+    Trebuchet MS
+    Verdana
+*/
+$typography-font-family: comspot, sans-serif !default;
+$typography-font-family-headline: comspot-tec, sans-serif !default;
+
+$typography-headline-1: (
+    font-family: $typography-font-family-headline,
+    font-size: 2.8125rem,
+    font-weight: 500
+);
+$typography-headline-2: (
+    font-family: $typography-font-family-headline,
+    font-size: 2rem,
+    font-weight: 500
+);
+$typography-headline-3: (
+    font-family: $typography-font-family,
+    font-size: 1.625rem,
+    font-weight: 500
+);
+$typography-headline-4: (
+    font-family: $typography-font-family,
+    font-size: 1.375rem,
+    font-weight: 500
+);
+$typography-headline-5: (
+    font-family: $typography-font-family,
+    font-size: 1.185rem,
+    font-weight: 500
+);
+$typography-headline-6: (
+    font-family: $typography-font-family,
+    font-size: 1.1rem,
+    font-weight: 500
+);
+$typography-subtitle-1: (font-family: $typography-font-family);
+$typography-subtitle-2: (font-family: $typography-font-family);
+$typography-body-1: (
+    font-size: 1.06rem,
+    font-weight: normal
+);
+$typography-body-2: (
+    font-size: 0.875rem,
+    font-weight: normal
+);
+$typography-caption: (
+    font-size: 0.875rem,
+    font-weight: normal
+);
