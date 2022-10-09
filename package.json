@@ -23,10 +23,9 @@
     "deploy.js",
     "index.d.ts",
     "index.js",
-    "index.css",
     "index.compiled.css",
-    "font",
-    "font.compiled",
+    "fonts",
+    "fonts.compiled",
     "type.d.ts"
   ],
   "bin": {
@@ -90,10 +89,12 @@
     "postcss-fontpath": "*",
     "postcss-import": "<=12",
     "postcss-loader": "*",
-    "postcss-nested": "*",
     "postcss-preset-env": "*",
+    "postcss-scss": "*",
     "postcss-sprites": "*",
     "postcss-url": "<=9",
+    "sass": "*",
+    "sass-loader": "*",
     "spin.js": "*",
     "style-loader": "*",
     "stylelint": "*",
@@ -139,6 +140,22 @@
   },
   "webOptimizer": {
     "commandLine": {
+      "lint": {
+        "__remove__": "__0__",
+        "__prepend__": {
+          "arguments": [
+            {
+              "__evaluate__": "path.resolve(self.path.source.asset.cascadingStyleSheet, '**/*.scss')"
+            },
+            "--config",
+            {
+              "__evaluate__": "path.relative(self.path.context, path.resolve(webOptimizerPath, 'stylelintConfigurator.js'))"
+            }
+          ],
+          "command": "stylelint",
+          "indicator": "self.needed.cascadingStyleSheet"
+        }
+      },
       "test": {
         "environments": [
           "jsdom"
@@ -148,6 +165,10 @@
     "injection": {
       "autoExclude": {
         "__append__": "./deploy.ts"
+      },
+      "chunks": false,
+      "entry": {
+        "__evaluate__": "2 < self.givenCommandLineArguments.length && self.givenCommandLineArguments[2].startsWith('test') ? {testBundle: './test'} : {index: ['./index.scss', './index.ts']}"
       },
       "external": {
         "implicit": {
@@ -166,12 +187,12 @@
     "path": {
       "source": {
         "asset": {
-          "font": "font/"
+          "font": "fonts/"
         }
       },
       "target": {
         "asset": {
-          "font": "font.compiled/"
+          "font": "fonts.compiled/"
         }
       }
     },
@@ -186,11 +207,9 @@
       "preprocessor": {
         "cascadingStyleSheet": {
           "additional": {
-            "plugins": {
-              "pre": {
-                "__append__": "require('postcss-nested')"
-              }
-            }
+            "post": [
+              "{loader: 'sass-loader'}"
+            ]
           }
         },
         "javaScript": {

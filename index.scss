@@ -12,48 +12,47 @@ endregion */
 @use "fonts";
 @use "variables" as v;
 
-.wu {
-    /* region constants */
-    --default-space: 20px;
+:root {
+    /* region custom-properties */
+    --w-default-space: v.$default-space;
     /** region dimensions */
-    --extra-extra-small-width: 360px;
-    --extra-small-width: 500px;
-    --small-width: 768px;
-    --medium-width: 992px;
-    --large-width: 1200px;
+    --w-extra-extra-small-width: v.$extra-extra-small-width;
+    --w-extra-small-width: v.$extra-small-width;
+    --w-small-width: v.$small-width;
+    --w-medium-width: v.$medium-width;
+    --w-large-width: v.$large-width;
     /*** region extra small dimension */
-    /*
-    @custom-media --extra-extra-small (min-width: var(--extra-extra-small-width));
-    @custom-media --extra-small (min-width: var(--extra-small-width));
-    */
-    @custom-media --extra-extra-small (min-width: 360px);
-    @custom-media --extra-small (min-width: 500px);
+    @custom-media --w-extra-extra-small (min-width: v.$extra-extra-small-width);
+    @custom-media --w-extra-small (min-width: v.$extra-small-width));
     /*** endregion */
     /*** region default media query dimensions */
-    /*
-    @custom-media --small (min-width: var(--small-width));
-    @custom-media --medium (min-width: var(--medium-width));
-    @custom-media --large (min-width: var(--large-width));
-    */
-    @custom-media --small (min-width: 768px);
-    @custom-media --medium (min-width: 992px);
-    @custom-media --large (min-width: 1200px);
+    @custom-media --w-small (min-width: v.$small-width);
+    @custom-media --medium (min-width: v.$medium-width);
+    @custom-media --large (min-width: v.$large-width);
     /*** endregion */
     /** endregion */
     /** region color */
-    --background-color: #fff;
-    --disabled-color: #eee;
-    --font-color: #555;
-    --border-color: #ccc;
+    --w-background-color: v.$theme-background;
+    --w-theme-primary: $theme-primary;
+    --w-theme-on-primary: $theme-on-primary;
+    --w-theme-secondary: $theme-secondary;
+    --w-theme-on-secondary: $theme-on-secondary;
+    --w-theme-error: $theme-error;
+    --w-theme-on-error: $theme-on-error;
+    --w-theme-surface: $theme-surface;
+    --w-theme-on-surface: $theme-on-surface;
     /** endregion */
     /** region font */
-    --font-family: "Open Sans", open-sans, sans-serif;
-    --font-family-condensed: "Open Sans Condensed", open-sans-condensed, sans-serif;
+    --w-font-family: $typography-font-family;
+    --w-font-family-headline: $typography-font-family-headline;
     /** endregion */
     /* endregion */
+}
+
+.wu {
     margin: 0;
 
-    font-family: var(--font-family);
+    font-family: var(--w-font-family, v.$typography-font-family);
     font-size: 14px;
 }
 
@@ -75,7 +74,7 @@ endregion */
 .wu h5,
 .wu-h6,
 .wu h6 {
-    font-family: var(--font-family);
+    font-family: var(--w-font-family, v.$typography-font-family);
     line-height: 1.1;
 }
 
@@ -83,7 +82,7 @@ endregion */
 .wu h1,
 .wu-h2,
 .wu h2 {
-    font-family: var(--font-family-condensed);
+    font-family: var(--w-font-family-headline, v.$typography-font-family-headline);
     font-weight: normal;
     font-size: 3em;
 }
@@ -121,7 +120,7 @@ a.wu-a:visited,
 /* Overlay the whole page till everything is loaded completely. */
 .wu-window-loading-cover,
 .wu .window-loading-cover {
-    background-color: var(--background-color);
+    background-color: var(--w-background-color, v.$theme-background);
     /* always cover full viewport */
     position: fixed;
     height: 100%;
@@ -140,7 +139,7 @@ a.wu-a:visited,
 .wu .icon,
 .wu-icon-social,
 .wu .icon-social {
-    font-family: "Glyphicons Halflings", sans-serif;
+    font-family: var(--w-font-family-social, v.$typography-font-family-social);
     font-style: normal;
     font-weight: 400;
 
@@ -160,7 +159,7 @@ a.wu-a:visited,
     -moz-osx-font-smoothing: grayscale;
 
     &::before {
-        font-family: "Glyphicons Halflings", sans-serif;
+        font-family: var(--w-font-family-social, v.$typography-font-family-social);
 
         display: inline-block;
 
@@ -278,7 +277,7 @@ a.wu-a:visited,
 
             & .checkbox__wrapper__styled {
                 border-radius: 4px;
-                border: 2px solid var(--border-color);
+                border: 2px solid var(--w-theme-primary, v.$theme-primary);
                 cursor: pointer;
                 float: right;
                 height: 25px;
@@ -287,7 +286,7 @@ a.wu-a:visited,
 
                 & .checkbox__wrapper__styled__checked {
                     background: transparent;
-                    border: 3px solid var(--font-color);
+                    border: 3px solid var(--w-theme-on-primary, v.$theme-on-primary);
                     border-top: none;
                     border-right: none;
                     height: 8px;
@@ -303,14 +302,12 @@ a.wu-a:visited,
             & input[type="checkbox"] {
                 display: none;
 
-                &:checked ~ span.checkbox-styled > span {
-                    &.checkbox-styled-checked {
-                        opacity: 1;
-                    }
+                &:checked ~ .checkbox-styled > .checkbox-styled-checked {
+                    opacity: 1;
                 }
 
-                &:disabled ~ span.checkbox-styled {
-                    background-color: var(--disabled-color);
+                &:disabled ~ .checkbox-styled {
+                    background-color: var(--w-theme-surface, v.$theme-surface);
                 }
             }
         }
