@@ -98,7 +98,7 @@
     "spin.js": "*",
     "style-loader": "*",
     "stylelint": "*",
-    "stylelint-config-standard": "*",
+    "stylelint-config-standard-scss": "*",
     "weboptimizer": "*",
     "webpack-dev-server": "*"
   },
