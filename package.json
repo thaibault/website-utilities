@@ -26,7 +26,10 @@
     "index.compiled.css",
     "fonts",
     "fonts.compiled",
-    "type.d.ts"
+    "type.d.ts",
+    "_fonts.scss",
+    "_variables.scss",
+    "_index.scss"
   ],
   "bin": {
     "website-utilities": "deploy.js"
