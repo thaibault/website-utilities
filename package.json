@@ -21,15 +21,15 @@
   "files": [
     "deploy.d.ts",
     "deploy.js",
+    "index.compiled.css",
     "index.d.ts",
     "index.js",
-    "index.compiled.css",
+    "index.scss",
     "fonts",
     "fonts.compiled",
     "type.d.ts",
     "_fonts.scss",
-    "_variables.scss",
-    "_index.scss"
+    "_variables.scss"
   ],
   "bin": {
     "website-utilities": "deploy.js"
