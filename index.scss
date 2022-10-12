@@ -32,7 +32,7 @@ endregion */
     /*** endregion */
     /** endregion */
     /** region color */
-    --w-background-color: #{v.$theme-background};
+    --w-theme-background: #{v.$theme-background};
     --w-theme-primary: #{v.$theme-primary};
     --w-theme-on-primary: #{v.$theme-on-primary};
     --w-theme-secondary: #{v.$theme-secondary};
@@ -43,8 +43,8 @@ endregion */
     --w-theme-on-surface: #{v.$theme-on-surface};
     /** endregion */
     /** region font */
-    --w-font-family: #{v.$typography-font-family};
-    --w-font-family-headline: #{v.$typography-font-family-headline};
+    --w-typography-font-family: #{v.$typography-font-family};
+    --w-typography-font-family-headline: #{v.$typography-font-family-headline};
     /** endregion */
     /* endregion */
 }
@@ -52,7 +52,7 @@ endregion */
 .wu {
     margin: 0;
 
-    font-family: var(--w-font-family, v.$typography-font-family);
+    font-family: var(--w-typography-font-family, v.$typography-font-family);
     font-size: 14px;
 }
 
@@ -74,7 +74,7 @@ endregion */
 .wu h5,
 .wu-h6,
 .wu h6 {
-    font-family: var(--w-font-family, v.$typography-font-family);
+    font-family: var(--w-typography-font-family, v.$typography-font-family);
     line-height: 1.1;
 }
 
@@ -83,7 +83,10 @@ endregion */
 .wu-h2,
 .wu h2 {
     font-family:
-        var(--w-font-family-headline, v.$typography-font-family-headline);
+        var(
+            --w-typography-font-family-headline,
+            v.$typography-font-family-headline
+        );
     font-weight: normal;
     font-size: 3em;
 }
@@ -140,7 +143,10 @@ a.wu-a:visited,
 .wu .icon,
 .wu-icon-social,
 .wu .icon-social {
-    font-family: var(--w-font-family-social, v.$typography-font-family-social);
+    font-family:
+        var(
+            --w-typography-font-family-social, v.$typography-font-family-social
+        );
     font-style: normal;
     font-weight: 400;
 
@@ -161,7 +167,10 @@ a.wu-a:visited,
 
     &::before {
         font-family:
-            var(--w-font-family-social, v.$typography-font-family-social);
+            var(
+                --w-typography-font-family-social,
+                v.$typography-font-family-social
+            );
 
         display: inline-block;
 
