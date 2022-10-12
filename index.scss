@@ -76,7 +76,7 @@ endregion */
 .wu h5,
 .wu-h6,
 .wu h6 {
-    font-family: var(--w-font-family, v.$typography-font-family);
+    font-family: var(--w-font-family, string.quote(v.$typography-font-family));
     line-height: 1.1;
 }
 
@@ -84,7 +84,11 @@ endregion */
 .wu h1,
 .wu-h2,
 .wu h2 {
-    font-family: var(--w-font-family-headline, v.$typography-font-family-headline);
+    font-family:
+        var(
+            --w-font-family-headline,
+            string.quote(v.$typography-font-family-headline)
+        );
     font-weight: normal;
     font-size: 3em;
 }
@@ -141,7 +145,11 @@ a.wu-a:visited,
 .wu .icon,
 .wu-icon-social,
 .wu .icon-social {
-    font-family: var(--w-font-family-social, v.$typography-font-family-social);
+    font-family:
+        var(
+            --w-font-family-social,
+            string.quote(v.$typography-font-family-social)
+        );
     font-style: normal;
     font-weight: 400;
 
@@ -161,7 +169,11 @@ a.wu-a:visited,
     -moz-osx-font-smoothing: grayscale;
 
     &::before {
-        font-family: var(--w-font-family-social, v.$typography-font-family-social);
+        font-family:
+            var(
+                --w-font-family-social,
+                string.quote(v.$typography-font-family-social)
+            );
 
         display: inline-block;
 
