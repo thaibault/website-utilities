@@ -9,42 +9,44 @@ License
 This library written by Torben Sickert stand under a creative commons naming
 3.0 unported license. See https://creativecommons.org/licenses/by/3.0/deed.de
 endregion */
+@use "sass:string";
+
 @use "fonts";
 @use "variables" as v;
 
 :root {
     /* region custom-properties */
-    --w-default-space: v.$default-space;
+    --w-default-space: #{v.$default-space};
     /** region dimensions */
-    --w-extra-extra-small-width: v.$extra-extra-small-width;
-    --w-extra-small-width: v.$extra-small-width;
-    --w-small-width: v.$small-width;
-    --w-medium-width: v.$medium-width;
-    --w-large-width: v.$large-width;
+    --w-extra-extra-small-width: #{v.$extra-extra-small-width};
+    --w-extra-small-width: #{v.$extra-small-width};
+    --w-small-width: #{v.$small-width};
+    --w-medium-width: #{v.$medium-width};
+    --w-large-width: #{v.$large-width};
     /*** region extra small dimension */
-    @custom-media --w-extra-extra-small (min-width: v.$extra-extra-small-width);
-    @custom-media --w-extra-small (min-width: v.$extra-small-width));
+    @custom-media --w-extra-extra-small (min-width: #{v.$extra-extra-small-width});
+    @custom-media --w-extra-small (min-width: #{v.$extra-small-width}));
     /*** endregion */
     /*** region default media query dimensions */
-    @custom-media --w-small (min-width: v.$small-width);
-    @custom-media --medium (min-width: v.$medium-width);
-    @custom-media --large (min-width: v.$large-width);
+    @custom-media --w-small (min-width: #{v.$small-width});
+    @custom-media --w-medium (min-width: #{v.$medium-width});
+    @custom-media --w-large (min-width: #{v.$large-width});
     /*** endregion */
     /** endregion */
     /** region color */
-    --w-background-color: v.$theme-background;
-    --w-theme-primary: $theme-primary;
-    --w-theme-on-primary: $theme-on-primary;
-    --w-theme-secondary: $theme-secondary;
-    --w-theme-on-secondary: $theme-on-secondary;
-    --w-theme-error: $theme-error;
-    --w-theme-on-error: $theme-on-error;
-    --w-theme-surface: $theme-surface;
-    --w-theme-on-surface: $theme-on-surface;
+    --w-background-color: #{v.$theme-background};
+    --w-theme-primary: #{v.$theme-primary};
+    --w-theme-on-primary: #{v.$theme-on-primary};
+    --w-theme-secondary: #{v.$theme-secondary};
+    --w-theme-on-secondary: #{v.$theme-on-secondary};
+    --w-theme-error: #{v.$theme-error};
+    --w-theme-on-error: #{v.$theme-on-error};
+    --w-theme-surface: #{v.$theme-surface};
+    --w-theme-on-surface: #{v.$theme-on-surface};
     /** endregion */
     /** region font */
-    --w-font-family: $typography-font-family;
-    --w-font-family-headline: $typography-font-family-headline;
+    --w-font-family: #{v.$typography-font-family};
+    --w-font-family-headline: #{v.$typography-font-family-headline};
     /** endregion */
     /* endregion */
 }
@@ -52,7 +54,7 @@ endregion */
 .wu {
     margin: 0;
 
-    font-family: var(--w-font-family, v.$typography-font-family);
+    font-family: var(--w-font-family, string.quote(v.$typography-font-family));
     font-size: 14px;
 }
 
