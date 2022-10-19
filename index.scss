@@ -145,7 +145,8 @@ a.wu-a:visited,
 .wu .icon-social {
     font-family:
         var(
-            --w-typography-font-family-social, v.$typography-font-family-social
+            --w-typography-font-family-social,
+            v.$typography-font-family-social
         );
     font-style: normal;
     font-weight: 400;
