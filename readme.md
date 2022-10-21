@@ -18,17 +18,12 @@ Project status
 
 [![<LABEL>](https://github.com/thaibault/website-utilities/actions/workflows/build.yaml/badge.svg)](https://github.com/thaibault/website-utilities/actions/workflows/build.yaml)
 [![<LABEL>](https://github.com/thaibault/website-utilities/actions/workflows/test.yaml/badge.svg)](https://github.com/thaibault/website-utilities/actions/workflows/test.yaml)
-[![<LABEL>](https://github.com/thaibault/website-utilities/actions/workflows/test:coverage:report.yaml/badge.svg)](https://github.com/thaibault/website-utilities/actions/workflows/test:coverage:report.yaml)
-[![<LABEL>](https://github.com/thaibault/website-utilities/actions/workflows/check:types.yaml/badge.svg)](https://github.com/thaibault/website-utilities/actions/workflows/check:types.yaml)
+[![<LABEL>](https://github.com/thaibault/website-utilities/actions/workflows/test-coverage-report.yaml/badge.svg)](https://github.com/thaibault/website-utilities/actions/workflows/test-coverage-report.yaml)
+[![<LABEL>](https://github.com/thaibault/website-utilities/actions/workflows/check-types.yaml/badge.svg)](https://github.com/thaibault/website-utilities/actions/workflows/check-types.yaml)
 [![<LABEL>](https://github.com/thaibault/website-utilities/actions/workflows/lint.yaml/badge.svg)](https://github.com/thaibault/website-utilities/actions/workflows/lint.yaml)
 
 [![code coverage](https://coveralls.io/repos/github/thaibault/website-utilities/badge.svg)](https://coveralls.io/github/thaibault/website-utilities)
 
-<!-- Too unstable yet
-[![dependencies](https://img.shields.io/david/thaibault/website-utilities.svg)](https://david-dm.org/thaibault/website-utilities)
-[![development dependencies](https://img.shields.io/david/dev/thaibault/website-utilities.svg)](https://david-dm.org/thaibault/website-utilities?type=dev)
-[![peer dependencies](https://img.shields.io/david/peer/thaibault/website-utilities.svg)](https://david-dm.org/thaibault/website-utilities?type=peer)
--->
 [![documentation website](https://img.shields.io/website-up-down-green-red/https/torben.website/website-utilities.svg?label=documentation-website)](https://torben.website/website-utilities)
 
 <!--|deDE:Einsatzmöglichkeiten-->
