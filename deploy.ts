@@ -23,7 +23,7 @@ import {basename, resolve} from 'path'
 const run = (command:string, options = {}):string =>
     execSync(command, {encoding: 'utf-8', shell: '/bin/bash', ...options})
 
-if (run('git branch').includes('* master')) {
+if (run('git branch').includes('* main')) {
     console.info('Build new web page.')
     run('yarn build')
 
@@ -71,8 +71,8 @@ if (run('git branch').includes('* master')) {
     if (run('git branch').includes('gh-pages'))
         console.info('Switch back to source directory.')
     else {
-        console.info('Switch back to master branch.')
-        run('git checkout master')
+        console.info('Switch back to main branch.')
+        run('git checkout main')
     }
 }
 // region vim modline
