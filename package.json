@@ -239,7 +239,7 @@
       },
       "injection": {
         "entry": {
-          "deploy": "./deploy"
+          "__evaluate__": "{deploy: './deploy'}"
         }
       },
       "module": {
