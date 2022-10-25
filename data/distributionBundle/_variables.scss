@@ -1,0 +1,34 @@
+/* colors */
+$theme-background: #fff !default;
+$theme-primary: #76b82a !default;
+$theme-on-primary: #f0f6fc !default;
+$theme-secondary: #238636 !default;
+$theme-on-secondary: #d6e9da !default;
+$theme-error: #723637 !default;
+$theme-on-error: #fff !default;
+$theme-surface: #21262d !default;
+$theme-on-surface: #bbc2ca !default;
+/* typography */
+/*
+    NOTE: Browser has default "font-size" of "16px". We shouldn't overwrite
+    this behaviour.
+
+    Fallback order:
+
+    Arial
+    Helvetica
+    Lucida Sans
+    Tahoma
+    Trebuchet MS
+    Verdana
+*/
+$typography-font-family: "Open Sans", open-sans, sans-serif !default;
+$typography-font-family-headline: "Open Sans Condensed", open-sans-condensed, sans-serif !default;
+$typography-font-family-social: "Glyphicons Halflings", sans-serif !default;
+/* spaces */
+$default-space: 20px !default;
+$extra-extra-small-width: 360px !default;
+$extra-small-width: 500px !default;
+$small-width: 768px !default;
+$medium-width: 992px !default;
+$large-width: 1200px !default;

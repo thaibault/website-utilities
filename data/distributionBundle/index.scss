@@ -9,200 +9,50 @@ License
 This library written by Torben Sickert stand under a creative commons naming
 3.0 unported license. See https://creativecommons.org/licenses/by/3.0/deed.de
 endregion */
-/* region font */
-/** region open sans */
-/*** region light */
-@font-face {
-    font-family: open-sans;
-    /* stylelint-disable property-no-unknown */
-    font-path: "font/open-sans/light/open-sans-light";
-    /* stylelint-enable property-no-unknown */
-    font-weight: 300;
-    font-style: normal;
-}
-/*** endregion */
-/*** region light italic */
-@font-face {
-    font-family: open-sans;
-    /* stylelint-disable property-no-unknown */
-    font-path: "font/open-sans/light-italic/open-sans-light-italic";
-    /* stylelint-enable property-no-unknown */
-    font-weight: 300;
-    font-style: italic;
-}
-/*** endregion */
-/*** region regular */
-@font-face {
-    font-family: open-sans;
-    /* stylelint-disable property-no-unknown */
-    font-path: "font/open-sans/regular/open-sans-regular";
-    /* stylelint-enable property-no-unknown */
-    font-weight: normal;
-    font-style: normal;
-}
-/*** endregion */
-/*** region italic */
-@font-face {
-    font-family: open-sans;
-    /* stylelint-disable property-no-unknown */
-    font-path: "font/open-sans/italic/open-sans-italic";
-    /* stylelint-enable property-no-unknown */
-    font-weight: normal;
-    font-style: italic;
-}
-/*** endregion */
-/*** region semi-bold */
-@font-face {
-    font-family: open-sans;
-    /* stylelint-disable property-no-unknown */
-    font-path: "font/open-sans/semi-bold/open-sans-semi-bold";
-    /* stylelint-enable property-no-unknown */
-    font-weight: 600;
-    font-style: normal;
-}
-/*** endregion */
-/*** region semi-bold italic */
-@font-face {
-    font-family: open-sans;
-    /* stylelint-disable property-no-unknown */
-    font-path: "font/open-sans/semi-bold-italic/open-sans-semi-bold-italic";
-    /* stylelint-enable property-no-unknown */
-    font-weight: 600;
-    font-style: italic;
-}
-/*** endregion */
-/*** region bold */
-@font-face {
-    font-family: open-sans;
-    /* stylelint-disable property-no-unknown */
-    font-path: "font/open-sans/bold/open-sans-bold";
-    /* stylelint-enable property-no-unknown */
-    font-weight: bold;
-    font-style: normal;
-}
-/*** endregion */
-/*** region bold italic */
-@font-face {
-    font-family: open-sans;
-    /* stylelint-disable property-no-unknown */
-    font-path: "font/open-sans/bold-italic/open-sans-bold-italic";
-    /* stylelint-enable property-no-unknown */
-    font-weight: bold;
-    font-style: italic;
-}
-/*** endregion */
-/*** region extrabold */
-@font-face {
-    font-family: open-sans;
-    /* stylelint-disable property-no-unknown */
-    font-path: "font/open-sans/extra-bold/open-sans-extra-bold";
-    /* stylelint-enable property-no-unknown */
-    font-weight: 800;
-    font-style: normal;
-}
-/*** endregion */
-/*** region extrabold italic */
-@font-face {
-    font-family: open-sans;
-    /* stylelint-disable property-no-unknown */
-    font-path: "font/open-sans/extra-bold-italic/open-sans-extra-bold-italic";
-    /* stylelint-enable property-no-unknown */
-    font-weight: 800;
-    font-style: italic;
-}
-/*** endregion */
-/** endregion */
-/** region open sans condensed */
-/*** region bold */
-@font-face {
-    font-family: open-sans-condensed;
-    /* stylelint-disable property-no-unknown */
-    font-path: "font/open-sans-condensed/condensed-bold/open-sans-condensed-bold";
-    /* stylelint-enable property-no-unknown */
-    font-weight: bold;
-    font-style: normal;
-}
-/*** endregion */
-/*** region open sans light */
-@font-face {
-    font-family: open-sans-condensed;
-    /* stylelint-disable property-no-unknown */
-    font-path: "font/open-sans-condensed/condensed-light/open-sans-condensed-light";
-    /* stylelint-enable property-no-unknown */
-    font-weight: 300;
-    font-style: normal;
-}
-/*** endregion */
-/*** region open sans italic */
-@font-face {
-    font-family: open-sans-condensed;
-    /* stylelint-disable property-no-unknown */
-    font-path: "font/open-sans-condensed/condensed-light-italic/open-sans-condensed-light-italic";
-    /* stylelint-enable property-no-unknown */
-    font-weight: 300;
-    font-style: italic;
-}
-/*** endregion */
-/** endregion */
-/** region glyphicons halflings */
-@font-face {
-    font-family: "Glyphicons Halflings";
-    /* stylelint-disable property-no-unknown */
-    font-path: "font/glyphicons-halflings/glyphicons-halflings-regular";
-    /* stylelint-enable property-no-unknown */
-}
-/** endregion */
-/** region glyphicons social regular */
-@font-face {
-    font-family: "Glyphicons Social Regular";
-    /* stylelint-disable property-no-unknown */
-    font-path: "font/glyphicons-halflings/glyphicons-halflings-social-regular";
-    /* stylelint-enable property-no-unknown */
-}
-/** endregion */
-/* endregion */
-.wu {
-    /* region constants */
-    --default-space: 20px;
+@use "fonts";
+@use "variables" as v;
+
+:root {
+    /* region custom-properties */
+    --w-default-space: #{v.$default-space};
     /** region dimensions */
-    --extra-extra-small-width: 360px;
-    --extra-small-width: 500px;
-    --small-width: 768px;
-    --medium-width: 992px;
-    --large-width: 1200px;
+    --w-extra-extra-small-width: #{v.$extra-extra-small-width};
+    --w-extra-small-width: #{v.$extra-small-width};
+    --w-small-width: #{v.$small-width};
+    --w-medium-width: #{v.$medium-width};
+    --w-large-width: #{v.$large-width};
     /*** region extra small dimension */
-    /*
-    @custom-media --extra-extra-small (min-width: var(--extra-extra-small-width));
-    @custom-media --extra-small (min-width: var(--extra-small-width));
-    */
-    @custom-media --extra-extra-small (min-width: 360px);
-    @custom-media --extra-small (min-width: 500px);
+    @custom-media --w-extra-extra-small (min-width: #{v.$extra-extra-small-width});
+    @custom-media --w-extra-small (min-width: #{v.$extra-small-width}));
     /*** endregion */
     /*** region default media query dimensions */
-    /*
-    @custom-media --small (min-width: var(--small-width));
-    @custom-media --medium (min-width: var(--medium-width));
-    @custom-media --large (min-width: var(--large-width));
-    */
-    @custom-media --small (min-width: 768px);
-    @custom-media --medium (min-width: 992px);
-    @custom-media --large (min-width: 1200px);
+    @custom-media --w-small (min-width: #{v.$small-width});
+    @custom-media --w-medium (min-width: #{v.$medium-width});
+    @custom-media --w-large (min-width: #{v.$large-width});
     /*** endregion */
     /** endregion */
     /** region color */
-    --background-color: #fff;
-    --disabled-color: #eee;
-    --font-color: #555;
-    --border-color: #ccc;
+    --w-theme-background: #{v.$theme-background};
+    --w-theme-primary: #{v.$theme-primary};
+    --w-theme-on-primary: #{v.$theme-on-primary};
+    --w-theme-secondary: #{v.$theme-secondary};
+    --w-theme-on-secondary: #{v.$theme-on-secondary};
+    --w-theme-error: #{v.$theme-error};
+    --w-theme-on-error: #{v.$theme-on-error};
+    --w-theme-surface: #{v.$theme-surface};
+    --w-theme-on-surface: #{v.$theme-on-surface};
     /** endregion */
     /** region font */
-    --font-family: "Open Sans", open-sans, sans-serif;
-    --font-family-condensed: "Open Sans Condensed", open-sans-condensed, sans-serif;
+    --w-typography-font-family: #{v.$typography-font-family};
+    --w-typography-font-family-headline: #{v.$typography-font-family-headline};
     /** endregion */
     /* endregion */
+}
+
+.wu {
     margin: 0;
 
-    font-family: var(--font-family);
+    font-family: var(--w-typography-font-family, v.$typography-font-family);
     font-size: 14px;
 }
 
@@ -224,7 +74,7 @@ endregion */
 .wu h5,
 .wu-h6,
 .wu h6 {
-    font-family: var(--font-family);
+    font-family: var(--w-typography-font-family, v.$typography-font-family);
     line-height: 1.1;
 }
 
@@ -232,7 +82,11 @@ endregion */
 .wu h1,
 .wu-h2,
 .wu h2 {
-    font-family: var(--font-family-condensed);
+    font-family:
+        var(
+            --w-typography-font-family-headline,
+            v.$typography-font-family-headline
+        );
     font-weight: normal;
     font-size: 3em;
 }
@@ -270,7 +124,7 @@ a.wu-a:visited,
 /* Overlay the whole page till everything is loaded completely. */
 .wu-window-loading-cover,
 .wu .window-loading-cover {
-    background-color: var(--background-color);
+    background-color: var(--w-background-color, v.$theme-background);
     /* always cover full viewport */
     position: fixed;
     height: 100%;
@@ -289,7 +143,11 @@ a.wu-a:visited,
 .wu .icon,
 .wu-icon-social,
 .wu .icon-social {
-    font-family: "Glyphicons Halflings", sans-serif;
+    font-family:
+        var(
+            --w-typography-font-family-social,
+            v.$typography-font-family-social
+        );
     font-style: normal;
     font-weight: 400;
 
@@ -309,7 +167,11 @@ a.wu-a:visited,
     -moz-osx-font-smoothing: grayscale;
 
     &::before {
-        font-family: "Glyphicons Halflings", sans-serif;
+        font-family:
+            var(
+                --w-typography-font-family-social,
+                v.$typography-font-family-social
+            );
 
         display: inline-block;
 
@@ -427,7 +289,7 @@ a.wu-a:visited,
 
             & .checkbox__wrapper__styled {
                 border-radius: 4px;
-                border: 2px solid var(--border-color);
+                border: 2px solid var(--w-theme-primary, v.$theme-primary);
                 cursor: pointer;
                 float: right;
                 height: 25px;
@@ -436,7 +298,7 @@ a.wu-a:visited,
 
                 & .checkbox__wrapper__styled__checked {
                     background: transparent;
-                    border: 3px solid var(--font-color);
+                    border: 3px solid var(--w-theme-on-primary, v.$theme-on-primary);
                     border-top: none;
                     border-right: none;
                     height: 8px;
@@ -452,14 +314,12 @@ a.wu-a:visited,
             & input[type="checkbox"] {
                 display: none;
 
-                &:checked ~ span.checkbox-styled > span {
-                    &.checkbox-styled-checked {
-                        opacity: 1;
-                    }
+                &:checked ~ .checkbox-styled > .checkbox-styled-checked {
+                    opacity: 1;
                 }
 
-                &:disabled ~ span.checkbox-styled {
-                    background-color: var(--disabled-color);
+                &:disabled ~ .checkbox-styled {
+                    background-color: var(--w-theme-surface, v.$theme-surface);
                 }
             }
         }
