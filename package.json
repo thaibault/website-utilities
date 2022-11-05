@@ -21,6 +21,8 @@
   "files": [
     "deploy.d.ts",
     "deploy.js",
+    "fonts.compiled.css",
+    "fonts.scss",
     "index.compiled.css",
     "index.d.ts",
     "index.js",
@@ -28,7 +30,6 @@
     "fonts",
     "fonts.compiled",
     "type.d.ts",
-    "_fonts.scss",
     "_variables.scss"
   ],
   "bin": {
@@ -171,7 +172,7 @@
       },
       "chunks": false,
       "entry": {
-        "__evaluate__": "2 < self.givenCommandLineArguments.length && self.givenCommandLineArguments[2].startsWith('test') ? {testBundle: './test'} : {index: ['./index.scss', './index.ts']}"
+        "__evaluate__": "2 < self.givenCommandLineArguments.length && self.givenCommandLineArguments[2].startsWith('test') ? {testBundle: './test'} : {fonts: './fonts.scss', index: ['./index.scss', './index.ts']}"
       },
       "external": {
         "implicit": {
