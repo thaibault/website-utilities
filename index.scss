@@ -22,16 +22,14 @@ endregion */
     --w-large-width: #{v.$large-width};
     /*** region extra small dimension */
     @custom-media --w-extra-extra-small
-        only screen and
         (min-width: #{v.$extra-extra-small-width});
     @custom-media --w-extra-small
-        only screen and
         (min-width: #{v.$extra-small-width}));
     /*** endregion */
     /*** region default media query dimensions */
-    @custom-media --w-small only screen and (min-width: #{v.$small-width});
-    @custom-media --w-medium only screen and (min-width: #{v.$medium-width});
-    @custom-media --w-large only screen and (min-width: #{v.$large-width});
+    @custom-media --w-small (min-width: #{v.$small-width});
+    @custom-media --w-medium (min-width: #{v.$medium-width});
+    @custom-media --w-large (min-width: #{v.$large-width});
     /*** endregion */
     /** endregion */
     /** region color */
