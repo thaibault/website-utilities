@@ -50,7 +50,6 @@
     "deploy": "./deploy.js",
     "document": "weboptimizer document",
     "lint": "weboptimizer lint",
-    "postversion": "yarn publish --non-interactive; git push --tags && git push",
     "prepare": "yarn build",
     "serve": "weboptimizer serve",
     "start": "yarn serve",
