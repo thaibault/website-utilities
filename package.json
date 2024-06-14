@@ -163,7 +163,7 @@
     },
     "injection": {
       "autoExclude": {
-        "__append__": "./deploy.ts"
+        "paths": {"__append__": "./deploy.ts"}
       },
       "chunks": false,
       "entry": {
