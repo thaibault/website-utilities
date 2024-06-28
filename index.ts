@@ -17,8 +17,22 @@
     endregion
 */
 // region imports
-import Tools, {globalContext, $} from 'clientnode'
-import {Mapping, RecursivePartial, $DomNodes, $T} from 'clientnode/type'
+import {
+    $,
+    $DomNodes,
+    $T,
+    capitalize,
+    debounce,
+    extend,
+    format,
+    globalContext,
+    Mapping,
+    NOOP,
+    RecursivePartial,
+    represent,
+    timeout,
+    Tools
+} from 'clientnode'
 import Internationalisation from 'internationalisation'
 import {Spinner} from 'spin.js'
 
@@ -169,15 +183,15 @@ export class WebsiteUtilities extends Tools {
             ['large', 'lg']
         ],
         name: 'WebsiteUtilities',
-        onChangeMediaQueryMode: Tools.noop,
-        onChangeToExtraSmallMode: Tools.noop,
-        onChangeToLargeMode: Tools.noop,
-        onChangeToMediumMode: Tools.noop,
-        onChangeToSmallMode: Tools.noop,
-        onViewportMovesAwayFromTop: Tools.noop,
-        onViewportMovesToTop: Tools.noop,
-        onSwitchSection: Tools.noop,
-        onStartUpAnimationComplete: Tools.noop,
+        onChangeMediaQueryMode: NOOP,
+        onChangeToExtraSmallMode: NOOP,
+        onChangeToLargeMode: NOOP,
+        onChangeToMediumMode: NOOP,
+        onChangeToSmallMode: NOOP,
+        onViewportMovesAwayFromTop: NOOP,
+        onViewportMovesToTop: NOOP,
+        onSwitchSection: NOOP,
+        onStartUpAnimationComplete: NOOP,
         scrollToTop: {
             button: {
                 hideAnimationOptions: {},
@@ -314,13 +328,12 @@ export class WebsiteUtilities extends Tools {
     /**
      * Initializes the interactive web application.
      * @param options - An options object.
-     *
      * @returns Returns a promise containing the current instance.
      */
     initialize<R = Promise<WebsiteUtilities>>(
         options:RecursivePartial<Options> = {}
     ):R {
-        super.initialize(Tools.extend(
+        super.initialize(extend(
             true, {} as Options, WebsiteUtilities._defaultOptions, options
         ))
 
@@ -355,7 +368,7 @@ export class WebsiteUtilities extends Tools {
                 }
             }
             $(():void => {
-                void Tools.timeout(
+                void timeout(
                     onLoaded,
                     this.options.windowLoadedTimeoutAfterDocLoadedInMSec
                 )
@@ -418,7 +431,6 @@ export class WebsiteUtilities extends Tools {
      * Triggers an analytics event. All given arguments are forwarded to
      * configured analytics event code to defined their environment variables.
      * @param properties - Event tracking informations.
-     *
      * @returns Returns the current instance.
      */
     track(
@@ -447,8 +459,8 @@ export class WebsiteUtilities extends Tools {
                 this.options.tracking.track(trackingItem)
             } catch (error) {
                 this.warn(
-                    `Problem in tracking "${Tools.represent(trackingItem)}":` +
-                    ` ${Tools.represent(error)}`
+                    `Problem in tracking "${represent(trackingItem)}": ` +
+                    represent(error)
                 )
             }
         }
@@ -462,7 +474,7 @@ export class WebsiteUtilities extends Tools {
      * This method triggers if the viewport moves to top.
      * @returns Nothing.
      */
-    _onViewportMovesToTop = Tools.debounce(():void => {
+    _onViewportMovesToTop = debounce(():void => {
         if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
             this.$domNodes.scrollToTopButton.css('opacity', 0)
         else {
@@ -490,7 +502,7 @@ export class WebsiteUtilities extends Tools {
      * This method triggers if the viewport moves away from top.
      * @returns Nothing.
      */
-    _onViewportMovesAwayFromTop = Tools.debounce(():void => {
+    _onViewportMovesAwayFromTop = debounce(():void => {
         if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
             this.$domNodes.scrollToTopButton.css('opacity', 1)
         else
@@ -520,54 +532,40 @@ export class WebsiteUtilities extends Tools {
                     this.options.scrollToTop.button.showAnimationOptions
                 )
     })
-    /* eslint-disable @typescript-eslint/no-empty-function */
     /**
      * This method triggers if the responsive design switches to another mode.
      * @param _oldMode - Saves the previous mode.
      * @param _newMode - Saves the new mode.
-     *
-     * @returns Nothing.
      */
-    _onChangeMediaQueryMode(_oldMode:string, _newMode:string):void {}
+    _onChangeMediaQueryMode(_oldMode:string, _newMode:string) {}
     /**
      * This method triggers if the responsive design switches to large mode.
      * @param _oldMode - Saves the previous mode.
      * @param _newMode - Saves the new mode.
-     *
-     * @returns Nothing.
      */
-    _onChangeToLargeMode(_oldMode:string, _newMode:string):void {}
+    _onChangeToLargeMode(_oldMode:string, _newMode:string) {}
     /**
      * This method triggers if the responsive design switches to medium mode.
      * @param _oldMode - Saves the previous mode.
      * @param _newMode - Saves the new mode.
-     *
-     * @returns Nothing.
      */
-    _onChangeToMediumMode(_oldMode:string, _newMode:string):void {}
+    _onChangeToMediumMode(_oldMode:string, _newMode:string) {}
     /**
      * This method triggers if the responsive design switches to small mode.
      * @param _oldMode - Saves the previous mode.
      * @param _newMode - Saves the new mode.
-     *
-     * @returns Nothing.
      */
-    _onChangeToSmallMode(_oldMode:string, _newMode:string):void {}
+    _onChangeToSmallMode(_oldMode:string, _newMode:string) {}
     /**
      * This method triggers if the responsive design switches to extra small
      * mode.
      * @param _oldMode - Saves the previous mode.
      * @param _newMode - Saves the new mode.
-     *
-     * @returns Nothing.
      */
-    _onChangeToExtraSmallMode(_oldMode:string, _newMode:string):void {}
-    /* eslint-enable @typescript-eslint/no-empty-function */
+    _onChangeToExtraSmallMode(_oldMode:string, _newMode:string) {}
     /**
      * This method triggers if we change the current section.
      * @param sectionName - Contains the new section name.
-     *
-     * @returns Nothing.
      */
     _onSwitchSection(sectionName:string):void {
         if (
@@ -589,25 +587,23 @@ export class WebsiteUtilities extends Tools {
             } catch (error) {
                 this.warn(
                     'Problem due to track section switch to "' +
-                    `${this.currentSectionName}": ${Tools.represent(error)}`
+                    `${this.currentSectionName}": ${represent(error)}`
                 )
             }
         }
     }
     /**
      * This method is complete if last startup animation was initialized.
-     * @returns Nothing.
      */
-    _onStartUpAnimationComplete():void {
+    _onStartUpAnimationComplete() {
         this.startUpAnimationIsComplete = true
     }
     // endregion
     /// region helper
     /**
      * This method adds triggers for responsive design switches.
-     * @returns Nothing.
      */
-    _bindMediaQueryChangeEvents():void {
+    _bindMediaQueryChangeEvents() {
         this.on(
             this.$domNodes.window,
             'resize',
@@ -618,8 +614,6 @@ export class WebsiteUtilities extends Tools {
      * This method triggers if the responsive design switches its mode.
      * @param parameters - All arguments will be appended to the event handler
      * callbacks.
-     *
-     * @returns Nothing.
      */
     _triggerWindowResizeEvents(...parameters:Array<unknown>):void {
         for (
@@ -645,8 +639,7 @@ export class WebsiteUtilities extends Tools {
                 )
 
                 this.fireEvent(
-                    `changeTo${Tools.stringCapitalize(classNameMapping[0])}` +
-                    'Mode',
+                    `changeTo${capitalize(classNameMapping[0])}Mode`,
                     false,
                     this,
                     this.currentMediaQueryMode,
@@ -666,8 +659,6 @@ export class WebsiteUtilities extends Tools {
      * This method triggers if view port arrives at special areas.
      * @param parameters - All arguments will be appended to the event handler
      * callbacks.
-     *
-     * @returns Nothing.
      */
     _bindScrollEvents(...parameters:Array<unknown>):void {
         const $scrollTarget:$T =
@@ -725,12 +716,10 @@ export class WebsiteUtilities extends Tools {
      * removed.
      */
     async _removeLoadingCover():Promise<void> {
-        await Tools.timeout(
-            this.options.additionalPageLoadingTimeInMilliseconds
-        )
+        await timeout(this.options.additionalPageLoadingTimeInMilliseconds)
 
         // Hide startup animation dom nodes to show them step by step.
-        $(Tools.stringFormat(
+        $(format(
             '[class^="{1}"], [class*=" {1}"]',
             this.sliceDomNodeSelectorPrefix(
                 this.options.domNodes.startUpAnimationClassPrefix
@@ -751,8 +740,7 @@ export class WebsiteUtilities extends Tools {
     }
     /**
      * This method handles the given start up effect step.
-     * @param elementNumber - The current start up step.
-     *
+     * @param elementNumber - The current startup step.
      * @returns Promise resolving to nothing when start up effects have been
      * finished.
      */
@@ -763,13 +751,13 @@ export class WebsiteUtilities extends Tools {
         if (this.windowLoadingSpinner)
             this.windowLoadingSpinner.stop()
 
-        if ($(Tools.stringFormat(
+        if ($(format(
             '[class^="{1}"], [class*=" {1}"]',
             this.sliceDomNodeSelectorPrefix(
                 this.options.domNodes.startUpAnimationClassPrefix
             ).substr(1)
         )).length) {
-            await Tools.timeout(
+            await timeout(
                 this.options.startUpAnimationElementDelayInMiliseconds
             )
 
@@ -802,9 +790,8 @@ export class WebsiteUtilities extends Tools {
     }
     /**
      * This method adds triggers to switch section.
-     * @returns Nothing.
      */
-    _bindNavigationEvents():void {
+    _bindNavigationEvents() {
         globalContext.window.addEventListener(
             'hashchange',
             (event:Event):void => {
@@ -824,9 +811,8 @@ export class WebsiteUtilities extends Tools {
     }
     /**
      * Adds trigger to scroll top buttons.
-     * @returns Nothing.
      */
-    _bindScrollToTopButton():void {
+    _bindScrollToTopButton() {
         this.on(
             this.$domNodes.scrollToTopButton,
             'click',
@@ -839,9 +825,8 @@ export class WebsiteUtilities extends Tools {
     }
     /**
      * Executes the page tracking code.
-     * @returns Nothing.
      */
-    _bindClickTracking():void {
+    _bindClickTracking() {
         if (this.options.tracking) {
             if (this.options.tracking.linkClick)
                 this.on(
@@ -874,8 +859,4 @@ $.WebsiteUtilities = ((...parameters:Array<unknown>):unknown =>
     Tools.controller(WebsiteUtilities, parameters)
 ) as WebsiteUtilitiesFunction
 $.WebsiteUtilities.class = WebsiteUtilities
-// endregion
-// region vim modline
-// vim: set tabstop=4 shiftwidth=4 expandtab:
-// vim: foldmethod=marker foldmarker=region,endregion:
 // endregion
