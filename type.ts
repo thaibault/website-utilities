@@ -23,7 +23,7 @@ import {
     Options as BaseOptions,
     ProcedureFunction,
     $T
-} from 'clientnode/type'
+} from 'clientnode'
 import {
     Options as InternationalisationOptions
 } from 'internationalisation/type'

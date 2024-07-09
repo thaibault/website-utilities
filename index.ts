@@ -43,109 +43,99 @@ import {
 // region plugins/classes
 /**
  * This plugin holds all needed methods to extend a whole website.
- * @property static:_defaultOptions - Options extended by the options given to
- * the initializer method.
- * @property static:_defaultOptions.activateLanguageSupport - Indicates whether
+ * @property _defaultOptions - Options extended by the options given to the
+ * initializer method.
+ * @property _defaultOptions.activateLanguageSupport - Indicates whether
  * language support should be used or not.
- * @property static:_defaultOptions.additionalPageLoadingTimeInMilliseconds -
+ * @property _defaultOptions.additionalPageLoadingTimeInMilliseconds -
  * Additional time to wait until page will be indicated as loaded.
- * @property static:_defaultOptions.domNodes - Mapping of dom node descriptions
- * to their corresponding selectors.
- * @property static:_defaultOptions.domNodes.mediaQueryIndicator - Selector for
+ * @property _defaultOptions.domNodes - Mapping of dom node descriptions to
+ * their corresponding selectors.
+ * @property _defaultOptions.domNodes.mediaQueryIndicator - Selector for
  * indicator dom node to use to trigger current media query mode.
- * @property static:_defaultOptions.domNodes.top - Selector to indicate that
- * viewport is currently on top.
- * @property static:_defaultOptions.domNodes.scrollToTopButton - Selector for
+ * @property _defaultOptions.domNodes.top - Selector to indicate that viewport
+ * is currently on top.
+ * @property _defaultOptions.domNodes.scrollToTopButton - Selector for
  * starting an animated scroll to top.
- * @property static:_defaultOptions.domNodes.startUpAnimationClassPrefix -
- * Class name selector prefix for all dom nodes to appear during start up
- * animations.
- * @property static:_defaultOptions.domNodes.windowLoadingCover - Selector to
- * the full window loading cover dom node.
- * @property static:_defaultOptions.domNodes.windowLoadingSpinner - Selector to
- * the window loading spinner (on top of the window loading cover).
- * @property static:_defaultOptions.domNodeSelectorInfix - Selector infix for
- * all nodes to take into account.
- * @property static:_defaultOptions.domNodeSelectorPrefix - Selector prefix for
- * all nodes to take into account.
- * @property static:_defaultOptions.initialSectionName - Pre-selected section
- * name.
- * @property static:_defaultOptions.knownScrollEventNames - Saves all known
- * scroll events in a space separated string.
- * @property static:_defaultOptions.language - Options for client side
+ * @property _defaultOptions.domNodes.startUpAnimationClassPrefix - Class name
+ * selector prefix for all dom nodes to appear during start up animations.
+ * @property _defaultOptions.domNodes.windowLoadingCover - Selector to the full
+ * window loading cover dom node.
+ * @property _defaultOptions.domNodes.windowLoadingSpinner - Selector to the
+ * window loading spinner (on top of the window loading cover).
+ * @property _defaultOptions.domNodeSelectorInfix - Selector infix for all
+ * nodes to take into account.
+ * @property _defaultOptions.domNodeSelectorPrefix - Selector prefix for all
+ * nodes to take into account.
+ * @property _defaultOptions.initialSectionName - Pre-selected section name.
+ * @property _defaultOptions.knownScrollEventNames - Saves all known scroll
+ * events in a space separated string.
+ * @property _defaultOptions.language - Options for client side
  * internationalisation handler.
- * @property static:_defaultOptions.mediaQueryClassNameIndicator - Mapping of
- * media query class indicator names to internal event names.
- * @property static:_defaultOptions.onChangeMediaQueryMode - Callback to
- * trigger if media query mode changes.
- * @property static:_defaultOptions.onChangeToExtraSmallMode - Callback to
- * trigger if media query mode changes to extra small mode.
- * @property static:_defaultOptions.onChangeToLargeMode - Callback to trigger
- * if media query mode changes to large mode.
- * @property static:_defaultOptions.onChangeToMediumMode - Callback to trigger
- * if media query mode changes to medium mode.
- * @property static:_defaultOptions.onChangeToSmallMode - Callback to trigger
- * if media query mode changes to small mode.
- * @property static:_defaultOptions.onStartUpAnimationComplete - Callback to
- * trigger if all start up animations has finished.
- * @property static:_defaultOptions.onSwitchSection - Callback to trigger if
- * current section switches.
- * @property static:_defaultOptions.onViewportMovesAwayFromTop - Callback to
- * trigger when viewport moves away from top.
- * @property static:_defaultOptions.onViewportMovesToTop - Callback to trigger
- * when viewport arrives at top.
- * @property static:_defaultOptions.scrollToTop - Options for automated scroll
- * top animation.
- * @property static:_defaultOptions.scrollToTop.button - To top scroll button
- * behavior configuration.
- * @property static:_defaultOptions.scrollToTop.button.hideAnimationOptions -
+ * @property _defaultOptions.mediaQueryClassNameIndicator - Mapping of media
+ * query class indicator names to internal event names.
+ * @property _defaultOptions.onChangeMediaQueryMode - Callback to trigger if
+ * media query mode changes.
+ * @property _defaultOptions.onChangeToExtraSmallMode - Callback to trigger if
+ * media query mode changes to extra small mode.
+ * @property _defaultOptions.onChangeToLargeMode - Callback to trigger if media
+ * query mode changes to large mode.
+ * @property _defaultOptions.onChangeToMediumMode - Callback to trigger if
+ * media query mode changes to medium mode.
+ * @property _defaultOptions.onChangeToSmallMode - Callback to trigger if media
+ * query mode changes to small mode.
+ * @property _defaultOptions.onStartUpAnimationComplete - Callback to trigger
+ * if all start up animations has finished.
+ * @property _defaultOptions.onSwitchSection - Callback to trigger if current
+ * section switches.
+ * @property _defaultOptions.onViewportMovesAwayFromTop - Callback to trigger
+ * when viewport moves away from top.
+ * @property _defaultOptions.onViewportMovesToTop - Callback to trigger when
+ * viewport arrives at top.
+ * @property _defaultOptions.scrollToTop - Options for automated scroll top
+ * animation.
+ * @property _defaultOptions.scrollToTop.button - To top scroll button behavior
+ * configuration.
+ * @property _defaultOptions.scrollToTop.button.hideAnimationOptions -
  * Configures hide animation.
- * @property static:_defaultOptions.scrollToTop.button.showAnimationOptions -
+ * @property _defaultOptions.scrollToTop.button.showAnimationOptions -
  * Configures show animation.
- * @property static:_defaultOptions.scrollToTop.options - Scrolling animation
- * options.
- * @property static:_defaultOptions.startUpAnimationElementDelayInMiliseconds -
- * Delay between two startup animated dom nodes in order.
- * @property static:_defaultOptions.startUpHide - Options for initially hiding
- * dom nodes showing on startup later.
- * @property static:_defaultOptions.startUpShowAnimation - Options for startup
- * show in animation.
- * @property static:_defaultOptions.switchToManualScrollingIndicator -
- * Indicator function to stop currently running scroll animations to let the
- * user get control of current scrolling behavior. Given callback gets an event
- * object. If the function returns "true" current animated scrolls will be
- * stopped.
- * @property static:_defaultOptions.tracking - Tracking configuration to
- * collect user's behavior data.
- * @property static:_defaultOptions.tracking.buttonClick - Function to call on
- * button click events.
- * @property static:_defaultOptions.tracking.linkClick - Function to call on
- * link click events.
- * @property static:_defaultOptions.tracking.sectionSwitch - Function to call
- * on section switches.
- * @property static:_defaultOptions.tracking.track - Tracker call itself.
- * @property static:_defaultOptions.windowLoadingCoverHideAnimation - Options
- * for startup loading cover hide animation.
- * @property static:_defaultOptions.windowLoadingSpinner - Options for the
- * window loading cover spinner.
- * @property static:_defaultOptions.windowLoadedTimeoutAfterDocLoadedInMSec -
- * Duration after loading cover should be removed.
- *
+ * @property _defaultOptions.scrollToTop.options - Scrolling animation options.
+ * @property _defaultOptions.startUpAnimationElementDelayInMiliseconds - Delay
+ * between two startup animated dom nodes in order.
+ * @property _defaultOptions.startUpHide - Options for initially hiding dom
+ * nodes showing on startup later.
+ * @property _defaultOptions.startUpShowAnimation - Options for startup show in
+ * animation.
+ * @property _defaultOptions.switchToManualScrollingIndicator - Indicator
+ * function to stop currently running scroll animations to let the user get
+ * control of current scrolling behavior. Given callback gets an event object.
+ * If the function returns "true" current animated scrolls will be stopped.
+ * @property _defaultOptions.tracking - Tracking configuration to collect
+ * user's behavior data.
+ * @property _defaultOptions.tracking.buttonClick - Function to call on button
+ * click events.
+ * @property _defaultOptions.tracking.linkClick - Function to call on link
+ * click events.
+ * @property _defaultOptions.tracking.sectionSwitch - Function to call on
+ * section switches.
+ * @property _defaultOptions.tracking.track - Tracker call itself.
+ * @property _defaultOptions.windowLoadingCoverHideAnimation - Options for
+ * startup loading cover hide animation.
+ * @property _defaultOptions.windowLoadingSpinner - Options for the window
+ * loading cover spinner.
+ * @property _defaultOptions.windowLoadedTimeoutAfterDocLoadedInMSec - Duration
+ * after loading cover should be removed.
  * @property options - Finally configured given options.
- *
  * @property $domNodes - Saves a set of references to all needed dom nodes.
- *
  * @property currentMediaQueryMode - Saves current media query status depending
  * on available space in current browser window.
  * @property currentSectionName - Saves current section hash name.
- *
  * @property languageHandler - Reference to the language switcher instance.
- *
  * @property startUpAnimationIsComplete - Indicates whether start up animations
  * has finished.
  * @property viewportIsOnTop - Indicates whether current viewport is on top.
  * @property windowLoaded - Indicates whether window is already loaded.
- *
  * @property windowLoadingSpinner - The window loading spinner instance.
  */
 export class WebsiteUtilities extends Tools {
