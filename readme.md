@@ -280,8 +280,3 @@ Here you can see the initialisation with all available plugin options:
     }))
 </script>
 ```
-
-<!-- region modline
-vim: set tabstop=4 shiftwidth=4 expandtab:
-vim: foldmethod=marker foldmarker=region,endregion:
-endregion -->
