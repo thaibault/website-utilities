@@ -23,8 +23,7 @@ endregion */
     /*** region extra small dimension */
     @custom-media --w-extra-extra-small
         (min-width: #{v.$extra-extra-small-width});
-    @custom-media --w-extra-small
-        (min-width: #{v.$extra-small-width}));
+    @custom-media --w-extra-small (min-width: #{v.$extra-small-width});
     /*** endregion */
     /*** region default media query dimensions */
     @custom-media --w-small (min-width: #{v.$small-width});
