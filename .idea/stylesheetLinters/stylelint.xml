@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="StylelintConfiguration">
+    <config-file value="$PROJECT_DIR$/node_modules/weboptimizer/stylelintConfigurator.js" />
+    <file-patterns value="**/*.{scss}" />
+  </component>
+</project>
