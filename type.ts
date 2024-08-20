@@ -116,7 +116,7 @@ export interface DefaultOptions {
 }
 export type Options = BaseOptions & DefaultOptions
 
-export type TrackingItem = {
+export interface TrackingItem {
     context:string
     event:string
     eventType:string

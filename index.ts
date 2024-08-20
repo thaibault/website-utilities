@@ -28,6 +28,7 @@ import {
     globalContext,
     Mapping,
     NOOP,
+    PlainObject,
     RecursivePartial,
     represent,
     timeout,
@@ -254,7 +255,7 @@ export class WebsiteUtilities extends Tools {
                 })
             },
             track: (item:TrackingItem) => {
-                globalContext.dataLayer?.push(item)
+                globalContext.dataLayer?.push(item as unknown as PlainObject)
             }
         },
         windowLoadingCoverHideAnimation: {opacity: 0},
@@ -409,15 +410,19 @@ export class WebsiteUtilities extends Tools {
      * @returns Returns the current instance.
      */
     enableScrolling():this {
-        this.$domNodes.parent!.removeClass(['disable-scrolling', 'touchmove'])
-        this.off(this.$domNodes.parent)
+        if (this.$domNodes.parent) {
+            this.$domNodes.parent.removeClass(
+                ['disable-scrolling', 'touchmove']
+            )
+            this.off(this.$domNodes.parent)
+        }
 
         return this
     }
     /**
      * Triggers an analytics event. All given arguments are forwarded to
      * configured analytics event code to defined their environment variables.
-     * @param properties - Event tracking informations.
+     * @param properties - Event tracking information.
      * @returns Returns the current instance.
      */
     track(
@@ -426,7 +431,12 @@ export class WebsiteUtilities extends Tools {
             value?:number
         }
     ):this {
-        if (globalContext.window.location && this.options.tracking) {
+        if (
+            Object.prototype.hasOwnProperty.call(
+                globalContext.window, 'location'
+            ) &&
+            this.options.tracking
+        ) {
             const trackingItem:TrackingItem = {
                 context:
                     `${globalContext.window.location.pathname}#` +
@@ -468,7 +478,10 @@ export class WebsiteUtilities extends Tools {
             this.options.scrollToTop.button.hideAnimationOptions.always = (
             ):$T => this.$domNodes.scrollToTopButton.css({
                 bottom:
-                `-=${this.options.scrollToTop.button.slideDistanceInPixel}`,
+                    '-=' +
+                    String(
+                        this.options.scrollToTop.button.slideDistanceInPixel
+                    ),
                 display: 'none'
             })
             this.$domNodes.scrollToTopButton.finish().animate(
@@ -524,39 +537,56 @@ export class WebsiteUtilities extends Tools {
      * @param _oldMode - Saves the previous mode.
      * @param _newMode - Saves the new mode.
      */
-    _onChangeMediaQueryMode(_oldMode:string, _newMode:string) {}
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _onChangeMediaQueryMode(_oldMode:string, _newMode:string) {
+        // Do nothing.
+    }
     /**
      * This method triggers if the responsive design switches to large mode.
      * @param _oldMode - Saves the previous mode.
      * @param _newMode - Saves the new mode.
      */
-    _onChangeToLargeMode(_oldMode:string, _newMode:string) {}
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _onChangeToLargeMode(_oldMode:string, _newMode:string) {
+        // Do nothing.
+    }
     /**
      * This method triggers if the responsive design switches to medium mode.
      * @param _oldMode - Saves the previous mode.
      * @param _newMode - Saves the new mode.
      */
-    _onChangeToMediumMode(_oldMode:string, _newMode:string) {}
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _onChangeToMediumMode(_oldMode:string, _newMode:string) {
+        // Do nothing.
+    }
     /**
      * This method triggers if the responsive design switches to small mode.
      * @param _oldMode - Saves the previous mode.
      * @param _newMode - Saves the new mode.
      */
-    _onChangeToSmallMode(_oldMode:string, _newMode:string) {}
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _onChangeToSmallMode(_oldMode:string, _newMode:string) {
+        // Do nothing.
+    }
     /**
      * This method triggers if the responsive design switches to extra small
      * mode.
      * @param _oldMode - Saves the previous mode.
      * @param _newMode - Saves the new mode.
      */
-    _onChangeToExtraSmallMode(_oldMode:string, _newMode:string) {}
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _onChangeToExtraSmallMode(_oldMode:string, _newMode:string) {
+        // Do nothing.
+    }
     /**
      * This method triggers if we change the current section.
      * @param sectionName - Contains the new section name.
      */
     _onSwitchSection(sectionName:string):void {
         if (
-            globalContext.window.location &&
+            Object.prototype.hasOwnProperty.call(
+                globalContext.window, 'location'
+            ) &&
             this.options.tracking?.sectionSwitch &&
             this.currentSectionName !== sectionName
         ) {
@@ -607,10 +637,11 @@ export class WebsiteUtilities extends Tools {
             const classNameMapping of
             this.options.mediaQueryClassNameIndicator
         ) {
-            this.$domNodes
-                .mediaQueryIndicator
-                .prependTo(this.$domNodes.parent!)
-                .addClass(`hidden-${classNameMapping[1]}`)
+            if (this.$domNodes.parent)
+                this.$domNodes
+                    .mediaQueryIndicator
+                    .prependTo(this.$domNodes.parent)
+                    .addClass(`hidden-${classNameMapping[1]}`)
 
             if (
                 this.$domNodes.mediaQueryIndicator.is(':hidden') &&
@@ -648,8 +679,10 @@ export class WebsiteUtilities extends Tools {
      * callbacks.
      */
     _bindScrollEvents(...parameters:Array<unknown>):void {
-        const $scrollTarget:$T =
-            $('body, html').add(this.$domNodes.window!)
+        const $bodyHTML = $('body, html')
+        const $scrollTarget:$T = this.$domNodes.window ?
+            $bodyHTML.add(this.$domNodes.window) :
+            $bodyHTML
         $scrollTarget.on(
             this.options.knownScrollEventNames.join(' '),
             (event:JQuery.Event):void => {
@@ -666,7 +699,7 @@ export class WebsiteUtilities extends Tools {
             this.$domNodes.window,
             'scroll',
             ():void => {
-                if (this.$domNodes.window!.scrollTop()) {
+                if (this.$domNodes.window?.scrollTop()) {
                     if (this.viewportIsOnTop) {
                         this.viewportIsOnTop = false
 
@@ -687,7 +720,7 @@ export class WebsiteUtilities extends Tools {
             }
         )
 
-        if (this.$domNodes.window!.scrollTop()) {
+        if (this.$domNodes.window?.scrollTop()) {
             this.viewportIsOnTop = false
             this.fireEvent(
                 'viewportMovesAwayFromTop', false, this, ...parameters
@@ -719,7 +752,9 @@ export class WebsiteUtilities extends Tools {
 
                 this.$domNodes.windowLoadingCover.animate(
                     this.options.windowLoadingCoverHideAnimation,
-                    {always: () => resolve()}
+                    {always: () => {
+                        resolve()
+                    }}
                 )
             } else
                 resolve()
@@ -742,7 +777,7 @@ export class WebsiteUtilities extends Tools {
             '[class^="{1}"], [class*=" {1}"]',
             this.sliceDomNodeSelectorPrefix(
                 this.options.domNodes.startUpAnimationClassPrefix
-            ).substr(1)
+            ).substring(1)
         )).length) {
             await timeout(
                 this.options.startUpAnimationElementDelayInMiliseconds
@@ -752,13 +787,13 @@ export class WebsiteUtilities extends Tools {
 
             const $domNode:$T = $(
                 this.options.domNodes.startUpAnimationClassPrefix +
-                `${elementNumber}`
+                String(elementNumber)
             )
 
             $domNode.animate(
                 this.options.startUpShowAnimation,
                 {
-                    always: ():void => {
+                    always: () => {
                         if (lastElementTriggered)
                             this.fireEvent('startUpAnimationComplete')
                     }
@@ -767,7 +802,7 @@ export class WebsiteUtilities extends Tools {
 
             if ($(
                 this.options.domNodes.startUpAnimationClassPrefix +
-                `${elementNumber + 1}`
+                String(elementNumber + 1)
             ).length)
                 await this._performStartUpEffects(elementNumber + 1)
             else
@@ -817,22 +852,24 @@ export class WebsiteUtilities extends Tools {
         if (this.options.tracking) {
             if (this.options.tracking.linkClick)
                 this.on(
-                    this.$domNodes.parent!.find('a'),
+                    this.$domNodes.parent?.find('a'),
                     'click',
-                    (event:JQuery.Event & {target:HTMLLinkElement}):void =>
-                        this.options.tracking!.linkClick!.call(
+                    (event:JQuery.Event & {target:HTMLLinkElement}) => {
+                        this.options.tracking?.linkClick?.call(
                             this, $(event.target), event
                         )
+                    }
                 )
 
             if (this.options.tracking.buttonClick)
                 this.on(
-                    this.$domNodes.parent!.find('button'),
+                    this.$domNodes.parent?.find('button'),
                     'click',
-                    (event:JQuery.Event & {target:HTMLButtonElement}):void =>
-                        this.options.tracking!.buttonClick!.call(
+                    (event:JQuery.Event & {target:HTMLButtonElement}) => {
+                        this.options.tracking?.buttonClick?.call(
                             this, $(event.target), event
                         )
+                    }
                 )
         }
     }
