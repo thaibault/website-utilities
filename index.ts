@@ -201,10 +201,8 @@ export class WebsiteUtilities extends Tools {
         ),
         tracking: {
             buttonClick: function(
-                this:WebsiteUtilities,
-                $button:$T<HTMLButtonElement>,
-                _event:JQuery.Event
-            ):void {
+                this:WebsiteUtilities, $button:$T<HTMLButtonElement>
+            ) {
                 this.track({
                     event: 'buttonClick',
                     eventType: 'click',
@@ -222,9 +220,7 @@ export class WebsiteUtilities extends Tools {
                 })
             },
             linkClick: function(
-                this:WebsiteUtilities,
-                $link:$T<HTMLLinkElement>,
-                _event:JQuery.Event
+                this:WebsiteUtilities, $link:$T<HTMLLinkElement>
             ):void {
                 this.track({
                     event: 'linkClick',
@@ -245,7 +241,7 @@ export class WebsiteUtilities extends Tools {
             },
             sectionSwitch: function(
                 this:WebsiteUtilities, sectionName:string
-            ):void {
+            ) {
                 this.track({
                     event: 'sectionSwitch',
                     eventType: 'sectionSwitch',
@@ -257,7 +253,7 @@ export class WebsiteUtilities extends Tools {
                     userInteraction: false
                 })
             },
-            track: (item:TrackingItem):void => {
+            track: (item:TrackingItem) => {
                 globalContext.dataLayer?.push(item)
             }
         },
@@ -344,7 +340,7 @@ export class WebsiteUtilities extends Tools {
 
             this._bindScrollEvents()
 
-            this.$domNodes.parent!.show()
+            this.$domNodes.parent?.show()
 
             const onLoaded = ():void => {
                 if (!this.windowLoaded) {
@@ -388,7 +384,7 @@ export class WebsiteUtilities extends Tools {
      * Scrolls to top of page. Runs the given function after viewport arrives.
      * @returns Returns the current instance.
      */
-    scrollToTop():WebsiteUtilities {
+    scrollToTop():this {
         if (globalContext.document)
             $('html, body')
                 .stop()
@@ -400,10 +396,11 @@ export class WebsiteUtilities extends Tools {
      * This method disables scrolling on the given web view.
      * @returns Returns the current instance.
      */
-    disableScrolling():WebsiteUtilities {
-        this.$domNodes.parent!
-            .addClass('disable-scrolling')
-            .on('touchmove', (event:Event):void => event.preventDefault())
+    disableScrolling():this {
+        this.$domNodes.parent?.addClass('disable-scrolling')
+            .on('touchmove', (event:Event) => {
+                event.preventDefault()
+            })
 
         return this
     }
@@ -411,7 +408,7 @@ export class WebsiteUtilities extends Tools {
      * This method disables scrolling on the given web view.
      * @returns Returns the current instance.
      */
-    enableScrolling():WebsiteUtilities {
+    enableScrolling():this {
         this.$domNodes.parent!.removeClass(['disable-scrolling', 'touchmove'])
         this.off(this.$domNodes.parent)
 
@@ -428,7 +425,7 @@ export class WebsiteUtilities extends Tools {
             context?:string
             value?:number
         }
-    ):WebsiteUtilities {
+    ):this {
         if (globalContext.window.location && this.options.tracking) {
             const trackingItem:TrackingItem = {
                 context:
