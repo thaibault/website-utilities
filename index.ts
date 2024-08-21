@@ -593,8 +593,8 @@ export class WebsiteUtilities extends Tools {
             this.currentSectionName = sectionName
 
             this.debug(
-                'Run section switch tracking on section "' +
-                `${this.currentSectionName}".`
+                'Run section switch tracking on section ' +
+                `"${this.currentSectionName}".`
             )
 
             try {
@@ -603,8 +603,8 @@ export class WebsiteUtilities extends Tools {
                 )
             } catch (error) {
                 this.warn(
-                    'Problem due to track section switch to "' +
-                    `${this.currentSectionName}": ${represent(error)}`
+                    'Problem due to track section switch to ' +
+                    `"${this.currentSectionName}": ${represent(error)}`
                 )
             }
         }
@@ -612,7 +612,7 @@ export class WebsiteUtilities extends Tools {
     /**
      * This method is complete if last startup animation was initialized.
      */
-    _onStartUpAnimationComplete() {
+    _onStartUpAnimationComplete():Promise<void>|void {
         this.startUpAnimationIsComplete = true
     }
     // endregion

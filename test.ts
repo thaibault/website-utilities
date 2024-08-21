@@ -97,7 +97,7 @@ describe('WebsiteUtilities', ():void => {
         expect(true).toStrictEqual(true)
     })
     test('_onStartUpAnimationComplete', () => {
-        websiteUtilities._onStartUpAnimationComplete()
+        void websiteUtilities._onStartUpAnimationComplete()
         expect(true).toStrictEqual(true)
     })
     //// endregion
