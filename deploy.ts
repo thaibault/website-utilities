@@ -20,15 +20,15 @@
 import {execSync} from 'child_process'
 import {basename, resolve} from 'path'
 // endregion
-const run = (command:string, options = {}):string =>
+const run = (command: string, options = {}): string =>
     execSync(command, {encoding: 'utf-8', shell: '/bin/bash', ...options})
 
 if (run('git branch').includes('* main')) {
     console.info('Build new web page.')
     run('yarn build')
 
-    const currentWorkingDirectoryPath:string = run('pwd')
-    const parentWebsitePath:string = resolve(
+    const currentWorkingDirectoryPath: string = run('pwd')
+    const parentWebsitePath: string = resolve(
         currentWorkingDirectoryPath,
         '../',
         `${basename(currentWorkingDirectoryPath)}.github.io`

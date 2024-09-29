@@ -140,7 +140,7 @@ import {
  * @property windowLoadingSpinner - The window loading spinner instance.
  */
 export class WebsiteUtilities extends Tools {
-    static _defaultOptions:DefaultOptions = {
+    static _defaultOptions: DefaultOptions = {
         activateLanguageSupport: true,
         additionalPageLoadingTimeInMilliseconds: 0,
         domain: 'auto',
@@ -194,7 +194,7 @@ export class WebsiteUtilities extends Tools {
         startUpAnimationElementDelayInMiliseconds: 100,
         startUpHide: {opacity: 0},
         startUpShowAnimation: {opacity: 1},
-        switchToManualScrollingIndicator: (event:JQuery.Event):boolean => (
+        switchToManualScrollingIndicator: (event: JQuery.Event): boolean => (
             typeof event.which === 'number' && event.which > 0 ||
             event.type === 'mousedown' ||
             event.type === 'mousewheel' ||
@@ -202,7 +202,7 @@ export class WebsiteUtilities extends Tools {
         ),
         tracking: {
             buttonClick: function(
-                this:WebsiteUtilities, $button:$T<HTMLButtonElement>
+                this: WebsiteUtilities, $button: $T<HTMLButtonElement>
             ) {
                 this.track({
                     event: 'buttonClick',
@@ -221,8 +221,8 @@ export class WebsiteUtilities extends Tools {
                 })
             },
             linkClick: function(
-                this:WebsiteUtilities, $link:$T<HTMLLinkElement>
-            ):void {
+                this: WebsiteUtilities, $link: $T<HTMLLinkElement>
+            ) {
                 this.track({
                     event: 'linkClick',
                     eventType: 'click',
@@ -241,7 +241,7 @@ export class WebsiteUtilities extends Tools {
                 })
             },
             sectionSwitch: function(
-                this:WebsiteUtilities, sectionName:string
+                this: WebsiteUtilities, sectionName: string
             ) {
                 this.track({
                     event: 'sectionSwitch',
@@ -254,7 +254,7 @@ export class WebsiteUtilities extends Tools {
                     userInteraction: false
                 })
             },
-            track: (item:TrackingItem) => {
+            track: (item: TrackingItem) => {
                 globalContext.dataLayer?.push(item as unknown as PlainObject)
             }
         },
@@ -295,21 +295,21 @@ export class WebsiteUtilities extends Tools {
         windowLoadedTimeoutAfterDocLoadedInMSec: 2000
     }
 
-    options:Options = null as unknown as Options
+    options = null as unknown as Options
 
-    $domNodes:$DomNodes = null as unknown as $DomNodes
+    $domNodes = null as unknown as $DomNodes
 
     currentMediaQueryMode = ''
     currentSectionName = 'home'
 
-    languageHandler:Internationalisation|null = null
+    languageHandler: Internationalisation|null = null
 
     startUpAnimationIsComplete = false
 
     viewportIsOnTop = false
     windowLoaded = false
 
-    windowLoadingSpinner:null|Spinner = null
+    windowLoadingSpinner: null|Spinner = null
     // region public methods
     /// region special
     /**
@@ -318,8 +318,8 @@ export class WebsiteUtilities extends Tools {
      * @returns Returns a promise containing the current instance.
      */
     initialize<R = Promise<WebsiteUtilities>>(
-        options:RecursivePartial<Options> = {}
-    ):R {
+        options: RecursivePartial<Options> = {}
+    ): R {
         super.initialize(extend(
             true, {} as Options, WebsiteUtilities._defaultOptions, options
         ))
@@ -329,8 +329,8 @@ export class WebsiteUtilities extends Tools {
         this.disableScrolling()
 
         return new Promise<WebsiteUtilities>((
-            resolve:(value:WebsiteUtilities) => void
-        ):void => {
+            resolve: (value: WebsiteUtilities) => void
+        ): void => {
             if (this.$domNodes.windowLoadingSpinner.length) {
                 this.windowLoadingSpinner =
                     new Spinner(this.options.windowLoadingSpinner)
@@ -343,18 +343,18 @@ export class WebsiteUtilities extends Tools {
 
             this.$domNodes.parent?.show()
 
-            const onLoaded = ():void => {
+            const onLoaded = () => {
                 if (!this.windowLoaded) {
                     this.windowLoaded = true
 
-                    void this._removeLoadingCover().then(():void => {
+                    void this._removeLoadingCover().then(() => {
                         void this._performStartUpEffects()
 
                         resolve(this)
                     })
                 }
             }
-            $(():void => {
+            $(() => {
                 void timeout(
                     onLoaded,
                     this.options.windowLoadedTimeoutAfterDocLoadedInMSec
@@ -369,7 +369,7 @@ export class WebsiteUtilities extends Tools {
             if (this.options.activateLanguageSupport && !this.languageHandler)
                 void $(this.$domNodes.parent as unknown as HTMLBodyElement)
                     .Internationalisation(this.options.language)
-                    .then(($domNode:$T<HTMLBodyElement>):void => {
+                    .then(($domNode: $T<HTMLBodyElement>) => {
                         this.languageHandler =
                             $domNode.data('Internationalisation') as
                                 Internationalisation<HTMLBodyElement>
@@ -385,7 +385,7 @@ export class WebsiteUtilities extends Tools {
      * Scrolls to top of page. Runs the given function after viewport arrives.
      * @returns Returns the current instance.
      */
-    scrollToTop():this {
+    scrollToTop(): this {
         if (globalContext.document)
             $('html, body')
                 .stop()
@@ -397,9 +397,9 @@ export class WebsiteUtilities extends Tools {
      * This method disables scrolling on the given web view.
      * @returns Returns the current instance.
      */
-    disableScrolling():this {
+    disableScrolling(): this {
         this.$domNodes.parent?.addClass('disable-scrolling')
-            .on('touchmove', (event:Event) => {
+            .on('touchmove', (event: JQuery.Event) => {
                 event.preventDefault()
             })
 
@@ -409,7 +409,7 @@ export class WebsiteUtilities extends Tools {
      * This method disables scrolling on the given web view.
      * @returns Returns the current instance.
      */
-    enableScrolling():this {
+    enableScrolling(): this {
         if (this.$domNodes.parent) {
             this.$domNodes.parent.removeClass(
                 ['disable-scrolling', 'touchmove']
@@ -426,18 +426,18 @@ export class WebsiteUtilities extends Tools {
      * @returns Returns the current instance.
      */
     track(
-        properties:Omit<TrackingItem, 'context'|'value'> & {
-            context?:string
-            value?:number
+        properties: Omit<TrackingItem, 'context'|'value'> & {
+            context?: string
+            value?: number
         }
-    ):this {
+    ): this {
         if (
             Object.prototype.hasOwnProperty.call(
                 globalContext.window, 'location'
             ) &&
             this.options.tracking
         ) {
-            const trackingItem:TrackingItem = {
+            const trackingItem: TrackingItem = {
                 context:
                     `${globalContext.window.location.pathname}#` +
                     this.currentSectionName,
@@ -471,12 +471,12 @@ export class WebsiteUtilities extends Tools {
      * This method triggers if the viewport moves to top.
      * @returns Nothing.
      */
-    _onViewportMovesToTop = debounce(():void => {
+    _onViewportMovesToTop = debounce((): void => {
         if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
             this.$domNodes.scrollToTopButton.css('opacity', 0)
         else {
             this.options.scrollToTop.button.hideAnimationOptions.always = (
-            ):$T => this.$domNodes.scrollToTopButton.css({
+            ): $T => this.$domNodes.scrollToTopButton.css({
                 bottom:
                     '-=' +
                     String(
@@ -502,7 +502,7 @@ export class WebsiteUtilities extends Tools {
      * This method triggers if the viewport moves away from top.
      * @returns Nothing.
      */
-    _onViewportMovesAwayFromTop = debounce(():void => {
+    _onViewportMovesAwayFromTop = debounce((): void => {
         if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
             this.$domNodes.scrollToTopButton.css('opacity', 1)
         else
@@ -538,7 +538,7 @@ export class WebsiteUtilities extends Tools {
      * @param _newMode - Saves the new mode.
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _onChangeMediaQueryMode(_oldMode:string, _newMode:string) {
+    _onChangeMediaQueryMode(_oldMode: string, _newMode: string) {
         // Do nothing.
     }
     /**
@@ -547,7 +547,7 @@ export class WebsiteUtilities extends Tools {
      * @param _newMode - Saves the new mode.
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _onChangeToLargeMode(_oldMode:string, _newMode:string) {
+    _onChangeToLargeMode(_oldMode: string, _newMode: string) {
         // Do nothing.
     }
     /**
@@ -556,7 +556,7 @@ export class WebsiteUtilities extends Tools {
      * @param _newMode - Saves the new mode.
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _onChangeToMediumMode(_oldMode:string, _newMode:string) {
+    _onChangeToMediumMode(_oldMode: string, _newMode: string) {
         // Do nothing.
     }
     /**
@@ -565,7 +565,7 @@ export class WebsiteUtilities extends Tools {
      * @param _newMode - Saves the new mode.
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _onChangeToSmallMode(_oldMode:string, _newMode:string) {
+    _onChangeToSmallMode(_oldMode: string, _newMode: string) {
         // Do nothing.
     }
     /**
@@ -575,14 +575,14 @@ export class WebsiteUtilities extends Tools {
      * @param _newMode - Saves the new mode.
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _onChangeToExtraSmallMode(_oldMode:string, _newMode:string) {
+    _onChangeToExtraSmallMode(_oldMode: string, _newMode: string) {
         // Do nothing.
     }
     /**
      * This method triggers if we change the current section.
      * @param sectionName - Contains the new section name.
      */
-    _onSwitchSection(sectionName:string):void {
+    _onSwitchSection(sectionName: string): void {
         if (
             Object.prototype.hasOwnProperty.call(
                 globalContext.window, 'location'
@@ -612,7 +612,7 @@ export class WebsiteUtilities extends Tools {
     /**
      * This method is complete if last startup animation was initialized.
      */
-    _onStartUpAnimationComplete():Promise<void>|void {
+    _onStartUpAnimationComplete(): Promise<void>|void {
         this.startUpAnimationIsComplete = true
     }
     // endregion
@@ -632,7 +632,7 @@ export class WebsiteUtilities extends Tools {
      * @param parameters - All arguments will be appended to the event handler
      * callbacks.
      */
-    _triggerWindowResizeEvents(...parameters:Array<unknown>):void {
+    _triggerWindowResizeEvents(...parameters: Array<unknown>): void {
         for (
             const classNameMapping of
             this.options.mediaQueryClassNameIndicator
@@ -678,14 +678,14 @@ export class WebsiteUtilities extends Tools {
      * @param parameters - All arguments will be appended to the event handler
      * callbacks.
      */
-    _bindScrollEvents(...parameters:Array<unknown>):void {
+    _bindScrollEvents(...parameters: Array<unknown>): void {
         const $bodyHTML = $('body, html')
-        const $scrollTarget:$T = this.$domNodes.window ?
+        const $scrollTarget: $T = this.$domNodes.window ?
             $bodyHTML.add(this.$domNodes.window) :
             $bodyHTML
         $scrollTarget.on(
             this.options.knownScrollEventNames.join(' '),
-            (event:JQuery.Event):void => {
+            (event: JQuery.Event) => {
                 /*
                     NOTE: Stop automatic scrolling if the user wants to scroll
                     manually.
@@ -698,7 +698,7 @@ export class WebsiteUtilities extends Tools {
         this.on(
             this.$domNodes.window,
             'scroll',
-            ():void => {
+            (): void => {
                 if (this.$domNodes.window?.scrollTop()) {
                     if (this.viewportIsOnTop) {
                         this.viewportIsOnTop = false
@@ -735,7 +735,7 @@ export class WebsiteUtilities extends Tools {
      * @returns Promise resolving to nothing when loading cover has been
      * removed.
      */
-    async _removeLoadingCover():Promise<void> {
+    async _removeLoadingCover(): Promise<void> {
         await timeout(this.options.additionalPageLoadingTimeInMilliseconds)
 
         // Hide startup animation dom nodes to show them step by step.
@@ -743,10 +743,10 @@ export class WebsiteUtilities extends Tools {
             '[class^="{1}"], [class*=" {1}"]',
             this.sliceDomNodeSelectorPrefix(
                 this.options.domNodes.startUpAnimationClassPrefix
-            ).substr(1)
+            ).substring(1)
         )).css(this.options.startUpHide)
 
-        await new Promise<void>((resolve:() => void):void => {
+        await new Promise<void>((resolve: () => void) => {
             if (this.$domNodes.windowLoadingCover.length) {
                 this.enableScrolling()
 
@@ -766,7 +766,7 @@ export class WebsiteUtilities extends Tools {
      * @returns Promise resolving to nothing when start up effects have been
      * finished.
      */
-    async _performStartUpEffects(elementNumber = 1):Promise<void> {
+    async _performStartUpEffects(elementNumber = 1): Promise<void> {
         // Stop and delete spinner instance.
         this.$domNodes.windowLoadingCover.hide()
 
@@ -785,7 +785,7 @@ export class WebsiteUtilities extends Tools {
 
             let lastElementTriggered = false
 
-            const $domNode:$T = $(
+            const $domNode: $T = $(
                 this.options.domNodes.startUpAnimationClassPrefix +
                 String(elementNumber)
             )
@@ -816,7 +816,7 @@ export class WebsiteUtilities extends Tools {
     _bindNavigationEvents() {
         globalContext.window.addEventListener(
             'hashchange',
-            (event:Event):void => {
+            (event: Event) => {
                 if (this.startUpAnimationIsComplete)
                     this.fireEvent(
                         'switchSection',
@@ -838,7 +838,7 @@ export class WebsiteUtilities extends Tools {
         this.on(
             this.$domNodes.scrollToTopButton,
             'click',
-            (event:Event):void => {
+            (event: Event) => {
                 event.preventDefault()
 
                 this.scrollToTop()
@@ -854,7 +854,7 @@ export class WebsiteUtilities extends Tools {
                 this.on(
                     this.$domNodes.parent?.find('a'),
                     'click',
-                    (event:JQuery.Event & {target:HTMLLinkElement}) => {
+                    (event: JQuery.Event & {target: HTMLLinkElement}) => {
                         this.options.tracking?.linkClick?.call(
                             this, $(event.target), event
                         )
@@ -865,7 +865,7 @@ export class WebsiteUtilities extends Tools {
                 this.on(
                     this.$domNodes.parent?.find('button'),
                     'click',
-                    (event:JQuery.Event & {target:HTMLButtonElement}) => {
+                    (event: JQuery.Event & {target: HTMLButtonElement}) => {
                         this.options.tracking?.buttonClick?.call(
                             this, $(event.target), event
                         )
@@ -879,7 +879,7 @@ export class WebsiteUtilities extends Tools {
 export default WebsiteUtilities
 // endregion
 // region handle $ extending
-$.WebsiteUtilities = ((...parameters:Array<unknown>):unknown =>
+$.WebsiteUtilities = ((...parameters: Array<unknown>): unknown =>
     Tools.controller(WebsiteUtilities, parameters)
 ) as WebsiteUtilitiesFunction
 $.WebsiteUtilities.class = WebsiteUtilities
