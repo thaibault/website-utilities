@@ -19,8 +19,8 @@ import {$} from 'clientnode'
 
 import WebsiteUtilities from './index'
 // endregion
-describe('WebsiteUtilities', ():void => {
-    let websiteUtilities:WebsiteUtilities
+describe('WebsiteUtilities', (): void => {
+    let websiteUtilities: WebsiteUtilities
     /*
         NOTE: Import plugins with side effects (augmenting "$" scope /
         registering plugin) when other imports are only used as type.
@@ -30,7 +30,7 @@ describe('WebsiteUtilities', ():void => {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     require('./index')
 
-    beforeAll(async ():Promise<void> => {
+    beforeAll(async (): Promise<void> => {
         websiteUtilities = (await $.WebsiteUtilities()) as WebsiteUtilities
     })
     // region tests
@@ -114,11 +114,11 @@ describe('WebsiteUtilities', ():void => {
         websiteUtilities._bindScrollEvents()
         expect(true).toStrictEqual(true)
     })
-    test('_removeLoadingCover', async ():Promise<void> =>
+    test('_removeLoadingCover', async (): Promise<void> =>
         expect(websiteUtilities._removeLoadingCover())
             .resolves.not.toBeDefined()
     )
-    test('_performStartUpEffects', async ():Promise<void> =>
+    test('_performStartUpEffects', async (): Promise<void> =>
         expect(websiteUtilities._performStartUpEffects(10))
             .resolves.not.toBeDefined()
     )

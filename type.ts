@@ -33,98 +33,98 @@ import WebsiteUtilities from './index'
 // endregion
 // region exports
 export type WebsiteUtilitiesFunction =
-    ((..._parameters:Array<unknown>) => unknown) &
-    {class:typeof WebsiteUtilities}
+    ((..._parameters: Array<unknown>) => unknown) &
+    {class: typeof WebsiteUtilities}
 declare global {
     interface JQueryStatic {
-        WebsiteUtilities:WebsiteUtilitiesFunction
+        WebsiteUtilities: WebsiteUtilitiesFunction
     }
 
-    const dataLayer:Array<unknown>
+    const dataLayer: Array<unknown>
 }
 
 export type DomNodes<Type = string> =
     BaseDomNodes<Type> &
     {
-        mediaQueryIndicator:Type
+        mediaQueryIndicator: Type
 
-        scrollToTopButton:Type
+        scrollToTopButton: Type
 
-        startUpAnimationClassPrefix:Type
+        startUpAnimationClassPrefix: Type
 
-        top:Type
+        top: Type
 
-        windowLoadingCover:Type
-        windowLoadingSpinner:Type
+        windowLoadingCover: Type
+        windowLoadingSpinner: Type
     }
 
 export interface DefaultOptions {
-    activateLanguageSupport:boolean
-    additionalPageLoadingTimeInMilliseconds:number
-    domain:string
-    domNodes:DomNodes
-    domNodeSelectorInfix:null|string
-    domNodeSelectorPrefix:string
-    initialSectionName:string
-    knownScrollEventNames:Array<string>
-    language:Partial<InternationalisationOptions>
-    mediaQueryClassNameIndicator:Array<Array<string>>
-    name:string
-    onChangeMediaQueryMode:ProcedureFunction
-    onChangeToExtraSmallMode:ProcedureFunction
-    onChangeToLargeMode:ProcedureFunction
-    onChangeToMediumMode:ProcedureFunction
-    onChangeToSmallMode:ProcedureFunction
-    onStartUpAnimationComplete:ProcedureFunction
-    onSwitchSection:ProcedureFunction
-    onViewportMovesAwayFromTop:ProcedureFunction
-    onViewportMovesToTop:ProcedureFunction
-    scrollToTop:{
-        button:{
-            hideAnimationOptions:JQuery.EffectsOptions<HTMLElement>
-            showAnimationOptions:JQuery.EffectsOptions<HTMLElement>
-            slideDistanceInPixel:number
+    activateLanguageSupport: boolean
+    additionalPageLoadingTimeInMilliseconds: number
+    domain: string
+    domNodes: DomNodes
+    domNodeSelectorInfix: null|string
+    domNodeSelectorPrefix: string
+    initialSectionName: string
+    knownScrollEventNames: Array<string>
+    language: Partial<InternationalisationOptions>
+    mediaQueryClassNameIndicator: Array<Array<string>>
+    name: string
+    onChangeMediaQueryMode: ProcedureFunction
+    onChangeToExtraSmallMode: ProcedureFunction
+    onChangeToLargeMode: ProcedureFunction
+    onChangeToMediumMode: ProcedureFunction
+    onChangeToSmallMode: ProcedureFunction
+    onStartUpAnimationComplete: ProcedureFunction
+    onSwitchSection: ProcedureFunction
+    onViewportMovesAwayFromTop: ProcedureFunction
+    onViewportMovesToTop: ProcedureFunction
+    scrollToTop: {
+        button: {
+            hideAnimationOptions: JQuery.EffectsOptions<HTMLElement>
+            showAnimationOptions: JQuery.EffectsOptions<HTMLElement>
+            slideDistanceInPixel: number
         },
-        options:JQuery.EffectsOptions<HTMLElement>
+        options: JQuery.EffectsOptions<HTMLElement>
     },
-    startUpAnimationElementDelayInMiliseconds:number
+    startUpAnimationElementDelayInMiliseconds: number
     /*
         NOTE: We cannot use type helper "Parameters" (or "FirstParameter" which
         is based on "Parameters") since this grabs always last (often wrong)
         overloaded signature.
     */
-    startUpHide:Mapping<number|string>
-    startUpShowAnimation:FirstParameter<$T['animate']>
-    switchToManualScrollingIndicator:(event:JQuery.Event) => boolean
-    tracking?:{
-        buttonClick?:(
-            this:WebsiteUtilities,
-            $link:$T<HTMLButtonElement>,
-            event:JQuery.Event
+    startUpHide: Mapping<number|string>
+    startUpShowAnimation: FirstParameter<$T['animate']>
+    switchToManualScrollingIndicator: (event: JQuery.Event) => boolean
+    tracking?: {
+        buttonClick?: (
+            this: WebsiteUtilities,
+            $link: $T<HTMLButtonElement>,
+            event: JQuery.Event
         ) => void
-        linkClick?:(
-            this:WebsiteUtilities,
-            $link:$T<HTMLLinkElement>,
-            event:JQuery.Event
+        linkClick?: (
+            this: WebsiteUtilities,
+            $link: $T<HTMLLinkElement>,
+            event: JQuery.Event
         ) => void
-        sectionSwitch?:(this:WebsiteUtilities, sectionName:string) => void
-        track:(item:TrackingItem) => void
+        sectionSwitch?: (this: WebsiteUtilities, sectionName: string) => void
+        track: (item: TrackingItem) => void
     }
-    windowLoadingCoverHideAnimation:FirstParameter<$T['animate']>
-    windowLoadingSpinner:SpinnerOptions
-    windowLoadedTimeoutAfterDocLoadedInMSec:number
+    windowLoadingCoverHideAnimation: FirstParameter<$T['animate']>
+    windowLoadingSpinner: SpinnerOptions
+    windowLoadedTimeoutAfterDocLoadedInMSec: number
 }
 export type Options = BaseOptions & DefaultOptions
 
 export interface TrackingItem {
-    context:string
-    event:string
-    eventType:string
-    icon?:string
-    label:string
-    reference:string
-    subject:string
-    value:number
-    userInteraction:boolean
+    context: string
+    event: string
+    eventType: string
+    icon?: string
+    label: string
+    reference: string
+    subject: string
+    value: number
+    userInteraction: boolean
 }
 // endregion
