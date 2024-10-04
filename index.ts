@@ -243,16 +243,17 @@ export class WebsiteUtilities extends Tools {
             sectionSwitch: function(
                 this: WebsiteUtilities, sectionName: string
             ) {
-                this.track({
-                    event: 'sectionSwitch',
-                    eventType: 'sectionSwitch',
-                    label: sectionName,
-                    reference:
-                        `${globalContext.window.location.pathname}#` +
-                        sectionName,
-                    subject: 'url',
-                    userInteraction: false
-                })
+                if (globalContext.window?.location)
+                    this.track({
+                        event: 'sectionSwitch',
+                        eventType: 'sectionSwitch',
+                        label: sectionName,
+                        reference:
+                            `${globalContext.window.location.pathname}#` +
+                            sectionName,
+                        subject: 'url',
+                        userInteraction: false
+                    })
             },
             track: (item: TrackingItem) => {
                 globalContext.dataLayer?.push(item as unknown as PlainObject)
@@ -431,12 +432,7 @@ export class WebsiteUtilities extends Tools {
             value?: number
         }
     ): this {
-        if (
-            Object.prototype.hasOwnProperty.call(
-                globalContext.window, 'location'
-            ) &&
-            this.options.tracking
-        ) {
+        if (globalContext.window?.location && this.options.tracking) {
             const trackingItem: TrackingItem = {
                 context:
                     `${globalContext.window.location.pathname}#` +
@@ -814,7 +810,7 @@ export class WebsiteUtilities extends Tools {
      * This method adds triggers to switch section.
      */
     _bindNavigationEvents() {
-        globalContext.window.addEventListener(
+        globalContext.window?.addEventListener(
             'hashchange',
             (event: Event) => {
                 if (this.startUpAnimationIsComplete)
