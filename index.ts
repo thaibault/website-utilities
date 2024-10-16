@@ -102,7 +102,7 @@ import {
  * @property _defaultOptions.scrollToTop.button.showAnimationOptions -
  * Configures show animation.
  * @property _defaultOptions.scrollToTop.options - Scrolling animation options.
- * @property _defaultOptions.startUpAnimationElementDelayInMiliseconds - Delay
+ * @property _defaultOptions.startUpAnimationElementDelayInMilliseconds - Delay
  * between two startup animated dom nodes in order.
  * @property _defaultOptions.startUpHide - Options for initially hiding dom
  * nodes showing on startup later.
@@ -191,7 +191,7 @@ export class WebsiteUtilities extends Tools {
             },
             options: {duration: 'fast'}
         },
-        startUpAnimationElementDelayInMiliseconds: 100,
+        startUpAnimationElementDelayInMilliseconds: 100,
         startUpHide: {opacity: 0},
         startUpShowAnimation: {opacity: 1},
         switchToManualScrollingIndicator: (event: JQuery.Event): boolean => (
@@ -303,14 +303,14 @@ export class WebsiteUtilities extends Tools {
     currentMediaQueryMode = ''
     currentSectionName = 'home'
 
-    languageHandler: Internationalisation|null = null
+    languageHandler: Internationalisation | null = null
 
     startUpAnimationIsComplete = false
 
     viewportIsOnTop = false
     windowLoaded = false
 
-    windowLoadingSpinner: null|Spinner = null
+    windowLoadingSpinner: null | Spinner = null
     // region public methods
     /// region special
     /**
@@ -427,7 +427,7 @@ export class WebsiteUtilities extends Tools {
      * @returns Returns the current instance.
      */
     track(
-        properties: Omit<TrackingItem, 'context'|'value'> & {
+        properties: Omit<TrackingItem, 'context' | 'value'> & {
             context?: string
             value?: number
         }
@@ -608,7 +608,7 @@ export class WebsiteUtilities extends Tools {
     /**
      * This method is complete if last startup animation was initialized.
      */
-    _onStartUpAnimationComplete(): Promise<void>|void {
+    _onStartUpAnimationComplete(): Promise<void> | void {
         this.startUpAnimationIsComplete = true
     }
     // endregion
@@ -776,7 +776,7 @@ export class WebsiteUtilities extends Tools {
             ).substring(1)
         )).length) {
             await timeout(
-                this.options.startUpAnimationElementDelayInMiliseconds
+                this.options.startUpAnimationElementDelayInMilliseconds
             )
 
             let lastElementTriggered = false

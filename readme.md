@@ -242,7 +242,7 @@ Here you can see the initialisation with all available plugin options:
         onChangeMediaQueryMode: $.noop(),
         onSwitchSection: $.noop(),
         onStartUpAnimationComplete: $.noop(),
-        startUpAnimationElementDelayInMiliseconds: 100,
+        startUpAnimationElementDelayInMilliseconds: 100,
         startUpShowAnimation: [{opacity: 1}, {}],
         startUpHide: {opacity: 0},
         switchToManualScrollingIndicator: (event:Object):boolean => (

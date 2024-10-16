@@ -63,7 +63,7 @@ export interface DefaultOptions {
     additionalPageLoadingTimeInMilliseconds: number
     domain: string
     domNodes: DomNodes
-    domNodeSelectorInfix: null|string
+    domNodeSelectorInfix: null | string
     domNodeSelectorPrefix: string
     initialSectionName: string
     knownScrollEventNames: Array<string>
@@ -87,13 +87,13 @@ export interface DefaultOptions {
         },
         options: JQuery.EffectsOptions<HTMLElement>
     },
-    startUpAnimationElementDelayInMiliseconds: number
+    startUpAnimationElementDelayInMilliseconds: number
     /*
         NOTE: We cannot use type helper "Parameters" (or "FirstParameter" which
         is based on "Parameters") since this grabs always last (often wrong)
         overloaded signature.
     */
-    startUpHide: Mapping<number|string>
+    startUpHide: Mapping<number | string>
     startUpShowAnimation: FirstParameter<$T['animate']>
     switchToManualScrollingIndicator: (event: JQuery.Event) => boolean
     tracking?: {
