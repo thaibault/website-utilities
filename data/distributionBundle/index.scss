@@ -23,8 +23,7 @@ endregion */
     /*** region extra small dimension */
     @custom-media --w-extra-extra-small
         (min-width: #{v.$extra-extra-small-width});
-    @custom-media --w-extra-small
-        (min-width: #{v.$extra-small-width}));
+    @custom-media --w-extra-small (min-width: #{v.$extra-small-width});
     /*** endregion */
     /*** region default media query dimensions */
     @custom-media --w-small (min-width: #{v.$small-width});
@@ -132,7 +131,7 @@ a.wu-a:visited,
     width: 100%;
     z-index: 1002 !important;
 
-    & > div {
+    > div {
         /* Positioning the loading spinner in center in the loading overlay. */
         position: absolute;
         top: 50%;
@@ -259,13 +258,13 @@ a.wu-a:visited,
         right: 15px;
         pointer-events: none;
 
-        & span {
+        span {
             vertical-align: bottom;
             font-size: 10px;
         }
     }
 
-    & select {
+    select {
         position: initial !important;
         padding-left: 7px !important;
         padding-right: 25px !important;
@@ -280,15 +279,15 @@ a.wu-a:visited,
     margin-top: 2px;
     padding-top: 3px;
 
-    & label {
+    label {
         padding-left: 40px;
 
-        & .checkbox__wrapper {
+        .checkbox__wrapper {
             margin-top: -2px;
             margin-left: -40px;
             position: absolute;
 
-            & .checkbox__wrapper__styled {
+            .checkbox__wrapper__styled {
                 border-radius: 4px;
                 border: 2px solid var(--w-theme-primary, v.$theme-primary);
                 cursor: pointer;
@@ -297,7 +296,7 @@ a.wu-a:visited,
                 padding: 0;
                 width: 25px;
 
-                & .checkbox__wrapper__styled__checked {
+                .checkbox__wrapper__styled__checked {
                     background: transparent;
                     border: 3px solid var(--w-theme-on-primary, v.$theme-on-primary);
                     border-top: none;
@@ -312,7 +311,7 @@ a.wu-a:visited,
                 }
             }
 
-            & input[type="checkbox"] {
+            input[type="checkbox"] {
                 display: none;
 
                 &:checked ~ .checkbox-styled > .checkbox-styled-checked {
@@ -365,7 +364,3 @@ a.wu-a:visited,
     }
 }
 /* endregion */
-/* region vim modline
-vim: set tabstop=4 shiftwidth=4 expandtab:
-vim: foldmethod=marker foldmarker=region,endregion:
-endregion */
