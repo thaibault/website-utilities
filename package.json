@@ -70,15 +70,15 @@
     "@types/jquery": "^3.5.33",
     "@types/jsdom": "^27.0.0",
     "@types/node": "^24.10.1",
-    "@typescript-eslint/eslint-plugin": "^8.47.0",
-    "@typescript-eslint/parser": "^8.47.0",
-    "clientnode": "^3.0.1329",
+    "@typescript-eslint/eslint-plugin": "^8.48.0",
+    "@typescript-eslint/parser": "^8.48.0",
+    "clientnode": "^3.0.1332",
     "css-loader": "^7.1.2",
     "cssnano": "^7.1.2",
-    "documentation-website": "^1.0.395",
+    "documentation-website": "^1.0.396",
     "eslint": "^9.39.1",
     "eslint-config-google": "^0.14.0",
-    "eslint-plugin-jsdoc": "^61.4.0",
+    "eslint-plugin-jsdoc": "^61.4.1",
     "internationalisation": "^1.0.342",
     "jest": "^30.2.0",
     "jquery": "^3.7.1",
@@ -96,10 +96,10 @@
     "sass-loader": "^16.0.6",
     "spin.js": "^4.1.2",
     "style-loader": "^4.0.0",
-    "stylelint": "^16.25.0",
+    "stylelint": "^16.26.0",
     "stylelint-config-standard-scss": "^16.0.0",
-    "typescript-eslint": "^8.47.0",
-    "weboptimizer": "^2.0.1624",
+    "typescript-eslint": "^8.48.0",
+    "weboptimizer": "^2.0.1626",
     "webpack-dev-server": "^5.2.2"
   },
   "peerDependencies": {
@@ -117,6 +117,9 @@
       "optional": true
     },
     "jquery": {
+      "optional": true
+    },
+    "spin.js": {
       "optional": true
     }
   },
