@@ -26,6 +26,7 @@ import {
     extend,
     format,
     globalContext,
+    Logger,
     Mapping,
     NOOP,
     PlainObject,
@@ -41,6 +42,7 @@ import {
     DefaultOptions, DomNodes, Options, TrackingItem, WebsiteUtilitiesFunction
 } from './type'
 // endregion
+export const log = new Logger({name: 'website-utilities'})
 // region plugins/classes
 /**
  * This plugin holds all needed methods to extend a whole website.
@@ -365,8 +367,6 @@ export class WebsiteUtilities extends Tools {
 
             this._bindClickTracking()
 
-            if (!this.options.language.logging)
-                this.options.language.logging = this.options.logging
             if (this.options.activateLanguageSupport && !this.languageHandler)
                 void $(this.$domNodes.parent as unknown as HTMLBodyElement)
                     .Internationalisation(this.options.language)
@@ -445,14 +445,14 @@ export class WebsiteUtilities extends Tools {
             )
                 trackingItem.value = 1
 
-            this.debug('Run tracking code: "event" with arguments:')
-            this.debug(trackingItem)
+            log.debug('Run tracking code: "event" with arguments:')
+            log.debug(trackingItem)
 
             try {
                 this.options.tracking.track(trackingItem)
             } catch (error) {
-                this.warn(
-                    `Problem in tracking "${represent(trackingItem)}": ` +
+                log.warn(
+                    `Problem in tracking "${represent(trackingItem)}":`,
                     represent(error)
                 )
             }
@@ -588,8 +588,8 @@ export class WebsiteUtilities extends Tools {
         ) {
             this.currentSectionName = sectionName
 
-            this.debug(
-                'Run section switch tracking on section ' +
+            log.debug(
+                'Run section switch tracking on section',
                 `"${this.currentSectionName}".`
             )
 
@@ -598,8 +598,8 @@ export class WebsiteUtilities extends Tools {
                     this, this.currentSectionName
                 )
             } catch (error) {
-                this.warn(
-                    'Problem due to track section switch to ' +
+                log.warn(
+                    'Problem due to track section switch to',
                     `"${this.currentSectionName}": ${represent(error)}`
                 )
             }
