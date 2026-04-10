@@ -16,7 +16,6 @@
     endregion
 */
 // region imports
-import {FirstParameter, Mapping, ProcedureFunction} from 'clientnode'
 import {
     Options as InternationalisationOptions
 } from 'internationalisation/type'
@@ -45,6 +44,7 @@ export interface DefaultOptions {
         windowLoadingSpinner: string
     }
     startUpAnimationElementDelayInMilliseconds: number
+    tracking: boolean
     windowLoadingSpinner: SpinnerOptions
     windowLoadedTimeoutAfterDocLoadedInMSec: number
 }

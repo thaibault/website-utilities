@@ -25,9 +25,11 @@ import {
     format,
     getText,
     globalContext,
+    isHidden,
     Logger,
     Mapping,
     NOOP,
+    onDocumentReady,
     preventDefault,
     ProcedureFunction,
     represent,
@@ -47,8 +49,6 @@ export const log = new Logger({name: 'website-utilities'})
  * This plugin holds all needed methods to extend a whole website.
  * @property _defaultOptions - Options extended by the options given to the
  * initializer method.
- * @property _defaultOptions.activateLanguageSupport - Indicates whether
- * language support should be used or not.
  * @property _defaultOptions.additionalPageLoadingTimeInMilliseconds -
  * Additional time to wait until page will be indicated as loaded.
  * @property _defaultOptions.domNodeSelectorInfix - Selector infix for all
@@ -80,6 +80,8 @@ export const log = new Logger({name: 'website-utilities'})
  * window loading spinner (on top of the window loading cover).
  * @property _defaultOptions.startUpAnimationElementDelayInMilliseconds - Delay
  * between two startup animated dom nodes in order.
+ * @property _defaultOptions.tracking - Indicates whether tracking should be
+ * used or not.
  * @property _defaultOptions.windowLoadingSpinner - Options for the window
  * loading cover spinner.
  * @property _defaultOptions.windowLoadedTimeoutAfterDocLoadedInMSec - Duration
@@ -93,6 +95,8 @@ export const log = new Logger({name: 'website-utilities'})
  * @property viewportIsOnTop - Indicates whether current viewport is on top.
  * @property windowLoaded - Indicates whether window is already loaded.
  * @property windowLoadingSpinner - The window loading spinner instance.
+ * @property mediaQueryIndicatorDomNodes - Dom nodes to indicate current media
+ * query mode.
  * @property onChangeMediaQueryMode - Callback to trigger if media query mode
  * changes.
  * @property onChangeToExtraSmallMode - Callback to trigger if media query mode
@@ -123,9 +127,7 @@ export class WebsiteUtilities<
     TElement = HTMLElement,
     ExternalProperties extends Mapping<unknown> = Mapping<unknown>,
     InternalProperties extends Mapping<unknown> = Mapping<unknown>
-> extends Web<
-    TElement, ExternalProperties, InternalProperties
-> {
+> extends Web<TElement, ExternalProperties, InternalProperties> {
     static _name = 'WebsiteUtilities'
 
     static _defaultOptions: DefaultOptions = {
@@ -164,6 +166,8 @@ export class WebsiteUtilities<
         },
 
         startUpAnimationElementDelayInMilliseconds: 100,
+
+        tracking: false,
 
         windowLoadingSpinner: {
             animation: 'spinner-line-fade-quick',
@@ -216,7 +220,7 @@ export class WebsiteUtilities<
 
     /// region dom nodes
     windowLoadingSpinner: null | Spinner = null
-    mediaQueryIndicators: Array<HTMLElement> = []
+    mediaQueryIndicatorDomNodes: Array<HTMLElement> = []
 
     scrollToTopButtons: Array<HTMLElement> = []
 
@@ -228,15 +232,29 @@ export class WebsiteUtilities<
     windowLoadingSpinnerDomNode: HTMLElement | null = null
     /// endregion
     @property({type: func})
-        onChangeMediaQueryMode: ProcedureFunction = NOOP
+        onChangeMediaQueryMode: (
+            this: WebsiteUtilities,
+            oldMediaQueryMode: string,
+            newMediaQueryMode: string,
+            event?: Event
+        ) => void = NOOP
     @property({type: func})
-        onChangeToExtraSmallMode: ProcedureFunction = NOOP
+        onChangeToExtraSmallMode: (
+            this: WebsiteUtilities, oldMediaQueryMode: string, event?: Event
+        ) => void = NOOP
     @property({type: func})
-        onChangeToLargeMode: ProcedureFunction = NOOP
+        onChangeToLargeMode: (
+            this: WebsiteUtilities, oldMediaQueryMode: string, event?: Event
+        ) => void = NOOP
     @property({type: func})
-        onChangeToMediumMode: ProcedureFunction = NOOP
+        onChangeToMediumMode: (
+            this: WebsiteUtilities, oldMediaQueryMode: string, event?: Event
+        ) => void = NOOP
     @property({type: func})
-        onChangeToSmallMode: ProcedureFunction = NOOP
+        onChangeToSmallMode: (
+            this: WebsiteUtilities, oldMediaQueryMode: string, event?: Event
+        ) => void = NOOP
+
     @property({type: func})
         onStartUpAnimationComplete: ProcedureFunction = NOOP
     @property({type: func})
@@ -284,7 +302,7 @@ export class WebsiteUtilities<
         }
     @property({type: func})
         onSectionSwitch = function(
-            this: WebsiteUtilities, sectionName: string
+            this: WebsiteUtilities, sectionName: string, _event?: Event
         ) {
             if (!globalContext.window?.location)
                 return
@@ -386,7 +404,7 @@ export class WebsiteUtilities<
                 })
             }
         }
-        $(() => {
+        onDocumentReady(() => {
             void timeout(
                 onLoaded,
                 this.options.windowLoadedTimeoutAfterDocLoadedInMSec
@@ -407,9 +425,7 @@ export class WebsiteUtilities<
      */
     scrollToTop() {
         if (globalContext.document)
-            $('html, body')
-                .stop()
-                .animate({scrollTop: 0}, this.options.scrollToTop.options)
+            window.scrollTo({top: 0, behavior: 'smooth'})
     }
     /**
      * This method disables scrolling on the given web view.
@@ -456,8 +472,8 @@ export class WebsiteUtilities<
                 ...(properties as Omit<TrackingItem, 'context'>)
             }
             if (
-                isNaN(trackingItem.value) ||
-                typeof trackingItem.value !== 'number'
+                typeof trackingItem.value !== 'number' ||
+                isNaN(trackingItem.value)
             )
                 trackingItem.value = 1
 
@@ -465,7 +481,7 @@ export class WebsiteUtilities<
             log.debug(trackingItem)
 
             try {
-                this.options.tracking.track(trackingItem)
+                this.onTrack(trackingItem)
             } catch (error) {
                 log.warn(
                     `Problem in tracking "${represent(trackingItem)}":`,
@@ -484,8 +500,11 @@ export class WebsiteUtilities<
      * @returns Nothing.
      */
     _onViewportMovesToTop = debounce((): void => {
-        if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
-            this.$domNodes.scrollToTopButton.css('opacity', 0)
+        if (this.scrollToTopButtons.some((domNode) =>
+            domNode.style.visibility === 'hidden'
+        ))
+            for (const domNode of this.scrollToTopButtons)
+                domNode.style.opacity = '0'
         else {
             this.options.scrollToTop.button.hideAnimationOptions.always = (
             ): $T => this.$domNodes.scrollToTopButton.css({
@@ -501,8 +520,7 @@ export class WebsiteUtilities<
                     bottom:
                         '+=' +
                         String(
-                            this.options.scrollToTop.button
-                                .slideDistanceInPixel
+                            this.options.scrollToTopButtonSlideDistanceInPixel
                         ),
                     opacity: 0
                 },
@@ -515,17 +533,19 @@ export class WebsiteUtilities<
      * @returns Nothing.
      */
     _onViewportMovesAwayFromTop = debounce((): void => {
-        if (this.$domNodes.scrollToTopButton.css('visibility') === 'hidden')
-            this.$domNodes.scrollToTopButton.css('opacity', 1)
+        if (this.scrollToTopButtons.some((domNode) =>
+            domNode.style.visibility === 'hidden'
+        ))
+            for (const domNode of this.scrollToTopButtons)
+                domNode.style.opacity = '1'
         else
-            this.$domNodes.scrollToTopButton
+            this.scrollToTopButtons
                 .finish()
                 .css({
                     bottom:
                         '+=' +
                         String(
-                            this.options.scrollToTop.button
-                                .slideDistanceInPixel
+                            this.options.scrollToTopButtonSlideDistanceInPixel
                         ),
                     display: 'block',
                     opacity: 0
@@ -545,61 +565,14 @@ export class WebsiteUtilities<
                 )
     })
     /**
-     * This method triggers if the responsive design switches to another mode.
-     * @param _oldMode - Saves the previous mode.
-     * @param _newMode - Saves the new mode.
-     */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _onChangeMediaQueryMode(_oldMode: string, _newMode: string) {
-        // Do nothing.
-    }
-    /**
-     * This method triggers if the responsive design switches to large mode.
-     * @param _oldMode - Saves the previous mode.
-     * @param _newMode - Saves the new mode.
-     */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _onChangeToLargeMode(_oldMode: string, _newMode: string) {
-        // Do nothing.
-    }
-    /**
-     * This method triggers if the responsive design switches to medium mode.
-     * @param _oldMode - Saves the previous mode.
-     * @param _newMode - Saves the new mode.
-     */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _onChangeToMediumMode(_oldMode: string, _newMode: string) {
-        // Do nothing.
-    }
-    /**
-     * This method triggers if the responsive design switches to small mode.
-     * @param _oldMode - Saves the previous mode.
-     * @param _newMode - Saves the new mode.
-     */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _onChangeToSmallMode(_oldMode: string, _newMode: string) {
-        // Do nothing.
-    }
-    /**
-     * This method triggers if the responsive design switches to extra small
-     * mode.
-     * @param _oldMode - Saves the previous mode.
-     * @param _newMode - Saves the new mode.
-     */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _onChangeToExtraSmallMode(_oldMode: string, _newMode: string) {
-        // Do nothing.
-    }
-    /**
      * This method triggers if we change the current section.
      * @param sectionName - Contains the new section name.
      */
     _onSwitchSection(sectionName: string): void {
         if (
-            Object.prototype.hasOwnProperty.call(
-                globalContext.window, 'location'
-            ) &&
-            this.options.tracking?.sectionSwitch &&
+            globalContext.window &&
+            'location' in globalContext.window &&
+            this.options.tracking &&
             this.currentSectionName !== sectionName
         ) {
             this.currentSectionName = sectionName
@@ -610,9 +583,7 @@ export class WebsiteUtilities<
             )
 
             try {
-                this.options.tracking.sectionSwitch.call(
-                    this, this.currentSectionName
-                )
+                this.onSectionSwitch.call(this, this.currentSectionName)
             } catch (error) {
                 log.warn(
                     'Problem due to track section switch to',
@@ -633,56 +604,46 @@ export class WebsiteUtilities<
      * This method adds triggers for responsive design switches.
      */
     _bindMediaQueryChangeEvents() {
-        this.on(
-            this.$domNodes.window,
-            'resize',
-            this._triggerWindowResizeEvents.bind(this)
+        globalContext.window?.addEventListener(
+            'resize', this._triggerWindowResizeEvents.bind(this)
         )
     }
     /**
      * This method triggers if the responsive design switches its mode.
-     * @param parameters - All arguments will be appended to the event handler
-     * callbacks.
+     * @param event - Event object if existing.
      */
-    _triggerWindowResizeEvents(...parameters: Array<unknown>): void {
+    _triggerWindowResizeEvents(event?: Event): void {
         for (
-            const classNameMapping of
-            this.options.mediaQueryClassNameIndicator
+            const classNameMapping of this.options.mediaQueryClassNameIndicator
         ) {
-            if (this.$domNodes.parent)
-                this.$domNodes
-                    .mediaQueryIndicator
-                    .prependTo(this.$domNodes.parent)
+            if (this.root.parentElement)
+                this.mediaQueryIndicatorDomNodes
+                    .prependTo(this.root.parentElement)
                     .addClass(`hidden-${classNameMapping[1]}`)
 
             if (
-                this.$domNodes.mediaQueryIndicator.is(':hidden') &&
+                this.mediaQueryIndicatorDomNodes.some((domNode) =>
+                    isHidden(domNode)
+                ) &&
                 classNameMapping[0] !== this.currentMediaQueryMode
             ) {
-                this.fireEvent(
-                    'changeMediaQueryMode',
-                    false,
+                this.onChangeMediaQueryMode.call(
                     this,
                     this.currentMediaQueryMode,
                     classNameMapping[0],
-                    ...parameters
+                    event
                 )
 
-                this.fireEvent(
-                    `changeTo${capitalize(classNameMapping[0])}Mode`,
-                    false,
-                    this,
-                    this.currentMediaQueryMode,
-                    classNameMapping[0],
-                    ...parameters
-                )
+                this[
+                    `changeTo${capitalize(classNameMapping[0])}Mode` as
+                        'onChangeToExtraSmallMode'
+                ].call(this, this.currentMediaQueryMode, event)
 
                 this.currentMediaQueryMode = classNameMapping[0]
             }
 
-            this.$domNodes.mediaQueryIndicator.removeClass(
-                `hidden-${classNameMapping[1]}`
-            )
+            for (const domNode of this.mediaQueryIndicatorDomNodes)
+                domNode.classList.remove(`hidden-${classNameMapping[1]}`)
         }
     }
     /**
@@ -780,7 +741,7 @@ export class WebsiteUtilities<
      */
     async _performStartUpEffects(elementNumber = 1): Promise<void> {
         // Stop and delete spinner instance.
-        this.$domNodes.windowLoadingCover.hide()
+        this.windowLoadingCoverDomNode.hide()
 
         if (this.windowLoadingSpinner)
             this.windowLoadingSpinner.stop()
@@ -830,15 +791,10 @@ export class WebsiteUtilities<
             'hashchange',
             (event: Event) => {
                 if (this.startUpAnimationIsComplete)
-                    this.fireEvent(
-                        'switchSection',
-                        false,
-                        this,
-                        location.hash.substring('#'.length),
-                        event
+                    this.onSectionSwitch.call(
+                        this, location.hash.substring('#'.length), event
                     )
-            },
-            false
+            }
         )
 
         this._bindScrollToTopButton()
@@ -847,42 +803,23 @@ export class WebsiteUtilities<
      * Adds trigger to scroll top buttons.
      */
     _bindScrollToTopButton() {
-        this.on(
-            this.$domNodes.scrollToTopButton,
-            'click',
-            (event: Event) => {
+        for (const domNode of this.scrollToTopButtons)
+            domNode.addEventListener('click', (event: Event) => {
                 event.preventDefault()
 
                 this.scrollToTop()
-            }
-        )
+            })
     }
     /**
      * Executes the page tracking code.
      */
     _bindClickTracking() {
         if (this.options.tracking) {
-            if (this.options.tracking.linkClick)
-                this.on(
-                    this.$domNodes.parent?.find('a'),
-                    'click',
-                    (event: JQuery.Event & {target: HTMLLinkElement}) => {
-                        this.options.tracking?.linkClick?.call(
-                            this, $(event.target), event
-                        )
-                    }
-                )
+            for (const domNode of this.root.querySelectorAll('a'))
+                domNode.addEventListener('click', this.onButtonClick.bind(this))
 
-            if (this.options.tracking.buttonClick)
-                this.on(
-                    this.$domNodes.parent?.find('button'),
-                    'click',
-                    (event: JQuery.Event & {target: HTMLButtonElement}) => {
-                        this.options.tracking?.buttonClick?.call(
-                            this, $(event.target), event
-                        )
-                    }
-                )
+            for (const domNode of this.root.querySelectorAll('button'))
+                domNode.addEventListener('click', this.onLinkClick.bind(this))
         }
     }
     /// endregion
