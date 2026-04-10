@@ -32,17 +32,6 @@ import {SpinnerOptions} from 'spin.js'
 import WebsiteUtilities from './index'
 // endregion
 // region exports
-export type WebsiteUtilitiesFunction =
-    ((..._parameters: Array<unknown>) => unknown) &
-    {class: typeof WebsiteUtilities}
-declare global {
-    interface JQueryStatic {
-        WebsiteUtilities: WebsiteUtilitiesFunction
-    }
-
-    const dataLayer: Array<unknown>
-}
-
 export type DomNodes<Type = string> =
     BaseDomNodes<Type> &
     {

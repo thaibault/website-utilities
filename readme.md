@@ -92,25 +92,6 @@ after needed dependencies:
 
 ```HTML
 <script
-    src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-    crossorigin="anonymous"
-></script>
-<script
-    src="https://torben.website/clientnode/data/distributionBundle/index.js"
-></script>
-<script
-    src="https://torben.website/internationalisation/data/distributionBundle/index.js"
-></script>
-<!--Inject downloaded file:
-<script src="index.js"></script>
--->
-<!--Or integrate via cdn:-->
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<!--Inject downloaded file:-->
-<script src="index.compiled.js"></script>
-<!--Or integrate via cdn:
-<script
     src="https://torben.website/website-utilities/data/distributionBundle/index.js"
 ></script>
 -->
@@ -189,25 +170,6 @@ Here you can see the initialisation with all available plugin options:
 -->
 
 ```HTML
-<script
-    src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-    crossorigin="anonymous"
-></script>
-<script
-    src="https://torben.website/clientnode/data/distributionBundle/index.js"
-></script>
-<script
-    src="https://torben.website/internationalisation/data/distributionBundle/index.js"
-></script>
-<!--Inject downloaded file:
-<script src="index.js"></script>
--->
-<!--Or integrate via cdn:-->
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<!--Inject downloaded file:-->
-<script src="index.compiled.js"></script>
-<!--Or integrate via cdn:
 <script
     src="https://torben.website/website-utilities/data/distributionBundle/index.js"
 ></script>

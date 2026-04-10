@@ -3,7 +3,6 @@
   "version": "1.0.375",
   "description": "extend your web app",
   "keywords": [
-    "jquery",
     "website",
     "utilities"
   ],
@@ -67,7 +66,6 @@
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/ejs": "^3.1.5",
     "@types/html-minifier": "^4.0.6",
-    "@types/jquery": "^4.0.0",
     "@types/jsdom": "^28.0.0",
     "@types/node": "^25.4.0",
     "@typescript-eslint/eslint-plugin": "^8.57.0",
@@ -81,7 +79,6 @@
     "eslint-plugin-jsdoc": "^62.7.1",
     "internationalisation": "^1.0.351",
     "jest": "^30.3.0",
-    "jquery": "^4.0.0",
     "jsdoc": "^4.0.5",
     "mini-css-extract-plugin": "^2.10.1",
     "postcss": "^8.5.8",
@@ -106,7 +103,6 @@
     "@babel/runtime": "*",
     "clientnode": "*",
     "internationalisation": "*",
-    "jquery": "*",
     "spin.js": "*"
   },
   "peerDependenciesMeta": {
@@ -116,16 +112,13 @@
     "internationalisation": {
       "optional": true
     },
-    "jquery": {
-      "optional": true
-    },
     "spin.js": {
       "optional": true
     }
   },
   "engines": {
-    "node": ">=20",
-    "npm": ">=10",
+    "node": ">=24",
+    "npm": ">=11",
     "yarn": ">=4"
   },
   "resolutions": {
