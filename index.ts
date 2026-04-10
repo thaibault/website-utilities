@@ -405,13 +405,11 @@ export class WebsiteUtilities<
      * Scrolls to top of page. Runs the given function after viewport arrives.
      * @returns Returns the current instance.
      */
-    scrollToTop(): this {
+    scrollToTop() {
         if (globalContext.document)
             $('html, body')
                 .stop()
                 .animate({scrollTop: 0}, this.options.scrollToTop.options)
-
-        return this
     }
     /**
      * This method disables scrolling on the given web view.
