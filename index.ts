@@ -22,6 +22,8 @@ import {
     capitalize,
     debounce,
     extend,
+    fadeIn,
+    fadeOut,
     format,
     getText,
     globalContext,
@@ -31,7 +33,6 @@ import {
     NOOP,
     onDocumentReady,
     preventDefault,
-    ProcedureFunction,
     represent,
     timeout
 } from 'clientnode'
@@ -256,13 +257,13 @@ export class WebsiteUtilities<
         ) => void = NOOP
 
     @property({type: func})
-        onStartUpAnimationComplete: ProcedureFunction = NOOP
+        onStartUpAnimationComplete: (this: WebsiteUtilities) => void = NOOP
     @property({type: func})
-        onSwitchSection: ProcedureFunction = NOOP
+        onSwitchSection: (this: WebsiteUtilities) => void = NOOP
     @property({type: func})
-        onViewportMovesAwayFromTop: ProcedureFunction = NOOP
+        onViewportMovesAwayFromTop: (this: WebsiteUtilities) => void = NOOP
     @property({type: func})
-        onViewportMovesToTop: ProcedureFunction = NOOP
+        onViewportMovesToTop: (this: WebsiteUtilities) => void = NOOP
     @property({type: func})
         onSwitchToManualScrollingIndicator: (event: Event) => boolean = (
             event: Event & {which?: number}
@@ -511,7 +512,7 @@ export class WebsiteUtilities<
                 bottom:
                     '-=' +
                     String(
-                        this.options.scrollToTop.button.slideDistanceInPixel
+                        this.options.scrollToTopButtonSlideDistanceInPixel
                     ),
                 display: 'none'
             })
@@ -534,35 +535,36 @@ export class WebsiteUtilities<
      */
     _onViewportMovesAwayFromTop = debounce((): void => {
         if (this.scrollToTopButtons.some((domNode) =>
-            domNode.style.visibility === 'hidden'
+            domNode.style.display === 'hidden'
         ))
             for (const domNode of this.scrollToTopButtons)
                 domNode.style.opacity = '1'
         else
-            this.scrollToTopButtons
-                .finish()
-                .css({
-                    bottom:
-                        '+=' +
-                        String(
-                            this.options.scrollToTopButtonSlideDistanceInPixel
-                        ),
-                    display: 'block',
-                    opacity: 0
-                })
-                .animate(
-                    {
+            for (const domNode of this.scrollToTopButtons)
+                domNode
+                    .finish()
+                    .css({
                         bottom:
-                            '-=' +
+                            '+=' +
                             String(
-                                this.options.scrollToTop.button
-                                    .slideDistanceInPixel
+                                this.options.scrollToTopButtonSlideDistanceInPixel
                             ),
-                        queue: false,
-                        opacity: 1
-                    },
-                    this.options.scrollToTop.button.showAnimationOptions
-                )
+                        display: 'block',
+                        opacity: 0
+                    })
+                    .animate(
+                        {
+                            bottom:
+                                '-=' +
+                                String(
+                                    this.options
+                                        .scrollToTopButtonSlideDistanceInPixel
+                                ),
+                            queue: false,
+                            opacity: 1
+                        },
+                        this.options.scrollToTop.button.showAnimationOptions
+                    )
     })
     /**
      * This method triggers if we change the current section.
@@ -591,12 +593,6 @@ export class WebsiteUtilities<
                 )
             }
         }
-    }
-    /**
-     * This method is complete if last startup animation was initialized.
-     */
-    _onStartUpAnimationComplete(): Promise<void> | void {
-        this.startUpAnimationIsComplete = true
     }
     // endregion
     /// region helper
@@ -712,76 +708,60 @@ export class WebsiteUtilities<
         await timeout(this.options.additionalPageLoadingTimeInMilliseconds)
 
         // Hide startup animation dom nodes to show them step by step.
-        $(format(
+        for (const domNode of this.root.querySelectorAll(format(
             '[class^="{1}"], [class*=" {1}"]',
-            this.sliceDomNodeSelectorPrefix(
-                this.options.domNodes.startUpAnimationClassPrefix
-            ).substring(1)
-        )).css(this.options.startUpHide)
+            this.options.selectors.startUpAnimationClassPrefix
+        ).substring(1)))
+            (domNode as HTMLElement).style.visibility = 'hidden'
 
-        await new Promise<void>((resolve: () => void) => {
-            if (this.$domNodes.windowLoadingCover.length) {
-                this.enableScrolling()
+        if (this.windowLoadingCoverDomNode) {
+            this.enableScrolling()
 
-                this.$domNodes.windowLoadingCover.animate(
-                    this.options.windowLoadingCoverHideAnimation,
-                    {always: () => {
-                        resolve()
-                    }}
-                )
-            } else
-                resolve()
-        })
+            return fadeOut(this.windowLoadingCoverDomNode)
+        }
+
+        return Promise.resolve()
     }
     /**
      * This method handles the given start up effect step.
-     * @param elementNumber - The current startup step.
      * @returns Promise resolving to nothing when start up effects have been
      * finished.
      */
-    async _performStartUpEffects(elementNumber = 1): Promise<void> {
+    async _performStartUpEffects(): Promise<void> {
         // Stop and delete spinner instance.
-        this.windowLoadingCoverDomNode.hide()
+        if (this.windowLoadingCoverDomNode)
+            this.windowLoadingCoverDomNode.style.display = 'none'
 
         if (this.windowLoadingSpinner)
             this.windowLoadingSpinner.stop()
 
-        if ($(format(
-            '[class^="{1}"], [class*=" {1}"]',
-            this.sliceDomNodeSelectorPrefix(
-                this.options.domNodes.startUpAnimationClassPrefix
-            ).substring(1)
-        )).length) {
+        const animationPromises: Array<Promise<void>> = []
+        let elementNumber = 1
+        while (true) {
+            const domNodesToAnimate = this.root.querySelectorAll(
+                this.options.selectors.startUpAnimationClassPrefix +
+                String(elementNumber)
+            )
+
+            if (domNodesToAnimate.length === 0) {
+                await Promise.all(animationPromises)
+                this.startUpAnimationIsComplete = true
+                this.onStartUpAnimationComplete.call(this)
+                break
+            }
+
             await timeout(
                 this.options.startUpAnimationElementDelayInMilliseconds
             )
 
-            let lastElementTriggered = false
-
-            const $domNode: $T = $(
-                this.options.domNodes.startUpAnimationClassPrefix +
+            for (const domNode of this.root.querySelectorAll(
+                this.options.selectors.startUpAnimationClassPrefix +
                 String(elementNumber)
-            )
+            ))
+                animationPromises.push(fadeIn(domNode as HTMLElement))
 
-            $domNode.animate(
-                this.options.startUpShowAnimation,
-                {
-                    always: () => {
-                        if (lastElementTriggered)
-                            this.fireEvent('startUpAnimationComplete')
-                    }
-                }
-            )
-
-            if ($(
-                this.options.domNodes.startUpAnimationClassPrefix +
-                String(elementNumber + 1)
-            ).length)
-                await this._performStartUpEffects(elementNumber + 1)
-            else
-                lastElementTriggered = true
-        } else
-            this.fireEvent('startUpAnimationComplete')
+            elementNumber += 1
+        }
     }
     /**
      * This method adds triggers to switch section.
