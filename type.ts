@@ -16,14 +16,7 @@
     endregion
 */
 // region imports
-import {
-    DomNodes as BaseDomNodes,
-    FirstParameter,
-    Mapping,
-    Options as BaseOptions,
-    ProcedureFunction,
-    $T
-} from 'clientnode'
+import {FirstParameter, Mapping, ProcedureFunction} from 'clientnode'
 import {
     Options as InternationalisationOptions
 } from 'internationalisation/type'
@@ -32,26 +25,9 @@ import {SpinnerOptions} from 'spin.js'
 import WebsiteUtilities from './index'
 // endregion
 // region exports
-export type DomNodes<Type = string> =
-    BaseDomNodes<Type> &
-    {
-        mediaQueryIndicator: Type
-
-        scrollToTopButton: Type
-
-        startUpAnimationClassPrefix: Type
-
-        top: Type
-
-        windowLoadingCover: Type
-        windowLoadingSpinner: Type
-    }
-
 export interface DefaultOptions {
-    activateLanguageSupport: boolean
     additionalPageLoadingTimeInMilliseconds: number
     domain: string
-    domNodes: DomNodes
     domNodeSelectorInfix: null | string
     domNodeSelectorPrefix: string
     initialSectionName: string
@@ -59,61 +35,30 @@ export interface DefaultOptions {
     language: Partial<InternationalisationOptions>
     mediaQueryClassNameIndicator: Array<Array<string>>
     name: string
-    onChangeMediaQueryMode: ProcedureFunction
-    onChangeToExtraSmallMode: ProcedureFunction
-    onChangeToLargeMode: ProcedureFunction
-    onChangeToMediumMode: ProcedureFunction
-    onChangeToSmallMode: ProcedureFunction
-    onStartUpAnimationComplete: ProcedureFunction
-    onSwitchSection: ProcedureFunction
-    onViewportMovesAwayFromTop: ProcedureFunction
-    onViewportMovesToTop: ProcedureFunction
-    scrollToTop: {
-        button: {
-            hideAnimationOptions: JQuery.EffectsOptions<HTMLElement>
-            showAnimationOptions: JQuery.EffectsOptions<HTMLElement>
-            slideDistanceInPixel: number
-        },
-        options: JQuery.EffectsOptions<HTMLElement>
-    },
-    startUpAnimationElementDelayInMilliseconds: number
-    /*
-        NOTE: We cannot use type helper "Parameters" (or "FirstParameter" which
-        is based on "Parameters") since this grabs always last (often wrong)
-        overloaded signature.
-    */
-    startUpHide: Mapping<number | string>
-    startUpShowAnimation: FirstParameter<$T['animate']>
-    switchToManualScrollingIndicator: (event: JQuery.Event) => boolean
-    tracking?: {
-        buttonClick?: (
-            this: WebsiteUtilities,
-            $link: $T<HTMLButtonElement>,
-            event: JQuery.Event
-        ) => void
-        linkClick?: (
-            this: WebsiteUtilities,
-            $link: $T<HTMLLinkElement>,
-            event: JQuery.Event
-        ) => void
-        sectionSwitch?: (this: WebsiteUtilities, sectionName: string) => void
-        track: (item: TrackingItem) => void
+    scrollToTopButtonSlideDistanceInPixel: number
+    selectors: {
+        mediaQueryIndicator: string
+        scrollToTopButton: string
+        startUpAnimationClassPrefix: string
+        top: string
+        windowLoadingCover: string
+        windowLoadingSpinner: string
     }
-    windowLoadingCoverHideAnimation: FirstParameter<$T['animate']>
+    startUpAnimationElementDelayInMilliseconds: number
     windowLoadingSpinner: SpinnerOptions
     windowLoadedTimeoutAfterDocLoadedInMSec: number
 }
-export type Options = BaseOptions & DefaultOptions
+export type Options = DefaultOptions
 
 export interface TrackingItem {
-    context: string
+    context?: string
     event: string
     eventType: string
     icon?: string
     label: string
     reference: string
     subject: string
-    value: number
+    value?: number
     userInteraction: boolean
 }
 // endregion

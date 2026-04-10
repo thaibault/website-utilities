@@ -18,29 +18,28 @@
 */
 // region imports
 import {
-    $,
-    $DomNodes,
-    $T,
+    camelCaseToDelimited,
     capitalize,
     debounce,
     extend,
     format,
+    getText,
     globalContext,
     Logger,
     Mapping,
     NOOP,
-    PlainObject,
-    RecursivePartial,
+    preventDefault,
+    ProcedureFunction,
     represent,
-    timeout,
-    Tools
+    timeout
 } from 'clientnode'
-import Internationalisation from 'internationalisation'
+import {func, object} from 'clientnode/property-types'
 import {Spinner} from 'spin.js'
+import {property} from 'web-component-wrapper/decorator'
+import {WebComponentAPI} from 'web-component-wrapper/type'
+import {Web} from 'web-component-wrapper/Web'
 
-import {
-    DefaultOptions, DomNodes, Options, TrackingItem, WebsiteUtilitiesFunction
-} from './type'
+import {DefaultOptions, Options, TrackingItem} from './type'
 // endregion
 export const log = new Logger({name: 'website-utilities'})
 // region plugins/classes
@@ -52,20 +51,6 @@ export const log = new Logger({name: 'website-utilities'})
  * language support should be used or not.
  * @property _defaultOptions.additionalPageLoadingTimeInMilliseconds -
  * Additional time to wait until page will be indicated as loaded.
- * @property _defaultOptions.domNodes - Mapping of dom node descriptions to
- * their corresponding selectors.
- * @property _defaultOptions.domNodes.mediaQueryIndicator - Selector for
- * indicator dom node to use to trigger current media query mode.
- * @property _defaultOptions.domNodes.top - Selector to indicate that viewport
- * is currently on top.
- * @property _defaultOptions.domNodes.scrollToTopButton - Selector for
- * starting an animated scroll to top.
- * @property _defaultOptions.domNodes.startUpAnimationClassPrefix - Class name
- * selector prefix for all dom nodes to appear during start up animations.
- * @property _defaultOptions.domNodes.windowLoadingCover - Selector to the full
- * window loading cover dom node.
- * @property _defaultOptions.domNodes.windowLoadingSpinner - Selector to the
- * window loading spinner (on top of the window loading cover).
  * @property _defaultOptions.domNodeSelectorInfix - Selector infix for all
  * nodes to take into account.
  * @property _defaultOptions.domNodeSelectorPrefix - Selector prefix for all
@@ -74,88 +59,78 @@ export const log = new Logger({name: 'website-utilities'})
  * @property _defaultOptions.knownScrollEventNames - Saves all known scroll
  * events in a space separated string.
  * @property _defaultOptions.language - Options for client side
- * internationalisation handler.
+ * internationalization handler.
  * @property _defaultOptions.mediaQueryClassNameIndicator - Mapping of media
  * query class indicator names to internal event names.
- * @property _defaultOptions.onChangeMediaQueryMode - Callback to trigger if
- * media query mode changes.
- * @property _defaultOptions.onChangeToExtraSmallMode - Callback to trigger if
- * media query mode changes to extra small mode.
- * @property _defaultOptions.onChangeToLargeMode - Callback to trigger if media
- * query mode changes to large mode.
- * @property _defaultOptions.onChangeToMediumMode - Callback to trigger if
- * media query mode changes to medium mode.
- * @property _defaultOptions.onChangeToSmallMode - Callback to trigger if media
- * query mode changes to small mode.
- * @property _defaultOptions.onStartUpAnimationComplete - Callback to trigger
- * if all start up animations has finished.
- * @property _defaultOptions.onSwitchSection - Callback to trigger if current
- * section switches.
- * @property _defaultOptions.onViewportMovesAwayFromTop - Callback to trigger
- * when viewport moves away from top.
- * @property _defaultOptions.onViewportMovesToTop - Callback to trigger when
- * viewport arrives at top.
- * @property _defaultOptions.scrollToTop - Options for automated scroll top
- * animation.
- * @property _defaultOptions.scrollToTop.button - To top scroll button behavior
- * configuration.
- * @property _defaultOptions.scrollToTop.button.hideAnimationOptions -
- * Configures hide animation.
- * @property _defaultOptions.scrollToTop.button.showAnimationOptions -
- * Configures show animation.
- * @property _defaultOptions.scrollToTop.options - Scrolling animation options.
+ * @property _defaultOptions.scrollToTopButtonSlideDistanceInPixel - Distance
+ * to slide up until fading out.
+ * @property _defaultOptions.selectors - Mapping of dom node descriptions to
+ * their corresponding selectors.
+ * @property _defaultOptions.selectors.mediaQueryIndicator - Selector for
+ * indicator dom node to use to trigger current media query mode.
+ * @property _defaultOptions.selectors.top - Selector to indicate that viewport
+ * is currently on top.
+ * @property _defaultOptions.selectors.scrollToTopButton - Selector for
+ * starting an animated scroll to top.
+ * @property _defaultOptions.selectors.startUpAnimationClassPrefix - Class name
+ * selector prefix for all dom nodes to appear during start up animations.
+ * @property _defaultOptions.selectors.windowLoadingCover - Selector to the full
+ * window loading cover dom node.
+ * @property _defaultOptions.selectors.windowLoadingSpinner - Selector to the
+ * window loading spinner (on top of the window loading cover).
  * @property _defaultOptions.startUpAnimationElementDelayInMilliseconds - Delay
  * between two startup animated dom nodes in order.
- * @property _defaultOptions.startUpHide - Options for initially hiding dom
- * nodes showing on startup later.
- * @property _defaultOptions.startUpShowAnimation - Options for startup show in
- * animation.
- * @property _defaultOptions.switchToManualScrollingIndicator - Indicator
- * function to stop currently running scroll animations to let the user get
- * control of current scrolling behavior. Given callback gets an event object.
- * If the function returns "true" current animated scrolls will be stopped.
- * @property _defaultOptions.tracking - Tracking configuration to collect
- * user's behavior data.
- * @property _defaultOptions.tracking.buttonClick - Function to call on button
- * click events.
- * @property _defaultOptions.tracking.linkClick - Function to call on link
- * click events.
- * @property _defaultOptions.tracking.sectionSwitch - Function to call on
- * section switches.
- * @property _defaultOptions.tracking.track - Tracker call itself.
- * @property _defaultOptions.windowLoadingCoverHideAnimation - Options for
- * startup loading cover hide animation.
  * @property _defaultOptions.windowLoadingSpinner - Options for the window
  * loading cover spinner.
  * @property _defaultOptions.windowLoadedTimeoutAfterDocLoadedInMSec - Duration
  * after loading cover should be removed.
  * @property options - Finally configured given options.
- * @property $domNodes - Saves a set of references to all needed dom nodes.
  * @property currentMediaQueryMode - Saves current media query status depending
  * on available space in current browser window.
  * @property currentSectionName - Saves current section hash name.
- * @property languageHandler - Reference to the language switcher instance.
  * @property startUpAnimationIsComplete - Indicates whether start up animations
  * has finished.
  * @property viewportIsOnTop - Indicates whether current viewport is on top.
  * @property windowLoaded - Indicates whether window is already loaded.
  * @property windowLoadingSpinner - The window loading spinner instance.
+ * @property onChangeMediaQueryMode - Callback to trigger if media query mode
+ * changes.
+ * @property onChangeToExtraSmallMode - Callback to trigger if media query mode
+ * changes to extra small mode.
+ * @property onChangeToLargeMode - Callback to trigger if media query mode
+ * changes to large mode.
+ * @property onChangeToMediumMode - Callback to trigger if media query mode
+ * changes to medium mode.
+ * @property onChangeToSmallMode - Callback to trigger if media query mode
+ * changes to small mode.
+ * @property onStartUpAnimationComplete - Callback to trigger if all start up
+ * animations has finished.
+ * @property onSwitchSection - Callback to trigger if current section switches.
+ * @property onViewportMovesAwayFromTop - Callback to trigger when viewport
+ * moves away from top.
+ * @property onViewportMovesToTop - Callback to trigger when viewport arrives
+ * at top.
+ * @property onSwitchToManualScrollingIndicator - Indicator
+ * function to stop currently running scroll animations to let the user get
+ * control of current scrolling behavior. Given callback gets an event object.
+ * If the function returns "true" current animated scrolls will be stopped.
+ * @property onButtonClick - Function to call on button click events.
+ * @property onLinkClick - Function to call on link click events.
+ * @property onSectionSwitch - Function to call on section switches.
+ * @property onTrack - Tracker call itself.
  */
-export class WebsiteUtilities extends Tools {
+export class WebsiteUtilities<
+    TElement = HTMLElement,
+    ExternalProperties extends Mapping<unknown> = Mapping<unknown>,
+    InternalProperties extends Mapping<unknown> = Mapping<unknown>
+> extends Web<
+    TElement, ExternalProperties, InternalProperties
+> {
+    static _name = 'WebsiteUtilities'
+
     static _defaultOptions: DefaultOptions = {
-        activateLanguageSupport: true,
         additionalPageLoadingTimeInMilliseconds: 0,
         domain: 'auto',
-        domNodes: {
-            mediaQueryIndicator: '<div class="wu-media-query-indicator">',
-            scrollToTopButton: 'a[href="#top"]',
-            startUpAnimationClassPrefix: '.wu-start-up-animation-number-',
-            top: 'header',
-            windowLoadingCover:
-                '.window-loading-cover, .wu-window-loading-cover',
-            windowLoadingSpinner:
-                '.window-loading-cover > div, .wu-window-loading-cover > div'
-        } as unknown as DomNodes,
         domNodeSelectorInfix: 'wu',
         domNodeSelectorPrefix: 'body.{1}',
         initialSectionName: 'home',
@@ -176,92 +151,20 @@ export class WebsiteUtilities extends Tools {
             ['large', 'lg']
         ],
         name: 'WebsiteUtilities',
-        onChangeMediaQueryMode: NOOP,
-        onChangeToExtraSmallMode: NOOP,
-        onChangeToLargeMode: NOOP,
-        onChangeToMediumMode: NOOP,
-        onChangeToSmallMode: NOOP,
-        onViewportMovesAwayFromTop: NOOP,
-        onViewportMovesToTop: NOOP,
-        onSwitchSection: NOOP,
-        onStartUpAnimationComplete: NOOP,
-        scrollToTop: {
-            button: {
-                hideAnimationOptions: {},
-                showAnimationOptions: {},
-                slideDistanceInPixel: 30
-            },
-            options: {duration: 'fast'}
+        scrollToTopButtonSlideDistanceInPixel: 30,
+        selectors: {
+            mediaQueryIndicator: '<div class="wu-media-query-indicator">',
+            scrollToTopButton: 'a[href="#top"]',
+            startUpAnimationClassPrefix: '.wu-start-up-animation-number-',
+            top: 'header',
+            windowLoadingCover:
+                '.window-loading-cover, .wu-window-loading-cover',
+            windowLoadingSpinner:
+                '.window-loading-cover > div, .wu-window-loading-cover > div'
         },
+
         startUpAnimationElementDelayInMilliseconds: 100,
-        startUpHide: {opacity: 0},
-        startUpShowAnimation: {opacity: 1},
-        switchToManualScrollingIndicator: (event: JQuery.Event): boolean => (
-            typeof event.which === 'number' && event.which > 0 ||
-            event.type === 'mousedown' ||
-            event.type === 'mousewheel' ||
-            event.type === 'touchmove'
-        ),
-        tracking: {
-            buttonClick: function(
-                this: WebsiteUtilities, $button: $T<HTMLButtonElement>
-            ) {
-                this.track({
-                    event: 'buttonClick',
-                    eventType: 'click',
-                    label: $button.text(),
-                    reference:
-                        $button.attr('action') ||
-                        $button.attr('target') ||
-                        $button.attr('type') ||
-                        $button.text(),
-                    subject: 'button',
-                    value: parseInt(
-                        $button.attr('website-analytics-value') as string
-                    ),
-                    userInteraction: true
-                })
-            },
-            linkClick: function(
-                this: WebsiteUtilities, $link: $T<HTMLLinkElement>
-            ) {
-                this.track({
-                    event: 'linkClick',
-                    eventType: 'click',
-                    label: $link.text(),
-                    reference:
-                        $link.attr('href') ||
-                        $link.attr('action') ||
-                        $link.attr('target') ||
-                        $link.attr('type') ||
-                        $link.text(),
-                    subject: 'link',
-                    value: parseInt(
-                        $link.attr('website-analytics-value') as string
-                    ),
-                    userInteraction: true
-                })
-            },
-            sectionSwitch: function(
-                this: WebsiteUtilities, sectionName: string
-            ) {
-                if (globalContext.window?.location)
-                    this.track({
-                        event: 'sectionSwitch',
-                        eventType: 'sectionSwitch',
-                        label: sectionName,
-                        reference:
-                            `${globalContext.window.location.pathname}#` +
-                            sectionName,
-                        subject: 'url',
-                        userInteraction: false
-                    })
-            },
-            track: (item: TrackingItem) => {
-                globalContext.dataLayer?.push(item as unknown as PlainObject)
-            }
-        },
-        windowLoadingCoverHideAnimation: {opacity: 0},
+
         windowLoadingSpinner: {
             animation: 'spinner-line-fade-quick',
             className: 'spinner',
@@ -298,88 +201,204 @@ export class WebsiteUtilities extends Tools {
         windowLoadedTimeoutAfterDocLoadedInMSec: 2000
     }
 
-    options = null as unknown as Options
+    readonly self = WebsiteUtilities
 
-    $domNodes = null as unknown as $DomNodes
+    @property({type: object})
+        options = {} as Options
 
     currentMediaQueryMode = ''
     currentSectionName = 'home'
-
-    languageHandler: Internationalisation | null = null
 
     startUpAnimationIsComplete = false
 
     viewportIsOnTop = false
     windowLoaded = false
 
+    /// region dom nodes
     windowLoadingSpinner: null | Spinner = null
+    mediaQueryIndicators: Array<HTMLElement> = []
+
+    scrollToTopButtons: Array<HTMLElement> = []
+
+    startUpAnimationDomNodes: Array<HTMLElement> = []
+
+    topDomNode: HTMLElement | null = null
+
+    windowLoadingCoverDomNode: HTMLElement | null = null
+    windowLoadingSpinnerDomNode: HTMLElement | null = null
+    /// endregion
+    @property({type: func})
+        onChangeMediaQueryMode: ProcedureFunction = NOOP
+    @property({type: func})
+        onChangeToExtraSmallMode: ProcedureFunction = NOOP
+    @property({type: func})
+        onChangeToLargeMode: ProcedureFunction = NOOP
+    @property({type: func})
+        onChangeToMediumMode: ProcedureFunction = NOOP
+    @property({type: func})
+        onChangeToSmallMode: ProcedureFunction = NOOP
+    @property({type: func})
+        onStartUpAnimationComplete: ProcedureFunction = NOOP
+    @property({type: func})
+        onSwitchSection: ProcedureFunction = NOOP
+    @property({type: func})
+        onViewportMovesAwayFromTop: ProcedureFunction = NOOP
+    @property({type: func})
+        onViewportMovesToTop: ProcedureFunction = NOOP
+    @property({type: func})
+        onSwitchToManualScrollingIndicator: (event: Event) => boolean = (
+            event: Event & {which?: number}
+        ): boolean => (
+            typeof event.which === 'number' && event.which > 0 ||
+            event.type === 'mousedown' ||
+            event.type === 'mousewheel' ||
+            event.type === 'touchmove'
+        )
+
+    @property({type: func})
+        onLoaded: () => void = NOOP
+
+    @property({type: func})
+        onButtonClick = function(this: WebsiteUtilities, event: Event) {
+            const button = event.target as HTMLElement
+            const content = getText(button).join(' ')
+
+            this.onTrack({
+                event: 'buttonClick',
+                eventType: 'click',
+                label: content,
+                reference:
+                    button.getAttribute('action') ||
+                    button.getAttribute('target') ||
+                    button.getAttribute('type') ||
+                    content,
+                subject: 'button',
+                value: parseInt(
+                    button.getAttribute(
+                        'website-analytics-value'
+                    ) ||
+                    '1'
+                ),
+                userInteraction: true
+            })
+        }
+    @property({type: func})
+        onSectionSwitch = function(
+            this: WebsiteUtilities, sectionName: string
+        ) {
+            if (!globalContext.window?.location)
+                return
+
+            this.onTrack({
+                event: 'sectionSwitch',
+                eventType: 'sectionSwitch',
+                label: sectionName,
+                reference:
+                    `${globalContext.window.location.pathname}#${sectionName}`,
+                subject: 'url',
+                userInteraction: false
+            })
+        }
+    @property({type: func})
+        onLinkClick = function(
+            this: WebsiteUtilities, event: Event
+        ) {
+            const link = event.target as HTMLElement
+            const content = getText(link).join(' ')
+
+            this.onTrack({
+                event: 'linkClick',
+                eventType: 'click',
+                label: content,
+                reference:
+                    link.getAttribute('href') ||
+                    link.getAttribute('action') ||
+                    link.getAttribute('target') ||
+                    link.getAttribute('type') ||
+                    content,
+                subject: 'link',
+                value: parseInt(
+                    link.getAttribute(
+                        'website-analytics-value'
+                    ) ||
+                    '1'
+                ),
+                userInteraction: true
+            })
+        }
+    @property({type: func})
+        onTrack = function(item: TrackingItem) {
+            (globalContext as {dataLayer: Array<TrackingItem>})
+                .dataLayer?.push(item)
+        }
     // region public methods
-    /// region special
+    /// region live-cycle
+    /**
+     * Triggered when ever a given attribute has changed and triggers to update
+     * configured dom content.
+     * @param name - Attribute name which was updates.
+     * @param newValue - New updated value.
+     */
+    onUpdateAttribute(name: string, newValue: string) {
+        super.onUpdateAttribute(name, newValue)
+
+        if (name === 'options')
+            this.options = extend<Options>(
+                true,
+                {} as Options,
+                this.self._defaultOptions,
+                this.options
+            )
+    }
     /**
      * Initializes the interactive web application.
-     * @param options - An options object.
-     * @returns Returns a promise containing the current instance.
      */
-    initialize<R = Promise<WebsiteUtilities>>(
-        options: RecursivePartial<Options> = {}
-    ): R {
-        super.initialize(extend(
-            true, {} as Options, WebsiteUtilities._defaultOptions, options
-        ))
-
-        this.$domNodes = this.grabDomNodes(this.options.domNodes as Mapping)
+    connectedCallback(): void {
+        if (Object.keys(this.options).length === 0)
+            this.onUpdateAttribute('options', '{}')
 
         this.disableScrolling()
 
-        return new Promise<WebsiteUtilities>((
-            resolve: (value: WebsiteUtilities) => void
-        ): void => {
-            if (this.$domNodes.windowLoadingSpinner.length) {
-                this.windowLoadingSpinner =
-                    new Spinner(this.options.windowLoadingSpinner)
-                this.windowLoadingSpinner.spin(
-                    this.$domNodes.windowLoadingSpinner[0]
-                )
+        this.windowLoadingCoverDomNode =
+        this.root.querySelector(this.options.selectors.windowLoadingCover)
+
+        if (this.windowLoadingSpinnerDomNode) {
+            this.windowLoadingSpinner =
+                new Spinner(this.options.windowLoadingSpinner)
+            this.windowLoadingSpinner.spin(
+                this.windowLoadingSpinnerDomNode
+            )
+        }
+
+        this._bindScrollEvents()
+
+        if (this.root.parentElement)
+            this.root.parentElement.style.visibility = 'visible'
+
+        const onLoaded = () => {
+            if (!this.windowLoaded) {
+                this.windowLoaded = true
+
+                void this._removeLoadingCover().then(() => {
+                    void this._performStartUpEffects()
+
+                    this.onLoaded()
+                })
             }
+        }
+        $(() => {
+            void timeout(
+                onLoaded,
+                this.options.windowLoadedTimeoutAfterDocLoadedInMSec
+            )
+        })
+        globalContext.window?.addEventListener('load', onLoaded)
 
-            this._bindScrollEvents()
+        this._bindClickTracking()
 
-            this.$domNodes.parent?.show()
-
-            const onLoaded = () => {
-                if (!this.windowLoaded) {
-                    this.windowLoaded = true
-
-                    void this._removeLoadingCover().then(() => {
-                        void this._performStartUpEffects()
-
-                        resolve(this)
-                    })
-                }
-            }
-            $(() => {
-                void timeout(
-                    onLoaded,
-                    this.options.windowLoadedTimeoutAfterDocLoadedInMSec
-                )
-            })
-            this.on(this.$domNodes.window, 'load', onLoaded)
-
-            this._bindClickTracking()
-
-            if (this.options.activateLanguageSupport && !this.languageHandler)
-                void $(this.$domNodes.parent as unknown as HTMLBodyElement)
-                    .Internationalisation(this.options.language)
-                    .then(($domNode: $T<HTMLBodyElement>) => {
-                        this.languageHandler =
-                            $domNode.data('Internationalisation') as
-                                Internationalisation<HTMLBodyElement>
-                    })
-
-            this._bindNavigationEvents()
-            this._bindMediaQueryChangeEvents()
-            this._triggerWindowResizeEvents()
-        }) as unknown as R
+        this._bindNavigationEvents()
+        this._bindMediaQueryChangeEvents()
+        this._triggerWindowResizeEvents()
     }
     // endregion
     /**
@@ -398,27 +417,26 @@ export class WebsiteUtilities extends Tools {
      * This method disables scrolling on the given web view.
      * @returns Returns the current instance.
      */
-    disableScrolling(): this {
-        this.$domNodes.parent?.addClass('disable-scrolling')
-            .on('touchmove', (event: JQuery.Event) => {
-                event.preventDefault()
-            })
+    disableScrolling() {
+        if (!this.root.parentElement)
+            return
 
-        return this
+        this.root.parentElement.classList.add('disable-scrolling')
+        this.root.parentElement.addEventListener('touchmove', preventDefault)
     }
     /**
      * This method disables scrolling on the given web view.
      * @returns Returns the current instance.
      */
-    enableScrolling(): this {
-        if (this.$domNodes.parent) {
-            this.$domNodes.parent.removeClass(
-                ['disable-scrolling', 'touchmove']
-            )
-            this.off(this.$domNodes.parent)
-        }
+    enableScrolling() {
+        if (!this.root.parentElement)
+            return
 
-        return this
+        this.root.parentElement.classList.remove('disable-scrolling')
+        this.root.parentElement.classList.remove('touchmove')
+        this.root.parentElement.removeEventListener(
+            'touchmove', preventDefault
+        )
     }
     /**
      * Triggers an analytics event. All given arguments are forwarded to
@@ -431,7 +449,7 @@ export class WebsiteUtilities extends Tools {
             context?: string
             value?: number
         }
-    ): this {
+    ) {
         if (globalContext.window?.location && this.options.tracking) {
             const trackingItem: TrackingItem = {
                 context:
@@ -872,11 +890,16 @@ export class WebsiteUtilities extends Tools {
     /// endregion
     // endregion
 }
+
+export const api: WebComponentAPI<
+    HTMLElement, Mapping<unknown>, Mapping<unknown>, typeof Web
+> = {
+    component: WebsiteUtilities,
+    register: (
+        tagName: string = camelCaseToDelimited(WebsiteUtilities._name)
+    ) => {
+        customElements.define(tagName, WebsiteUtilities)
+    }
+}
 export default WebsiteUtilities
-// endregion
-// region handle $ extending
-$.WebsiteUtilities = ((...parameters: Array<unknown>): unknown =>
-    Tools.controller(WebsiteUtilities, parameters)
-) as WebsiteUtilitiesFunction
-$.WebsiteUtilities.class = WebsiteUtilities
 // endregion
