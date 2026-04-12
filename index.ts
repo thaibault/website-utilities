@@ -258,12 +258,18 @@ export class WebsiteUtilities<
 
     @property({type: func})
         onStartUpAnimationComplete: (this: WebsiteUtilities) => void = NOOP
+
     @property({type: func})
         onSwitchSection: (this: WebsiteUtilities) => void = NOOP
+
     @property({type: func})
-        onViewportMovesAwayFromTop: (this: WebsiteUtilities) => void = NOOP
+        onViewportMovesAwayFromTop: (
+            this: WebsiteUtilities, event?: Event
+        ) => void = NOOP
     @property({type: func})
-        onViewportMovesToTop: (this: WebsiteUtilities) => void = NOOP
+        onViewportMovesToTop: (this: WebsiteUtilities, event?: Event) => void =
+            NOOP
+
     @property({type: func})
         onSwitchToManualScrollingIndicator: (event: Event) => boolean = (
             event: Event & {which?: number}
@@ -648,55 +654,54 @@ export class WebsiteUtilities<
      * callbacks.
      */
     _bindScrollEvents(...parameters: Array<unknown>): void {
-        const $bodyHTML = $('body, html')
-        const $scrollTarget: $T = this.$domNodes.window ?
-            $bodyHTML.add(this.$domNodes.window) :
-            $bodyHTML
-        $scrollTarget.on(
-            this.options.knownScrollEventNames.join(' '),
-            (event: JQuery.Event) => {
-                /*
-                    NOTE: Stop automatic scrolling if the user wants to scroll
-                    manually.
-                */
-                if (this.options.switchToManualScrollingIndicator(event))
-                    $scrollTarget.stop(true)
-            }
-        )
+        if (!globalContext.document)
+            return
 
-        this.on(
-            this.$domNodes.window,
+        for (const node of [
+            globalContext.document.body,
+            globalContext.document.querySelector('html'),
+            globalContext.window
+        ])
+            for (const eventName of this.options.knownScrollEventNames)
+                node?.addEventListener(
+                    eventName,
+                    (event: Event) => {
+                        /*
+                            NOTE: Stop automatic scrolling if the user wants to
+                            scroll manually.
+                        */
+                        if (this.onSwitchToManualScrollingIndicator(event))
+                            node.stop(true)
+                    }
+                )
+
+        globalContext.window?.addEventListener(
             'scroll',
-            (): void => {
-                if (this.$domNodes.window?.scrollTop()) {
+            (event: Event): void => {
+                if (globalContext.window?.scrollY) {
                     if (this.viewportIsOnTop) {
                         this.viewportIsOnTop = false
 
-                        this.fireEvent(
-                            'viewportMovesAwayFromTop',
-                            false,
-                            this,
-                            ...parameters
-                        )
+                        this._onViewportMovesAwayFromTop()
+                        this.onViewportMovesAwayFromTop.call(this, event)
                     }
                 } else if (!this.viewportIsOnTop) {
                     this.viewportIsOnTop = true
 
-                    this.fireEvent(
-                        'viewportMovesToTop', false, this, ...parameters
-                    )
+                    this._onViewportMovesToTop()
+                    this.onViewportMovesToTop.call(this, event)
                 }
             }
         )
 
-        if (this.$domNodes.window?.scrollTop()) {
+        if (globalContext.window?.scrollY) {
             this.viewportIsOnTop = false
-            this.fireEvent(
-                'viewportMovesAwayFromTop', false, this, ...parameters
-            )
+            this._onViewportMovesAwayFromTop()
+            this.onViewportMovesAwayFromTop.call(this)
         } else {
             this.viewportIsOnTop = true
-            this.fireEvent('viewportMovesToTop', false, this, ...parameters)
+            this._onViewportMovesToTop()
+            this.onViewportMovesToTop.call(this)
         }
     }
     /**
