@@ -356,7 +356,7 @@ export class WebsiteUtilities<
             (globalContext as {dataLayer: Array<TrackingItem>})
                 .dataLayer?.push(item)
         }
-    // region public methods
+    // region public
     /// region live-cycle
     /**
      * Triggered when ever a given attribute has changed and triggers to update
