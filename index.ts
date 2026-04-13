@@ -19,7 +19,7 @@
 // region imports
 import {
     camelCaseToDelimited,
-    capitalize,
+    capitalize, createDomNodes,
     debounce,
     extend,
     fadeIn,
@@ -156,7 +156,8 @@ export class WebsiteUtilities<
         name: 'WebsiteUtilities',
         scrollToTopButtonSlideDistanceInPixel: 30,
         selectors: {
-            mediaQueryIndicators: '<div class="wu-media-query-indicator">',
+            mediaQueryIndicator:
+                '<div class="wu-media-query-indicator"></div>',
             scrollToTopButtons: 'a[href="#top"]',
             startUpAnimationClassPrefix: '.wu-start-up-animation-number-',
             top: 'header',
@@ -221,7 +222,7 @@ export class WebsiteUtilities<
 
     windowLoadingSpinner: null | Spinner = null
     /// region dom nodes
-    mediaQueryIndicatorDomNodes: NodeListOf<HTMLElement> | null = null
+    mediaQueryIndicatorDomNode: HTMLElement | null = null
 
     scrollToTopButtonDomNodes: NodeListOf<HTMLElement> | null = null
 
@@ -432,10 +433,6 @@ export class WebsiteUtilities<
     }
     // endregion
     grabDomNodes(): void {
-        this.mediaQueryIndicatorDomNodes = this.root.querySelectorAll(
-            this.options.selectors.mediaQueryIndicators
-        )
-
         this.scrollToTopButtonDomNodes = this.root.querySelectorAll(
             this.options.selectors.scrollToTopButtons
         )
@@ -635,15 +632,20 @@ export class WebsiteUtilities<
         for (
             const classNameMapping of this.options.mediaQueryClassNameIndicator
         ) {
-            if (this.root.parentElement)
-                this.mediaQueryIndicatorDomNodes
-                    .prependTo(this.root.parentElement)
-                    .addClass(`hidden-${classNameMapping[1]}`)
+            if (this.root.parentElement) {
+                this.mediaQueryIndicatorDomNode =
+                    createDomNodes(this.options.selectors.mediaQueryIndicator)
+                this.root.parentElement.prepend(
+                    this.mediaQueryIndicatorDomNode
+                )
+                this.mediaQueryIndicatorDomNode.classList.add(
+                    `hidden-${classNameMapping[1]}`
+                )
+            }
 
             if (
-                this.mediaQueryIndicatorDomNodes.some((domNode) =>
-                    isHidden(domNode)
-                ) &&
+                this.mediaQueryIndicatorDomNode &&
+                isHidden(this.mediaQueryIndicatorDomNode) &&
                 classNameMapping[0] !== this.currentMediaQueryMode
             ) {
                 this.onChangeMediaQueryMode.call(
