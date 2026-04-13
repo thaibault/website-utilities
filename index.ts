@@ -156,8 +156,8 @@ export class WebsiteUtilities<
         name: 'WebsiteUtilities',
         scrollToTopButtonSlideDistanceInPixel: 30,
         selectors: {
-            mediaQueryIndicator: '<div class="wu-media-query-indicator">',
-            scrollToTopButton: 'a[href="#top"]',
+            mediaQueryIndicators: '<div class="wu-media-query-indicator">',
+            scrollToTopButtons: 'a[href="#top"]',
             startUpAnimationClassPrefix: '.wu-start-up-animation-number-',
             top: 'header',
             windowLoadingCover:
@@ -219,13 +219,11 @@ export class WebsiteUtilities<
     viewportIsOnTop = false
     windowLoaded = false
 
-    /// region dom nodes
     windowLoadingSpinner: null | Spinner = null
-    mediaQueryIndicatorDomNodes: Array<HTMLElement> = []
+    /// region dom nodes
+    mediaQueryIndicatorDomNodes: NodeListOf<HTMLElement> | null = null
 
-    scrollToTopButtons: Array<HTMLElement> = []
-
-    startUpAnimationDomNodes: Array<HTMLElement> = []
+    scrollToTopButtonDomNodes: NodeListOf<HTMLElement> | null = null
 
     topDomNode: HTMLElement | null = null
 
@@ -384,8 +382,7 @@ export class WebsiteUtilities<
 
         this.disableScrolling()
 
-        this.windowLoadingCoverDomNode =
-        this.root.querySelector(this.options.selectors.windowLoadingCover)
+        this.grabDomNodes()
 
         if (this.windowLoadingSpinnerDomNode) {
             this.windowLoadingSpinner =
@@ -417,15 +414,40 @@ export class WebsiteUtilities<
                 this.options.windowLoadedTimeoutAfterDocLoadedInMSec
             )
         })
-        globalContext.window?.addEventListener('load', onLoaded)
+        if (globalContext.window)
+            this.addSecureEventListener(
+                globalContext.window, 'load', onLoaded
+            )
 
         this._bindClickTracking()
 
         this._bindNavigationEvents()
-        this._bindMediaQueryChangeEvents()
+        if (globalContext.window)
+            this.addSecureEventListener(
+                globalContext.window,
+                'resize',
+                this._triggerWindowResizeEvents.bind(this)
+            )
         this._triggerWindowResizeEvents()
     }
     // endregion
+    grabDomNodes(): void {
+        this.mediaQueryIndicatorDomNodes = this.root.querySelectorAll(
+            this.options.selectors.mediaQueryIndicators
+        )
+
+        this.scrollToTopButtonDomNodes = this.root.querySelectorAll(
+            this.options.selectors.scrollToTopButtons
+        )
+
+        this.topDomNode = this.root.querySelector(this.options.selectors.top)
+
+        this.windowLoadingCoverDomNode =
+            this.root.querySelector(this.options.selectors.windowLoadingCover)
+        this.windowLoadingSpinnerDomNode = this.root.querySelector(
+            this.options.selectors.windowLoadingSpinner
+        )
+    }
     /**
      * Scrolls to top of page. Runs the given function after viewport arrives.
      * @returns Returns the current instance.
@@ -443,7 +465,9 @@ export class WebsiteUtilities<
             return
 
         this.root.parentElement.classList.add('disable-scrolling')
-        this.root.parentElement.addEventListener('touchmove', preventDefault)
+        this.addSecureEventListener(
+            this.root.parentElement, 'touchmove', preventDefault
+        )
     }
     /**
      * This method disables scrolling on the given web view.
@@ -507,15 +531,15 @@ export class WebsiteUtilities<
      * @returns Nothing.
      */
     _onViewportMovesToTop = debounce((): void => {
-        if (this.scrollToTopButtons.some((domNode) =>
+        if (Array.from(this.scrollToTopButtonDomNodes ?? []).some((domNode) =>
             domNode.style.visibility === 'hidden'
         ))
-            for (const domNode of this.scrollToTopButtons)
+            for (const domNode of this.scrollToTopButtonDomNodes ?? [])
                 domNode.style.opacity = '0'
         else {
             this.options.scrollToTop.button.hideAnimationOptions.always = (
             ): $T => {
-                for (const domNode of this.scrollToTopButtons) {
+                for (const domNode of this.scrollToTopButtonDomNodes || []) {
                     domNode.style.bottom = String(
                         parseInt(domNode.style.bottom) -
                         this.options.scrollToTopButtonSlideDistanceInPixel
@@ -604,14 +628,6 @@ export class WebsiteUtilities<
     // endregion
     /// region helper
     /**
-     * This method adds triggers for responsive design switches.
-     */
-    _bindMediaQueryChangeEvents() {
-        globalContext.window?.addEventListener(
-            'resize', this._triggerWindowResizeEvents.bind(this)
-        )
-    }
-    /**
      * This method triggers if the responsive design switches its mode.
      * @param event - Event object if existing.
      */
@@ -664,36 +680,40 @@ export class WebsiteUtilities<
             globalContext.window
         ])
             for (const eventName of this.options.knownScrollEventNames)
-                node?.addEventListener(
-                    eventName,
-                    (event: Event) => {
-                        /*
-                            NOTE: Stop automatic scrolling if the user wants to
-                            scroll manually.
-                        */
-                        if (this.onSwitchToManualScrollingIndicator(event))
-                            node.stop(true)
-                    }
-                )
+                if (node)
+                    this.addSecureEventListener(
+                        node,
+                        eventName,
+                        (event: Event) => {
+                            /*
+                                NOTE: Stop automatic scrolling if the user wants to
+                                scroll manually.
+                            */
+                            if (this.onSwitchToManualScrollingIndicator(event))
+                                node.stop(true)
+                        }
+                    )
 
-        globalContext.window?.addEventListener(
+        if (globalContext.window)
+            this.addSecureEventListener(
+                globalContext.window,
             'scroll',
-            (event: Event): void => {
-                if (globalContext.window?.scrollY) {
-                    if (this.viewportIsOnTop) {
-                        this.viewportIsOnTop = false
+                (event: Event): void => {
+                    if (globalContext.window?.scrollY) {
+                        if (this.viewportIsOnTop) {
+                            this.viewportIsOnTop = false
 
-                        this._onViewportMovesAwayFromTop()
-                        this.onViewportMovesAwayFromTop.call(this, event)
+                            this._onViewportMovesAwayFromTop()
+                            this.onViewportMovesAwayFromTop.call(this, event)
+                        }
+                    } else if (!this.viewportIsOnTop) {
+                        this.viewportIsOnTop = true
+
+                        this._onViewportMovesToTop()
+                        this.onViewportMovesToTop.call(this, event)
                     }
-                } else if (!this.viewportIsOnTop) {
-                    this.viewportIsOnTop = true
-
-                    this._onViewportMovesToTop()
-                    this.onViewportMovesToTop.call(this, event)
                 }
-            }
-        )
+            )
 
         if (globalContext.window?.scrollY) {
             this.viewportIsOnTop = false
@@ -773,15 +793,17 @@ export class WebsiteUtilities<
      * This method adds triggers to switch section.
      */
     _bindNavigationEvents() {
-        globalContext.window?.addEventListener(
-            'hashchange',
-            (event: Event) => {
-                if (this.startUpAnimationIsComplete)
-                    this.onSectionSwitch.call(
-                        this, location.hash.substring('#'.length), event
-                    )
-            }
-        )
+        if (globalContext.window)
+            this.addSecureEventListener(
+                globalContext.window,
+                'hashchange',
+                (event: Event) => {
+                    if (this.startUpAnimationIsComplete)
+                        this.onSectionSwitch.call(
+                            this, location.hash.substring('#'.length), event
+                        )
+                }
+            )
 
         this._bindScrollToTopButton()
     }
@@ -789,12 +811,16 @@ export class WebsiteUtilities<
      * Adds trigger to scroll top buttons.
      */
     _bindScrollToTopButton() {
-        for (const domNode of this.scrollToTopButtons)
-            domNode.addEventListener('click', (event: Event) => {
-                event.preventDefault()
+        for (const domNode of this.scrollToTopButtonDomNodes || [])
+            this.addSecureEventListener(
+                domNode,
+                'click',
+                (event: Event) => {
+                    event.preventDefault()
 
-                this.scrollToTop()
-            })
+                    this.scrollToTop()
+                }
+            )
     }
     /**
      * Executes the page tracking code.
@@ -802,10 +828,14 @@ export class WebsiteUtilities<
     _bindClickTracking() {
         if (this.options.tracking) {
             for (const domNode of this.root.querySelectorAll('a'))
-                domNode.addEventListener('click', this.onButtonClick.bind(this))
+                this.addSecureEventListener(
+                    domNode, 'click', this.onButtonClick.bind(this)
+                )
 
             for (const domNode of this.root.querySelectorAll('button'))
-                domNode.addEventListener('click', this.onLinkClick.bind(this))
+                this.addSecureEventListener(
+                    domNode, 'click', this.onButtonClick.bind(this)
+                )
         }
     }
     /// endregion

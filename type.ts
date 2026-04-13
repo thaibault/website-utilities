@@ -36,10 +36,13 @@ export interface DefaultOptions {
     name: string
     scrollToTopButtonSlideDistanceInPixel: number
     selectors: {
-        mediaQueryIndicator: string
-        scrollToTopButton: string
-        startUpAnimationClassPrefix: string
+        mediaQueryIndicators: string
+
         top: string
+        scrollToTopButtons: string
+
+        startUpAnimationClassPrefix: string
+
         windowLoadingCover: string
         windowLoadingSpinner: string
     }
