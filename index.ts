@@ -514,15 +514,16 @@ export class WebsiteUtilities<
                 domNode.style.opacity = '0'
         else {
             this.options.scrollToTop.button.hideAnimationOptions.always = (
-            ): $T => this.$domNodes.scrollToTopButton.css({
-                bottom:
-                    '-=' +
-                    String(
+            ): $T => {
+                for (const domNode of this.scrollToTopButtons) {
+                    domNode.style.bottom = String(
+                        parseInt(domNode.style.bottom) -
                         this.options.scrollToTopButtonSlideDistanceInPixel
-                    ),
-                display: 'none'
-            })
-            this.$domNodes.scrollToTopButton.finish().animate(
+                    )
+                    domNode.style.display = 'none'
+                }
+            }
+            this.scrollToTopButtons.finish().animate(
                 {
                     bottom:
                         '+=' +
