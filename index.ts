@@ -63,8 +63,6 @@ export const log = new Logger({name: 'website-utilities'})
  * internationalization handler.
  * @property _defaultOptions.mediaQueryClassNameIndicator - Mapping of media
  * query class indicator names to internal event names.
- * @property _defaultOptions.scrollToTopButtonSlideDistanceInPixel - Distance
- * to slide up until fading out.
  * @property _defaultOptions.selectors - Mapping of dom node descriptions to
  * their corresponding selectors.
  * @property _defaultOptions.selectors.mediaQueryIndicator - Selector for
@@ -134,8 +132,6 @@ export class WebsiteUtilities<
     static _defaultOptions: DefaultOptions = {
         additionalPageLoadingTimeInMilliseconds: 0,
         domain: 'auto',
-        domNodeSelectorInfix: 'wu',
-        domNodeSelectorPrefix: 'body.{1}',
         initialSectionName: 'home',
         knownScrollEventNames: [
             'DOMMouseScroll',
@@ -146,15 +142,12 @@ export class WebsiteUtilities<
             'touchmove',
             'wheel'
         ],
-        language: {},
         mediaQueryClassNameIndicator: [
             ['extraSmall', 'xs'],
             ['small', 'sm'],
             ['medium', 'md'],
             ['large', 'lg']
         ],
-        name: 'WebsiteUtilities',
-        scrollToTopButtonSlideDistanceInPixel: 30,
         selectors: {
             mediaQueryIndicator:
                 '<div class="wu-media-query-indicator"></div>',
@@ -526,33 +519,14 @@ export class WebsiteUtilities<
      * @returns Nothing.
      */
     _onViewportMovesToTop = debounce((): void => {
-        if (Array.from(this.scrollToTopButtonDomNodes ?? []).some((domNode) =>
-            domNode.style.visibility === 'hidden'
-        ))
-            for (const domNode of this.scrollToTopButtonDomNodes ?? [])
-                domNode.style.opacity = '0'
-        else {
-            this.options.scrollToTop.button.hideAnimationOptions.always = (
-            ): $T => {
-                for (const domNode of this.scrollToTopButtonDomNodes || []) {
-                    domNode.style.bottom = String(
-                        parseInt(domNode.style.bottom) -
-                        this.options.scrollToTopButtonSlideDistanceInPixel
-                    )
-                    domNode.style.display = 'none'
-                }
-            }
-            this.scrollToTopButtons.finish().animate(
-                {
-                    bottom:
-                        '+=' +
-                        String(
-                            this.options.scrollToTopButtonSlideDistanceInPixel
-                        ),
-                    opacity: 0
-                },
-                this.options.scrollToTop.button.hideAnimationOptions
-            )
+        this._finishScrollToTopButtonTransition()
+
+        for (const domNode of this.scrollToTopButtonDomNodes ?? []) {
+            domNode.addEventListener('transitionend', () => {
+                domNode.classList.remove('scroll-up-start')
+                domNode.classList.add('top-settled scroll-up-end')
+            })
+            domNode.classList.add('scroll-up-start')
         }
     })
     /**
@@ -560,37 +534,19 @@ export class WebsiteUtilities<
      * @returns Nothing.
      */
     _onViewportMovesAwayFromTop = debounce((): void => {
-        if (this.scrollToTopButtons.some((domNode) =>
-            domNode.style.display === 'hidden'
-        ))
-            for (const domNode of this.scrollToTopButtons)
-                domNode.style.opacity = '1'
-        else
-            for (const domNode of this.scrollToTopButtons)
-                domNode
-                    .finish()
-                    .css({
-                        bottom:
-                            '+=' +
-                            String(
-                                this.options.scrollToTopButtonSlideDistanceInPixel
-                            ),
-                        display: 'block',
-                        opacity: 0
-                    })
-                    .animate(
-                        {
-                            bottom:
-                                '-=' +
-                                String(
-                                    this.options
-                                        .scrollToTopButtonSlideDistanceInPixel
-                                ),
-                            queue: false,
-                            opacity: 1
-                        },
-                        this.options.scrollToTop.button.showAnimationOptions
-                    )
+        if (Array.from(this.scrollToTopButtonDomNodes ?? []).some(
+            (domNode) => domNode.classList.contains('top-settled')
+        )) {
+            this._finishScrollToTopButtonTransition()
+
+            for (const domNode of this.scrollToTopButtonDomNodes ?? []) {
+                domNode.addEventListener('transitionend', () => {
+                    domNode.classList.remove('scroll-down-start')
+                    domNode.classList.add('scroll-down-end')
+                })
+                domNode.classList.add('scroll-down-start')
+            }
+        }
     })
     /**
      * This method triggers if we change the current section.
@@ -622,6 +578,14 @@ export class WebsiteUtilities<
     }
     // endregion
     /// region helper
+    _finishScrollToTopButtonTransition() {
+        for (const domNode of this.scrollToTopButtonDomNodes ?? [])
+            domNode.classList.remove(
+                'scroll-down-start', 'scroll-down-end',
+                'scroll-up-end', 'scroll-up-start',
+                'top-settled'
+            )
+    }
     /**
      * This method triggers if the responsive design switches its mode.
      * @param event - Event object if existing.
@@ -661,8 +625,8 @@ export class WebsiteUtilities<
                 this.currentMediaQueryMode = classNameMapping[0]
             }
 
-            for (const domNode of this.mediaQueryIndicatorDomNodes)
-                domNode.classList.remove(`hidden-${classNameMapping[1]}`)
+            this.mediaQueryIndicatorDomNode?.classList
+                .remove(`hidden-${classNameMapping[1]}`)
         }
     }
     /**
@@ -686,11 +650,11 @@ export class WebsiteUtilities<
                         eventName,
                         (event: Event) => {
                             /*
-                                NOTE: Stop automatic scrolling if the user wants to
-                                scroll manually.
+                                NOTE: Stop automatic scrolling if the user
+                                wants to scroll manually.
                             */
                             if (this.onSwitchToManualScrollingIndicator(event))
-                                node.stop(true)
+                                console.log('TODO', 'node.stop(true)')
                         }
                     )
 

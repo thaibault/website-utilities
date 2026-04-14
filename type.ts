@@ -18,7 +18,7 @@
 // region imports
 import {
     Options as InternationalisationOptions
-} from 'internationalisation/type'
+} from 'web-internationalization/type'
 import {SpinnerOptions} from 'spin.js'
 
 import WebsiteUtilities from './index'
@@ -27,14 +27,9 @@ import WebsiteUtilities from './index'
 export interface DefaultOptions {
     additionalPageLoadingTimeInMilliseconds: number
     domain: string
-    domNodeSelectorInfix: null | string
-    domNodeSelectorPrefix: string
     initialSectionName: string
     knownScrollEventNames: Array<string>
-    language: Partial<InternationalisationOptions>
     mediaQueryClassNameIndicator: Array<Array<string>>
-    name: string
-    scrollToTopButtonSlideDistanceInPixel: number
     selectors: {
         mediaQueryIndicator: string
 
@@ -46,8 +41,11 @@ export interface DefaultOptions {
         windowLoadingCover: string
         windowLoadingSpinner: string
     }
+
     startUpAnimationElementDelayInMilliseconds: number
+
     tracking: boolean
+
     windowLoadingSpinner: SpinnerOptions
     windowLoadedTimeoutAfterDocLoadedInMSec: number
 }

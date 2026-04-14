@@ -49,39 +49,30 @@ endregion */
     /* endregion */
 }
 
-.wu {
+website-utilities {
     margin: 0;
 
     font-family: var(--w-typography-font-family, v.$typography-font-family);
     font-size: 14px;
 }
 
-.wu-lang-replacement,
-.wu lang-replacement {
+website-utilities lang-replacement {
     display: none;
 }
 /* region  generic dom nodes */
 /** region headline */
-.wu-h1,
-.wu h1,
-.wu-h2,
-.wu h2,
-.wu-h3,
-.wu h3,
-.wu-h4,
-.wu h4,
-.wu-h5,
-.wu h5,
-.wu-h6,
-.wu h6 {
+website-utilities h1,
+website-utilities h2,
+website-utilities h3,
+website-utilities h4,
+website-utilities h5,
+website-utilities h6 {
     font-family: var(--w-typography-font-family, v.$typography-font-family);
     line-height: 1.1;
 }
 
-.wu-h1,
-.wu h1,
-.wu-h2,
-.wu h2 {
+website-utilities h1,
+website-utilities h2 {
     font-family:
         var(
             --w-typography-font-family-headline,
@@ -91,20 +82,15 @@ endregion */
     font-size: 3em;
 }
 
-.wu-h2,
-.wu h2 {
+website-utilities h2 {
     font-size: 2em;
 }
 /** endregion */
 /** region  link */
-a.wu-a,
-.wu a,
-a.wu-a:hover,
-.wu a:hover,
-a.wu-a:focus,
-.wu a:focus,
-a.wu-a:visited,
-.wu a:visited {
+website-utilities a,
+website-utilities a:hover,
+website-utilities a:focus,
+website-utilities a:visited {
     outline: none;
     text-decoration: none;
 }
@@ -112,18 +98,16 @@ a.wu-a:visited,
 /* endregion */
 /* region generic classes */
 /* Disables and hides a scrolling and scrollbar. */
-.tools-disable-scrolling {
+website-utilities .disable-scrolling {
     height: 100% !important;
     overflow: hidden !important;
 }
 
-.wu-action,
-.wu .action {
+website-utilities .action {
     cursor: pointer;
 }
 /* Overlay the whole page till everything is loaded completely. */
-.wu-window-loading-cover,
-.wu .window-loading-cover {
+website-utilities .window-loading-cover {
     background-color: var(--w-background-color, v.$theme-background);
     /* always cover full viewport */
     position: fixed;
@@ -139,10 +123,8 @@ a.wu-a:visited,
     }
 }
 /** region icons */
-.wu-icon,
-.wu .icon,
-.wu-icon-social,
-.wu .icon-social {
+website-utilities .icon,
+website-utilities .icon-social {
     font-family:
         var(
             --w-typography-font-family-social,
@@ -182,13 +164,11 @@ a.wu-a:visited,
     }
 }
 
-.wu-icon,
-.wu .icon {
+website-utilities .icon {
     &-arrow-left::before { content: "\E091"; }
 }
 
-.wu-icon-social,
-.wu .icon-social {
+website-utilities .icon-social {
     &::before {
         font: 24px/1em "Glyphicons Social Regular", sans-serif;
     }
@@ -248,8 +228,7 @@ a.wu-a:visited,
 /** endregion */
 /** region form */
 /*** region styled select */
-.wu-select,
-.wu .select {
+website-utilities .select {
     position: relative;
 
     &__arrow {
@@ -274,8 +253,7 @@ a.wu-a:visited,
 }
 /*** endregion */
 /*** region styled checkbox */
-.wu-checkbox,
-.wu .checkbox {
+website-utilities .checkbox {
     margin-top: 2px;
     padding-top: 3px;
 
@@ -329,8 +307,8 @@ a.wu-a:visited,
 /** endregion */
 /* endregion */
 /* Initially hide/show javaScript dependent dom nodes. */
-.tools-hidden-on-javascript-enabled { display: none; }
-.tools-visible-on-javascript-enabled { display: initial; }
+website-utilities .hidden-on-javascript-enabled { display: none; }
+website-utilities .visible-on-javascript-enabled { display: initial; }
 /* region spinner animation */
 @keyframes spinner-line-fade-more {
     0%,
@@ -362,5 +340,32 @@ a.wu-a:visited,
     1% {
         opacity: 1;
     }
+}
+/* endregion */
+/* region move to top button animation */
+website-utilities a[href="#top"] {
+    transition-property: bottom, opacity;
+    transition-duration: 1s;
+
+    position: absolute;
+    right: var(--w-default-space, #{v.$default-space});
+}
+
+website-utilities a[href="#top"].top-settled {
+    display: none;
+}
+
+website-utilities a[href="#top"].scroll-down-start,
+website-utilities a[href="#top"].scroll-up-end {
+    display: block;
+    bottom: calc(3 * var(--w-default-space, #{v.$default-space}));
+    opacity: 0;
+}
+
+website-utilities a[href="#top"].scroll-down-end,
+website-utilities a[href="#top"].scroll-up-start {
+    display: block;
+    bottom: var(--w-default-space, #{v.$default-space});
+    opacity: 1;
 }
 /* endregion */
