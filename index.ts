@@ -161,10 +161,8 @@ export class WebsiteUtilities<
             scrollToTopButtons: 'a[href="#top"]',
             startUpAnimationClassPrefix: '.wu-start-up-animation-number-',
             top: 'header',
-            windowLoadingCover:
-                '.window-loading-cover, .wu-window-loading-cover',
-            windowLoadingSpinner:
-                '.window-loading-cover > div, .wu-window-loading-cover > div'
+            windowLoadingCover: '.wu-window-loading-cover',
+            windowLoadingSpinner: '.wu-window-loading-cover > div'
         },
 
         startUpAnimationElementDelayInMilliseconds: 100,
