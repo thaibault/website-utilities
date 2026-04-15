@@ -74,7 +74,10 @@
     <!--endregion-->
     <body>
     <div class="wu-window-loading-cover"><div></div></div>
-        <website-utilities options="{additionalPageLoadingTimeInMilliseconds: 0}">
+        <website-utilities options="{
+            additionalPageLoadingTimeInMilliseconds: 0,
+            startUpAnimationElementDelayInMilliseconds: 1000
+        }">
             <header>
                 <a href="#home">Home</a>
             </header>
@@ -91,7 +94,7 @@
                 Show third
             </div>
 
-            <a href="#top">top</a>
+            <a href="#top">scroll to top</a>
         </website-utilities>
     </body>
 <html>

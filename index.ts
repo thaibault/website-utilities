@@ -386,8 +386,6 @@ export class WebsiteUtilities<
 
         this.disableScrolling()
 
-        console.log(this.options)
-
         this.grabDomNodes()
 
         if (this.windowLoadingSpinnerDomNode) {
@@ -735,6 +733,14 @@ export class WebsiteUtilities<
      * finished.
      */
     async _performStartUpEffects(): Promise<void> {
+        for (const domNode of this.root.querySelectorAll(
+            '[class^="' +
+            `${this.options.selectors.startUpAnimationClassPrefix}"], ` +
+            '[class*=" ' +
+            `${this.options.selectors.startUpAnimationClassPrefix}"]`
+        ))
+            (domNode as HTMLElement).style.opacity = '0'
+
         // Stop and delete spinner instance.
         if (this.windowLoadingCoverDomNode)
             this.windowLoadingCoverDomNode.style.display = 'none'
@@ -746,6 +752,7 @@ export class WebsiteUtilities<
         let elementNumber = 1
         while (true) {
             const domNodesToAnimate = this.root.querySelectorAll(
+                '.' +
                 this.options.selectors.startUpAnimationClassPrefix +
                 String(elementNumber)
             )
@@ -756,6 +763,8 @@ export class WebsiteUtilities<
                 this.onStartUpAnimationComplete.call(this)
                 break
             }
+
+            console.log('A', this.options.startUpAnimationElementDelayInMilliseconds)
 
             await timeout(
                 this.options.startUpAnimationElementDelayInMilliseconds
