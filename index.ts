@@ -52,10 +52,6 @@ export const log = new Logger({name: 'website-utilities'})
  * initializer method.
  * @property _defaultOptions.additionalPageLoadingTimeInMilliseconds -
  * Additional time to wait until page will be indicated as loaded.
- * @property _defaultOptions.domNodeSelectorInfix - Selector infix for all
- * nodes to take into account.
- * @property _defaultOptions.domNodeSelectorPrefix - Selector prefix for all
- * nodes to take into account.
  * @property _defaultOptions.initialSectionName - Pre-selected section name.
  * @property _defaultOptions.knownScrollEventNames - Saves all known scroll
  * events in a space separated string.
@@ -69,7 +65,7 @@ export const log = new Logger({name: 'website-utilities'})
  * indicator dom node to use to trigger current media query mode.
  * @property _defaultOptions.selectors.top - Selector to indicate that viewport
  * is currently on top.
- * @property _defaultOptions.selectors.scrollToTopButton - Selector for
+ * @property _defaultOptions.selectors.scrollToTopButtons - Selectors for
  * starting an animated scroll to top.
  * @property _defaultOptions.selectors.startUpAnimationClassPrefix - Class name
  * selector prefix for all dom nodes to appear during start up animations.
@@ -94,7 +90,7 @@ export const log = new Logger({name: 'website-utilities'})
  * @property viewportIsOnTop - Indicates whether current viewport is on top.
  * @property windowLoaded - Indicates whether window is already loaded.
  * @property windowLoadingSpinner - The window loading spinner instance.
- * @property mediaQueryIndicatorDomNodes - Dom nodes to indicate current media
+ * @property mediaQueryIndicatorDomNode - Dom node to indicate current media
  * query mode.
  * @property onChangeMediaQueryMode - Callback to trigger if media query mode
  * changes.
@@ -198,7 +194,7 @@ export class WebsiteUtilities<
         windowLoadedTimeoutAfterDocLoadedInMSec: 2000
     }
 
-    readonly self = WebsiteUtilities
+    readonly self: typeof WebsiteUtilities = WebsiteUtilities
 
     @property({type: object})
         options = {} as Options
@@ -349,6 +345,20 @@ export class WebsiteUtilities<
     // region public
     /// region live-cycle
     /**
+     * Defines dynamic getter and setter interface and resolves configuration
+     * object. Initializes the map implementation.
+     */
+    constructor() {
+        super()
+        /*
+            Babels property declaration transformation overwrites defined
+            properties at the end of an implicit constructor. So we have to
+            redefined them as long as we want to declare expected component
+            interface properties to enable static type checks.
+        */
+        this.defineGetterAndSetterInterface()
+    }
+    /**
      * Triggered when ever a given attribute has changed and triggers to update
      * configured dom content.
      * @param name - Attribute name which was updates.
@@ -362,7 +372,7 @@ export class WebsiteUtilities<
                 true,
                 {} as Options,
                 this.self._defaultOptions,
-                this.getPropertyValue(name) as Options
+                this.options
             )
     }
     /**
@@ -376,6 +386,8 @@ export class WebsiteUtilities<
 
         this.disableScrolling()
 
+        console.log(this.options)
+
         this.grabDomNodes()
 
         if (this.windowLoadingSpinnerDomNode) {
@@ -385,9 +397,6 @@ export class WebsiteUtilities<
                 this.windowLoadingSpinnerDomNode
             )
         }
-
-        // TODO
-        return
 
         this._bindScrollEvents()
 

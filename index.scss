@@ -106,22 +106,6 @@ website-utilities {
   .wu-action {
     cursor: pointer;
   }
-  /* Overlay the whole page till everything is loaded completely. */
-  .wu-window-loading-cover {
-    background-color: var(--w-background-color, v.$theme-background);
-    /* always cover full viewport */
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    z-index: 1002 !important;
-
-    > div {
-      /* Positioning the loading spinner in center in the loading overlay. */
-      position: absolute;
-      top: 50%;
-      left: 50%;
-    }
-  }
   /** region icons */
   .icon,
   .icon-social {
@@ -370,5 +354,22 @@ website-utilities {
     bottom: var(--w-default-space, #{v.$default-space});
     opacity: 1;
   }
+  /* endregion */
 }
-/* endregion */
+
+/* Overlay the whole page till everything is loaded completely. */
+.wu-window-loading-cover {
+  background-color: var(--w-background-color, v.$theme-background);
+  /* always cover full viewport */
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 1002 !important;
+
+  > div {
+    /* Positioning the loading spinner in center in the loading overlay. */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+}
