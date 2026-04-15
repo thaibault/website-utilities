@@ -713,26 +713,6 @@ export class WebsiteUtilities<
         await timeout(this.options.additionalPageLoadingTimeInMilliseconds)
 
         // Hide startup animation dom nodes to show them step by step.
-        for (const domNode of this.root.querySelectorAll(format(
-            '[class^=".{1}"], [class*=" .{1}"]',
-            this.options.selectors.startUpAnimationClassPrefix
-        )))
-            (domNode as HTMLElement).style.visibility = 'hidden'
-
-        if (this.windowLoadingCoverDomNode) {
-            this.enableScrolling()
-
-            return fadeOut(this.windowLoadingCoverDomNode)
-        }
-
-        return Promise.resolve()
-    }
-    /**
-     * This method handles the given start up effect step.
-     * @returns Promise resolving to nothing when start up effects have been
-     * finished.
-     */
-    async _performStartUpEffects(): Promise<void> {
         for (const domNode of this.root.querySelectorAll(
             '[class^="' +
             `${this.options.selectors.startUpAnimationClassPrefix}"], ` +
@@ -741,13 +721,21 @@ export class WebsiteUtilities<
         ))
             (domNode as HTMLElement).style.opacity = '0'
 
-        // Stop and delete spinner instance.
-        if (this.windowLoadingCoverDomNode)
-            this.windowLoadingCoverDomNode.style.display = 'none'
+        if (this.windowLoadingCoverDomNode) {
+            this.enableScrolling()
 
-        if (this.windowLoadingSpinner)
-            this.windowLoadingSpinner.stop()
+            await fadeOut(this.windowLoadingCoverDomNode)
 
+            if (this.windowLoadingSpinner)
+                this.windowLoadingSpinner.stop()
+        }
+    }
+    /**
+     * This method handles the given start up effect step.
+     * @returns Promise resolving to nothing when start up effects have been
+     * finished.
+     */
+    async _performStartUpEffects(): Promise<void> {
         const animationPromises: Array<Promise<void>> = []
         let elementNumber = 1
         while (true) {
@@ -764,16 +752,11 @@ export class WebsiteUtilities<
                 break
             }
 
-            console.log('A', this.options.startUpAnimationElementDelayInMilliseconds)
-
             await timeout(
                 this.options.startUpAnimationElementDelayInMilliseconds
             )
 
-            for (const domNode of this.root.querySelectorAll(
-                this.options.selectors.startUpAnimationClassPrefix +
-                String(elementNumber)
-            ))
+            for (const domNode of domNodesToAnimate)
                 animationPromises.push(fadeIn(domNode as HTMLElement))
 
             elementNumber += 1
