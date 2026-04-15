@@ -152,10 +152,10 @@ export class WebsiteUtilities<
             mediaQueryIndicator:
                 '<div class="wu-media-query-indicator"></div>',
             scrollToTopButtons: 'a[href="#top"]',
-            startUpAnimationClassPrefix: '.wu-start-up-animation-number-',
+            startUpAnimationClassPrefix: 'wu-start-up-animation-number-',
             top: 'header',
             windowLoadingCover: '.wu-window-loading-cover',
-            windowLoadingSpinner: '.wu-window-loading-cover > div'
+            windowLoadingSpinner: 'div'
         },
 
         startUpAnimationElementDelayInMilliseconds: 100,
@@ -362,13 +362,15 @@ export class WebsiteUtilities<
                 true,
                 {} as Options,
                 this.self._defaultOptions,
-                this.options
+                this.getPropertyValue(name) as Options
             )
     }
     /**
      * Initializes the interactive web application.
      */
     connectedCallback(): void {
+        super.connectedCallback()
+
         if (Object.keys(this.options).length === 0)
             this.onUpdateAttribute('options', '{}')
 
@@ -383,6 +385,9 @@ export class WebsiteUtilities<
                 this.windowLoadingSpinnerDomNode
             )
         }
+
+        // TODO
+        return
 
         this._bindScrollEvents()
 
@@ -431,10 +436,13 @@ export class WebsiteUtilities<
         this.topDomNode = this.root.querySelector(this.options.selectors.top)
 
         this.windowLoadingCoverDomNode =
-            this.root.querySelector(this.options.selectors.windowLoadingCover)
-        this.windowLoadingSpinnerDomNode = this.root.querySelector(
-            this.options.selectors.windowLoadingSpinner
-        )
+            this.root.parentElement?.querySelector(
+                this.options.selectors.windowLoadingCover
+            ) ?? null
+        this.windowLoadingSpinnerDomNode =
+            this.windowLoadingCoverDomNode?.querySelector(
+                this.options.selectors.windowLoadingSpinner
+            ) ?? null
     }
     /**
      * Scrolls to top of page. Runs the given function after viewport arrives.
@@ -594,10 +602,10 @@ export class WebsiteUtilities<
         for (
             const classNameMapping of this.options.mediaQueryClassNameIndicator
         ) {
-            if (this.root.parentElement) {
+            if (this.root.parentElement && !this.mediaQueryIndicatorDomNode) {
                 this.mediaQueryIndicatorDomNode =
                     createDomNodes(this.options.selectors.mediaQueryIndicator)
-                this.root.parentElement.prepend(
+                this.root.prepend(
                     this.mediaQueryIndicatorDomNode
                 )
                 this.mediaQueryIndicatorDomNode.classList.add(
@@ -699,9 +707,9 @@ export class WebsiteUtilities<
 
         // Hide startup animation dom nodes to show them step by step.
         for (const domNode of this.root.querySelectorAll(format(
-            '[class^="{1}"], [class*=" {1}"]',
+            '[class^=".{1}"], [class*=" .{1}"]',
             this.options.selectors.startUpAnimationClassPrefix
-        ).substring(1)))
+        )))
             (domNode as HTMLElement).style.visibility = 'hidden'
 
         if (this.windowLoadingCoverDomNode) {

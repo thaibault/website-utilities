@@ -24,23 +24,74 @@
         <!--region script-->
         <script>
             window.onload = function() {
-                internationalisation.index.api.register()
+                websiteUtilities.index.api.register()
             }
         </script>
+        <!--endregion-->
+        <!--region style-->
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            website-utilities {
+                display: block;
+
+                width: 100%;
+                height: 1000px;
+
+                box-sizing: border-box;
+                padding: 20px;
+
+                background-color: black;
+                color: white;
+            }
+
+            website-utilities a {
+                color: darkgrey;
+            }
+
+            website-utilities .header {
+                height: 80px;
+
+                padding: 20px;
+
+                background-color: #238636;
+            }
+
+            website-utilities .content {
+                height: 80px;
+
+                margin: 20px;
+                padding: 20px;
+
+                background-color: rosybrown;
+            }
+        </style>
         <!--endregion-->
     </head>
     <!--endregion-->
     <body>
-        <website-utilities>
-            <div class="wu-window-loading-cover"></div>
+    <div class="wu-window-loading-cover"><div></div></div>
+        <website-utilities options="{additionalPageLoadingTimeInMilliseconds: 3000}">
+            <header>
+                <a href="#home">Home</a>
+            </header>
 
-            <div class="header"></div>
+            <div class="content wu-start-up-animation-number-1">
+                Show first
+            </div>
 
-            <div class="wu-start-up-animation-number-1">Show first</div>
-            <div class="wu-start-up-animation-number-2">Show second</div>
-            <div class="wu-start-up-animation-number-2">Show third</div>
+            <div class="content wu-start-up-animation-number-2">
+                Show second
+            </div>
 
-            <a href="#top"></a>
+            <div class="content wu-start-up-animation-number-3">
+                Show third
+            </div>
+
+            <a href="#top">top</a>
         </website-utilities>
     </body>
 <html>

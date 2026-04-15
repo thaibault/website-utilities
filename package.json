@@ -68,12 +68,12 @@
     "@types/html-minifier": "^4.0.6",
     "@types/jsdom": "^28.0.1",
     "@types/node": "^25.6.0",
-    "@typescript-eslint/eslint-plugin": "^8.58.1",
-    "@typescript-eslint/parser": "^8.58.1",
+    "@typescript-eslint/eslint-plugin": "^8.58.2",
+    "@typescript-eslint/parser": "^8.58.2",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "clientnode": "^4.0.1386",
     "css-loader": "^7.1.4",
-    "cssnano": "^7.1.4",
+    "cssnano": "^7.1.5",
     "documentation-website": "^1.0.401",
     "eslint": "^10.2.0",
     "eslint-config-google": "^0.14.0",
@@ -96,8 +96,8 @@
     "style-loader": "^4.0.0",
     "stylelint": "^17.7.0",
     "stylelint-config-standard-scss": "^17.0.0",
-    "typescript-eslint": "^8.58.1",
-    "web-component-wrapper": "^0.0.556",
+    "typescript-eslint": "^8.58.2",
+    "web-component-wrapper": "^0.0.558",
     "weboptimizer": "^3.0.21",
     "webpack-dev-server": "^5.2.3"
   },
@@ -301,6 +301,23 @@
               }
             }
           }
+        }
+      }
+    },
+    "webpack": {
+      "snapshot": {
+        "unmanagedPaths": [
+          {
+            "__evaluate__": "/^.+?[\\/]node_modules[\\/]clientnode[\\/]/"
+          },
+          {
+            "__evaluate__": "/^.+?[\\/]node_modules[\\/]web-component-wrapper[\\/]/"
+          }
+        ]
+      },
+      "watchOptions": {
+        "ignored": {
+          "__remove__": "**/node_modules"
         }
       }
     }

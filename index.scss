@@ -50,64 +50,64 @@ endregion */
 }
 
 website-utilities {
-    margin: 0;
+  margin: 0;
 
-    font-family: var(--w-typography-font-family, v.$typography-font-family);
-    font-size: 14px;
-}
+  font-family: var(--w-typography-font-family, v.$typography-font-family);
+  font-size: 14px;
 
-website-utilities lang-replacement {
+  lang-replacement {
     display: none;
-}
-/* region  generic dom nodes */
-/** region headline */
-website-utilities h1,
-website-utilities h2,
-website-utilities h3,
-website-utilities h4,
-website-utilities h5,
-website-utilities h6 {
+  }
+
+  /* region generic dom nodes */
+  /** region headline */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--w-typography-font-family, v.$typography-font-family);
     line-height: 1.1;
-}
+  }
 
-website-utilities h1,
-website-utilities h2 {
+  h1,
+  h2 {
     font-family:
-        var(
-            --w-typography-font-family-headline,
-            v.$typography-font-family-headline
-        );
+            var(
+                    --w-typography-font-family-headline,
+                    v.$typography-font-family-headline
+            );
     font-weight: normal;
     font-size: 3em;
-}
+  }
 
-website-utilities h2 {
+  h2 {
     font-size: 2em;
-}
-/** endregion */
-/** region  link */
-website-utilities a,
-website-utilities a:hover,
-website-utilities a:focus,
-website-utilities a:visited {
+  }
+  /** endregion */
+  /** region  link */
+  a,
+  a:hover,
+  a:focus,
+  a:visited {
     outline: none;
     text-decoration: none;
-}
-/** endregion */
-/* endregion */
-/* region generic classes */
-/* Disables and hides a scrolling and scrollbar. */
-website-utilities .disable-scrolling {
+  }
+  /** endregion */
+  /* endregion */
+  /* region generic classes */
+  /* Disables and hides a scrolling and scrollbar. */
+  .wu-disable-scrolling {
     height: 100% !important;
     overflow: hidden !important;
-}
+  }
 
-website-utilities .action {
+  .wu-action {
     cursor: pointer;
-}
-/* Overlay the whole page till everything is loaded completely. */
-website-utilities .window-loading-cover {
+  }
+  /* Overlay the whole page till everything is loaded completely. */
+  .wu-window-loading-cover {
     background-color: var(--w-background-color, v.$theme-background);
     /* always cover full viewport */
     position: fixed;
@@ -116,20 +116,20 @@ website-utilities .window-loading-cover {
     z-index: 1002 !important;
 
     > div {
-        /* Positioning the loading spinner in center in the loading overlay. */
-        position: absolute;
-        top: 50%;
-        left: 50%;
+      /* Positioning the loading spinner in center in the loading overlay. */
+      position: absolute;
+      top: 50%;
+      left: 50%;
     }
-}
-/** region icons */
-website-utilities .icon,
-website-utilities .icon-social {
+  }
+  /** region icons */
+  .icon,
+  .icon-social {
     font-family:
-        var(
-            --w-typography-font-family-social,
-            v.$typography-font-family-social
-        );
+            var(
+                    --w-typography-font-family-social,
+                    v.$typography-font-family-social
+            );
     font-style: normal;
     font-weight: 400;
 
@@ -149,28 +149,28 @@ website-utilities .icon-social {
     -moz-osx-font-smoothing: grayscale;
 
     &::before {
-        font-family:
-            var(
-                --w-typography-font-family-social,
-                v.$typography-font-family-social
-            );
+      font-family:
+              var(
+                      --w-typography-font-family-social,
+                      v.$typography-font-family-social
+              );
 
-        display: inline-block;
+      display: inline-block;
 
-        left: 0;
-        margin: 0 5px 0 0;
-        position: absolute;
-        top: 0;
+      left: 0;
+      margin: 0 5px 0 0;
+      position: absolute;
+      top: 0;
     }
-}
+  }
 
-website-utilities .icon {
+  .icon {
     &-arrow-left::before { content: "\E091"; }
-}
+  }
 
-website-utilities .icon-social {
+  .icon-social {
     &::before {
-        font: 24px/1em "Glyphicons Social Regular", sans-serif;
+      font: 24px/1em "Glyphicons Social Regular", sans-serif;
     }
 
     &-white::before { color: #fff; }
@@ -224,148 +224,151 @@ website-utilities .icon-social {
     &-xbox::before { content: "\E048"; }
     &-android::before { content: "\E049"; }
     &-ios::before { content: "\E050"; }
-}
-/** endregion */
-/** region form */
-/*** region styled select */
-website-utilities .select {
+  }
+  /** endregion */
+  /** region form */
+  /*** region styled select */
+  .wu-select {
     position: relative;
 
     &__arrow {
-        position: absolute;
-        top: 3px;
-        right: 15px;
-        pointer-events: none;
+      position: absolute;
+      top: 3px;
+      right: 15px;
+      pointer-events: none;
 
-        span {
-            vertical-align: bottom;
-            font-size: 10px;
-        }
+      span {
+        vertical-align: bottom;
+        font-size: 10px;
+      }
     }
 
     select {
-        position: initial !important;
-        padding-left: 7px !important;
-        padding-right: 25px !important;
-        /* hide default down arrow in IE10 */
-        &::-ms-expand { display: none; }
+      position: initial !important;
+      padding-left: 7px !important;
+      padding-right: 25px !important;
+      /* hide default down arrow in IE10 */
+      &::-ms-expand { display: none; }
     }
-}
-/*** endregion */
-/*** region styled checkbox */
-website-utilities .checkbox {
+  }
+  /*** endregion */
+  /*** region styled checkbox */
+  .wu-checkbox {
     margin-top: 2px;
     padding-top: 3px;
 
     label {
-        padding-left: 40px;
+      padding-left: 40px;
 
-        .checkbox__wrapper {
-            margin-top: -2px;
-            margin-left: -40px;
+      .wu-checkbox__wrapper {
+        margin-top: -2px;
+        margin-left: -40px;
+        position: absolute;
+
+        .wu-checkbox__wrapper__styled {
+          border-radius: 4px;
+          border: 2px solid var(--w-theme-primary, v.$theme-primary);
+          cursor: pointer;
+          float: right;
+          height: 25px;
+          padding: 0;
+          width: 25px;
+
+          .wu-checkbox__wrapper__styled__checked {
+            background: transparent;
+            border: 3px solid var(--w-theme-on-primary, v.$theme-on-primary);
+            border-top: none;
+            border-right: none;
+            height: 8px;
+            left: 4px;
+            opacity: 0;
             position: absolute;
-
-            .checkbox__wrapper__styled {
-                border-radius: 4px;
-                border: 2px solid var(--w-theme-primary, v.$theme-primary);
-                cursor: pointer;
-                float: right;
-                height: 25px;
-                padding: 0;
-                width: 25px;
-
-                .checkbox__wrapper__styled__checked {
-                    background: transparent;
-                    border: 3px solid var(--w-theme-on-primary, v.$theme-on-primary);
-                    border-top: none;
-                    border-right: none;
-                    height: 8px;
-                    left: 4px;
-                    opacity: 0;
-                    position: absolute;
-                    top: 5px;
-                    transform: rotate(-45deg);
-                    width: 13px;
-                }
-            }
-
-            input[type="checkbox"] {
-                display: none;
-
-                &:checked ~ .checkbox-styled > .checkbox-styled-checked {
-                    opacity: 1;
-                }
-
-                &:disabled ~ .checkbox-styled {
-                    background-color: var(--w-theme-surface, v.$theme-surface);
-                }
-            }
+            top: 5px;
+            transform: rotate(-45deg);
+            width: 13px;
+          }
         }
+
+        input[type="checkbox"] {
+          display: none;
+
+          &:checked ~ .wu-checkbox-styled > .wu-checkbox-styled-checked {
+            opacity: 1;
+          }
+
+          &:disabled ~ .wu-checkbox-styled {
+            background-color: var(--w-theme-surface, v.$theme-surface);
+          }
+        }
+      }
     }
-}
-/*** endregion */
-/** endregion */
-/* endregion */
-/* Initially hide/show javaScript dependent dom nodes. */
-website-utilities .hidden-on-javascript-enabled { display: none; }
-website-utilities .visible-on-javascript-enabled { display: initial; }
-/* region spinner animation */
-@keyframes spinner-line-fade-more {
+  }
+  /*** endregion */
+  /** endregion */
+  /* endregion */
+  /* Initially hide/show javaScript dependent dom nodes. */
+  .wu-hidden-on-javascript-enabled { display: none; }
+  .wu-visible-on-javascript-enabled { display: initial; }
+  /* region spinner animation */
+  @keyframes spinner-line-fade-more {
     0%,
     100% {
-        opacity: 0;
+      opacity: 0;
     }
 
     1% {
-        opacity: 1;
+      opacity: 1;
     }
-}
-@keyframes spinner-line-fade-quick {
+  }
+  @keyframes spinner-line-fade-quick {
     0%,
     39%,
     100% {
-        opacity: 0.25;
+      opacity: 0.25;
     }
 
     40% {
-        opacity: 1;
+      opacity: 1;
     }
-}
-@keyframes spinner-line-fade-default {
+  }
+  @keyframes spinner-line-fade-default {
     0%,
     100% {
-        opacity: 0.22;
+      opacity: 0.22;
     }
 
     1% {
-        opacity: 1;
+      opacity: 1;
     }
-}
-/* endregion */
-/* region move to top button animation */
-website-utilities a[href="#top"] {
+  }
+  /* endregion */
+  /* region move to top button animation */
+  a[href="#top"] {
     transition-property: bottom, opacity;
     transition-duration: 1s;
 
-    position: absolute;
+    position: fixed;
+
+    bottom: var(--w-default-space, #{v.$default-space});
     right: var(--w-default-space, #{v.$default-space});
-}
+  }
 
-website-utilities a[href="#top"].top-settled {
+  a[href="#top"].wu-top-settled {
     display: none;
-}
+  }
 
-website-utilities a[href="#top"].scroll-down-start,
-website-utilities a[href="#top"].scroll-up-end {
+  a[href="#top"].wu-scroll-down-start,
+  a[href="#top"].wu-scroll-up-end {
     display: block;
     bottom: calc(3 * var(--w-default-space, #{v.$default-space}));
     opacity: 0;
-}
+  }
 
-website-utilities a[href="#top"].scroll-down-end,
-website-utilities a[href="#top"].scroll-up-start {
+  a[href="#top"].wu-scroll-down-end,
+  a[href="#top"].wu-scroll-up-start {
     display: block;
     bottom: var(--w-default-space, #{v.$default-space});
     opacity: 1;
+  }
 }
 /* endregion */
