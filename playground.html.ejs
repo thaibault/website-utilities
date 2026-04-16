@@ -73,8 +73,18 @@
     </head>
     <!--endregion-->
     <body>
-    <div class="wu-window-loading-cover"><div></div></div>
-        <website-utilities options="{}">
+    <div class="wu-window-loading-cover">
+        <div class="loading-text">
+            <span class="loading-text-words">L</span>
+            <span class="loading-text-words">O</span>
+            <span class="loading-text-words">A</span>
+            <span class="loading-text-words">D</span>
+            <span class="loading-text-words">I</span>
+            <span class="loading-text-words">N</span>
+            <span class="loading-text-words">G</span>
+        </div>
+    </div>
+        <website-utilities options="{windowLoadedTimeoutAfterDocLoadedInMSec: 10000}">
             <header class="wu-header">
                 <a href="#home">Home</a>
             </header>
@@ -89,6 +99,18 @@
 
             <div class="content wu-start-up-animation-number-3">
                 Show third
+            </div>
+
+            <div class="content wu-start-up-animation-number-4">
+                Show fourth
+            </div>
+
+            <div class="content wu-start-up-animation-number-5">
+                Show fifth
+            </div>
+
+            <div class="content wu-start-up-animation-number-6">
+                Show sixth
             </div>
 
             <a class="wu-scroll-to-top" href="#top">scroll to top</a>

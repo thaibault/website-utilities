@@ -15,11 +15,6 @@
     See https://creativecommons.org/licenses/by/3.0/deed.de
     endregion
 */
-// region imports
-import {SpinnerOptions} from 'spin.js'
-
-import WebsiteUtilities from './index'
-// endregion
 // region exports
 export interface DefaultOptions {
     additionalPageLoadingTimeInMilliseconds: number
@@ -41,7 +36,6 @@ export interface DefaultOptions {
 
     tracking: boolean
 
-    windowLoadingSpinner: SpinnerOptions
     windowLoadedTimeoutAfterDocLoadedInMSec: number
 }
 export type Options = DefaultOptions

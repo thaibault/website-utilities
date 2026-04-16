@@ -148,39 +148,6 @@ export class WebsiteUtilities<
 
         tracking: false,
 
-        windowLoadingSpinner: {
-            animation: 'spinner-line-fade-quick',
-            className: 'spinner',
-            color: '#000',
-            // Corner roundness (0..1)
-            corners: 1,
-            // 1: clockwise, -1: counterclockwise
-            direction: 1,
-            // CSS color or array of colors
-            fadeColor: 'transparent',
-            // Left position relative to parent in pixel
-            left: 'auto',
-            // The length of each line
-            length: 23,
-            // The number of lines to draw
-            lines: 9,
-            position: 'absolute',
-            // The radius of the inner circle
-            radius: 40,
-            // The rotation offset
-            rotate: 0,
-            // Scales overall size of the spinner
-            scale: 1,
-            shadow: false,
-            // Rounds per second
-            speed: 1.1,
-            // Top position relative to parent in pixel
-            top: 'auto',
-            // The line thickness
-            width: 11,
-            // The z-index (defaults to 2000000000)
-            zIndex: 2e9
-        },
         windowLoadedTimeoutAfterDocLoadedInMSec: 2000
     }
 
@@ -194,7 +161,7 @@ export class WebsiteUtilities<
 
     startUpAnimationIsComplete = false
 
-    viewportIsOnTop = false
+    viewportIsOnTop: boolean | undefined
     windowLoaded = false
 
     windowLoadingSpinner: null | Spinner = null
@@ -509,28 +476,25 @@ export class WebsiteUtilities<
      * @returns Nothing.
      */
     _onViewportMovesToTop(): void {
-        if (this.viewportIsOnTop)
-            return
-        this.viewportIsOnTop = true
-
         this._finishScrollToTopButtonTransition()
 
         for (const domNode of this.scrollToTopButtonDomNodes ?? []) {
-            const finishTransition = () => {
-                domNode.classList.remove('wu-scroll-up')
-                domNode.classList.add('wu-top-settled')
-
-                domNode.removeEventListener('transitionend', finishTransition)
-                domNode.removeEventListener(
-                    'transitioncancel', finishTransition
-                )
+            const cancel = () => {
+                domNode.removeEventListener('transitionend', setSettledClass)
+                domNode.removeEventListener('transitioncancel', cancel)
             }
+            const setSettledClass = () => {
+                if (this.viewportIsOnTop)
+                    domNode.classList.add('wu-top-settled')
+
+                cancel()
+            }
+
             domNode.addEventListener(
-                'transitionend', finishTransition, {once: true}
+                'transitionend', setSettledClass, {once: true}
             )
-            domNode.addEventListener(
-                'transitioncancel', finishTransition, {once: true}
-            )
+            domNode.addEventListener('transitioncancel', cancel, {once: true})
+
             domNode.classList.add('wu-scroll-up')
         }
     }
@@ -538,30 +502,19 @@ export class WebsiteUtilities<
      * This method triggers if the viewport moves away from top.
      * @returns Nothing.
      */
-    _onViewportMovesAwayFromTop(): void {
-        if (!this.viewportIsOnTop)
-            return
-        this.viewportIsOnTop = false
+    async _onViewportMovesAwayFromTop() {
+        this._finishScrollToTopButtonTransition('wu-top-settled')
+
+        /*
+            NOTE: We need to render the none setteled state beforehand to make
+            sure the transition will be performed by browser.
+        */
+        await timeout()
 
         this._finishScrollToTopButtonTransition()
 
-        for (const domNode of this.scrollToTopButtonDomNodes ?? []) {
-            const finishTransition = () => {
-                domNode.classList.remove('scroll-down')
-
-                domNode.removeEventListener('transitionend', finishTransition)
-                domNode.removeEventListener(
-                    'transitioncancel', finishTransition
-                )
-            }
-            domNode.addEventListener(
-                'transitionend', finishTransition, {once: true}
-            )
-            domNode.addEventListener(
-                'transitioncancel', finishTransition, {once: true}
-            )
+        for (const domNode of this.scrollToTopButtonDomNodes ?? [])
             domNode.classList.add('wu-scroll-down')
-        }
     }
     /**
      * This method triggers if we change the current section.
@@ -593,10 +546,12 @@ export class WebsiteUtilities<
     }
     // endregion
     /// region helper
-    _finishScrollToTopButtonTransition() {
+    _finishScrollToTopButtonTransition(
+        classNames: Array<string> | string = ['wu-scroll-down', 'wu-scroll-up']
+    ) {
         for (const domNode of this.scrollToTopButtonDomNodes ?? [])
             domNode.classList.remove(
-                'wu-scroll-down', 'wu-scroll-up', 'wu-top-settled'
+                ...([] as Array<string>).concat(classNames)
             )
     }
     /**
@@ -633,10 +588,15 @@ export class WebsiteUtilities<
                 (event: Event): void => {
                     if (globalContext.window?.scrollY) {
                         if (this.viewportIsOnTop) {
-                            this._onViewportMovesAwayFromTop()
-                            this.onViewportMovesAwayFromTop.call(this, event)
+                            this.viewportIsOnTop = false
+
+                            this._onViewportMovesAwayFromTop().then(
+                                this.onViewportMovesAwayFromTop.bind(this, event)
+                            )
                         }
                     } else if (!this.viewportIsOnTop) {
+                        this.viewportIsOnTop = true
+
                         void this._onViewportMovesToTop()
                         this.onViewportMovesToTop.call(this, event)
                     }
@@ -644,12 +604,17 @@ export class WebsiteUtilities<
             )
 
         if (globalContext.window?.scrollY) {
-            this._onViewportMovesAwayFromTop()
-            this.onViewportMovesAwayFromTop.call(this)
+            this.viewportIsOnTop = false
+
+            this._onViewportMovesAwayFromTop().then(() =>
+                this.onViewportMovesAwayFromTop.call(this)
+            )
         } else {
-            this._onViewportMovesToTop()
+            this.viewportIsOnTop = true
+
             for (const domNode of this.scrollToTopButtonDomNodes ?? [])
                 domNode.classList.add('wu-top-settled')
+            this._onViewportMovesToTop()
             this.onViewportMovesToTop.call(this)
         }
     }

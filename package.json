@@ -92,7 +92,6 @@
     "prop-types": "^15.8.1",
     "sass": "^1.99.0",
     "sass-loader": "^16.0.7",
-    "spin.js": "^4.1.2",
     "style-loader": "^4.0.0",
     "stylelint": "^17.7.0",
     "stylelint-config-standard-scss": "^17.0.0",
@@ -104,14 +103,10 @@
   "peerDependencies": {
     "@babel/runtime": "*",
     "clientnode": "*",
-    "spin.js": "*",
     "web-component-wrapper": "*"
   },
   "peerDependenciesMeta": {
     "@babel/runtime": {
-      "optional": true
-    },
-    "spin.js": {
       "optional": true
     }
   },
@@ -181,9 +176,6 @@
             "exclude": {
               "__append__": [
                 {
-                  "__evaluate__": "/^spin\\.js$/"
-                },
-                {
                   "__evaluate__": "/(?:^|\\/)web-component-wrapper(?:$|\\/)/"
                 }
               ]
@@ -226,10 +218,6 @@
               "{loader: 'sass-loader'}"
             ]
           }
-        },
-        "javaScript": {
-          "#": "We have to pre-process \"spin.js\" since it isn't a compatible ECMAScript.",
-          "exclude": "!filePath.endsWith('/spin.js') && isFilePathInDependencies(filePath)"
         }
       }
     },

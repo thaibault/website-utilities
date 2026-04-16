@@ -22,7 +22,7 @@ endregion */
     --w-large-width: #{v.$large-width};
     /*** region extra small dimension */
     @custom-media --w-extra-extra-small
-        (min-width: #{v.$extra-extra-small-width});
+    (min-width: #{v.$extra-extra-small-width});
     @custom-media --w-extra-small (min-width: #{v.$extra-small-width});
     /*** endregion */
     /*** region default media query dimensions */
@@ -50,323 +50,465 @@ endregion */
 }
 
 website-utilities {
-  margin: 0;
+    margin: 0;
 
-  font-family: var(--w-typography-font-family, v.$typography-font-family);
-  font-size: 14px;
-
-  lang-replacement {
-    display: none;
-  }
-
-  /* region generic dom nodes */
-  /** region headline */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
     font-family: var(--w-typography-font-family, v.$typography-font-family);
-    line-height: 1.1;
-  }
+    font-size: 14px;
 
-  h1,
-  h2 {
-    font-family:
-            var(
-                    --w-typography-font-family-headline,
-                    v.$typography-font-family-headline
-            );
-    font-weight: normal;
-    font-size: 3em;
-  }
+    lang-replacement {
+        display: none;
+    }
+    /* region generic dom nodes */
+    /** region headline */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: var(--w-typography-font-family, v.$typography-font-family);
+        line-height: 1.1;
+    }
 
-  h2 {
-    font-size: 2em;
-  }
-  /** endregion */
-  /** region  link */
-  a,
-  a:hover,
-  a:focus,
-  a:visited {
-    outline: none;
-    text-decoration: none;
-  }
-  /** endregion */
-  /* endregion */
-  /* region generic classes */
-  /* Disables and hides a scrolling and scrollbar. */
-  .wu-disable-scrolling {
-    height: 100% !important;
-    overflow: hidden !important;
-  }
+    h1,
+    h2 {
+        font-family: var(
+                --w-typography-font-family-headline,
+                v.$typography-font-family-headline
+        );
+        font-weight: normal;
+        font-size: 3em;
+    }
 
-  .wu-action {
-    cursor: pointer;
-  }
-  /** region icons */
-  .icon,
-  .icon-social {
-    font-family:
-            var(
+    h2 {
+        font-size: 2em;
+    }
+    /** endregion */
+    /** region  link */
+    a,
+    a:hover,
+    a:focus,
+    a:visited {
+        outline: none;
+        text-decoration: none;
+    }
+    /** endregion */
+    /* endregion */
+    /* region generic classes */
+    /* Disables and hides a scrolling and scrollbar. */
+    .wu-disable-scrolling {
+        height: 100% !important;
+        overflow: hidden !important;
+    }
+
+    .wu-action {
+        cursor: pointer;
+    }
+    /** region icons */
+    .icon,
+    .icon-social {
+        font-family: var(
+                --w-typography-font-family-social,
+                v.$typography-font-family-social
+        );
+        font-style: normal;
+        font-weight: 400;
+
+        line-height: 1;
+
+        display: inline-block;
+        position: relative;
+
+        text-decoration: none;
+
+        top: 1px;
+        vertical-align: middle;
+
+        zoom: 1;
+
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+
+        &::before {
+            font-family: var(
                     --w-typography-font-family-social,
                     v.$typography-font-family-social
             );
-    font-style: normal;
-    font-weight: 400;
 
-    line-height: 1;
+            display: inline-block;
 
-    display: inline-block;
-    position: relative;
-
-    text-decoration: none;
-
-    top: 1px;
-    vertical-align: middle;
-
-    zoom: 1;
-
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-
-    &::before {
-      font-family:
-              var(
-                      --w-typography-font-family-social,
-                      v.$typography-font-family-social
-              );
-
-      display: inline-block;
-
-      left: 0;
-      margin: 0 5px 0 0;
-      position: absolute;
-      top: 0;
-    }
-  }
-
-  .icon {
-    &-arrow-left::before { content: "\E091"; }
-  }
-
-  .icon-social {
-    &::before {
-      font: 24px/1em "Glyphicons Social Regular", sans-serif;
-    }
-
-    &-white::before { color: #fff; }
-    &-pinterest::before { content: "\E001"; }
-    &-dropbox::before { content: "\E002"; }
-    &-google_plus::before { content: "\E003"; }
-    &-jolicloud::before { content: "\E004"; }
-    &-yahoo::before { content: "\E005"; }
-    &-blogger::before { content: "\E006"; }
-    &-picasa::before { content: "\E007"; }
-    &-amazon::before { content: "\E008"; }
-    &-tumblr::before { content: "\E009"; }
-    &-wordpress::before { content: "\E010"; }
-    &-instapaper::before { content: "\E011"; }
-    &-evernote::before { content: "\E012"; }
-    &-xing::before { content: "\E013"; }
-    &-zootool::before { content: "\E014"; }
-    &-dribbble::before { content: "\E015"; }
-    &-deviantart::before { content: "\E016"; }
-    &-read_it_later::before { content: "\E017"; }
-    &-linked_in::before { content: "\E018"; }
-    &-forrst::before { content: "\E019"; }
-    &-pinboard::before { content: "\E020"; }
-    &-behance::before { content: "\E021"; }
-    &-github::before { content: "\E022"; }
-    &-youtube::before { content: "\E023"; }
-    &-skitch::before { content: "\E024"; }
-    &-foursquare::before { content: "\E025"; }
-    &-quora::before { content: "\E026"; }
-    &-badoo::before { content: "\E027"; }
-    &-spotify::before { content: "\E028"; }
-    &-stumbleupon::before { content: "\E029"; }
-    &-readability::before { content: "\E030"; }
-    &-facebook::before { content: "\E031"; }
-    &-twitter::before { content: "\E032"; }
-    &-instagram::before { content: "\E033"; }
-    &-posterous_spaces::before { content: "\E034"; }
-    &-vimeo::before { content: "\E035"; }
-    &-flickr::before { content: "\E036"; }
-    &-last_fm::before { content: "\E037"; }
-    &-rss::before { content: "\E038"; }
-    &-skype::before { content: "\E039"; }
-    &-e-mail::before { content: "\E040"; }
-    &-vine::before { content: "\E041"; }
-    &-myspace::before { content: "\E042"; }
-    &-goodreads::before { content: "\E043"; }
-    &-apple::before { content: "\F8FF"; }
-    &-windows::before { content: "\E045"; }
-    &-yelp::before { content: "\E046"; }
-    &-playstation::before { content: "\E047"; }
-    &-xbox::before { content: "\E048"; }
-    &-android::before { content: "\E049"; }
-    &-ios::before { content: "\E050"; }
-  }
-  /** endregion */
-  /** region form */
-  /*** region styled select */
-  .wu-select {
-    position: relative;
-
-    &__arrow {
-      position: absolute;
-      top: 3px;
-      right: 15px;
-      pointer-events: none;
-
-      span {
-        vertical-align: bottom;
-        font-size: 10px;
-      }
-    }
-
-    select {
-      position: initial !important;
-      padding-left: 7px !important;
-      padding-right: 25px !important;
-      /* hide default down arrow in IE10 */
-      &::-ms-expand { display: none; }
-    }
-  }
-  /*** endregion */
-  /*** region styled checkbox */
-  .wu-checkbox {
-    margin-top: 2px;
-    padding-top: 3px;
-
-    label {
-      padding-left: 40px;
-
-      .wu-checkbox__wrapper {
-        margin-top: -2px;
-        margin-left: -40px;
-        position: absolute;
-
-        .wu-checkbox__wrapper__styled {
-          border-radius: 4px;
-          border: 2px solid var(--w-theme-primary, v.$theme-primary);
-          cursor: pointer;
-          float: right;
-          height: 25px;
-          padding: 0;
-          width: 25px;
-
-          .wu-checkbox__wrapper__styled__checked {
-            background: transparent;
-            border: 3px solid var(--w-theme-on-primary, v.$theme-on-primary);
-            border-top: none;
-            border-right: none;
-            height: 8px;
-            left: 4px;
-            opacity: 0;
+            left: 0;
+            margin: 0 5px 0 0;
             position: absolute;
-            top: 5px;
-            transform: rotate(-45deg);
-            width: 13px;
-          }
+            top: 0;
+        }
+    }
+
+    .icon {
+        &-arrow-left::before {
+            content: "\E091";
+        }
+    }
+
+    .icon-social {
+        &::before {
+            font: 24px/1em "Glyphicons Social Regular", sans-serif;
         }
 
-        input[type="checkbox"] {
-          display: none;
-
-          &:checked ~ .wu-checkbox-styled > .wu-checkbox-styled-checked {
-            opacity: 1;
-          }
-
-          &:disabled ~ .wu-checkbox-styled {
-            background-color: var(--w-theme-surface, v.$theme-surface);
-          }
+        &-white::before {
+            color: #fff;
         }
-      }
+
+        &-pinterest::before {
+            content: "\E001";
+        }
+
+        &-dropbox::before {
+            content: "\E002";
+        }
+
+        &-google_plus::before {
+            content: "\E003";
+        }
+
+        &-jolicloud::before {
+            content: "\E004";
+        }
+
+        &-yahoo::before {
+            content: "\E005";
+        }
+
+        &-blogger::before {
+            content: "\E006";
+        }
+
+        &-picasa::before {
+            content: "\E007";
+        }
+
+        &-amazon::before {
+            content: "\E008";
+        }
+
+        &-tumblr::before {
+            content: "\E009";
+        }
+
+        &-wordpress::before {
+            content: "\E010";
+        }
+
+        &-instapaper::before {
+            content: "\E011";
+        }
+
+        &-evernote::before {
+            content: "\E012";
+        }
+
+        &-xing::before {
+            content: "\E013";
+        }
+
+        &-zootool::before {
+            content: "\E014";
+        }
+
+        &-dribbble::before {
+            content: "\E015";
+        }
+
+        &-deviantart::before {
+            content: "\E016";
+        }
+
+        &-read_it_later::before {
+            content: "\E017";
+        }
+
+        &-linked_in::before {
+            content: "\E018";
+        }
+
+        &-forrst::before {
+            content: "\E019";
+        }
+
+        &-pinboard::before {
+            content: "\E020";
+        }
+
+        &-behance::before {
+            content: "\E021";
+        }
+
+        &-github::before {
+            content: "\E022";
+        }
+
+        &-youtube::before {
+            content: "\E023";
+        }
+
+        &-skitch::before {
+            content: "\E024";
+        }
+
+        &-foursquare::before {
+            content: "\E025";
+        }
+
+        &-quora::before {
+            content: "\E026";
+        }
+
+        &-badoo::before {
+            content: "\E027";
+        }
+
+        &-spotify::before {
+            content: "\E028";
+        }
+
+        &-stumbleupon::before {
+            content: "\E029";
+        }
+
+        &-readability::before {
+            content: "\E030";
+        }
+
+        &-facebook::before {
+            content: "\E031";
+        }
+
+        &-twitter::before {
+            content: "\E032";
+        }
+
+        &-instagram::before {
+            content: "\E033";
+        }
+
+        &-posterous_spaces::before {
+            content: "\E034";
+        }
+
+        &-vimeo::before {
+            content: "\E035";
+        }
+
+        &-flickr::before {
+            content: "\E036";
+        }
+
+        &-last_fm::before {
+            content: "\E037";
+        }
+
+        &-rss::before {
+            content: "\E038";
+        }
+
+        &-skype::before {
+            content: "\E039";
+        }
+
+        &-e-mail::before {
+            content: "\E040";
+        }
+
+        &-vine::before {
+            content: "\E041";
+        }
+
+        &-myspace::before {
+            content: "\E042";
+        }
+
+        &-goodreads::before {
+            content: "\E043";
+        }
+
+        &-apple::before {
+            content: "\F8FF";
+        }
+
+        &-windows::before {
+            content: "\E045";
+        }
+
+        &-yelp::before {
+            content: "\E046";
+        }
+
+        &-playstation::before {
+            content: "\E047";
+        }
+
+        &-xbox::before {
+            content: "\E048";
+        }
+
+        &-android::before {
+            content: "\E049";
+        }
+
+        &-ios::before {
+            content: "\E050";
+        }
     }
-  }
-  /*** endregion */
-  /** endregion */
-  /* endregion */
-  /* Initially hide/show javaScript dependent dom nodes. */
-  .wu-hidden-on-javascript-enabled { display: none; }
-  .wu-visible-on-javascript-enabled { display: initial; }
-  /* region spinner animation */
-  @keyframes spinner-line-fade-more {
-    0%,
-    100% {
-      opacity: 0;
+    /** endregion */
+    /** region form */
+    /*** region styled select */
+    .wu-select {
+        position: relative;
+
+        &__arrow {
+            position: absolute;
+            top: 3px;
+            right: 15px;
+            pointer-events: none;
+
+            span {
+                vertical-align: bottom;
+                font-size: 10px;
+            }
+        }
+
+        select {
+            position: initial !important;
+            padding-left: 7px !important;
+            padding-right: 25px !important;
+            /* hide default down arrow in IE10 */
+            &::-ms-expand {
+                display: none;
+            }
+        }
+    }
+    /*** endregion */
+    /*** region styled checkbox */
+    .wu-checkbox {
+        margin-top: 2px;
+        padding-top: 3px;
+
+        label {
+            padding-left: 40px;
+
+            .wu-checkbox__wrapper {
+                margin-top: -2px;
+                margin-left: -40px;
+                position: absolute;
+
+                .wu-checkbox__wrapper__styled {
+                    border-radius: 4px;
+                    border: 2px solid var(--w-theme-primary, v.$theme-primary);
+                    cursor: pointer;
+                    float: right;
+                    height: 25px;
+                    padding: 0;
+                    width: 25px;
+
+                    .wu-checkbox__wrapper__styled__checked {
+                        background: transparent;
+                        border: 3px solid var(--w-theme-on-primary, v.$theme-on-primary);
+                        border-top: none;
+                        border-right: none;
+                        height: 8px;
+                        left: 4px;
+                        opacity: 0;
+                        position: absolute;
+                        top: 5px;
+                        transform: rotate(-45deg);
+                        width: 13px;
+                    }
+                }
+
+                input[type="checkbox"] {
+                    display: none;
+
+                    &:checked ~ .wu-checkbox-styled > .wu-checkbox-styled-checked {
+                        opacity: 1;
+                    }
+
+                    &:disabled ~ .wu-checkbox-styled {
+                        background-color: var(--w-theme-surface, v.$theme-surface);
+                    }
+                }
+            }
+        }
+    }
+    /*** endregion */
+    /** endregion */
+    /* endregion */
+    /* Initially hide/show javaScript dependent dom nodes. */
+    .wu-hidden-on-javascript-enabled {
+        display: none;
     }
 
-    1% {
-      opacity: 1;
+    .wu-visible-on-javascript-enabled {
+        display: initial;
     }
-  }
-  @keyframes spinner-line-fade-quick {
-    0%,
-    39%,
-    100% {
-      opacity: 0.25;
-    }
+    /* region move to top button animation */
+    .wu-scroll-to-top {
+        display: block;
 
-    40% {
-      opacity: 1;
-    }
-  }
-  @keyframes spinner-line-fade-default {
-    0%,
-    100% {
-      opacity: 0.22;
+        transition-property: bottom, opacity;
+        transition-duration: .5s;
+
+        position: fixed;
+
+        right: var(--w-default-space, #{v.$default-space});
     }
 
-    1% {
-      opacity: 1;
+    a.wu-scroll-to-top.wu-scroll-up {
+        bottom: calc(3 * var(--w-default-space, #{v.$default-space}));
+        opacity: 0;
     }
-  }
-  /* endregion */
-  /* region move to top button animation */
-  .wu-scroll-to-top {
-    display: block;
 
-    transition-property: bottom, opacity;
-    transition-duration: .5s;
+    a.wu-scroll-to-top.wu-scroll-down {
+        bottom: var(--w-default-space, #{v.$default-space});
+        opacity: 1;
+    }
 
-    position: fixed;
-
-    right: var(--w-default-space, #{v.$default-space});
-  }
-
-  a.wu-scroll-to-top.wu-scroll-up {
-    bottom: calc(3 * var(--w-default-space, #{v.$default-space}));
-    opacity: 0;
-  }
-
-  a.wu-scroll-to-top.wu-scroll-down {
-    bottom: var(--w-default-space, #{v.$default-space});
-    opacity: 1;
-  }
-
-  a.wu-scroll-to-top.wu-top-settled {
-    bottom: calc(3 * var(--w-default-space, #{v.$default-space}));
-    opacity: 0;
-  }
-  /* endregion */
+    a.wu-scroll-to-top.wu-top-settled {
+        display: none;
+    }
+    /* endregion */
 }
 /* Overlay the whole page till everything is loaded completely. */
 .wu-window-loading-cover {
-  background-color: var(--w-background-color, v.$theme-background);
-  /* always cover full viewport */
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  z-index: 1002 !important;
+    background-color: var(--w-surface-color, v.$theme-surface);
+    top: 0;
+    left: 0;
+    /* always cover full viewport */
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 1002 !important;
 
-  > div {
-    /* Positioning the loading spinner in center in the loading overlay. */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-  }
+    .loading-text {
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        text-align: center;
+
+        width: 100%;
+        height: 100px;
+        line-height: 100px;
+
+        span {
+            display: inline-block;
+            margin: 0 5px;
+            color: var(--w-on-surface-color, v.$theme-on-surface);
+
+            @for $i from 0 through 6 {
+                &:nth-child(#{$i + 1}) {
+                    filter: blur(0);
+                    animation: blur-text 1.5s (#{$i/5})+s infinite linear alternate;
+                }
+            }
+        }
+    }
 }
