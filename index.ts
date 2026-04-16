@@ -33,7 +33,6 @@ import {
     timeout
 } from 'clientnode'
 import {func, object} from 'clientnode/property-types'
-import {Spinner} from 'spin.js'
 import {property} from 'web-component-wrapper/decorator'
 import {WebComponentAPI} from 'web-component-wrapper/type'
 import {Web} from 'web-component-wrapper/Web'
@@ -65,14 +64,10 @@ export const log = new Logger({name: 'website-utilities'})
  * selector prefix for all dom nodes to appear during start up animations.
  * @property _defaultOptions.selectors.windowLoadingCover - Selector to the full
  * window loading cover dom node.
- * @property _defaultOptions.selectors.windowLoadingSpinner - Selector to the
- * window loading spinner (on top of the window loading cover).
  * @property _defaultOptions.startUpAnimationElementDelayInMilliseconds - Delay
  * between two startup animated dom nodes in order.
  * @property _defaultOptions.tracking - Indicates whether tracking should be
  * used or not.
- * @property _defaultOptions.windowLoadingSpinner - Options for the window
- * loading cover spinner.
  * @property _defaultOptions.windowLoadedTimeoutAfterDocLoadedInMSec - Duration
  * after loading cover should be removed.
  * @property options - Finally configured given options.
@@ -81,9 +76,10 @@ export const log = new Logger({name: 'website-utilities'})
  * @property currentSectionName - Saves current section hash name.
  * @property startUpAnimationIsComplete - Indicates whether start up animations
  * has finished.
+ * @property continueAutoScrolling - Indicates whether auto scrolling should
+ * continue or not. Gets set to "false" if user wants to scroll manually.
  * @property viewportIsOnTop - Indicates whether current viewport is on top.
  * @property windowLoaded - Indicates whether window is already loaded.
- * @property windowLoadingSpinner - The window loading spinner instance.
  * @property onChangeMediaQueryMode - Callback to trigger if media query mode
  * changes.
  * @property onChangeToExtraSmallMode - Callback to trigger if media query mode
@@ -140,8 +136,7 @@ export class WebsiteUtilities<
             scrollToTopButtons: '.wu-scroll-to-top',
             startUpAnimationClassPrefix: 'wu-start-up-animation-number-',
             top: '.wu-header',
-            windowLoadingCover: '.wu-window-loading-cover',
-            windowLoadingSpinner: 'div'
+            windowLoadingCover: '.wu-window-loading-cover'
         },
 
         startUpAnimationElementDelayInMilliseconds: 100,
@@ -160,18 +155,16 @@ export class WebsiteUtilities<
     currentSectionName = 'home'
 
     startUpAnimationIsComplete = false
+    continueAutoScrolling = false
 
     viewportIsOnTop: boolean | undefined
     windowLoaded = false
-
-    windowLoadingSpinner: null | Spinner = null
     /// region dom nodes
     scrollToTopButtonDomNodes: NodeListOf<HTMLElement> | null = null
 
     topDomNode: HTMLElement | null = null
 
     windowLoadingCoverDomNode: HTMLElement | null = null
-    windowLoadingSpinnerDomNode: HTMLElement | null = null
     /// endregion
     @property({type: func})
         onChangeMediaQueryMode: (
@@ -212,14 +205,8 @@ export class WebsiteUtilities<
             NOOP
 
     @property({type: func})
-        onSwitchToManualScrollingIndicator: (event: Event) => boolean = (
-            event: Event & {which?: number}
-        ): boolean => (
-            typeof event.which === 'number' && event.which > 0 ||
-            event.type === 'mousedown' ||
-            event.type === 'mousewheel' ||
-            event.type === 'touchmove'
-        )
+        onSwitchToManualScrollingIndicator: (event: Event) => boolean =
+            () => true
 
     @property({type: func})
         onLoaded: () => void = NOOP
@@ -294,7 +281,7 @@ export class WebsiteUtilities<
         }
     @property({type: func})
         onTrack = function(item: TrackingItem) {
-            (globalContext as {dataLayer: Array<TrackingItem>})
+            (globalContext as {dataLayer?: Array<TrackingItem>})
                 .dataLayer?.push(item)
         }
     // region public
@@ -331,7 +318,8 @@ export class WebsiteUtilities<
             )
     }
     /**
-     * Initializes the interactive web application.
+     * Updates controlled dom elements.
+     * @param reason - Why an update has been triggered.
      */
     async render(reason?: string): Promise<void> {
         await super.render(reason)
@@ -340,14 +328,6 @@ export class WebsiteUtilities<
             this.onUpdateAttribute('options', '{}')
 
         this.grabDomNodes()
-
-        if (this.windowLoadingSpinnerDomNode) {
-            this.windowLoadingSpinner =
-                new Spinner(this.options.windowLoadingSpinner)
-            this.windowLoadingSpinner.spin(
-                this.windowLoadingSpinnerDomNode
-            )
-        }
 
         this.disableScrolling()
         this._bindScrollEvents()
@@ -388,14 +368,40 @@ export class WebsiteUtilities<
             this.root.parentElement?.querySelector(
                 this.options.selectors.windowLoadingCover
             ) ?? null
-        this.windowLoadingSpinnerDomNode =
-            this.windowLoadingCoverDomNode?.querySelector(
-                this.options.selectors.windowLoadingSpinner
-            ) ?? null
     }
     /**
-     * Scrolls to top of page. Runs the given function after viewport arrives.
-     * @returns Returns the current instance.
+     * Scrolls to top of page smoothly via being interruptible.
+     */
+    interruptableScrollToTop() {
+        const durationInMilliseconds = 500 // Dauer in ms
+        const start = window.pageYOffset
+        const startTime = performance.now()
+
+        this.continueAutoScrolling = true
+
+        // Animation-Funktion
+        const step = (currentTime: DOMHighResTimeStamp) => {
+            if (!this.continueAutoScrolling)
+                return
+
+            const elapsed = currentTime - startTime
+            const progress = Math.min(elapsed / durationInMilliseconds, 1)
+
+            // Easing (optional for soft start / stopp animation)
+            const ease = progress * (2 - progress)
+
+            window.scrollTo(0, start * (1 - ease))
+
+            if (progress < 1)
+                requestAnimationFrame(step)
+            else
+                this.continueAutoScrolling = false
+        }
+
+        requestAnimationFrame(step)
+    }
+    /**
+     * Scrolls to top of page smoothly.
      */
     scrollToTop() {
         if (globalContext.document)
@@ -403,7 +409,6 @@ export class WebsiteUtilities<
     }
     /**
      * This method disables scrolling on the given web view.
-     * @returns Returns the current instance.
      */
     disableScrolling() {
         if (!this.root.parentElement)
@@ -416,7 +421,6 @@ export class WebsiteUtilities<
     }
     /**
      * This method disables scrolling on the given web view.
-     * @returns Returns the current instance.
      */
     enableScrolling() {
         if (!this.root.parentElement)
@@ -432,7 +436,6 @@ export class WebsiteUtilities<
      * Triggers an analytics event. All given arguments are forwarded to
      * configured analytics event code to defined their environment variables.
      * @param properties - Event tracking information.
-     * @returns Returns the current instance.
      */
     track(
         properties: Omit<TrackingItem, 'context' | 'value'> & {
@@ -465,17 +468,14 @@ export class WebsiteUtilities<
                 )
             }
         }
-
-        return this
     }
     // endregion
     // region protected methods
     /// region event
     /**
      * This method triggers if the viewport moves to top.
-     * @returns Nothing.
      */
-    _onViewportMovesToTop(): void {
+    _onViewportMovesToTop() {
         this._finishScrollToTopButtonTransition()
 
         for (const domNode of this.scrollToTopButtonDomNodes ?? []) {
@@ -500,7 +500,6 @@ export class WebsiteUtilities<
     }
     /**
      * This method triggers if the viewport moves away from top.
-     * @returns Nothing.
      */
     async _onViewportMovesAwayFromTop() {
         this._finishScrollToTopButtonTransition('wu-top-settled')
@@ -577,27 +576,29 @@ export class WebsiteUtilities<
                                 wants to scroll manually.
                             */
                             if (this.onSwitchToManualScrollingIndicator(event))
-                                console.log('TODO', 'node.stop(true)')
+                                this.continueAutoScrolling = false
                         }
                     )
 
         if (globalContext.window)
             this.addSecureEventListener(
                 globalContext.window,
-            'scroll',
+                'scroll',
                 (event: Event): void => {
                     if (globalContext.window?.scrollY) {
                         if (this.viewportIsOnTop) {
                             this.viewportIsOnTop = false
 
-                            this._onViewportMovesAwayFromTop().then(
-                                this.onViewportMovesAwayFromTop.bind(this, event)
+                            void this._onViewportMovesAwayFromTop().then(
+                                this.onViewportMovesAwayFromTop.bind(
+                                    this, event
+                                )
                             )
                         }
                     } else if (!this.viewportIsOnTop) {
                         this.viewportIsOnTop = true
 
-                        void this._onViewportMovesToTop()
+                        this._onViewportMovesToTop()
                         this.onViewportMovesToTop.call(this, event)
                     }
                 }
@@ -606,9 +607,9 @@ export class WebsiteUtilities<
         if (globalContext.window?.scrollY) {
             this.viewportIsOnTop = false
 
-            this._onViewportMovesAwayFromTop().then(() =>
+            void this._onViewportMovesAwayFromTop().then(() => {
                 this.onViewportMovesAwayFromTop.call(this)
-            )
+            })
         } else {
             this.viewportIsOnTop = true
 
@@ -639,9 +640,6 @@ export class WebsiteUtilities<
             this.enableScrolling()
 
             await fadeOut(this.windowLoadingCoverDomNode)
-
-            if (this.windowLoadingSpinner)
-                this.windowLoadingSpinner.stop()
         }
     }
     /**
@@ -652,6 +650,7 @@ export class WebsiteUtilities<
     async _performStartUpEffects(): Promise<void> {
         const animationPromises: Array<Promise<void>> = []
         let elementNumber = 1
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         while (true) {
             const domNodesToAnimate = this.root.querySelectorAll(
                 '.' +
@@ -705,7 +704,7 @@ export class WebsiteUtilities<
                 (event: Event) => {
                     event.preventDefault()
 
-                    this.scrollToTop()
+                    this.interruptableScrollToTop()
                 }
             )
     }

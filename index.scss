@@ -503,12 +503,22 @@ website-utilities {
             margin: 0 5px;
             color: var(--w-on-surface-color, v.$theme-on-surface);
 
-            @for $i from 0 through 6 {
+            @for $i from 0 through 40 {
                 &:nth-child(#{$i + 1}) {
                     filter: blur(0);
                     animation: blur-text 1.5s (#{$i/5})+s infinite linear alternate;
                 }
             }
         }
+    }
+}
+
+@keyframes blur-text {
+    0% {
+        filter: blur(0);
+    }
+
+    100% {
+        filter: blur(4px);
     }
 }

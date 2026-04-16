@@ -29,7 +29,6 @@ export interface DefaultOptions {
         startUpAnimationClassPrefix: string
 
         windowLoadingCover: string
-        windowLoadingSpinner: string
     }
 
     startUpAnimationElementDelayInMilliseconds: number

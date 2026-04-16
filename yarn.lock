@@ -3009,6 +3009,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@eslint/js@npm:^10.0.1":
+  version: 10.0.1
+  resolution: "@eslint/js@npm:10.0.1"
+  peerDependencies:
+    eslint: ^10.0.0
+  peerDependenciesMeta:
+    eslint:
+      optional: true
+  checksum: 10c0/9f3fcaf71ba7fdf65d82e8faad6ecfe97e11801cc3c362b306a88ea1ed1344ae0d35330dddb0e8ad18f010f6687a70b75491b9e01c8af57acd7987cee6b3ec6c
+  languageName: node
+  linkType: hard
+
 "@eslint/object-schema@npm:^3.0.5":
   version: 3.0.5
   resolution: "@eslint/object-schema@npm:3.0.5"
@@ -4430,6 +4442,13 @@ __metadata:
   dependencies:
     source-map: "npm:^0.6.1"
   checksum: 10c0/e1625b203872aeb73d58df2dbe6baec8bcb7de651e44b6616e2b3b5bb2634ee535c9c8260c4e3258055adcec5fe057d8b655d6cc564916b7e4fc4ffe8bce520a
+  languageName: node
+  linkType: hard
+
+"@types/webpack-env@npm:^1.18.8":
+  version: 1.18.8
+  resolution: "@types/webpack-env@npm:1.18.8"
+  checksum: 10c0/527a5d1eb75c5243e4f3665d956c7c340f899955dd25d16c9fd9750406f32e95a3a17d207640295038e8235c0c2a2daf084f420e088e58b965d82fc74f6012d7
   languageName: node
   linkType: hard
 
@@ -14137,7 +14156,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.40, postcss@npm:^8.5.8":
+"postcss@npm:^8.4.40":
   version: 8.5.8
   resolution: "postcss@npm:8.5.8"
   dependencies:
@@ -14145,6 +14164,17 @@ __metadata:
     picocolors: "npm:^1.1.1"
     source-map-js: "npm:^1.2.1"
   checksum: 10c0/dd918f7127ee7c60a0295bae2e72b3787892296e1d1c3c564d7a2a00c68d8df83cadc3178491259daa19ccc54804fb71ed8c937c6787e08d8bd4bedf8d17044c
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^8.5.10":
+  version: 8.5.10
+  resolution: "postcss@npm:8.5.10"
+  dependencies:
+    nanoid: "npm:^3.3.11"
+    picocolors: "npm:^1.1.1"
+    source-map-js: "npm:^1.2.1"
+  checksum: 10c0/c592dffa0c4873b401f01955b265538d9942f425040df5e2b8f0ad34c83773a792ea0fa5859ccc99cfb5b955b4ebff118ab7056315388dc83b107b0fa8313576
   languageName: node
   linkType: hard
 
@@ -15664,13 +15694,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"spin.js@npm:^4.1.2":
-  version: 4.1.2
-  resolution: "spin.js@npm:4.1.2"
-  checksum: 10c0/8d6f5ac99264b0197a69233bd5f7c9f5c5e7f3da8412fa41d7a36770ee7fea035673870fb9200ab0a8b0a77d72f95812355fe68e3416b4b6801d7d0a70b59fd3
-  languageName: node
-  linkType: hard
-
 "sprintf-js@npm:^1.1.3":
   version: 1.1.3
   resolution: "sprintf-js@npm:1.1.3"
@@ -16077,9 +16100,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint@npm:^17.7.0":
-  version: 17.7.0
-  resolution: "stylelint@npm:17.7.0"
+"stylelint@npm:^17.8.0":
+  version: 17.8.0
+  resolution: "stylelint@npm:17.8.0"
   dependencies:
     "@csstools/css-calc": "npm:^3.1.1"
     "@csstools/css-parser-algorithms": "npm:^4.0.0"
@@ -16108,7 +16131,7 @@ __metadata:
     micromatch: "npm:^4.0.8"
     normalize-path: "npm:^3.0.0"
     picocolors: "npm:^1.1.1"
-    postcss: "npm:^8.5.8"
+    postcss: "npm:^8.5.9"
     postcss-safe-parser: "npm:^7.0.1"
     postcss-selector-parser: "npm:^7.1.1"
     postcss-value-parser: "npm:^4.2.0"
@@ -16119,7 +16142,7 @@ __metadata:
     write-file-atomic: "npm:^7.0.1"
   bin:
     stylelint: bin/stylelint.mjs
-  checksum: 10c0/6af0ddf4462e071f1ab00036b2ae81aa29d33df3ae11ab0109c33844884fad56c8aa2ee6372f947f4d0dbe386e747138e1f014f1d508748335a3ecc7c0bf9a10
+  checksum: 10c0/de822c902944ed094afabb48802e5659ef479e7707cc0a789e11e833fff5d54fb7a82b83052df83882f77de00190c109dbacd0b2d87157857c3ed626eb0fb4d5
   languageName: node
   linkType: hard
 
@@ -17498,11 +17521,13 @@ __metadata:
     "@babel/eslint-parser": "npm:^7.28.6"
     "@babel/plugin-transform-proto-to-assign": "npm:^7.27.1"
     "@babel/runtime": "npm:^7.29.2"
+    "@eslint/js": "npm:^10.0.1"
     "@stylistic/eslint-plugin": "npm:^5.10.0"
     "@types/ejs": "npm:^3.1.5"
     "@types/html-minifier": "npm:^4.0.6"
     "@types/jsdom": "npm:^28.0.1"
     "@types/node": "npm:^25.6.0"
+    "@types/webpack-env": "npm:^1.18.8"
     "@typescript-eslint/eslint-plugin": "npm:^8.58.2"
     "@typescript-eslint/parser": "npm:^8.58.2"
     "@webcomponents/webcomponentsjs": "npm:^2.8.0"
@@ -17516,7 +17541,7 @@ __metadata:
     jest: "npm:^30.3.0"
     jsdoc: "npm:^4.0.5"
     mini-css-extract-plugin: "npm:^2.10.2"
-    postcss: "npm:^8.5.9"
+    postcss: "npm:^8.5.10"
     postcss-fontpath: "npm:^1.0.0"
     postcss-import: "npm:^16.1.1"
     postcss-loader: "npm:^8.2.1"
@@ -17527,9 +17552,8 @@ __metadata:
     prop-types: "npm:^15.8.1"
     sass: "npm:^1.99.0"
     sass-loader: "npm:^16.0.7"
-    spin.js: "npm:^4.1.2"
     style-loader: "npm:^4.0.0"
-    stylelint: "npm:^17.7.0"
+    stylelint: "npm:^17.8.0"
     stylelint-config-standard-scss: "npm:^17.0.0"
     typescript-eslint: "npm:^8.58.2"
     web-component-wrapper: "npm:^0.0.558"
@@ -17538,12 +17562,9 @@ __metadata:
   peerDependencies:
     "@babel/runtime": "*"
     clientnode: "*"
-    spin.js: "*"
     web-component-wrapper: "*"
   peerDependenciesMeta:
     "@babel/runtime":
-      optional: true
-    spin.js:
       optional: true
   bin:
     website-utilities: deploy.js
