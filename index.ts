@@ -19,7 +19,6 @@
 // region imports
 import {
     camelCaseToDelimited,
-    debounce,
     extend,
     fadeIn,
     fadeOut,
@@ -58,8 +57,6 @@ export const log = new Logger({name: 'website-utilities'})
  * query class indicator names to internal event names.
  * @property _defaultOptions.selectors - Mapping of dom node descriptions to
  * their corresponding selectors.
- * @property _defaultOptions.selectors.mediaQueryIndicator - Selector for
- * indicator dom node to use to trigger current media query mode.
  * @property _defaultOptions.selectors.top - Selector to indicate that viewport
  * is currently on top.
  * @property _defaultOptions.selectors.scrollToTopButtons - Selectors for
@@ -401,7 +398,7 @@ export class WebsiteUtilities<
                 })
             }
         }
-        onDocumentReady(() => {
+        void onDocumentReady(() => {
             void timeout(
                 onLoaded,
                 this.options.windowLoadedTimeoutAfterDocLoadedInMSec
@@ -511,35 +508,61 @@ export class WebsiteUtilities<
      * This method triggers if the viewport moves to top.
      * @returns Nothing.
      */
-    _onViewportMovesToTop = debounce((): void => {
+    _onViewportMovesToTop(): void {
+        if (this.viewportIsOnTop)
+            return
+        this.viewportIsOnTop = true
+
         this._finishScrollToTopButtonTransition()
 
         for (const domNode of this.scrollToTopButtonDomNodes ?? []) {
-            domNode.addEventListener('transitionend', () => {
+            const finishTransition = () => {
                 domNode.classList.remove('wu-scroll-up')
                 domNode.classList.add('wu-top-settled')
-            })
+
+                domNode.removeEventListener('transitionend', finishTransition)
+                domNode.removeEventListener(
+                    'transitioncancel', finishTransition
+                )
+            }
+            domNode.addEventListener(
+                'transitionend', finishTransition, {once: true}
+            )
+            domNode.addEventListener(
+                'transitioncancel', finishTransition, {once: true}
+            )
             domNode.classList.add('wu-scroll-up')
         }
-    })
+    }
     /**
      * This method triggers if the viewport moves away from top.
      * @returns Nothing.
      */
-    _onViewportMovesAwayFromTop = debounce((): void => {
-        if (Array.from(this.scrollToTopButtonDomNodes ?? []).some(
-            (domNode) => domNode.classList.contains('wu-top-settled')
-        )) {
-            this._finishScrollToTopButtonTransition()
+    _onViewportMovesAwayFromTop(): void {
+        if (!this.viewportIsOnTop)
+            return
+        this.viewportIsOnTop = false
 
-            for (const domNode of this.scrollToTopButtonDomNodes ?? []) {
-                domNode.addEventListener('transitionend', () => {
-                    domNode.classList.remove('scroll-down')
-                })
-                domNode.classList.add('wu-scroll-down')
+        this._finishScrollToTopButtonTransition()
+
+        for (const domNode of this.scrollToTopButtonDomNodes ?? []) {
+            const finishTransition = () => {
+                domNode.classList.remove('scroll-down')
+
+                domNode.removeEventListener('transitionend', finishTransition)
+                domNode.removeEventListener(
+                    'transitioncancel', finishTransition
+                )
             }
+            domNode.addEventListener(
+                'transitionend', finishTransition, {once: true}
+            )
+            domNode.addEventListener(
+                'transitioncancel', finishTransition, {once: true}
+            )
+            domNode.classList.add('wu-scroll-down')
         }
-    })
+    }
     /**
      * This method triggers if we change the current section.
      * @param sectionName - Contains the new section name.
@@ -610,17 +633,10 @@ export class WebsiteUtilities<
                 (event: Event): void => {
                     if (globalContext.window?.scrollY) {
                         if (this.viewportIsOnTop) {
-                            this.viewportIsOnTop = false
-
-                            this._onViewportMovesAwayFromTop().then(
-                                this.onViewportMovesAwayFromTop.bind(
-                                    this, event
-                                )
-                            )
+                            this._onViewportMovesAwayFromTop()
+                            this.onViewportMovesAwayFromTop.call(this, event)
                         }
                     } else if (!this.viewportIsOnTop) {
-                        this.viewportIsOnTop = true
-
                         void this._onViewportMovesToTop()
                         this.onViewportMovesToTop.call(this, event)
                     }
@@ -628,19 +644,13 @@ export class WebsiteUtilities<
             )
 
         if (globalContext.window?.scrollY) {
-            this.viewportIsOnTop = false
-            this._onViewportMovesAwayFromTop().then(() =>
-                this.onViewportMovesAwayFromTop.bind(this)
-            )
+            this._onViewportMovesAwayFromTop()
+            this.onViewportMovesAwayFromTop.call(this)
         } else {
-            this.viewportIsOnTop = true
-
-            this._onViewportMovesToTop().then(() => {
-                for (const domNode of this.scrollToTopButtonDomNodes ?? [])
-                    domNode.classList.add('wu-top-settled')
-
-                this.onViewportMovesToTop.bind(this)
-            })
+            this._onViewportMovesToTop()
+            for (const domNode of this.scrollToTopButtonDomNodes ?? [])
+                domNode.classList.add('wu-top-settled')
+            this.onViewportMovesToTop.call(this)
         }
     }
     /**

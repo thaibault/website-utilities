@@ -331,11 +331,10 @@ website-utilities {
     display: block;
 
     transition-property: bottom, opacity;
-    transition-duration: 2s;
+    transition-duration: .5s;
 
     position: fixed;
 
-    bottom: var(--w-default-space, #{v.$default-space});
     right: var(--w-default-space, #{v.$default-space});
   }
 
@@ -351,7 +350,7 @@ website-utilities {
 
   a.wu-scroll-to-top.wu-top-settled {
     bottom: calc(3 * var(--w-default-space, #{v.$default-space}));
-    display: none;
+    opacity: 0;
   }
   /* endregion */
 }
