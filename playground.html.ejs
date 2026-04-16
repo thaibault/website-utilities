@@ -1,0 +1,127 @@
+<!doctype html>
+<%_ /*
+    region header
+    Copyright Torben Sickert (info["~at~"]torben.website) 16.12.2012
+
+    License
+    -------
+
+    This library written by Torben Sickert stand under a creative commons
+    naming 3.0 unported license.
+    See https://creativecommons.org/licenses/by/3.0/deed.de
+    endregion
+*/ _%>
+<html lang="en">
+    <!--region head-->
+    <head>
+        <meta charset="utf-8">
+        <!--Prevent browser caching-->
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="0">
+        <meta http-equiv="pragma" content="no-cache">
+        <title>playground</title>
+        <%-_.include('web-component-wrapper/polyfill.html') %>
+        <!--region script-->
+        <script>
+            window.onload = function() {
+                websiteUtilities.index.api.register()
+            }
+        </script>
+        <!--endregion-->
+        <!--region style-->
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            website-utilities {
+                display: block;
+
+                width: 100%;
+                height: 8000px;
+
+                box-sizing: border-box;
+                padding: 20px;
+
+                background-color: black;
+                color: white;
+            }
+
+            website-utilities a {
+                color: darkgrey;
+            }
+
+            website-utilities header {
+                height: 80px;
+
+                padding: 20px;
+
+                background-color: #238636;
+            }
+
+            website-utilities .content {
+                height: 80px;
+
+                margin: 20px;
+                padding: 20px;
+
+                background-color: rosybrown;
+            }
+        </style>
+        <!--endregion-->
+    </head>
+    <!--endregion-->
+    <body>
+    <div class="wu-window-loading-cover">
+        <div class="loading-text">
+            <span>L</span>
+            <span>O</span>
+            <span>A</span>
+            <span>D</span>
+            <span>I</span>
+            <span>N</span>
+            <span>G</span>
+        </div>
+    </div>
+        <website-utilities options="{windowLoadedTimeoutAfterDocLoadedInMSec: 200}">
+            <header class="wu-header">
+                <a href="#home">Home</a>
+            </header>
+
+            <div class="content wu-start-up-animation-number-1">
+                Show first
+            </div>
+
+            <div class="content wu-start-up-animation-number-2">
+                Show second
+            </div>
+
+            <div class="content wu-start-up-animation-number-3">
+                Show third
+            </div>
+
+            <div class="content wu-start-up-animation-number-4">
+                Show fourth
+            </div>
+
+            <div class="content wu-start-up-animation-number-5">
+                Show fifth
+            </div>
+
+            <div class="content wu-start-up-animation-number-6">
+                Show sixth
+            </div>
+
+            <div class="content wu-start-up-animation-number-7">
+                Show seventh
+            </div>
+
+            <div class="content wu-start-up-animation-number-8">
+                Show eights
+            </div>
+
+            <a class="wu-scroll-to-top" href="#top">scroll to top</a>
+        </website-utilities>
+    </body>
+<html>
