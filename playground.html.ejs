@@ -11,7 +11,7 @@
     See https://creativecommons.org/licenses/by/3.0/deed.de
     endregion
 */ _%>
-<html lang="en">
+<html class="wu-no-javascript" lang="en">
     <!--region head-->
     <head>
         <meta charset="utf-8">
@@ -23,9 +23,11 @@
         <%-_.include('web-component-wrapper/polyfill.html') %>
         <!--region script-->
         <script>
-            window.onload = function() {
-                websiteUtilities.index.api.register()
-            }
+            AUTO_DEFINE_WEBSITE_UTILITIES = true
+
+            window.document.documentElement.classList
+                .remove('wu-no-javascript')
+            window.document.documentElement.classList.add('wu-javascript')
         </script>
         <!--endregion-->
         <!--region style-->
@@ -72,18 +74,24 @@
         <!--endregion-->
     </head>
     <!--endregion-->
-    <body>
-    <div class="wu-window-loading-cover">
-        <div class="loading-text">
-            <span>L</span>
-            <span>O</span>
-            <span>A</span>
-            <span>D</span>
-            <span>I</span>
-            <span>N</span>
-            <span>G</span>
+    <body class="wu-no-javascript">
+        <script>
+            window.document.body.classList.remove('wu-no-javascript')
+            window.document.body.classList.add('wu-javascript')
+        </script>
+
+        <div class="wu-window-loading-cover">
+            <div class="loading-text">
+                <span>L</span>
+                <span>O</span>
+                <span>A</span>
+                <span>D</span>
+                <span>I</span>
+                <span>N</span>
+                <span>G</span>
+            </div>
         </div>
-    </div>
+
         <website-utilities options="{windowLoadedTimeoutAfterDocLoadedInMSec: 200}">
             <header class="wu-header">
                 <a href="#home">Home</a>

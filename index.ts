@@ -739,4 +739,7 @@ export const api: WebComponentAPI<
     }
 }
 export default WebsiteUtilities
+
+if ((globalContext as Mapping<boolean>).AUTO_DEFINE_WEBSITE_UTILITIES)
+    api.register()
 // endregion
