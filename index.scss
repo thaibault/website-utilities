@@ -327,9 +327,11 @@ website-utilities {
   }
   /* endregion */
   /* region move to top button animation */
-  a[href="#top"] {
+  .wu-scroll-to-top {
+    display: block;
+
     transition-property: bottom, opacity;
-    transition-duration: 1s;
+    transition-duration: 2s;
 
     position: fixed;
 
@@ -337,26 +339,22 @@ website-utilities {
     right: var(--w-default-space, #{v.$default-space});
   }
 
-  a[href="#top"].wu-top-settled {
-    display: none;
-  }
-
-  a[href="#top"].wu-scroll-down-start,
-  a[href="#top"].wu-scroll-up-end {
-    display: block;
+  a.wu-scroll-to-top.wu-scroll-up {
     bottom: calc(3 * var(--w-default-space, #{v.$default-space}));
     opacity: 0;
   }
 
-  a[href="#top"].wu-scroll-down-end,
-  a[href="#top"].wu-scroll-up-start {
-    display: block;
+  a.wu-scroll-to-top.wu-scroll-down {
     bottom: var(--w-default-space, #{v.$default-space});
     opacity: 1;
   }
+
+  a.wu-scroll-to-top.wu-top-settled {
+    bottom: calc(3 * var(--w-default-space, #{v.$default-space}));
+    display: none;
+  }
   /* endregion */
 }
-
 /* Overlay the whole page till everything is loaded completely. */
 .wu-window-loading-cover {
   background-color: var(--w-background-color, v.$theme-background);

@@ -16,9 +16,6 @@
     endregion
 */
 // region imports
-import {
-    Options as InternationalisationOptions
-} from 'web-internationalization/type'
 import {SpinnerOptions} from 'spin.js'
 
 import WebsiteUtilities from './index'
@@ -31,8 +28,6 @@ export interface DefaultOptions {
     knownScrollEventNames: Array<string>
     mediaQueryClassNameIndicator: Array<Array<string>>
     selectors: {
-        mediaQueryIndicator: string
-
         top: string
         scrollToTopButtons: string
 

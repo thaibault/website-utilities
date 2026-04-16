@@ -19,15 +19,12 @@
 // region imports
 import {
     camelCaseToDelimited,
-    capitalize, createDomNodes,
     debounce,
     extend,
     fadeIn,
     fadeOut,
-    format,
     getText,
     globalContext,
-    isHidden,
     Logger,
     Mapping,
     NOOP,
@@ -90,8 +87,6 @@ export const log = new Logger({name: 'website-utilities'})
  * @property viewportIsOnTop - Indicates whether current viewport is on top.
  * @property windowLoaded - Indicates whether window is already loaded.
  * @property windowLoadingSpinner - The window loading spinner instance.
- * @property mediaQueryIndicatorDomNode - Dom node to indicate current media
- * query mode.
  * @property onChangeMediaQueryMode - Callback to trigger if media query mode
  * changes.
  * @property onChangeToExtraSmallMode - Callback to trigger if media query mode
@@ -145,11 +140,9 @@ export class WebsiteUtilities<
             ['large', 'lg']
         ],
         selectors: {
-            mediaQueryIndicator:
-                '<div class="wu-media-query-indicator"></div>',
-            scrollToTopButtons: 'a[href="#top"]',
+            scrollToTopButtons: '.wu-scroll-to-top',
             startUpAnimationClassPrefix: 'wu-start-up-animation-number-',
-            top: 'header',
+            top: '.wu-header',
             windowLoadingCover: '.wu-window-loading-cover',
             windowLoadingSpinner: 'div'
         },
@@ -209,8 +202,6 @@ export class WebsiteUtilities<
 
     windowLoadingSpinner: null | Spinner = null
     /// region dom nodes
-    mediaQueryIndicatorDomNode: HTMLElement | null = null
-
     scrollToTopButtonDomNodes: NodeListOf<HTMLElement> | null = null
 
     topDomNode: HTMLElement | null = null
@@ -378,13 +369,11 @@ export class WebsiteUtilities<
     /**
      * Initializes the interactive web application.
      */
-    connectedCallback(): void {
-        super.connectedCallback()
+    async render(reason?: string): Promise<void> {
+        await super.render(reason)
 
         if (Object.keys(this.options).length === 0)
             this.onUpdateAttribute('options', '{}')
-
-        this.disableScrolling()
 
         this.grabDomNodes()
 
@@ -396,10 +385,10 @@ export class WebsiteUtilities<
             )
         }
 
+        this.disableScrolling()
         this._bindScrollEvents()
-
-        if (this.root.parentElement)
-            this.root.parentElement.style.visibility = 'visible'
+        this._bindClickTracking()
+        this._bindNavigationEvents()
 
         const onLoaded = () => {
             if (!this.windowLoaded) {
@@ -422,17 +411,6 @@ export class WebsiteUtilities<
             this.addSecureEventListener(
                 globalContext.window, 'load', onLoaded
             )
-
-        this._bindClickTracking()
-
-        this._bindNavigationEvents()
-        if (globalContext.window)
-            this.addSecureEventListener(
-                globalContext.window,
-                'resize',
-                this._triggerWindowResizeEvents.bind(this)
-            )
-        this._triggerWindowResizeEvents()
     }
     // endregion
     grabDomNodes(): void {
@@ -538,10 +516,10 @@ export class WebsiteUtilities<
 
         for (const domNode of this.scrollToTopButtonDomNodes ?? []) {
             domNode.addEventListener('transitionend', () => {
-                domNode.classList.remove('scroll-up-start')
-                domNode.classList.add('top-settled scroll-up-end')
+                domNode.classList.remove('wu-scroll-up')
+                domNode.classList.add('wu-top-settled')
             })
-            domNode.classList.add('scroll-up-start')
+            domNode.classList.add('wu-scroll-up')
         }
     })
     /**
@@ -550,16 +528,15 @@ export class WebsiteUtilities<
      */
     _onViewportMovesAwayFromTop = debounce((): void => {
         if (Array.from(this.scrollToTopButtonDomNodes ?? []).some(
-            (domNode) => domNode.classList.contains('top-settled')
+            (domNode) => domNode.classList.contains('wu-top-settled')
         )) {
             this._finishScrollToTopButtonTransition()
 
             for (const domNode of this.scrollToTopButtonDomNodes ?? []) {
                 domNode.addEventListener('transitionend', () => {
-                    domNode.classList.remove('scroll-down-start')
-                    domNode.classList.add('scroll-down-end')
+                    domNode.classList.remove('scroll-down')
                 })
-                domNode.classList.add('scroll-down-start')
+                domNode.classList.add('wu-scroll-down')
             }
         }
     })
@@ -596,60 +573,13 @@ export class WebsiteUtilities<
     _finishScrollToTopButtonTransition() {
         for (const domNode of this.scrollToTopButtonDomNodes ?? [])
             domNode.classList.remove(
-                'scroll-down-start', 'scroll-down-end',
-                'scroll-up-end', 'scroll-up-start',
-                'top-settled'
+                'wu-scroll-down', 'wu-scroll-up', 'wu-top-settled'
             )
     }
     /**
-     * This method triggers if the responsive design switches its mode.
-     * @param event - Event object if existing.
-     */
-    _triggerWindowResizeEvents(event?: Event): void {
-        for (
-            const classNameMapping of this.options.mediaQueryClassNameIndicator
-        ) {
-            if (this.root.parentElement && !this.mediaQueryIndicatorDomNode) {
-                this.mediaQueryIndicatorDomNode =
-                    createDomNodes(this.options.selectors.mediaQueryIndicator)
-                this.root.prepend(
-                    this.mediaQueryIndicatorDomNode
-                )
-                this.mediaQueryIndicatorDomNode.classList.add(
-                    `hidden-${classNameMapping[1]}`
-                )
-            }
-
-            if (
-                this.mediaQueryIndicatorDomNode &&
-                isHidden(this.mediaQueryIndicatorDomNode) &&
-                classNameMapping[0] !== this.currentMediaQueryMode
-            ) {
-                this.onChangeMediaQueryMode.call(
-                    this,
-                    this.currentMediaQueryMode,
-                    classNameMapping[0],
-                    event
-                )
-
-                this[
-                    `changeTo${capitalize(classNameMapping[0])}Mode` as
-                        'onChangeToExtraSmallMode'
-                ].call(this, this.currentMediaQueryMode, event)
-
-                this.currentMediaQueryMode = classNameMapping[0]
-            }
-
-            this.mediaQueryIndicatorDomNode?.classList
-                .remove(`hidden-${classNameMapping[1]}`)
-        }
-    }
-    /**
      * This method triggers if view port arrives at special areas.
-     * @param parameters - All arguments will be appended to the event handler
-     * callbacks.
      */
-    _bindScrollEvents(...parameters: Array<unknown>): void {
+    _bindScrollEvents(): void {
         if (!globalContext.document)
             return
 
@@ -682,13 +612,16 @@ export class WebsiteUtilities<
                         if (this.viewportIsOnTop) {
                             this.viewportIsOnTop = false
 
-                            this._onViewportMovesAwayFromTop()
-                            this.onViewportMovesAwayFromTop.call(this, event)
+                            this._onViewportMovesAwayFromTop().then(
+                                this.onViewportMovesAwayFromTop.bind(
+                                    this, event
+                                )
+                            )
                         }
                     } else if (!this.viewportIsOnTop) {
                         this.viewportIsOnTop = true
 
-                        this._onViewportMovesToTop()
+                        void this._onViewportMovesToTop()
                         this.onViewportMovesToTop.call(this, event)
                     }
                 }
@@ -696,12 +629,18 @@ export class WebsiteUtilities<
 
         if (globalContext.window?.scrollY) {
             this.viewportIsOnTop = false
-            this._onViewportMovesAwayFromTop()
-            this.onViewportMovesAwayFromTop.call(this)
+            this._onViewportMovesAwayFromTop().then(() =>
+                this.onViewportMovesAwayFromTop.bind(this)
+            )
         } else {
             this.viewportIsOnTop = true
-            this._onViewportMovesToTop()
-            this.onViewportMovesToTop.call(this)
+
+            this._onViewportMovesToTop().then(() => {
+                for (const domNode of this.scrollToTopButtonDomNodes ?? [])
+                    domNode.classList.add('wu-top-settled')
+
+                this.onViewportMovesToTop.bind(this)
+            })
         }
     }
     /**
