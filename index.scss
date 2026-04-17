@@ -442,6 +442,13 @@ website-utilities {
     /*** endregion */
     /** endregion */
     /* endregion */
+    /* region section */
+    .wu-section {
+        > * {
+            display: none;
+        }
+    }
+    /* endregion */
     /* region move to top button animation */
     .wu-scroll-to-top {
         display: block;
@@ -498,7 +505,7 @@ website-utilities {
             @for $i from 0 through 40 {
                 &:nth-child(#{$i + 1}) {
                     filter: blur(0);
-                    animation: blur-text 1.5s (#{$i/5})+s infinite linear alternate;
+                    animation: blur-text 1.5s (#{$i / 5}) + s infinite linear alternate;
                 }
             }
         }
