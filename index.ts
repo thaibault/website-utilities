@@ -194,7 +194,7 @@ export class WebsiteUtilities<
         onStartUpAnimationComplete: (this: WebsiteUtilities) => void = NOOP
 
     @property({type: func})
-        onSwitchSection: (this: WebsiteUtilities) => void = NOOP
+        onSwitchSection: (this: WebsiteUtilities, event?: Event) => void = NOOP
 
     @property({type: func})
         onViewportMovesAwayFromTop: (
@@ -521,8 +521,9 @@ export class WebsiteUtilities<
     /**
      * This method triggers if we change the current section.
      * @param sectionName - Contains the new section name.
+     * @param event - Optional event which triggered the switch.
      */
-    switchSection(sectionName: string): void {
+    switchSection(sectionName: string, event?: Event): void {
         if (
             globalContext.window &&
             'location' in globalContext.window &&
@@ -536,7 +537,7 @@ export class WebsiteUtilities<
             )
 
             try {
-                this.onSectionSwitch.call(this, this.currentSectionName)
+                this.onSectionSwitch.call(this, this.currentSectionName, event)
             } catch (error) {
                 log.warn(
                     'Problem due to call section switch callback on section',
