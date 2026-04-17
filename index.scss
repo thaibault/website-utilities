@@ -442,14 +442,6 @@ website-utilities {
     /*** endregion */
     /** endregion */
     /* endregion */
-    /* Initially hide/show javaScript dependent dom nodes. */
-    .wu-hidden-on-javascript-enabled {
-        display: none;
-    }
-
-    .wu-visible-on-javascript-enabled {
-        display: initial;
-    }
     /* region move to top button animation */
     .wu-scroll-to-top {
         display: block;
