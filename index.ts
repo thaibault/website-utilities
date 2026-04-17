@@ -553,16 +553,18 @@ export class WebsiteUtilities<
                 this.sectionDomNodes, sectionName
             )
         ) {
-            if (this.currentSectionName !== sectionName) {
+            if (this.currentSectionName === sectionName) {
+                this.sectionDomNodes[this.currentSectionName].style.display =
+                    'none'
+                this.sectionDomNodes[sectionName].style.display = 'initial'
+            } else {
+                this.interruptableScrollToTop()
+
                 await fadeOut(this.sectionDomNodes[this.currentSectionName])
                 this.sectionDomNodes[this.currentSectionName].style.display =
                     'none'
                 this.sectionDomNodes[sectionName].style.display = 'initial'
                 await fadeIn(this.sectionDomNodes[sectionName])
-            } else {
-                this.sectionDomNodes[this.currentSectionName].style.display =
-                    'none'
-                this.sectionDomNodes[sectionName].style.display = 'initial'
             }
 
             const oldSectionName = this.currentSectionName
