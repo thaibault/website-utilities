@@ -115,6 +115,9 @@ export class WebsiteUtilities<
 
     static _defaultOptions: DefaultOptions = {
         additionalPageLoadingTimeInMilliseconds: 0,
+        startUpAnimationElementDelayInMilliseconds: 100,
+        windowLoadedTimeoutAfterDocLoadedInMSec: 2000,
+
         domain: 'auto',
         initialSectionName: 'home',
         knownScrollEventNames: [
@@ -132,24 +135,21 @@ export class WebsiteUtilities<
             ['medium', 'md'],
             ['large', 'lg']
         ],
+
+        sectionNames: ['home'],
+
         selectors: {
             scrollToTopButtons: '.wu-scroll-to-top',
+            section: '.wu-section',
             startUpAnimationClassPrefix: 'wu-start-up-animation-number-',
             top: '.wu-header',
             windowLoadingCover: '.wu-window-loading-cover'
         },
 
-        startUpAnimationElementDelayInMilliseconds: 100,
-
-        tracking: false,
-
-        windowLoadedTimeoutAfterDocLoadedInMSec: 2000
+        tracking: false
     }
 
     readonly self = WebsiteUtilities
-
-    @property({type: object})
-        options = {} as Options
 
     currentMediaQueryMode = ''
     currentSectionName = 'home'
@@ -162,10 +162,17 @@ export class WebsiteUtilities<
     /// region dom nodes
     scrollToTopButtonDomNodes: NodeListOf<HTMLElement> | null = null
 
+    sectionDomNode: HTMLElement | null = null
+    sectionDomNodes: Mapping<HTMLElement> = {}
+
     topDomNode: HTMLElement | null = null
 
     windowLoadingCoverDomNode: HTMLElement | null = null
     /// endregion
+    // region api properties
+    @property({type: object})
+        options = {} as Options
+
     @property({type: func})
         onChangeMediaQueryMode: (
             this: WebsiteUtilities,
@@ -216,7 +223,7 @@ export class WebsiteUtilities<
             const button = event.target as HTMLElement
             const content = getText(button).join(' ')
 
-            this.onTrack({
+            void this.onTrack({
                 event: 'buttonClick',
                 eventType: 'click',
                 label: content,
@@ -236,13 +243,16 @@ export class WebsiteUtilities<
             })
         }
     @property({type: func})
-        onSectionSwitch = function(
-            this: WebsiteUtilities, sectionName: string, _event?: Event
-        ) {
+        onSectionSwitch = async function(
+            this: WebsiteUtilities,
+            sectionName: string,
+            _oldSectionName: string,
+            _event?: Event
+        ): Promise<void> {
             if (!globalContext.window?.location)
                 return
 
-            this.onTrack({
+            await this.onTrack({
                 event: 'sectionSwitch',
                 eventType: 'sectionSwitch',
                 label: sectionName,
@@ -259,7 +269,7 @@ export class WebsiteUtilities<
             const link = event.target as HTMLElement
             const content = getText(link).join(' ')
 
-            this.onTrack({
+            void this.onTrack({
                 event: 'linkClick',
                 eventType: 'click',
                 label: content,
@@ -282,11 +292,14 @@ export class WebsiteUtilities<
     @property({type: func})
         onTrack = function(
             this: WebsiteUtilities, item: TrackingItem
-        ) {
+        ): Promise<void> {
             if (this.options.tracking)
                 (globalContext as {dataLayer?: Array<TrackingItem>})
                     .dataLayer?.push(item)
+
+            return Promise.resolve()
         }
+    // endregion
     // region public
     /// region live-cycle
     /**
@@ -358,14 +371,23 @@ export class WebsiteUtilities<
             this.addSecureEventListener(
                 globalContext.window, 'load', onLoaded
             )
+
+        await this._initializeRouting()
     }
     // endregion
     grabDomNodes(): void {
+        this.topDomNode = this.root.querySelector(this.options.selectors.top)
         this.scrollToTopButtonDomNodes = this.root.querySelectorAll(
             this.options.selectors.scrollToTopButtons
         )
 
-        this.topDomNode = this.root.querySelector(this.options.selectors.top)
+        this.sectionDomNode =
+            this.root.querySelector(this.options.selectors.section)
+        for (const domNode of this.sectionDomNode?.children ?? []) {
+            const name = domNode.getAttribute('data-website-utilities-section')
+            if (name && this.options.sectionNames.includes(name))
+                this.sectionDomNodes[name] = domNode as HTMLElement
+        }
 
         this.windowLoadingCoverDomNode =
             this.root.parentElement?.querySelector(
@@ -440,7 +462,7 @@ export class WebsiteUtilities<
      * configured analytics event code to defined their environment variables.
      * @param properties - Event tracking information.
      */
-    track(
+    async track(
         properties: Omit<TrackingItem, 'context' | 'value'> & {
             context?: string
             value?: number
@@ -463,7 +485,7 @@ export class WebsiteUtilities<
             log.debug(trackingItem)
 
             try {
-                this.onTrack(trackingItem)
+                await this.onTrack(trackingItem)
             } catch (error) {
                 log.warn(
                     `Problem in tracking "${represent(trackingItem)}":`,
@@ -523,21 +545,38 @@ export class WebsiteUtilities<
      * @param sectionName - Contains the new section name.
      * @param event - Optional event which triggered the switch.
      */
-    switchSection(sectionName: string, event?: Event): void {
+    async switchSection(sectionName: string, event?: Event): Promise<void> {
         if (
             globalContext.window &&
             'location' in globalContext.window &&
-            this.currentSectionName !== sectionName
+            Object.prototype.hasOwnProperty.call(
+                this.sectionDomNodes, sectionName
+            )
         ) {
+            if (this.currentSectionName !== sectionName) {
+                await fadeOut(this.sectionDomNodes[this.currentSectionName])
+                this.sectionDomNodes[this.currentSectionName].style.display =
+                    'none'
+                this.sectionDomNodes[sectionName].style.display = 'initial'
+                await fadeIn(this.sectionDomNodes[sectionName])
+            } else {
+                this.sectionDomNodes[this.currentSectionName].style.display =
+                    'none'
+                this.sectionDomNodes[sectionName].style.display = 'initial'
+            }
+
+            const oldSectionName = this.currentSectionName
             this.currentSectionName = sectionName
 
             log.debug(
-                'Run section switch tracking on section',
+                `Run section switch from "${oldSectionName}" to`,
                 `"${this.currentSectionName}".`
             )
 
             try {
-                this.onSectionSwitch.call(this, this.currentSectionName, event)
+                await this.onSectionSwitch.call(
+                    this, this.currentSectionName, oldSectionName, event
+                )
             } catch (error) {
                 log.warn(
                     'Problem due to call section switch callback on section',
@@ -548,6 +587,30 @@ export class WebsiteUtilities<
     }
     // endregion
     /// region helper
+    /**
+     * Handle section switches.
+     * @returns Promise resolving when routing initialization has been
+     * finished.
+     */
+    _initializeRouting() {
+        this.currentSectionName = this.options.initialSectionName
+
+        const newSectionName = (
+            globalContext.location?.hash &&
+            this.options.initialSectionName !==
+                globalContext.location.hash.substring('#'.length)
+        ) ?
+            globalContext.location.hash.substring('#'.length) :
+            this.currentSectionName
+
+        return this.switchSection(newSectionName)
+    }
+
+    /**
+     * Removes class names from scroll to top buttons to stop running
+     * transitions.
+     * @param classNames - Optional class names to remove.
+     */
     _finishScrollToTopButtonTransition(
         classNames: Array<string> | string = ['wu-scroll-down', 'wu-scroll-up']
     ) {
@@ -688,8 +751,8 @@ export class WebsiteUtilities<
                 'hashchange',
                 (event: Event) => {
                     if (this.startUpAnimationIsComplete)
-                        this.onSectionSwitch.call(
-                            this, location.hash.substring('#'.length), event
+                        void this.switchSection(
+                            location.hash.substring('#'.length), event
                         )
                 }
             )

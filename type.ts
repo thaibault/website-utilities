@@ -22,9 +22,14 @@ export interface DefaultOptions {
     initialSectionName: string
     knownScrollEventNames: Array<string>
     mediaQueryClassNameIndicator: Array<Array<string>>
+
+    sectionNames: Array<string>
+
     selectors: {
         top: string
         scrollToTopButtons: string
+
+        section: string
 
         startUpAnimationClassPrefix: string
 

@@ -41,7 +41,6 @@
                 display: block;
 
                 width: 100%;
-                height: 8000px;
 
                 box-sizing: border-box;
                 padding: 20px;
@@ -54,12 +53,16 @@
                 color: darkgrey;
             }
 
-            website-utilities header {
+            website-utilities header, website-utilities footer {
                 height: 80px;
 
                 padding: 20px;
 
                 background-color: #238636;
+            }
+
+            website-utilities section > :first-child {
+                height: 8000px;
             }
 
             website-utilities .content {
@@ -92,44 +95,69 @@
             </div>
         </div>
 
-        <website-utilities options="{windowLoadedTimeoutAfterDocLoadedInMSec: 200}">
+        <website-utilities options="{
+            sectionNames: ['home', 'alternative'],
+            additionalPageLoadingTimeInMilliseconds: 200
+        }">
             <header class="wu-header">
                 <a href="#home">Home</a>
             </header>
 
-            <div class="content wu-start-up-animation-number-1">
-                Show first
-            </div>
+            <section class="wu-section">
+                <div data-website-utilities-section="home">
+                    <div class="content wu-start-up-animation-number-1">
+                        Show first
+                    </div>
 
-            <div class="content wu-start-up-animation-number-2">
-                Show second
-            </div>
+                    <div class="content wu-start-up-animation-number-2">
+                        Show second
+                    </div>
 
-            <div class="content wu-start-up-animation-number-3">
-                Show third
-            </div>
+                    <div class="content wu-start-up-animation-number-3">
+                        Show third
+                    </div>
 
-            <div class="content wu-start-up-animation-number-4">
-                Show fourth
-            </div>
+                    <div class="content wu-start-up-animation-number-4">
+                        Show fourth
+                    </div>
 
-            <div class="content wu-start-up-animation-number-5">
-                Show fifth
-            </div>
+                    <div class="content wu-start-up-animation-number-5">
+                        Show fifth
+                    </div>
 
-            <div class="content wu-start-up-animation-number-6">
-                Show sixth
-            </div>
+                    <div class="content wu-start-up-animation-number-6">
+                        Show sixth
+                    </div>
 
-            <div class="content wu-start-up-animation-number-7">
-                Show seventh
-            </div>
+                    <div class="content wu-start-up-animation-number-7">
+                        Show seventh
+                    </div>
 
-            <div class="content wu-start-up-animation-number-8">
-                Show eights
-            </div>
+                    <div class="content wu-start-up-animation-number-8">
+                        Show eights
+                    </div>
+                </div>
+
+                <div data-website-utilities-section="alternative">
+                    <div class="content wu-start-up-animation-number-1">
+                        Show first alternative
+                    </div>
+
+                    <div class="content wu-start-up-animation-number-2">
+                        Show second alternative
+                    </div>
+
+                    <div class="content wu-start-up-animation-number-3">
+                        Show third alternative
+                    </div>
+                </div>
+            </section>
 
             <a class="wu-scroll-to-top" href="#top">scroll to top</a>
+
+            <footer>
+                <a href="#alternative">alternative section</a>
+            </footer>
         </website-utilities>
     </body>
 <html>
