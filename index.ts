@@ -146,7 +146,7 @@ export class WebsiteUtilities<
         windowLoadedTimeoutAfterDocLoadedInMSec: 2000
     }
 
-    readonly self: typeof WebsiteUtilities = WebsiteUtilities
+    readonly self = WebsiteUtilities
 
     @property({type: object})
         options = {} as Options
@@ -280,9 +280,12 @@ export class WebsiteUtilities<
             })
         }
     @property({type: func})
-        onTrack = function(item: TrackingItem) {
-            (globalContext as {dataLayer?: Array<TrackingItem>})
-                .dataLayer?.push(item)
+        onTrack = function(
+            this: WebsiteUtilities, item: TrackingItem
+        ) {
+            if (this.options.tracking)
+                (globalContext as {dataLayer?: Array<TrackingItem>})
+                    .dataLayer?.push(item)
         }
     // region public
     /// region live-cycle
@@ -519,11 +522,10 @@ export class WebsiteUtilities<
      * This method triggers if we change the current section.
      * @param sectionName - Contains the new section name.
      */
-    _onSwitchSection(sectionName: string): void {
+    switchSection(sectionName: string): void {
         if (
             globalContext.window &&
             'location' in globalContext.window &&
-            this.options.tracking &&
             this.currentSectionName !== sectionName
         ) {
             this.currentSectionName = sectionName
@@ -537,7 +539,7 @@ export class WebsiteUtilities<
                 this.onSectionSwitch.call(this, this.currentSectionName)
             } catch (error) {
                 log.warn(
-                    'Problem due to track section switch to',
+                    'Problem due to call section switch callback on section',
                     `"${this.currentSectionName}": ${represent(error)}`
                 )
             }
