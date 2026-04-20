@@ -273,6 +273,7 @@
       "module": {
         "optimizer": {
           "babelMinify": {
+            "#": "To provide a logging output we need to exclude this feature.",
             "bundle": {
               "transform": {
                 "removeConsole": false
