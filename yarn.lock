@@ -2980,7 +2980,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/config-array@npm:^0.23.4":
+"@eslint/config-array@npm:^0.23.5":
   version: 0.23.5
   resolution: "@eslint/config-array@npm:0.23.5"
   dependencies:
@@ -2991,7 +2991,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/config-helpers@npm:^0.5.4":
+"@eslint/config-helpers@npm:^0.5.5":
   version: 0.5.5
   resolution: "@eslint/config-helpers@npm:0.5.5"
   dependencies:
@@ -3000,7 +3000,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/core@npm:^1.2.0, @eslint/core@npm:^1.2.1":
+"@eslint/core@npm:^1.2.1":
   version: 1.2.1
   resolution: "@eslint/core@npm:1.2.1"
   dependencies:
@@ -3028,7 +3028,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/plugin-kit@npm:^0.7.0":
+"@eslint/plugin-kit@npm:^0.7.1":
   version: 0.7.1
   resolution: "@eslint/plugin-kit@npm:0.7.1"
   dependencies:
@@ -7068,9 +7068,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clientnode@npm:^4.0.1386":
-  version: 4.0.1386
-  resolution: "clientnode@npm:4.0.1386"
+"clientnode@npm:^4.0.1387":
+  version: 4.0.1387
+  resolution: "clientnode@npm:4.0.1387"
   peerDependencies:
     "@babel/runtime": "*"
     "@types/prop-types": "*"
@@ -7085,7 +7085,7 @@ __metadata:
       optional: true
     prop-types:
       optional: true
-  checksum: 10c0/209a5f99b54f84b97ec45642f7d323fe3a351e4f2b936b75023307f64c80b7b403d23da7dec8a3fda333f6d67dfd4c6a7631b1631be8cf11971f55bbfb236283
+  checksum: 10c0/bbc067fe3d3893e1820fc66d3022975d0ca206363cec2e338371bd471ca882efc53d66510f2a24a1b487098a80ada87df0a230022c396de9f86f2fb8949733c7
   languageName: node
   linkType: hard
 
@@ -8690,16 +8690,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^10.2.0":
-  version: 10.2.0
-  resolution: "eslint@npm:10.2.0"
+"eslint@npm:^10.2.1":
+  version: 10.2.1
+  resolution: "eslint@npm:10.2.1"
   dependencies:
     "@eslint-community/eslint-utils": "npm:^4.8.0"
     "@eslint-community/regexpp": "npm:^4.12.2"
-    "@eslint/config-array": "npm:^0.23.4"
-    "@eslint/config-helpers": "npm:^0.5.4"
-    "@eslint/core": "npm:^1.2.0"
-    "@eslint/plugin-kit": "npm:^0.7.0"
+    "@eslint/config-array": "npm:^0.23.5"
+    "@eslint/config-helpers": "npm:^0.5.5"
+    "@eslint/core": "npm:^1.2.1"
+    "@eslint/plugin-kit": "npm:^0.7.1"
     "@humanfs/node": "npm:^0.16.6"
     "@humanwhocodes/module-importer": "npm:^1.0.1"
     "@humanwhocodes/retry": "npm:^0.4.2"
@@ -8731,7 +8731,7 @@ __metadata:
       optional: true
   bin:
     eslint: bin/eslint.js
-  checksum: 10c0/c275115f8937c243125986bf8f7d5c09bdc083f4a9fba8a77ad15a15989f05732f5037fe990cc1bc22dd887cf16060f57b8949dc5f1055d5020689adff49e219
+  checksum: 10c0/176795a3794a785502fa5cd14a9609264c2be5405552d20fed3e499bd465c29639c91ac44619ae66787b0fb7494e72d112550a2136a735d92a26bc6a7af4915c
   languageName: node
   linkType: hard
 
@@ -17531,11 +17531,11 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^8.58.2"
     "@typescript-eslint/parser": "npm:^8.58.2"
     "@webcomponents/webcomponentsjs": "npm:^2.8.0"
-    clientnode: "npm:^4.0.1386"
+    clientnode: "npm:^4.0.1387"
     css-loader: "npm:^7.1.4"
     cssnano: "npm:^7.1.5"
     documentation-website: "npm:^1.0.401"
-    eslint: "npm:^10.2.0"
+    eslint: "npm:^10.2.1"
     eslint-config-google: "npm:^0.14.0"
     eslint-plugin-jsdoc: "npm:^62.9.0"
     jest: "npm:^30.3.0"
