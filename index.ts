@@ -338,6 +338,7 @@ export class WebsiteUtilities<
      * @param reason - Why an update has been triggered.
      */
     async render(reason?: string): Promise<void> {
+        console.log('A')
         await super.render(reason)
 
         if (Object.keys(this.options).length === 0)
