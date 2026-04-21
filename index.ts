@@ -556,14 +556,14 @@ export class WebsiteUtilities<
             if (this.currentSectionName === sectionName) {
                 this.sectionDomNodes[this.currentSectionName].style.display =
                     'none'
-                this.sectionDomNodes[sectionName].style.display = 'initial'
+                this.sectionDomNodes[sectionName].style.display = 'block'
             } else {
                 this.interruptableScrollToTop()
 
                 await fadeOut(this.sectionDomNodes[this.currentSectionName])
                 this.sectionDomNodes[this.currentSectionName].style.display =
                     'none'
-                this.sectionDomNodes[sectionName].style.display = 'initial'
+                this.sectionDomNodes[sectionName].style.display = 'block'
                 await fadeIn(this.sectionDomNodes[sectionName])
             }
 
