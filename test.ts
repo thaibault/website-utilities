@@ -17,15 +17,15 @@
 import {beforeAll, describe, expect, test} from '@jest/globals'
 import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter'
 
-import root, {api} from './index'
+import WebsiteUtilities, {api} from './index'
 // endregion
 describe('root', (): void => {
-    let root: root
+    let root: WebsiteUtilities
 
     beforeAll(() => {
         api.register()
         root = document.createElement('web-internationalization') as
-            root
+            WebsiteUtilities
         document.body.appendChild(root)
     })
     // region tests
