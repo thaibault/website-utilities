@@ -795,7 +795,7 @@ export class WebsiteUtilities<
     /// endregion
     // endregion
 }
-
+// endregion
 export const api: WebComponentAPI<
     HTMLElement, Mapping<unknown>, Mapping<unknown>, typeof Web
 > = {
@@ -810,4 +810,3 @@ export default WebsiteUtilities
 
 if ((globalContext as Mapping<boolean>).AUTO_DEFINE_WEBSITE_UTILITIES)
     api.register()
-// endregion
