@@ -322,10 +322,7 @@ export class WebsiteUtilities<
 
         if (name === 'options')
             this.options = extend<Options>(
-                true,
-                {} as Options,
-                this.self._defaultOptions,
-                this.options
+                true, {}, this.self._defaultOptions, this.options
             )
     }
     /**
