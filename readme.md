@@ -25,7 +25,7 @@ Project status
 
 [![code coverage](https://img.shields.io/coverallsCoverage/github/thaibault/website-utilities?label=code%20coverage&style=for-the-badge)](https://coveralls.io/github/thaibault/website-utilities)
 
-[![deploy documentation website](https://img.shields.io/github/actions/workflow/status/thaibault/website-utilities/deploy-documentation-website.yaml?label=deploy%20documentation%20website&style=for-the-badge)](https://github.com/thaibault/website-utilities/actions/workflows/deploy-documentation-website.yaml)
+[![deploy web documentation](https://img.shields.io/github/actions/workflow/status/thaibault/website-utilities/deploy-web-documentation.yaml?label=deploy%20web%20documentation&style=for-the-badge)](https://github.com/thaibault/website-utilities/actions/workflows/deploy-web-documentation.yaml)
 [![documentation website](https://img.shields.io/website-up-down-green-red/https/torben.website/website-utilities.svg?label=documentation-website&style=for-the-badge)](https://torben.website/website-utilities)
 
 <!--|deDE:Einsatzmöglichkeiten-->
