@@ -71,8 +71,6 @@ export const log = new Logger({name: 'website-utilities'})
  * @property _defaultOptions.windowLoadedTimeoutAfterDocLoadedInMSec - Duration
  * after loading cover should be removed.
  * @property options - Finally configured given options.
- * @property currentMediaQueryMode - Saves current media query status depending
- * on available space in current browser window.
  * @property currentSectionName - Saves current section hash name.
  * @property startUpAnimationIsComplete - Indicates whether start up animations
  * has finished.
@@ -150,25 +148,6 @@ export class WebsiteUtilities<
     }
 
     readonly self = WebsiteUtilities
-
-    currentMediaQueryMode = ''
-    currentSectionName = 'home'
-
-    startUpAnimationIsComplete = false
-    continueAutoScrolling = false
-
-    viewportIsOnTop: boolean | undefined
-    windowLoaded = false
-    /// region dom nodes
-    scrollToTopButtonDomNodes: NodeListOf<HTMLElement> | null = null
-
-    sectionDomNode: HTMLElement | null = null
-    sectionDomNodes: Mapping<HTMLElement> = {}
-
-    topDomNode: HTMLElement | null = null
-
-    windowLoadingCoverDomNode: HTMLElement | null = null
-    /// endregion
     // region api properties
     @property({type: object})
         options = {} as Options
@@ -300,6 +279,22 @@ export class WebsiteUtilities<
             return Promise.resolve()
         }
     // endregion
+    currentSectionName = 'home'
+
+    startUpAnimationIsComplete = false
+    continueAutoScrolling = false
+    viewportIsOnTop: boolean | undefined
+    windowLoaded = false
+    /// region dom nodes
+    scrollToTopButtonDomNodes: NodeListOf<HTMLElement> | null = null
+
+    sectionDomNode: HTMLElement | null = null
+    sectionDomNodes: Mapping<HTMLElement> = {}
+
+    topDomNode: HTMLElement | null = null
+
+    windowLoadingCoverDomNode: HTMLElement | null = null
+    /// endregion
     // region public
     /// region live-cycle
     /**
