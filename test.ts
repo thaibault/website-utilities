@@ -22,11 +22,13 @@ import WebsiteUtilities, {api} from './index'
 describe('root', (): void => {
     let root: WebsiteUtilities
 
-    beforeAll(() => {
+    beforeAll(async () => {
         api.register()
         root = document.createElement('web-internationalization') as
             WebsiteUtilities
         document.body.appendChild(root)
+
+        await root.rendered
     })
     // region tests
     test('should be defined', () => {
