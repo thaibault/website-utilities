@@ -380,9 +380,16 @@ export class WebsiteUtilities<
         }
 
         this.windowLoadingCoverDomNode =
+            this.root.querySelector(
+                this.options.selectors.windowLoadingCover
+            ) ??
             this.root.parentElement?.querySelector(
                 this.options.selectors.windowLoadingCover
-            ) ?? null
+            ) ??
+            globalContext.document?.body.querySelector(
+                this.options.selectors.windowLoadingCover
+            ) ??
+            null
     }
     /**
      * Scrolls to top of page smoothly via being interruptible.
