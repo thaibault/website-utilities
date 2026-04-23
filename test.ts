@@ -24,7 +24,7 @@ describe('root', (): void => {
 
     beforeAll(async () => {
         api.register()
-        root = document.createElement('web-internationalization') as
+        root = document.createElement('website-utilities') as
             WebsiteUtilities
         document.body.appendChild(root)
 
