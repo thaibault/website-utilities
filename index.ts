@@ -321,9 +321,7 @@ export class WebsiteUtilities<
         super.onUpdateAttribute(name, newValue)
 
         if (name === 'options')
-            this.options = extend<Options>(
-                true, {}, this.self._defaultOptions, this.options
-            )
+            this._extendOptions()
     }
     /**
      * Updates controlled dom elements.
@@ -333,7 +331,7 @@ export class WebsiteUtilities<
         await super.render(reason)
 
         if (Object.keys(this.options).length === 0)
-            this.onUpdateAttribute('options', '{}')
+            this._extendOptions()
 
         this.grabDomNodes()
 
@@ -581,6 +579,14 @@ export class WebsiteUtilities<
     }
     // endregion
     /// region helper
+    /**
+     * Extends given options by default options.
+     */
+    _extendOptions() {
+        this.options = extend<Options>(
+            true, {}, this.self._defaultOptions, this.options
+        )
+    }
     /**
      * Handle section switches.
      * @returns Promise resolving when routing initialization has been
