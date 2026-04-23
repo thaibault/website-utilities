@@ -28,7 +28,7 @@ describe('root', (): void => {
             WebsiteUtilities
         document.body.appendChild(root)
 
-        await root.rendered
+        await root.renderState.promise
     })
     // region tests
     test('should be defined', () => {
