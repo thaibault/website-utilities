@@ -335,12 +335,12 @@ export class WebsiteUtilities<
      * @param reason - Why an update has been triggered.
      */
     async render(reason?: string): Promise<void> {
-        console.log('render wu', reason)
         await super.render(reason)
 
         if (Object.keys(this.options).length === 0)
             this._extendOptions()
 
+        // TODO dom nodes changes afterwards because of nested web components!
         this.grabDomNodes()
 
         this.disableScrolling()
@@ -557,8 +557,10 @@ export class WebsiteUtilities<
                 this.sectionDomNodes, sectionName
             )
         ) {
+            const oldSection = this.sectionDomNodes[this.currentSectionName]
+            const newSection = this.sectionDomNodes[sectionName]
+
             await this.self.switchSectionLock.acquire()
-            console.log('acquired SWITCH from', this.currentSectionName, 'to', sectionName)
 
             log.debug(
                 `Run section switch from "${this.currentSectionName}" to`,
@@ -566,17 +568,15 @@ export class WebsiteUtilities<
             )
 
             if (this.currentSectionName === sectionName) {
-                this.sectionDomNodes[this.currentSectionName].style.display =
-                    'none'
-                this.sectionDomNodes[sectionName].style.display = 'block'
+                oldSection.style.display = 'none'
+                newSection.style.display = 'block'
             } else {
                 this.interruptableScrollToTop()
 
-                await fadeOut(this.sectionDomNodes[this.currentSectionName])
-                this.sectionDomNodes[this.currentSectionName].style.display =
-                    'none'
-                this.sectionDomNodes[sectionName].style.display = 'block'
-                await fadeIn(this.sectionDomNodes[sectionName])
+                await fadeOut(oldSection)
+                oldSection.style.display = 'none'
+                newSection.style.display = 'block'
+                await fadeIn(newSection)
             }
 
             const oldSectionName = this.currentSectionName
@@ -593,7 +593,6 @@ export class WebsiteUtilities<
                 )
             }
 
-            console.log('release SWITCH from', this.currentSectionName, 'to', oldSectionName)
             await this.self.switchSectionLock.release()
         }
     }
@@ -789,6 +788,7 @@ export class WebsiteUtilities<
                     if (this.startUpAnimationIsComplete) {
                         const newSectionNameCandidate =
                             location.hash.substring('#'.length)
+
                         if (Object.prototype.hasOwnProperty.call(
                             this.sectionDomNodes, newSectionNameCandidate
                         ))
