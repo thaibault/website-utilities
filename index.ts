@@ -291,7 +291,7 @@ export class WebsiteUtilities<
     viewportIsOnTop: boolean | undefined
     windowLoaded = false
 
-    private switchSectionLock = new Lock<void>()
+    private static switchSectionLock = new Lock<void>()
     /// region dom nodes
     windowLoadingCoverDomNode: HTMLElement | null = null
 
@@ -335,6 +335,7 @@ export class WebsiteUtilities<
      * @param reason - Why an update has been triggered.
      */
     async render(reason?: string): Promise<void> {
+        console.log('render wu', reason)
         await super.render(reason)
 
         if (Object.keys(this.options).length === 0)
@@ -556,7 +557,8 @@ export class WebsiteUtilities<
                 this.sectionDomNodes, sectionName
             )
         ) {
-            await this.switchSectionLock.acquire()
+            await this.self.switchSectionLock.acquire()
+            console.log('acquired SWITCH from', this.currentSectionName, 'to', sectionName)
 
             log.debug(
                 `Run section switch from "${this.currentSectionName}" to`,
@@ -570,21 +572,15 @@ export class WebsiteUtilities<
             } else {
                 this.interruptableScrollToTop()
 
-                console.log('1 SWITCH from', this.currentSectionName, 'to', sectionName)
                 await fadeOut(this.sectionDomNodes[this.currentSectionName])
                 this.sectionDomNodes[this.currentSectionName].style.display =
                     'none'
-                console.log('A', this.sectionDomNodes[sectionName], this.sectionDomNodes[sectionName].style, this.sectionDomNodes[sectionName].style.display)
                 this.sectionDomNodes[sectionName].style.display = 'block'
-                console.log('B', this.sectionDomNodes[sectionName], this.sectionDomNodes[sectionName].style, this.sectionDomNodes[sectionName].style.display)
                 await fadeIn(this.sectionDomNodes[sectionName])
-                console.log('2 SWITCH from', this.currentSectionName, 'to', sectionName)
             }
 
             const oldSectionName = this.currentSectionName
             this.currentSectionName = sectionName
-
-            await this.switchSectionLock.release()
 
             try {
                 await this.onSectionSwitch.call(
@@ -596,6 +592,9 @@ export class WebsiteUtilities<
                     `"${this.currentSectionName}": ${represent(error)}`
                 )
             }
+
+            console.log('release SWITCH from', this.currentSectionName, 'to', oldSectionName)
+            await this.self.switchSectionLock.release()
         }
     }
     // endregion
@@ -604,8 +603,13 @@ export class WebsiteUtilities<
      * Extends given options by default options.
      */
     _extendOptions() {
-        this.options = extend<Options>(
-            true, {}, this.self._defaultOptions, this.options
+        /*
+            NOTE: Using the internal setter avoids to trigger an additinal
+            rendering.
+        */
+        this.setPropertyValue(
+            'options',
+            extend<Options>(true, {}, this.self._defaultOptions, this.options)
         )
     }
     /**
