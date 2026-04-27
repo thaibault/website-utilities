@@ -338,7 +338,6 @@ export class WebsiteUtilities<
         this.disableScrolling()
         this._bindScrollEvents()
         this._bindClickTracking()
-        this._bindNavigationEvents()
 
         const onLoaded = () => {
             if (!this.windowLoaded) {
@@ -600,14 +599,22 @@ export class WebsiteUtilities<
      * finished.
      */
     _initializeRouting() {
+        this._bindNavigationEvents()
+
         this.currentSectionName = this.options.initialSectionName
 
-        const newSectionName = (
+        const newSectionNameCandidate =
             globalContext.location?.hash &&
-            this.options.initialSectionName !==
-                globalContext.location.hash.substring('#'.length)
+            globalContext.location.hash.substring('#'.length)
+
+        const newSectionName = (
+            newSectionNameCandidate &&
+            this.options.initialSectionName !== newSectionNameCandidate &&
+            Object.prototype.hasOwnProperty.call(
+                this.sectionDomNodes, newSectionNameCandidate
+            )
         ) ?
-            globalContext.location.hash.substring('#'.length) :
+            newSectionNameCandidate :
             this.currentSectionName
 
         for (const domNode of Object.values(this.sectionDomNodes))
@@ -760,10 +767,16 @@ export class WebsiteUtilities<
                 globalContext.window,
                 'hashchange',
                 (event: Event) => {
-                    if (this.startUpAnimationIsComplete)
-                        void this.switchSection(
-                            location.hash.substring('#'.length), event
-                        )
+                    if (this.startUpAnimationIsComplete) {
+                        const newSectionNameCandidate =
+                            location.hash.substring('#'.length)
+                        if (Object.prototype.hasOwnProperty.call(
+                            this.sectionDomNodes, newSectionNameCandidate
+                        ))
+                            void this.switchSection(
+                                newSectionNameCandidate, event
+                            )
+                    }
                 }
             )
 
