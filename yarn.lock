@@ -14096,14 +14096,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.5.10":
-  version: 8.5.10
-  resolution: "postcss@npm:8.5.10"
+"postcss@npm:^8.5.12":
+  version: 8.5.12
+  resolution: "postcss@npm:8.5.12"
   dependencies:
     nanoid: "npm:^3.3.11"
     picocolors: "npm:^1.1.1"
     source-map-js: "npm:^1.2.1"
-  checksum: 10c0/c592dffa0c4873b401f01955b265538d9942f425040df5e2b8f0ad34c83773a792ea0fa5859ccc99cfb5b955b4ebff118ab7056315388dc83b107b0fa8313576
+  checksum: 10c0/5baebaf574c567bc1b3d61197f38af4ce5920b8f611c887fb6bc3dcc14af00253c169dbf19897bc889cce0b0d9818ab5eb4ea0caedf02b0bab10da8a43ce8c12
   languageName: node
   linkType: hard
 
@@ -16029,9 +16029,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint@npm:^17.9.0":
-  version: 17.9.0
-  resolution: "stylelint@npm:17.9.0"
+"stylelint@npm:^17.9.1":
+  version: 17.9.1
+  resolution: "stylelint@npm:17.9.1"
   dependencies:
     "@csstools/css-calc": "npm:^3.2.0"
     "@csstools/css-parser-algorithms": "npm:^4.0.0"
@@ -16071,7 +16071,7 @@ __metadata:
     write-file-atomic: "npm:^7.0.1"
   bin:
     stylelint: bin/stylelint.mjs
-  checksum: 10c0/e4d0867778f31e08a2458d871f70dbb701a5d844a2a775c13aff86b8a681e435da5dc6dc738eedc3d1744a2065fdef1a6bfd51b29a685b8087622d6ea88538c1
+  checksum: 10c0/889e31c66ceedac576ba222e0b1d867eae9a7f3a596d4806f3e5ee982aa77e216a247fba487d009a7e8bf1298ddddf707c21fd267d441395d76daf2deff979f9
   languageName: node
   linkType: hard
 
@@ -17135,12 +17135,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-documentation@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "web-documentation@npm:1.0.3"
+"web-documentation@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "web-documentation@npm:1.0.5"
   bin:
     web-documentation: build/deploy.js
-  checksum: 10c0/e7bc74c495f5f0c4d1496186868478b4d86a10ee02f23f8b81a1a36340b49fc44983cc50dcb5976bd42f765236eb166ec9536129e9b9b88e536d9e0cb5917472
+  checksum: 10c0/e754082f166763af62bc16ad8dda791b447d2442eaa6b025f25f4e71c1f7024c5266d1b6a94df7912e0c4aef6af5bceefedb1e9b967e50a73f5f30df45826c38
   languageName: node
   linkType: hard
 
@@ -17477,7 +17477,7 @@ __metadata:
     jest: "npm:^30.3.0"
     jsdoc: "npm:^4.0.5"
     mini-css-extract-plugin: "npm:^2.10.2"
-    postcss: "npm:^8.5.10"
+    postcss: "npm:^8.5.12"
     postcss-fontpath: "npm:^1.0.0"
     postcss-import: "npm:^16.1.1"
     postcss-loader: "npm:^8.2.1"
@@ -17489,11 +17489,11 @@ __metadata:
     sass: "npm:^1.99.0"
     sass-loader: "npm:^16.0.7"
     style-loader: "npm:^4.0.0"
-    stylelint: "npm:^17.9.0"
+    stylelint: "npm:^17.9.1"
     stylelint-config-standard-scss: "npm:^17.0.0"
     typescript-eslint: "npm:^8.59.0"
     web-component-wrapper: "npm:^0.0.566"
-    web-documentation: "npm:^1.0.3"
+    web-documentation: "npm:^1.0.5"
     weboptimizer: "npm:^3.0.22"
     webpack-dev-server: "npm:^5.2.3"
   peerDependencies:

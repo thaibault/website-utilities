@@ -610,6 +610,9 @@ export class WebsiteUtilities<
             globalContext.location.hash.substring('#'.length) :
             this.currentSectionName
 
+        for (const domNode of Object.values(this.sectionDomNodes))
+            domNode.style.display = 'none'
+
         return this.switchSection(newSectionName)
     }
 
