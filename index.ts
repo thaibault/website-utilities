@@ -24,6 +24,7 @@ import {
     fadeOut,
     getText,
     globalContext,
+    Lock,
     Logger,
     Mapping,
     NOOP,
@@ -137,11 +138,15 @@ export class WebsiteUtilities<
         sectionNames: ['home'],
 
         selectors: {
-            scrollToTopButtons: '.wu-scroll-to-top',
-            section: '.wu-section',
+            windowLoadingCover: '.wu-window-loading-cover',
+
             startUpAnimationClassPrefix: 'wu-start-up-animation-number-',
+
             top: '.wu-header',
-            windowLoadingCover: '.wu-window-loading-cover'
+
+            routerOutlet: '.wu-router-outlet',
+
+            scrollToTopButtons: '.wu-scroll-to-top'
         },
 
         tracking: false
@@ -285,15 +290,17 @@ export class WebsiteUtilities<
     continueAutoScrolling = false
     viewportIsOnTop: boolean | undefined
     windowLoaded = false
-    /// region dom nodes
-    scrollToTopButtonDomNodes: NodeListOf<HTMLElement> | null = null
 
-    sectionDomNode: HTMLElement | null = null
-    sectionDomNodes: Mapping<HTMLElement> = {}
+    private switchSectionLock = new Lock<void>()
+    /// region dom nodes
+    windowLoadingCoverDomNode: HTMLElement | null = null
 
     topDomNode: HTMLElement | null = null
 
-    windowLoadingCoverDomNode: HTMLElement | null = null
+    routerOutletDomNode: HTMLElement | null = null
+    sectionDomNodes: Mapping<HTMLElement> = {}
+
+    scrollToTopButtonDomNodes: NodeListOf<HTMLElement> | null = null
     /// endregion
     // region public
     /// region live-cycle
@@ -370,9 +377,9 @@ export class WebsiteUtilities<
             this.options.selectors.scrollToTopButtons
         )
 
-        this.sectionDomNode =
-            this.root.querySelector(this.options.selectors.section)
-        for (const domNode of this.sectionDomNode?.children ?? []) {
+        this.routerOutletDomNode =
+            this.root.querySelector(this.options.selectors.routerOutlet)
+        for (const domNode of this.routerOutletDomNode?.children ?? []) {
             const name = domNode.getAttribute('data-website-utilities-section')
             if (name && this.options.sectionNames.includes(name))
                 this.sectionDomNodes[name] = domNode as HTMLElement
@@ -549,6 +556,13 @@ export class WebsiteUtilities<
                 this.sectionDomNodes, sectionName
             )
         ) {
+            await this.switchSectionLock.acquire()
+
+            log.debug(
+                `Run section switch from "${this.currentSectionName}" to`,
+                `"${sectionName}".`
+            )
+
             if (this.currentSectionName === sectionName) {
                 this.sectionDomNodes[this.currentSectionName].style.display =
                     'none'
@@ -556,20 +570,21 @@ export class WebsiteUtilities<
             } else {
                 this.interruptableScrollToTop()
 
+                console.log('1 SWITCH from', this.currentSectionName, 'to', sectionName)
                 await fadeOut(this.sectionDomNodes[this.currentSectionName])
                 this.sectionDomNodes[this.currentSectionName].style.display =
                     'none'
+                console.log('A', this.sectionDomNodes[sectionName], this.sectionDomNodes[sectionName].style, this.sectionDomNodes[sectionName].style.display)
                 this.sectionDomNodes[sectionName].style.display = 'block'
+                console.log('B', this.sectionDomNodes[sectionName], this.sectionDomNodes[sectionName].style, this.sectionDomNodes[sectionName].style.display)
                 await fadeIn(this.sectionDomNodes[sectionName])
+                console.log('2 SWITCH from', this.currentSectionName, 'to', sectionName)
             }
 
             const oldSectionName = this.currentSectionName
             this.currentSectionName = sectionName
 
-            log.debug(
-                `Run section switch from "${oldSectionName}" to`,
-                `"${this.currentSectionName}".`
-            )
+            await this.switchSectionLock.release()
 
             try {
                 await this.onSectionSwitch.call(
