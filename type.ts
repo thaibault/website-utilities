@@ -26,14 +26,15 @@ export interface DefaultOptions {
     sectionNames: Array<string>
 
     selectors: {
-        top: string
-        scrollToTopButtons: string
-
-        section: string
+        windowLoadingCover: string
 
         startUpAnimationClassPrefix: string
 
-        windowLoadingCover: string
+        top: string
+
+        routerOutlet: string
+
+        scrollToTopButtons: string
     }
 
     startUpAnimationElementDelayInMilliseconds: number

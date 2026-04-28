@@ -24,6 +24,7 @@ import {
     fadeOut,
     getText,
     globalContext,
+    Lock,
     Logger,
     Mapping,
     NOOP,
@@ -137,11 +138,15 @@ export class WebsiteUtilities<
         sectionNames: ['home'],
 
         selectors: {
-            scrollToTopButtons: '.wu-scroll-to-top',
-            section: '.wu-section',
+            windowLoadingCover: '.wu-window-loading-cover',
+
             startUpAnimationClassPrefix: 'wu-start-up-animation-number-',
+
             top: '.wu-header',
-            windowLoadingCover: '.wu-window-loading-cover'
+
+            routerOutlet: '.wu-router-outlet',
+
+            scrollToTopButtons: '.wu-scroll-to-top'
         },
 
         tracking: false
@@ -284,16 +289,18 @@ export class WebsiteUtilities<
     startUpAnimationIsComplete = false
     continueAutoScrolling = false
     viewportIsOnTop: boolean | undefined
-    windowLoaded = false
-    /// region dom nodes
-    scrollToTopButtonDomNodes: NodeListOf<HTMLElement> | null = null
 
-    sectionDomNode: HTMLElement | null = null
-    sectionDomNodes: Mapping<HTMLElement> = {}
+    static windowLoaded = false
+    private static switchSectionLock = new Lock<void>()
+    /// region dom nodes
+    windowLoadingCoverDomNode: HTMLElement | null = null
 
     topDomNode: HTMLElement | null = null
 
-    windowLoadingCoverDomNode: HTMLElement | null = null
+    routerOutletDomNode: HTMLElement | null = null
+    sectionDomNodes: Mapping<HTMLElement> = {}
+
+    scrollToTopButtonDomNodes: NodeListOf<HTMLElement> | null = null
     /// endregion
     // region public
     /// region live-cycle
@@ -326,42 +333,58 @@ export class WebsiteUtilities<
     /**
      * Updates controlled dom elements.
      * @param reason - Why an update has been triggered.
+     * @param resolveRendering - Indicates whether rendering should be resolved
+     * finally. Should be set to "false" via super calls in inherited render
+     * methods which do further dom manipulations afterwards and resolve the
+     * rendering process by their own.
+     * @returns A promise resolving when rendering has finished. A promise may
+     * be needed for classes inheriting from this class.
      */
-    async render(reason?: string): Promise<void> {
-        await super.render(reason)
+    async render(reason = 'unknown', resolveRendering = true): Promise<void> {
+        await super.render(reason, false)
 
         if (Object.keys(this.options).length === 0)
             this._extendOptions()
 
-        this.grabDomNodes()
-
         this.disableScrolling()
-        this._bindScrollEvents()
-        this._bindClickTracking()
 
-        const onLoaded = () => {
-            if (!this.windowLoaded) {
-                this.windowLoaded = true
+        if (!this.self.windowLoaded) {
+            const onLoaded = () => {
+                if (!this.self.windowLoaded) {
+                    this.self.windowLoaded = true
 
-                void this._removeLoadingCover().then(() => {
-                    void this._performStartUpEffects()
+                    void this._removeLoadingCover().then(() => {
+                        this.enableScrolling()
 
-                    this.onLoaded()
-                })
+                        void this._performStartUpEffects()
+
+                        this.onLoaded()
+                    })
+                }
             }
+            void onDocumentReady(() => {
+                void timeout(
+                    onLoaded,
+                    this.options.windowLoadedTimeoutAfterDocLoadedInMSec
+                )
+            })
+            if (globalContext.window)
+                this.addSecureEventListener(
+                    globalContext.window, 'load', onLoaded
+                )
         }
-        void onDocumentReady(() => {
-            void timeout(
-                onLoaded,
-                this.options.windowLoadedTimeoutAfterDocLoadedInMSec
-            )
-        })
-        if (globalContext.window)
-            this.addSecureEventListener(
-                globalContext.window, 'load', onLoaded
-            )
 
-        await this._initializeRouting()
+
+        void Promise.all(this.self.pendingRenderPromises).then(() => {
+            this.grabDomNodes()
+
+            this._bindScrollEvents()
+            this._bindClickTracking()
+
+            void this._initializeRouting()
+        })
+
+        await this.resolveRenderingPromise(reason, resolveRendering)
     }
     // endregion
     grabDomNodes(): void {
@@ -370,9 +393,9 @@ export class WebsiteUtilities<
             this.options.selectors.scrollToTopButtons
         )
 
-        this.sectionDomNode =
-            this.root.querySelector(this.options.selectors.section)
-        for (const domNode of this.sectionDomNode?.children ?? []) {
+        this.routerOutletDomNode =
+            this.root.querySelector(this.options.selectors.routerOutlet)
+        for (const domNode of this.routerOutletDomNode?.children ?? []) {
             const name = domNode.getAttribute('data-website-utilities-section')
             if (name && this.options.sectionNames.includes(name))
                 this.sectionDomNodes[name] = domNode as HTMLElement
@@ -435,7 +458,7 @@ export class WebsiteUtilities<
         if (!this.root.parentElement)
             return
 
-        this.root.parentElement.classList.add('disable-scrolling')
+        this.root.parentElement.classList.add('wu-disable-scrolling')
         this.addSecureEventListener(
             this.root.parentElement, 'touchmove', preventDefault
         )
@@ -447,7 +470,7 @@ export class WebsiteUtilities<
         if (!this.root.parentElement)
             return
 
-        this.root.parentElement.classList.remove('disable-scrolling')
+        this.root.parentElement.classList.remove('wu-disable-scrolling')
         this.root.parentElement.classList.remove('touchmove')
         this.root.parentElement.removeEventListener(
             'touchmove', preventDefault
@@ -549,27 +572,30 @@ export class WebsiteUtilities<
                 this.sectionDomNodes, sectionName
             )
         ) {
+            const oldSection = this.sectionDomNodes[this.currentSectionName]
+            const newSection = this.sectionDomNodes[sectionName]
+
+            await this.self.switchSectionLock.acquire()
+
+            log.debug(
+                `Run section switch from "${this.currentSectionName}" to`,
+                `"${sectionName}".`
+            )
+
             if (this.currentSectionName === sectionName) {
-                this.sectionDomNodes[this.currentSectionName].style.display =
-                    'none'
-                this.sectionDomNodes[sectionName].style.display = 'block'
+                oldSection.style.display = 'none'
+                newSection.style.display = 'block'
             } else {
                 this.interruptableScrollToTop()
 
-                await fadeOut(this.sectionDomNodes[this.currentSectionName])
-                this.sectionDomNodes[this.currentSectionName].style.display =
-                    'none'
-                this.sectionDomNodes[sectionName].style.display = 'block'
-                await fadeIn(this.sectionDomNodes[sectionName])
+                await fadeOut(oldSection)
+                oldSection.style.display = 'none'
+                newSection.style.display = 'block'
+                await fadeIn(newSection)
             }
 
             const oldSectionName = this.currentSectionName
             this.currentSectionName = sectionName
-
-            log.debug(
-                `Run section switch from "${oldSectionName}" to`,
-                `"${this.currentSectionName}".`
-            )
 
             try {
                 await this.onSectionSwitch.call(
@@ -581,6 +607,8 @@ export class WebsiteUtilities<
                     `"${this.currentSectionName}": ${represent(error)}`
                 )
             }
+
+            await this.self.switchSectionLock.release()
         }
     }
     // endregion
@@ -589,8 +617,13 @@ export class WebsiteUtilities<
      * Extends given options by default options.
      */
     _extendOptions() {
-        this.options = extend<Options>(
-            true, {}, this.self._defaultOptions, this.options
+        /*
+            NOTE: Using the internal setter avoids to trigger an additinal
+            rendering.
+        */
+        this.setPropertyValue(
+            'options',
+            extend<Options>(true, {}, this.self._defaultOptions, this.options)
         )
     }
     /**
@@ -719,11 +752,8 @@ export class WebsiteUtilities<
         ))
             (domNode as HTMLElement).style.opacity = '0'
 
-        if (this.windowLoadingCoverDomNode) {
-            this.enableScrolling()
-
+        if (this.windowLoadingCoverDomNode)
             await fadeOut(this.windowLoadingCoverDomNode)
-        }
     }
     /**
      * This method handles the given start up effect step.
@@ -770,6 +800,7 @@ export class WebsiteUtilities<
                     if (this.startUpAnimationIsComplete) {
                         const newSectionNameCandidate =
                             location.hash.substring('#'.length)
+
                         if (Object.prototype.hasOwnProperty.call(
                             this.sectionDomNodes, newSectionNameCandidate
                         ))
