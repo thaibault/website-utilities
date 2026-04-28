@@ -289,8 +289,8 @@ export class WebsiteUtilities<
     startUpAnimationIsComplete = false
     continueAutoScrolling = false
     viewportIsOnTop: boolean | undefined
-    windowLoaded = false
 
+    static windowLoaded = false
     private static switchSectionLock = new Lock<void>()
     /// region dom nodes
     windowLoadingCoverDomNode: HTMLElement | null = null
@@ -333,43 +333,58 @@ export class WebsiteUtilities<
     /**
      * Updates controlled dom elements.
      * @param reason - Why an update has been triggered.
+     * @param resolveRendering - Indicates whether rendering should be resolved
+     * finally. Should be set to "false" via super calls in inherited render
+     * methods which do further dom manipulations afterwards and resolve the
+     * rendering process by their own.
+     * @returns A promise resolving when rendering has finished. A promise may
+     * be needed for classes inheriting from this class.
      */
-    async render(reason?: string): Promise<void> {
-        await super.render(reason)
+    async render(reason = 'unknown', resolveRendering = true): Promise<void> {
+        await super.render(reason, false)
 
         if (Object.keys(this.options).length === 0)
             this._extendOptions()
 
-        // TODO dom nodes changes afterwards because of nested web components!
-        this.grabDomNodes()
-
         this.disableScrolling()
-        this._bindScrollEvents()
-        this._bindClickTracking()
 
-        const onLoaded = () => {
-            if (!this.windowLoaded) {
-                this.windowLoaded = true
+        if (!this.self.windowLoaded) {
+            const onLoaded = () => {
+                if (!this.self.windowLoaded) {
+                    this.self.windowLoaded = true
 
-                void this._removeLoadingCover().then(() => {
-                    void this._performStartUpEffects()
+                    void this._removeLoadingCover().then(() => {
+                        this.enableScrolling()
 
-                    this.onLoaded()
-                })
+                        void this._performStartUpEffects()
+
+                        this.onLoaded()
+                    })
+                }
             }
+            void onDocumentReady(() => {
+                void timeout(
+                    onLoaded,
+                    this.options.windowLoadedTimeoutAfterDocLoadedInMSec
+                )
+            })
+            if (globalContext.window)
+                this.addSecureEventListener(
+                    globalContext.window, 'load', onLoaded
+                )
         }
-        void onDocumentReady(() => {
-            void timeout(
-                onLoaded,
-                this.options.windowLoadedTimeoutAfterDocLoadedInMSec
-            )
-        })
-        if (globalContext.window)
-            this.addSecureEventListener(
-                globalContext.window, 'load', onLoaded
-            )
 
-        await this._initializeRouting()
+
+        void Promise.all(this.self.pendingRenderPromises).then(() => {
+            this.grabDomNodes()
+
+            this._bindScrollEvents()
+            this._bindClickTracking()
+
+            void this._initializeRouting()
+        })
+
+        await this.resolveRenderingPromise(reason, resolveRendering)
     }
     // endregion
     grabDomNodes(): void {
@@ -443,7 +458,7 @@ export class WebsiteUtilities<
         if (!this.root.parentElement)
             return
 
-        this.root.parentElement.classList.add('disable-scrolling')
+        this.root.parentElement.classList.add('wu-disable-scrolling')
         this.addSecureEventListener(
             this.root.parentElement, 'touchmove', preventDefault
         )
@@ -455,7 +470,7 @@ export class WebsiteUtilities<
         if (!this.root.parentElement)
             return
 
-        this.root.parentElement.classList.remove('disable-scrolling')
+        this.root.parentElement.classList.remove('wu-disable-scrolling')
         this.root.parentElement.classList.remove('touchmove')
         this.root.parentElement.removeEventListener(
             'touchmove', preventDefault
@@ -737,11 +752,8 @@ export class WebsiteUtilities<
         ))
             (domNode as HTMLElement).style.opacity = '0'
 
-        if (this.windowLoadingCoverDomNode) {
-            this.enableScrolling()
-
+        if (this.windowLoadingCoverDomNode)
             await fadeOut(this.windowLoadingCoverDomNode)
-        }
     }
     /**
      * This method handles the given start up effect step.

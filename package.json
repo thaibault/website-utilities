@@ -73,7 +73,7 @@
     "@typescript-eslint/eslint-plugin": "^8.59.1",
     "@typescript-eslint/parser": "^8.59.1",
     "@webcomponents/webcomponentsjs": "^2.8.0",
-    "clientnode": "^4.0.1390",
+    "clientnode": "^4.0.1391",
     "css-loader": "^7.1.4",
     "cssnano": "^7.1.7",
     "eslint": "^10.2.1",
@@ -97,7 +97,7 @@
     "stylelint": "^17.9.1",
     "stylelint-config-standard-scss": "^17.0.0",
     "typescript-eslint": "^8.59.1",
-    "web-component-wrapper": "^0.0.566",
+    "web-component-wrapper": "^0.0.571",
     "web-documentation": "^1.0.5",
     "weboptimizer": "^3.0.22",
     "webpack-dev-server": "^5.2.3"
