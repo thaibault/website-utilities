@@ -374,27 +374,27 @@ export class WebsiteUtilities<
                 )
         }
 
+        await this.waitForNestedComponentRendering()
 
-        void Promise.all(this.self.pendingRenderPromises).then(() => {
-            this.grabDomNodes()
+        this.grabDomNodes()
 
-            this._bindScrollEvents()
-            this._bindClickTracking()
+        this._bindScrollEvents()
+        this._bindClickTracking()
 
-            void this._initializeRouting()
-        })
+        await this._initializeRouting()
 
-        await this.resolveRenderingPromise(reason, resolveRendering)
+        await this.resolveRenderingPromiseIfSet(reason, resolveRendering)
     }
     // endregion
     grabDomNodes(): void {
-        this.topDomNode = this.root.querySelector(this.options.selectors.top)
-        this.scrollToTopButtonDomNodes = this.root.querySelectorAll(
+        this.topDomNode =
+            this.rootDomNode.querySelector(this.options.selectors.top)
+        this.scrollToTopButtonDomNodes = this.rootDomNode.querySelectorAll(
             this.options.selectors.scrollToTopButtons
         )
 
         this.routerOutletDomNode =
-            this.root.querySelector(this.options.selectors.routerOutlet)
+            this.rootDomNode.querySelector(this.options.selectors.routerOutlet)
         for (const domNode of this.routerOutletDomNode?.children ?? []) {
             const name = domNode.getAttribute('data-website-utilities-section')
             if (name && this.options.sectionNames.includes(name))
@@ -402,10 +402,10 @@ export class WebsiteUtilities<
         }
 
         this.windowLoadingCoverDomNode =
-            this.root.querySelector(
+            this.rootDomNode.querySelector(
                 this.options.selectors.windowLoadingCover
             ) ??
-            this.root.parentElement?.querySelector(
+            this.rootDomNode.parentElement?.querySelector(
                 this.options.selectors.windowLoadingCover
             ) ??
             globalContext.document?.body.querySelector(
@@ -455,24 +455,24 @@ export class WebsiteUtilities<
      * This method disables scrolling on the given web view.
      */
     disableScrolling() {
-        if (!this.root.parentElement)
+        if (!this.rootDomNode.parentElement)
             return
 
-        this.root.parentElement.classList.add('wu-disable-scrolling')
+        this.rootDomNode.parentElement.classList.add('wu-disable-scrolling')
         this.addSecureEventListener(
-            this.root.parentElement, 'touchmove', preventDefault
+            this.rootDomNode.parentElement, 'touchmove', preventDefault
         )
     }
     /**
      * This method disables scrolling on the given web view.
      */
     enableScrolling() {
-        if (!this.root.parentElement)
+        if (!this.rootDomNode.parentElement)
             return
 
-        this.root.parentElement.classList.remove('wu-disable-scrolling')
-        this.root.parentElement.classList.remove('touchmove')
-        this.root.parentElement.removeEventListener(
+        this.rootDomNode.parentElement.classList.remove('wu-disable-scrolling')
+        this.rootDomNode.parentElement.classList.remove('touchmove')
+        this.rootDomNode.parentElement.removeEventListener(
             'touchmove', preventDefault
         )
     }
@@ -744,7 +744,7 @@ export class WebsiteUtilities<
         await timeout(this.options.additionalPageLoadingTimeInMilliseconds)
 
         // Hide startup animation dom nodes to show them step by step.
-        for (const domNode of this.root.querySelectorAll(
+        for (const domNode of this.rootDomNode.querySelectorAll(
             '[class^="' +
             `${this.options.selectors.startUpAnimationClassPrefix}"], ` +
             '[class*=" ' +
@@ -765,7 +765,7 @@ export class WebsiteUtilities<
         let elementNumber = 1
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         while (true) {
-            const domNodesToAnimate = this.root.querySelectorAll(
+            const domNodesToAnimate = this.rootDomNode.querySelectorAll(
                 '.' +
                 this.options.selectors.startUpAnimationClassPrefix +
                 String(elementNumber)
@@ -833,12 +833,12 @@ export class WebsiteUtilities<
      */
     _bindClickTracking() {
         if (this.options.tracking) {
-            for (const domNode of this.root.querySelectorAll('a'))
+            for (const domNode of this.rootDomNode.querySelectorAll('a'))
                 this.addSecureEventListener(
                     domNode, 'click', this.onButtonClick.bind(this)
                 )
 
-            for (const domNode of this.root.querySelectorAll('button'))
+            for (const domNode of this.rootDomNode.querySelectorAll('button'))
                 this.addSecureEventListener(
                     domNode, 'click', this.onButtonClick.bind(this)
                 )
