@@ -17110,9 +17110,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-component-wrapper@npm:^0.0.577":
-  version: 0.0.577
-  resolution: "web-component-wrapper@npm:0.0.577"
+"web-component-wrapper@npm:^0.0.578":
+  version: 0.0.578
+  resolution: "web-component-wrapper@npm:0.0.578"
   peerDependencies:
     "@babel/runtime": "*"
     "@types/react": "*"
@@ -17131,7 +17131,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10c0/7beb74f7891a87f431b740659150588c5ab08dc385844be9a7ebcb6666d69e23eb10d4859387760bf1a53d98d60409a6cd911cd10f3139e7b0a3eefde357ba3a
+  checksum: 10c0/200a119aa77f3352a93a75779cbba89596caa250d05f02148d4eda0cfc5fb4ee7881fa6e3a9cf30aac83e6757d656873631a926ffb8e826816f4baf2af249f77
   languageName: node
   linkType: hard
 
@@ -17492,7 +17492,7 @@ __metadata:
     stylelint: "npm:^17.9.1"
     stylelint-config-standard-scss: "npm:^17.0.0"
     typescript-eslint: "npm:^8.59.1"
-    web-component-wrapper: "npm:^0.0.577"
+    web-component-wrapper: "npm:^0.0.578"
     web-documentation: "npm:^1.0.5"
     weboptimizer: "npm:^3.0.22"
     webpack-dev-server: "npm:^5.2.3"
