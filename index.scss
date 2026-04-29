@@ -452,17 +452,17 @@ website-utilities {
         right: var(--w-default-space, #{v.$default-space});
     }
 
-    a.wu-scroll-to-top.wu-scroll-up {
+    .wu-scroll-to-top.wu-scroll-up {
         bottom: calc(3 * var(--w-default-space, #{v.$default-space}));
         opacity: 0;
     }
 
-    a.wu-scroll-to-top.wu-scroll-down {
+    .wu-scroll-to-top.wu-scroll-down {
         bottom: var(--w-default-space, #{v.$default-space});
         opacity: 1;
     }
 
-    a.wu-scroll-to-top.wu-top-settled {
+    .wu-scroll-to-top.wu-top-settled {
         display: none;
     }
     /* endregion */
