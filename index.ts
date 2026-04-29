@@ -388,13 +388,13 @@ export class WebsiteUtilities<
     // endregion
     grabDomNodes(): void {
         this.topDomNode =
-            this.rootDomNode.querySelector(this.options.selectors.top)
-        this.scrollToTopButtonDomNodes = this.rootDomNode.querySelectorAll(
+            this.hostDomNode.querySelector(this.options.selectors.top)
+        this.scrollToTopButtonDomNodes = this.hostDomNode.querySelectorAll(
             this.options.selectors.scrollToTopButtons
         )
 
         this.routerOutletDomNode =
-            this.rootDomNode.querySelector(this.options.selectors.routerOutlet)
+            this.hostDomNode.querySelector(this.options.selectors.routerOutlet)
         for (const domNode of this.routerOutletDomNode?.children ?? []) {
             const name = domNode.getAttribute('data-website-utilities-section')
             if (name && this.options.sectionNames.includes(name))
@@ -402,10 +402,10 @@ export class WebsiteUtilities<
         }
 
         this.windowLoadingCoverDomNode =
-            this.rootDomNode.querySelector(
+            this.hostDomNode.querySelector(
                 this.options.selectors.windowLoadingCover
             ) ??
-            this.rootDomNode.parentElement?.querySelector(
+            this.hostDomNode.parentElement?.querySelector(
                 this.options.selectors.windowLoadingCover
             ) ??
             globalContext.document?.body.querySelector(
@@ -455,24 +455,24 @@ export class WebsiteUtilities<
      * This method disables scrolling on the given web view.
      */
     disableScrolling() {
-        if (!this.rootDomNode.parentElement)
+        if (!this.hostDomNode.parentElement)
             return
 
-        this.rootDomNode.parentElement.classList.add('wu-disable-scrolling')
+        this.hostDomNode.parentElement.classList.add('wu-disable-scrolling')
         this.addSecureEventListener(
-            this.rootDomNode.parentElement, 'touchmove', preventDefault
+            this.hostDomNode.parentElement, 'touchmove', preventDefault
         )
     }
     /**
      * This method disables scrolling on the given web view.
      */
     enableScrolling() {
-        if (!this.rootDomNode.parentElement)
+        if (!this.hostDomNode.parentElement)
             return
 
-        this.rootDomNode.parentElement.classList.remove('wu-disable-scrolling')
-        this.rootDomNode.parentElement.classList.remove('touchmove')
-        this.rootDomNode.parentElement.removeEventListener(
+        this.hostDomNode.parentElement.classList.remove('wu-disable-scrolling')
+        this.hostDomNode.parentElement.classList.remove('touchmove')
+        this.hostDomNode.parentElement.removeEventListener(
             'touchmove', preventDefault
         )
     }
@@ -744,7 +744,7 @@ export class WebsiteUtilities<
         await timeout(this.options.additionalPageLoadingTimeInMilliseconds)
 
         // Hide startup animation dom nodes to show them step by step.
-        for (const domNode of this.rootDomNode.querySelectorAll(
+        for (const domNode of this.hostDomNode.querySelectorAll(
             '[class^="' +
             `${this.options.selectors.startUpAnimationClassPrefix}"], ` +
             '[class*=" ' +
@@ -765,7 +765,7 @@ export class WebsiteUtilities<
         let elementNumber = 1
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         while (true) {
-            const domNodesToAnimate = this.rootDomNode.querySelectorAll(
+            const domNodesToAnimate = this.hostDomNode.querySelectorAll(
                 '.' +
                 this.options.selectors.startUpAnimationClassPrefix +
                 String(elementNumber)
@@ -833,12 +833,12 @@ export class WebsiteUtilities<
      */
     _bindClickTracking() {
         if (this.options.tracking) {
-            for (const domNode of this.rootDomNode.querySelectorAll('a'))
+            for (const domNode of this.hostDomNode.querySelectorAll('a'))
                 this.addSecureEventListener(
                     domNode, 'click', this.onButtonClick.bind(this)
                 )
 
-            for (const domNode of this.rootDomNode.querySelectorAll('button'))
+            for (const domNode of this.hostDomNode.querySelectorAll('button'))
                 this.addSecureEventListener(
                     domNode, 'click', this.onButtonClick.bind(this)
                 )
