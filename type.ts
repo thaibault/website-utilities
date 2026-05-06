@@ -10,17 +10,18 @@
     License
     -------
 
-    This library written by Torben Sickert stand under a creative commons
+    This library written by Torben Sickert stands under a creative commons
     naming 3.0 unported license.
     See https://creativecommons.org/licenses/by/3.0/deed.de
     endregion
 */
+import {KnownEventName} from 'web-component-wrapper/type'
 // region exports
 export interface DefaultOptions {
     additionalPageLoadingTimeInMilliseconds: number
     domain: string
     initialSectionName: string
-    knownScrollEventNames: Array<string>
+    knownScrollEventNames: Array<KnownEventName>
     mediaQueryClassNameIndicator: Array<Array<string>>
 
     sectionNames: Array<string>

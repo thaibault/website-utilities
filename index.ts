@@ -11,7 +11,7 @@
     License
     -------
 
-    This library written by Torben Sickert stand under a creative commons
+    This library written by Torben Sickert stands under a creative commons
     naming 3.0 unported license.
     See https://creativecommons.org/licenses/by/3.0/deed.de
     endregion
@@ -43,14 +43,14 @@ import {DefaultOptions, Options, TrackingItem} from './type'
 export const log = new Logger({name: 'website-utilities'})
 // region plugins/classes
 /**
- * This plugin holds all needed methods to extend a whole website.
+ * This plugin holds common methods to extend a whole website.
  * @property _defaultOptions - Options extended by the options given to the
  * initializer method.
  * @property _defaultOptions.additionalPageLoadingTimeInMilliseconds -
  * Additional time to wait until page will be indicated as loaded.
  * @property _defaultOptions.initialSectionName - Pre-selected section name.
  * @property _defaultOptions.knownScrollEventNames - Saves all known scroll
- * events in a space separated string.
+ * events in a space-separated string.
  * @property _defaultOptions.language - Options for client side
  * internationalization handler.
  * @property _defaultOptions.mediaQueryClassNameIndicator - Mapping of media
@@ -62,7 +62,7 @@ export const log = new Logger({name: 'website-utilities'})
  * @property _defaultOptions.selectors.scrollToTopButtons - Selectors for
  * starting an animated scroll to top.
  * @property _defaultOptions.selectors.startUpAnimationClassPrefix - Class name
- * selector prefix for all dom nodes to appear during start up animations.
+ * selector prefix for all dom nodes to appear during startup animations.
  * @property _defaultOptions.selectors.windowLoadingCover - Selector to the full
  * window loading cover dom node.
  * @property _defaultOptions.startUpAnimationElementDelayInMilliseconds - Delay
@@ -73,12 +73,12 @@ export const log = new Logger({name: 'website-utilities'})
  * after loading cover should be removed.
  * @property options - Finally configured given options.
  * @property currentSectionName - Saves current section hash name.
- * @property startUpAnimationIsComplete - Indicates whether start up animations
- * has finished.
+ * @property startUpAnimationIsComplete - Indicates whether startup animations
+ * have finished.
  * @property continueAutoScrolling - Indicates whether auto scrolling should
- * continue or not. Gets set to "false" if user wants to scroll manually.
+ * continue or not. Gets set to "false" if the user wants to scroll manually.
  * @property viewportIsOnTop - Indicates whether current viewport is on top.
- * @property windowLoaded - Indicates whether window is already loaded.
+ * @property windowLoaded - Indicates whether the window is already loaded.
  * @property onChangeMediaQueryMode - Callback to trigger if media query mode
  * changes.
  * @property onChangeToExtraSmallMode - Callback to trigger if media query mode
@@ -89,9 +89,10 @@ export const log = new Logger({name: 'website-utilities'})
  * changes to medium mode.
  * @property onChangeToSmallMode - Callback to trigger if media query mode
  * changes to small mode.
- * @property onStartUpAnimationComplete - Callback to trigger if all start up
- * animations has finished.
- * @property onSwitchSection - Callback to trigger if current section switches.
+ * @property onStartUpAnimationComplete - Callback to trigger if all startup
+ * animations have finished.
+ * @property onSwitchSection - Callback to trigger if the current section
+ * switches.
  * @property onViewportMovesAwayFromTop - Callback to trigger when viewport
  * moves away from top.
  * @property onViewportMovesToTop - Callback to trigger when viewport arrives
@@ -99,7 +100,7 @@ export const log = new Logger({name: 'website-utilities'})
  * @property onSwitchToManualScrollingIndicator - Indicator
  * function to stop currently running scroll animations to let the user get
  * control of current scrolling behavior. Given callback gets an event object.
- * If the function returns "true" current animated scrolls will be stopped.
+ * If the function returns "true", current animated scrolls will be stopped.
  * @property onButtonClick - Function to call on button click events.
  * @property onLinkClick - Function to call on link click events.
  * @property onSectionSwitch - Function to call on section switches.
@@ -305,15 +306,15 @@ export class WebsiteUtilities<
     // region public
     /// region live-cycle
     /**
-     * Defines dynamic getter and setter interface and resolves configuration
-     * object. Initializes the map implementation.
+     * Defines dynamic getter and setter interface and resolves the
+     * configuration object. Initializes the map implementation.
      */
     constructor() {
         super()
         /*
-            Babels property declaration transformation overwrites defined
+            Babel's property declaration transformation overwrites defined
             properties at the end of an implicit constructor. So we have to
-            redefined them as long as we want to declare expected component
+            redefine them as long as we want to declare expected component
             interface properties to enable static type checks.
         */
         this.defineGetterAndSetterInterface()
@@ -335,7 +336,7 @@ export class WebsiteUtilities<
      * @param reason - Why an update has been triggered.
      * @param resolveRendering - Indicates whether rendering should be resolved
      * finally. Should be set to "false" via super calls in inherited render
-     * methods which do further dom manipulations afterwards and resolve the
+     * methods which do further dom manipulations afterward and resolve the
      * rendering process by their own.
      * @returns A promise resolving when rendering has finished. A promise may
      * be needed for classes inheriting from this class.
@@ -414,7 +415,7 @@ export class WebsiteUtilities<
             null
     }
     /**
-     * Scrolls to top of page smoothly via being interruptible.
+     * Scrolls to the top of the page smoothly via being interruptible.
      */
     interruptableScrollToTop() {
         const durationInMilliseconds = 500 // Dauer in ms
@@ -445,7 +446,7 @@ export class WebsiteUtilities<
         requestAnimationFrame(step)
     }
     /**
-     * Scrolls to top of page smoothly.
+     * Scrolls to the top of the page smoothly.
      */
     scrollToTop() {
         if (globalContext.document)
@@ -478,7 +479,8 @@ export class WebsiteUtilities<
     }
     /**
      * Triggers an analytics event. All given arguments are forwarded to
-     * configured analytics event code to defined their environment variables.
+     * configured analytics event code to define to their environment
+     * variables.
      * @param properties - Event tracking information.
      */
     async track(
@@ -517,7 +519,7 @@ export class WebsiteUtilities<
     // region protected methods
     /// region event
     /**
-     * This method triggers if the viewport moves to top.
+     * This method triggers if the viewport moves to the top.
      */
     _onViewportMovesToTop() {
         this._finishScrollToTopButtonTransition()
@@ -543,13 +545,13 @@ export class WebsiteUtilities<
         }
     }
     /**
-     * This method triggers if the viewport moves away from top.
+     * This method triggers if the viewport moves away from the top.
      */
     async _onViewportMovesAwayFromTop() {
         this._finishScrollToTopButtonTransition('wu-top-settled')
 
         /*
-            NOTE: We need to render the none setteled state beforehand to make
+            NOTE: We need to render the none-setteled state beforehand to make
             sure the transition will be performed by browser.
         */
         await timeout()
@@ -562,7 +564,7 @@ export class WebsiteUtilities<
     /**
      * This method triggers if we change the current section.
      * @param sectionName - Contains the new section name.
-     * @param event - Optional event which triggered the switch.
+     * @param event - Optional event that triggered the switch.
      */
     async switchSection(sectionName: string, event?: Event): Promise<void> {
         if (
@@ -618,7 +620,7 @@ export class WebsiteUtilities<
      */
     _extendOptions() {
         /*
-            NOTE: Using the internal setter avoids to trigger an additinal
+            NOTE: Using the internal setter avoids triggering an additional
             rendering.
         */
         this.setPropertyValue(
@@ -657,7 +659,7 @@ export class WebsiteUtilities<
     }
 
     /**
-     * Removes class names from scroll to top buttons to stop running
+     * Removes class names from scroll-to-top buttons to stop running
      * transitions.
      * @param classNames - Optional class names to remove.
      */
@@ -670,7 +672,7 @@ export class WebsiteUtilities<
             )
     }
     /**
-     * This method triggers if view port arrives at special areas.
+     * This method triggers if the view port arrives at special areas.
      */
     _bindScrollEvents(): void {
         if (!globalContext.document)
@@ -736,7 +738,7 @@ export class WebsiteUtilities<
         }
     }
     /**
-     * This method triggers after window is loaded.
+     * This method triggers after the window is loaded.
      * @returns Promise resolving to nothing when loading cover has been
      * removed.
      */
@@ -756,8 +758,8 @@ export class WebsiteUtilities<
             await fadeOut(this.windowLoadingCoverDomNode)
     }
     /**
-     * This method handles the given start up effect step.
-     * @returns Promise resolving to nothing when start up effects have been
+     * This method handles the given startup effect step.
+     * @returns Promise resolving to nothing when startup effects have been
      * finished.
      */
     async _performStartUpEffects(): Promise<void> {
@@ -789,7 +791,7 @@ export class WebsiteUtilities<
         }
     }
     /**
-     * This method adds triggers to switch section.
+     * This method adds triggers to switch the section.
      */
     _bindNavigationEvents() {
         if (globalContext.window)
