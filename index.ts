@@ -585,14 +585,22 @@ export class WebsiteUtilities<
             )
 
             if (this.currentSectionName === sectionName) {
-                oldSection.style.display = 'none'
-                newSection.style.display = 'block'
+                oldSection.classList.remove('wu-section-active')
+                oldSection.classList.add('wu-section-inactive')
+
+                newSection.classList.remove('wu-section-inactive')
+                newSection.classList.add('wu-section-active')
             } else {
                 this.interruptableScrollToTop()
 
                 await fadeOut(oldSection)
-                oldSection.style.display = 'none'
-                newSection.style.display = 'block'
+
+                oldSection.classList.remove('wu-section-active')
+                oldSection.classList.add('wu-section-inactive')
+
+                newSection.classList.remove('wu-section-inactive')
+                newSection.classList.add('wu-section-active')
+
                 await fadeIn(newSection)
             }
 
@@ -653,7 +661,7 @@ export class WebsiteUtilities<
             this.currentSectionName
 
         for (const domNode of Object.values(this.sectionDomNodes))
-            domNode.style.display = 'none'
+            domNode.classList.add('wu-section-inactive')
 
         return this.switchSection(newSectionName)
     }
@@ -733,6 +741,7 @@ export class WebsiteUtilities<
 
             for (const domNode of this.scrollToTopButtonDomNodes ?? [])
                 domNode.classList.add('wu-top-settled')
+
             this._onViewportMovesToTop()
             this.onViewportMovesToTop.call(this)
         }

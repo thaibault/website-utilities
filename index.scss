@@ -1,14 +1,16 @@
 /* !/usr/bin/env css
 -*- coding: utf-8 -*- */
-/* region header
+/*
+region header
 Copyright Torben Sickert (info["~at~"]torben.website) 16.12.2012
 
 License
 -------
 
-This library written by Torben Sickert stand under a creative commons naming
+This library written by Torben Sickert stands under a creative commons naming
 3.0 unported license. See https://creativecommons.org/licenses/by/3.0/deed.de
-endregion */
+endregion
+*/
 @use "variables" as v;
 
 :root {
@@ -94,13 +96,21 @@ website-utilities {
     /* endregion */
     /* region generic classes */
     /* Disables and hides a scrolling and scrollbar. */
+    .wu-action {
+        cursor: pointer;
+    }
+
     .wu-disable-scrolling {
         height: 100% !important;
         overflow: hidden !important;
     }
 
-    .wu-action {
-        cursor: pointer;
+    .wu-section-active {
+        display: block;
+    }
+
+   .wu-section-inactive {
+        display: none;
     }
     /** region icons */
     .icon,
