@@ -136,7 +136,10 @@ export class WebsiteUtilities<
             ['large', 'lg']
         ],
 
-        sectionNames: ['home'],
+        sectionNames: {
+            managed: ['home'],
+            unmanaged: []
+        },
 
         selectors: {
             windowLoadingCover: '.wu-window-loading-cover',
@@ -398,7 +401,7 @@ export class WebsiteUtilities<
             this.hostDomNode.querySelector(this.options.selectors.routerOutlet)
         for (const domNode of this.routerOutletDomNode?.children ?? []) {
             const name = domNode.getAttribute('data-website-utilities-section')
-            if (name && this.options.sectionNames.includes(name))
+            if (name && this.options.sectionNames.managed.includes(name))
                 this.sectionDomNodes[name] = domNode as HTMLElement
         }
 
@@ -570,12 +573,21 @@ export class WebsiteUtilities<
         if (
             globalContext.window &&
             'location' in globalContext.window &&
-            Object.prototype.hasOwnProperty.call(
-                this.sectionDomNodes, sectionName
+            (
+                this.options.sectionNames.managed.includes(sectionName) ||
+                this.options.sectionNames.unmanaged.includes(sectionName)
             )
         ) {
-            const oldSection = this.sectionDomNodes[this.currentSectionName]
-            const newSection = this.sectionDomNodes[sectionName]
+            const oldSection = Object.prototype.hasOwnProperty.call(
+                this.sectionDomNodes, this.currentSectionName
+            ) ?
+                this.sectionDomNodes[this.currentSectionName] :
+                null
+            const newSection = Object.prototype.hasOwnProperty.call(
+                this.sectionDomNodes, sectionName
+            ) ?
+                this.sectionDomNodes[sectionName] :
+                null
 
             await this.self.switchSectionLock.acquire()
 
@@ -585,23 +597,29 @@ export class WebsiteUtilities<
             )
 
             if (this.currentSectionName === sectionName) {
-                oldSection.classList.remove('wu-section-active')
-                oldSection.classList.add('wu-section-inactive')
+                if (oldSection) {
+                    oldSection.classList.remove('wu-section-active')
+                    oldSection.classList.add('wu-section-inactive')
+                }
 
-                newSection.classList.remove('wu-section-inactive')
-                newSection.classList.add('wu-section-active')
+                if (newSection) {
+                    newSection.classList.remove('wu-section-inactive')
+                    newSection.classList.add('wu-section-active')
+                }
             } else {
                 this.interruptableScrollToTop()
 
-                await fadeOut(oldSection)
+                if (oldSection) {
+                    await fadeOut(oldSection)
+                    oldSection.classList.remove('wu-section-active')
+                    oldSection.classList.add('wu-section-inactive')
+                }
 
-                oldSection.classList.remove('wu-section-active')
-                oldSection.classList.add('wu-section-inactive')
-
-                newSection.classList.remove('wu-section-inactive')
-                newSection.classList.add('wu-section-active')
-
-                await fadeIn(newSection)
+                if (newSection) {
+                    newSection.classList.remove('wu-section-inactive')
+                    newSection.classList.add('wu-section-active')
+                    await fadeIn(newSection)
+                }
             }
 
             const oldSectionName = this.currentSectionName
@@ -812,12 +830,7 @@ export class WebsiteUtilities<
                         const newSectionNameCandidate =
                             location.hash.substring('#'.length)
 
-                        if (Object.prototype.hasOwnProperty.call(
-                            this.sectionDomNodes, newSectionNameCandidate
-                        ))
-                            void this.switchSection(
-                                newSectionNameCandidate, event
-                            )
+                        void this.switchSection(newSectionNameCandidate, event)
                     }
                 }
             )

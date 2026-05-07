@@ -24,7 +24,10 @@ export interface DefaultOptions {
     knownScrollEventNames: Array<KnownEventName>
     mediaQueryClassNameIndicator: Array<Array<string>>
 
-    sectionNames: Array<string>
+    sectionNames: {
+        managed: Array<string>
+        unmanaged: Array<string>
+    }
 
     selectors: {
         windowLoadingCover: string
