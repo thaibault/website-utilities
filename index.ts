@@ -119,7 +119,7 @@ export class WebsiteUtilities<
         windowLoadedTimeoutAfterDocLoadedInMSec: 2000,
 
         domain: 'auto',
-        initialSectionName: 'home',
+        initialSectionName: '',
         knownScrollEventNames: [
             'DOMMouseScroll',
             'keyup',
@@ -302,7 +302,7 @@ export class WebsiteUtilities<
     topDomNode: HTMLElement | null = null
 
     routerOutletDomNode: HTMLElement | null = null
-    sectionDomNodes: Mapping<HTMLElement> = {}
+    sectionDomNodes: {default?: HTMLElement} & Mapping<HTMLElement> = {}
 
     scrollToTopButtonDomNodes: NodeListOf<HTMLElement> | null = null
     /// endregion
@@ -400,8 +400,11 @@ export class WebsiteUtilities<
         this.routerOutletDomNode =
             this.hostDomNode.querySelector(this.options.selectors.routerOutlet)
         for (const domNode of this.routerOutletDomNode?.children ?? []) {
-            const name = domNode.getAttribute('data-website-utilities-section')
-            if (name && this.options.sectionNames.managed.includes(name))
+            const name =
+                domNode.getAttribute('data-website-utilities-section')
+            if (name === '')
+                this.sectionDomNodes.default = domNode as HTMLElement
+            else if (name && this.options.sectionNames.managed.includes(name))
                 this.sectionDomNodes[name] = domNode as HTMLElement
         }
 
@@ -574,20 +577,21 @@ export class WebsiteUtilities<
             globalContext.window &&
             'location' in globalContext.window &&
             (
+                sectionName === '' ||
                 this.options.sectionNames.managed.includes(sectionName) ||
                 this.options.sectionNames.unmanaged.includes(sectionName)
             )
         ) {
-            const oldSection = Object.prototype.hasOwnProperty.call(
+            const oldSectionDomNode = Object.prototype.hasOwnProperty.call(
                 this.sectionDomNodes, this.currentSectionName
             ) ?
                 this.sectionDomNodes[this.currentSectionName] :
-                null
-            const newSection = Object.prototype.hasOwnProperty.call(
+                this.sectionDomNodes.default ?? null
+            const newSectionDomNode = Object.prototype.hasOwnProperty.call(
                 this.sectionDomNodes, sectionName
             ) ?
                 this.sectionDomNodes[sectionName] :
-                null
+                this.sectionDomNodes.default ?? null
 
             await this.self.switchSectionLock.acquire()
 
@@ -597,28 +601,33 @@ export class WebsiteUtilities<
             )
 
             if (this.currentSectionName === sectionName) {
-                if (oldSection) {
-                    oldSection.classList.remove('wu-section-active')
-                    oldSection.classList.add('wu-section-inactive')
+                if (oldSectionDomNode) {
+                    oldSectionDomNode.classList.remove('wu-section-active')
+                    oldSectionDomNode.classList.add('wu-section-inactive')
                 }
 
-                if (newSection) {
-                    newSection.classList.remove('wu-section-inactive')
-                    newSection.classList.add('wu-section-active')
+                if (newSectionDomNode) {
+                    newSectionDomNode.classList.remove('wu-section-inactive')
+                    newSectionDomNode.classList.add('wu-section-active')
                 }
-            } else {
+            } else if (!(
+                this.options.sectionNames.unmanaged.includes(sectionName) &&
+                this.options.sectionNames.unmanaged.includes(
+                    this.currentSectionName
+                )
+            )) {
                 this.interruptableScrollToTop()
 
-                if (oldSection) {
-                    await fadeOut(oldSection)
-                    oldSection.classList.remove('wu-section-active')
-                    oldSection.classList.add('wu-section-inactive')
+                if (oldSectionDomNode) {
+                    await fadeOut(oldSectionDomNode)
+                    oldSectionDomNode.classList.remove('wu-section-active')
+                    oldSectionDomNode.classList.add('wu-section-inactive')
                 }
 
-                if (newSection) {
-                    newSection.classList.remove('wu-section-inactive')
-                    newSection.classList.add('wu-section-active')
-                    await fadeIn(newSection)
+                if (newSectionDomNode) {
+                    newSectionDomNode.classList.remove('wu-section-inactive')
+                    newSectionDomNode.classList.add('wu-section-active')
+                    await fadeIn(newSectionDomNode)
                 }
             }
 
