@@ -633,8 +633,8 @@ export class WebsiteUtilities<
             this.currentSectionName = sectionName
 
             try {
-                await this.onSectionSwitch.call(
-                    this, this.currentSectionName, oldSectionName, event
+                await this.onSectionSwitch(
+                    this.currentSectionName, oldSectionName, event
                 )
             } catch (error) {
                 log.warn(
@@ -753,7 +753,7 @@ export class WebsiteUtilities<
                         this.viewportIsOnTop = true
 
                         this._onViewportMovesToTop()
-                        this.onViewportMovesToTop.call(this, event)
+                        this.onViewportMovesToTop(event)
                     }
                 }
             )
@@ -762,7 +762,7 @@ export class WebsiteUtilities<
             this.viewportIsOnTop = false
 
             void this._onViewportMovesAwayFromTop().then(() => {
-                this.onViewportMovesAwayFromTop.call(this)
+                this.onViewportMovesAwayFromTop()
             })
         } else {
             this.viewportIsOnTop = true
@@ -771,7 +771,7 @@ export class WebsiteUtilities<
                 domNode.classList.add('wu-top-settled')
 
             this._onViewportMovesToTop()
-            this.onViewportMovesToTop.call(this)
+            this.onViewportMovesToTop()
         }
     }
     /**
@@ -813,7 +813,7 @@ export class WebsiteUtilities<
             if (domNodesToAnimate.length === 0) {
                 await Promise.all(animationPromises)
                 this.startUpAnimationIsComplete = true
-                this.onStartUpAnimationComplete.call(this)
+                this.onStartUpAnimationComplete()
                 break
             }
 
