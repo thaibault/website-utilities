@@ -598,8 +598,6 @@ export class WebsiteUtilities<
                 `"${sectionName}".`
             )
 
-            console.log(this.currentSectionName, sectionName)
-
             if (this.currentSectionName === sectionName) {
                 if (oldSectionDomNode) {
                     oldSectionDomNode.classList.remove('wu-section-active')
