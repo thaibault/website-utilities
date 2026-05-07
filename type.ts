@@ -20,7 +20,6 @@ import {KnownEventName} from 'web-component-wrapper/type'
 export interface DefaultOptions {
     additionalPageLoadingTimeInMilliseconds: number
     domain: string
-    initialSectionName: string
     knownScrollEventNames: Array<KnownEventName>
     mediaQueryClassNameIndicator: Array<Array<string>>
 
