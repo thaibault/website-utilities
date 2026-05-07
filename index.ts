@@ -48,7 +48,6 @@ export const log = new Logger({name: 'website-utilities'})
  * initializer method.
  * @property _defaultOptions.additionalPageLoadingTimeInMilliseconds -
  * Additional time to wait until page will be indicated as loaded.
- * @property _defaultOptions.initialSectionName - Pre-selected section name.
  * @property _defaultOptions.knownScrollEventNames - Saves all known scroll
  * events in a space-separated string.
  * @property _defaultOptions.language - Options for client side
@@ -119,7 +118,6 @@ export class WebsiteUtilities<
         windowLoadedTimeoutAfterDocLoadedInMSec: 2000,
 
         domain: 'auto',
-        initialSectionName: '',
         knownScrollEventNames: [
             'DOMMouseScroll',
             'keyup',
@@ -288,7 +286,7 @@ export class WebsiteUtilities<
             return Promise.resolve()
         }
     // endregion
-    currentSectionName = 'home'
+    currentSectionName = ''
 
     startUpAnimationIsComplete = false
     continueAutoScrolling = false
@@ -600,6 +598,8 @@ export class WebsiteUtilities<
                 `"${sectionName}".`
             )
 
+            console.log(this.currentSectionName, sectionName)
+
             if (this.currentSectionName === sectionName) {
                 if (oldSectionDomNode) {
                     oldSectionDomNode.classList.remove('wu-section-active')
@@ -671,26 +671,29 @@ export class WebsiteUtilities<
     _initializeRouting() {
         this._bindNavigationEvents()
 
-        this.currentSectionName = this.options.initialSectionName
-
-        const newSectionNameCandidate =
+        const sectionNameCandidate =
             globalContext.location?.hash &&
             globalContext.location.hash.substring('#'.length)
 
-        const newSectionName = (
-            newSectionNameCandidate &&
-            this.options.initialSectionName !== newSectionNameCandidate &&
-            Object.prototype.hasOwnProperty.call(
-                this.sectionDomNodes, newSectionNameCandidate
+        if (
+            sectionNameCandidate &&
+            (
+                this.options.sectionNames.managed.includes(
+                    sectionNameCandidate
+                ) ||
+                this.options.sectionNames.unmanaged.includes(
+                    sectionNameCandidate
+                )
             )
-        ) ?
-            newSectionNameCandidate :
-            this.currentSectionName
+        )
+            this.currentSectionName = sectionNameCandidate
 
         for (const domNode of Object.values(this.sectionDomNodes))
             domNode.classList.add('wu-section-inactive')
 
-        return this.switchSection(newSectionName)
+        return this.switchSection(
+            sectionNameCandidate ?? this.currentSectionName
+        )
     }
 
     /**
