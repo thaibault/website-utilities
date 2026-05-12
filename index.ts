@@ -326,8 +326,8 @@ export class WebsiteUtilities<
      * @param name - Attribute name which was updates.
      * @param newValue - New updated value.
      */
-    onUpdateAttribute(name: string, newValue: string) {
-        super.onUpdateAttribute(name, newValue)
+    async onUpdateAttribute(name: string, newValue: string): Promise<void> {
+        await super.onUpdateAttribute(name, newValue)
 
         if (name === 'options')
             this._extendOptions()
