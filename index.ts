@@ -530,11 +530,14 @@ export class WebsiteUtilities<
             }
         }
     }
-    priorityNavigation() {
+    initializePriorityNavigation() {
         const menuDomNodes: NodeListOf<HTMLElement> =
             this.hostDomNode.querySelectorAll(
                 this.options.selectors.priorityNavigation
             )
+
+        if (menuDomNodes.length === 0)
+            return
 
         const setupOverflowMenu = () => {
             for (const menuDomNode of menuDomNodes) {
