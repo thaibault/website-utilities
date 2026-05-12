@@ -7014,9 +7014,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clientnode@npm:^4.0.1395":
-  version: 4.0.1395
-  resolution: "clientnode@npm:4.0.1395"
+"clientnode@npm:^4.0.1396":
+  version: 4.0.1396
+  resolution: "clientnode@npm:4.0.1396"
   peerDependencies:
     "@babel/runtime": "*"
     "@types/prop-types": "*"
@@ -7031,7 +7031,7 @@ __metadata:
       optional: true
     prop-types:
       optional: true
-  checksum: 10c0/7025ae6678d9ac7468c1050e051e75c292145924a31a47961cd7ef7b344a69e705ef3834249da905d521fb9c4859410df98cb1196459421af1773467866b3798
+  checksum: 10c0/b538387691b9359583a004d85c4bc6bf475b042af45cc1e58c8960e942b5fa1adabaec4959ba2387840dfda3eaf64540bae08b6fdaddff1b300e57d343aadf2d
   languageName: node
   linkType: hard
 
@@ -17130,12 +17130,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-documentation@npm:^1.0.9":
-  version: 1.0.9
-  resolution: "web-documentation@npm:1.0.9"
+"web-documentation@npm:^1.0.10":
+  version: 1.0.10
+  resolution: "web-documentation@npm:1.0.10"
   bin:
     web-documentation: build/deploy.js
-  checksum: 10c0/49374aa70ba451c5d806b26b5fd346860eb2c3de7185fbaac23b196d1d03215ce7b27bdd5e29cb0d1b3f2c7d234545f103575e33b39358f7692f7c900c5b7f55
+  checksum: 10c0/ffcb31135df999aeef2b3665a13b06b0e02733a4b41fe401eb58cffbb73c98a9b519662e7c89215872e0127efc1f0deec26b462e7df48fb4a7ea2577c3b06d12
   languageName: node
   linkType: hard
 
@@ -17463,7 +17463,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^8.59.3"
     "@typescript-eslint/parser": "npm:^8.59.3"
     "@webcomponents/webcomponentsjs": "npm:^2.8.0"
-    clientnode: "npm:^4.0.1395"
+    clientnode: "npm:^4.0.1396"
     css-loader: "npm:^7.1.4"
     cssnano: "npm:^8.0.1"
     eslint: "npm:^10.3.0"
@@ -17488,7 +17488,7 @@ __metadata:
     stylelint-config-standard-scss: "npm:^17.0.0"
     typescript-eslint: "npm:^8.59.3"
     web-component-wrapper: "npm:^0.0.591"
-    web-documentation: "npm:^1.0.9"
+    web-documentation: "npm:^1.0.10"
     weboptimizer: "npm:^3.0.22"
     webpack-dev-server: "npm:^5.2.4"
   peerDependencies:

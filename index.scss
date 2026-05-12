@@ -476,6 +476,82 @@ website-utilities {
         display: none;
     }
     /* endregion */
+    /* region priority navigation */
+    .wu-priority-navigation {
+        background: #f06d06;
+        height: 40px;
+
+        > ul {
+            list-style: none;
+
+            > li {
+                display: inline-block;
+                position: relative;
+
+                &.wu-priority-navigation__overflow {
+                    display: none;
+                }
+            }
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+            display: inline-block;
+            padding: 10px 15px;
+        }
+
+        &.resizing {
+            overflow: hidden;
+        }
+    }
+
+    .wu-priority-navigation__overflow__list {
+        display: block;
+        width: max-content;
+        background: white;
+        box-shadow: 0 0 10px rgb(black, 0.35);
+        position: absolute;
+        top: 95%; // moves to 100% on hover generally
+        right: -20px;
+        opacity: 0;
+        visibility: hidden;
+        padding: 5px 0;
+
+        list-style: none;
+
+        &.wu-priority-navigation__overflow__list--show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        > li > a {
+            color: black;
+            display: block;
+        }
+    }
+
+    .wu-priority-navigation__overflow__title {
+        cursor: pointer;
+        text-align: center;
+        color: #222;
+        border-radius: 50%;
+        font-size: 10px;
+        width: 2em;
+        height: 2em;
+        line-height: 2.2em;
+        vertical-align: top;
+        display: inline-block;
+    }
+
+    .wu-priority-navigation__list__item--hide {
+        display: none !important;
+    }
+
+    .wu-priority-navigation__overflow--inline-block {
+        display: inline-block !important;
+    }
+    /* endregion */
 }
 /* Overlay the whole page till everything is loaded completely. */
 .wu-window-loading-cover {
