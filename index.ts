@@ -325,6 +325,7 @@ export class WebsiteUtilities<
      * configured dom content.
      * @param name - Attribute name which was updates.
      * @param newValue - New updated value.
+     * @returns Promise resolving when attribute has been updated.
      */
     async onUpdateAttribute(name: string, newValue: string): Promise<void> {
         await super.onUpdateAttribute(name, newValue)
