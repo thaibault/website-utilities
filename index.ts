@@ -394,7 +394,7 @@ export class WebsiteUtilities<
 
         await this._initializeRouting()
 
-        this.priorityNavigation()
+        this.initializePriorityNavigation()
 
         await this.resolveRenderingPromiseIfSet(reason, resolveRendering)
     }
