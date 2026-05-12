@@ -99,7 +99,29 @@
             sectionNames: {managed: ['home', 'alternative']},
             additionalPageLoadingTimeInMilliseconds: 200
         }">
-            <header><a href="/">Home</a></header>
+            <header>
+                <a href="/">Home</a>
+
+                <nav role="navigation" class="wu-priority-navigation">
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#clients">Clients</a></li>
+                        <li><a href="#contact-us">Contact Us</a></li>
+                        <li><a href="#buy-lemons">Buy Lemons</a></li>
+                        <li><a href="#dance-wildly">Dance Wildly</a></li>
+                        <li><a href="#go-to-bed">Go To Bed</a></li>
+                        <li><a href="#donate-millions">Donate Millions</a></li>
+                        <li class="wu-priority-navigation__overflow">
+                            <span
+                                class="wu-priority-navigation__overflow__title"
+                            >▼</span>
+                            <ul class="wu-priority-navigation__overflow__list">
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
 
             <main class="wu-router-outlet">
                 <section data-website-utilities-section>

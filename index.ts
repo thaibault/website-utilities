@@ -31,7 +31,8 @@ import {
     onDocumentReady,
     preventDefault,
     represent,
-    timeout
+    timeout,
+    trailingThrottle
 } from 'clientnode'
 import {func, object} from 'clientnode/property-types'
 import {property} from 'web-component-wrapper/decorator'
@@ -148,7 +149,14 @@ export class WebsiteUtilities<
 
             routerOutlet: '.wu-router-outlet',
 
-            scrollToTopButtons: '.wu-scroll-to-top'
+            scrollToTopButtons: '.wu-scroll-to-top',
+
+            priorityNavigation: '.wu-priority-navigation',
+            priorityNavigationOverflow: '.wu-priority-navigation__overflow',
+            priorityNavigationOverflowTitle:
+                '.wu-priority-navigation__overflow__title',
+            priorityNavigationOverflowList:
+                '.wu-priority-navigation__overflow__list'
         },
 
         tracking: false
@@ -386,6 +394,8 @@ export class WebsiteUtilities<
 
         await this._initializeRouting()
 
+        this.priorityNavigation()
+
         await this.resolveRenderingPromiseIfSet(reason, resolveRendering)
     }
     // endregion
@@ -520,6 +530,156 @@ export class WebsiteUtilities<
             }
         }
     }
+    priorityNavigation() {
+        const menuDomNodes: NodeListOf<HTMLElement> =
+            this.hostDomNode.querySelectorAll(
+                this.options.selectors.priorityNavigation
+            )
+
+        const setupOverflowMenu = () => {
+            for (const menuDomNode of menuDomNodes) {
+                const allMenuItemsDomNode: NodeListOf<HTMLElement> =
+                    menuDomNode.querySelectorAll('ul > li')
+
+                const menuItemDomNodes: Array<HTMLElement> =
+                    Array.from(allMenuItemsDomNode)
+                        .filter((domNode) =>
+                            !domNode.classList.contains(
+                                this.options.selectors
+                                    .priorityNavigationOverflow
+                                    .substring(1)
+                            )
+                        )
+                // Checking top position of first item (sometimes changes)
+                const firstTopPosition =
+                    (menuDomNode.querySelector('ul > li') as
+                        HTMLElement
+                    ).offsetTop
+
+                const wrappedElements = []
+
+                /*
+                    Used to snag the previous menu item in addition to ones
+                    that have wrapped
+                */
+                let first = true
+                let index = 0
+                for (const domNode of menuItemDomNodes) {
+                    const topPosition: number = domNode.offsetTop
+
+                    if (topPosition !== firstTopPosition) {
+                        wrappedElements.push(domNode)
+
+                        // Add the previous one too, if first
+                        if (first) {
+                            wrappedElements.push(menuItemDomNodes[index - 1])
+                            first = false
+                        }
+                    }
+
+                    index += 1
+                }
+
+                if (wrappedElements.length) {
+                    // Clone set before altering
+                    const newSet = wrappedElements.map((domNode) =>
+                        domNode.cloneNode(true)
+                    )
+
+                    // Hide ones that we're moving
+                    for (const domNode of wrappedElements)
+                        domNode.classList.add(
+                            'wu-priority-navigation__list__item--hide'
+                        )
+
+                    // Add wrapped elements to dropdown
+                    const overflowNavigationList = menuDomNode.querySelector(
+                        this.options.selectors.priorityNavigationOverflowList
+                    )
+                    if (overflowNavigationList)
+                        for (const domNode of newSet)
+                            overflowNavigationList.append(domNode)
+
+                    // Show new menu
+                    const overflowMenu = menuDomNode.querySelector(
+                        this.options.selectors.priorityNavigationOverflow
+                    )
+                    if (overflowMenu)
+                        overflowMenu
+                            .classList
+                            .add(
+                                'wu-priority-navigation__overflow' +
+                                '--inline-block'
+                            )
+
+                    // Make overflow visible again so dropdown can be seen.
+                    menuDomNode.style.overflow = 'visible'
+                }
+            }
+        }
+
+        for (const domNode of this.hostDomNode.querySelectorAll(
+            this.options.selectors.priorityNavigationOverflowTitle
+        ))
+            domNode.addEventListener('click', ()=> {
+                for (const domNode of this.hostDomNode.querySelectorAll(
+                    this.options.selectors.priorityNavigationOverflowList
+                ))
+                    domNode.classList.toggle(
+                        'wu-priority-navigation__overflow__list--show'
+                    )
+            })
+
+        for (const menuDomNode of menuDomNodes) {
+            const update = trailingThrottle(
+                () => {
+                    for (const domNode of menuDomNode.querySelectorAll(
+                        this.options.selectors.priorityNavigationOverflowList
+                    ))
+                        while (domNode.firstChild)
+                            domNode.removeChild(domNode.firstChild)
+
+                    for (const domNode of menuDomNode.querySelectorAll(
+                        this.options.selectors.priorityNavigationOverflow
+                    ))
+                        domNode.classList.remove(
+                            'wu-priority-navigation__overflow' +
+                            '--show-inline-block'
+                        )
+
+                    for (const domNode of menuDomNode.querySelectorAll(
+                        'ul > li'
+                    ))
+                        if (!domNode.classList.contains(
+                            this.options.selectors.priorityNavigationOverflow
+                                .substring(1)
+                        ))
+                            domNode.classList.remove(
+                                'wu-priority-navigation__list__item--hide'
+                            )
+
+                    setupOverflowMenu()
+
+                    menuDomNode.classList.remove(
+                        'wu-priority-navigation--resizing'
+                    )
+                },
+                20
+            )
+
+            const observer = new ResizeObserver(() => {
+                menuDomNode.classList.add('wu-priority-navigation--resizing')
+
+                update()
+            })
+            observer.observe(menuDomNode)
+
+            // Optional: Stop observing
+            // observer.unobserve(targetElement)
+        }
+
+        setupOverflowMenu()
+    }
     // endregion
     // region protected methods
     /// region event
@@ -557,7 +717,7 @@ export class WebsiteUtilities<
 
         /*
             NOTE: We need to render the none-setteled state beforehand to make
-            sure the transition will be performed by browser.
+            sure browser will perform the transition.
         */
         await timeout()
 

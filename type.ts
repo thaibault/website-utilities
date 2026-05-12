@@ -38,6 +38,11 @@ export interface DefaultOptions {
         routerOutlet: string
 
         scrollToTopButtons: string
+
+        priorityNavigation: string
+        priorityNavigationOverflow: string
+        priorityNavigationOverflowList: string
+        priorityNavigationOverflowTitle: string
     }
 
     startUpAnimationElementDelayInMilliseconds: number
