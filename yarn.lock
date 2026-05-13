@@ -4235,15 +4235,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jsdom@npm:^28.0.2":
-  version: 28.0.2
-  resolution: "@types/jsdom@npm:28.0.2"
+"@types/jsdom@npm:^28.0.3":
+  version: 28.0.3
+  resolution: "@types/jsdom@npm:28.0.3"
   dependencies:
     "@types/node": "npm:*"
     "@types/tough-cookie": "npm:*"
     parse5: "npm:^8.0.0"
     undici-types: "npm:^7.21.0"
-  checksum: 10c0/c2ed63eedf494d714556b7b537e459f1339154489c1dbc7e0996b1fc94f981be590b2fa1c2122db11bf7818c8df9e212bf55a0efd7ce5d16a9751de6cc581220
+  checksum: 10c0/08b1cd61ee3e9610676be3c68a782a94667b86a5f73b8a262095d05f84c9e864fc11b25ae53450cd519a0abd46c202906a735bd61aa176257a981964bc5b1166
   languageName: node
   linkType: hard
 
@@ -17130,12 +17130,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-documentation@npm:^1.0.10":
-  version: 1.0.10
-  resolution: "web-documentation@npm:1.0.10"
+"web-documentation@npm:^1.0.12":
+  version: 1.0.12
+  resolution: "web-documentation@npm:1.0.12"
   bin:
     web-documentation: build/deploy.js
-  checksum: 10c0/ffcb31135df999aeef2b3665a13b06b0e02733a4b41fe401eb58cffbb73c98a9b519662e7c89215872e0127efc1f0deec26b462e7df48fb4a7ea2577c3b06d12
+  checksum: 10c0/1843886ffe687fb96e821cad4785d42bfde918087b4a8b1452af533c2554b1265af23ee1648b4d64d90e2b8107856ebc311c41149ec079cd66493fc2a0538bfb
   languageName: node
   linkType: hard
 
@@ -17457,7 +17457,7 @@ __metadata:
     "@stylistic/eslint-plugin": "npm:^5.10.0"
     "@types/ejs": "npm:^3.1.5"
     "@types/html-minifier": "npm:^4.0.6"
-    "@types/jsdom": "npm:^28.0.2"
+    "@types/jsdom": "npm:^28.0.3"
     "@types/node": "npm:^25.7.0"
     "@types/webpack-env": "npm:^1.18.8"
     "@typescript-eslint/eslint-plugin": "npm:^8.59.3"
@@ -17488,7 +17488,7 @@ __metadata:
     stylelint-config-standard-scss: "npm:^17.0.0"
     typescript-eslint: "npm:^8.59.3"
     web-component-wrapper: "npm:^0.0.591"
-    web-documentation: "npm:^1.0.10"
+    web-documentation: "npm:^1.0.12"
     weboptimizer: "npm:^3.0.22"
     webpack-dev-server: "npm:^5.2.4"
   peerDependencies:
