@@ -21,7 +21,6 @@ export interface DefaultOptions {
     additionalPageLoadingTimeInMilliseconds: number
     domain: string
     knownScrollEventNames: Array<KnownEventName>
-    mediaQueryClassNameIndicator: Array<Array<string>>
 
     sectionNames: {
         managed: Array<string>

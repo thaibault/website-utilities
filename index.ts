@@ -51,10 +51,6 @@ export const log = new Logger({name: 'website-utilities'})
  * Additional time to wait until page will be indicated as loaded.
  * @property _defaultOptions.knownScrollEventNames - Saves all known scroll
  * events in a space-separated string.
- * @property _defaultOptions.language - Options for client side
- * internationalization handler.
- * @property _defaultOptions.mediaQueryClassNameIndicator - Mapping of media
- * query class indicator names to internal event names.
  * @property _defaultOptions.selectors - Mapping of dom node descriptions to
  * their corresponding selectors.
  * @property _defaultOptions.selectors.top - Selector to indicate that viewport
@@ -128,12 +124,6 @@ export class WebsiteUtilities<
             'touchmove',
             'wheel'
         ],
-        mediaQueryClassNameIndicator: [
-            ['extraSmall', 'xs'],
-            ['small', 'sm'],
-            ['medium', 'md'],
-            ['large', 'lg']
-        ],
 
         sectionNames: {
             managed: ['home'],
@@ -168,30 +158,6 @@ export class WebsiteUtilities<
         options = {} as Options
 
     @property({type: func})
-        onChangeMediaQueryMode: (
-            this: WebsiteUtilities,
-            oldMediaQueryMode: string,
-            newMediaQueryMode: string,
-            event?: Event
-        ) => void = NOOP
-    @property({type: func})
-        onChangeToExtraSmallMode: (
-            this: WebsiteUtilities, oldMediaQueryMode: string, event?: Event
-        ) => void = NOOP
-    @property({type: func})
-        onChangeToLargeMode: (
-            this: WebsiteUtilities, oldMediaQueryMode: string, event?: Event
-        ) => void = NOOP
-    @property({type: func})
-        onChangeToMediumMode: (
-            this: WebsiteUtilities, oldMediaQueryMode: string, event?: Event
-        ) => void = NOOP
-    @property({type: func})
-        onChangeToSmallMode: (
-            this: WebsiteUtilities, oldMediaQueryMode: string, event?: Event
-        ) => void = NOOP
-
-    @property({type: func})
         onStartUpAnimationComplete: (this: WebsiteUtilities) => void = NOOP
 
     @property({type: func})
@@ -213,85 +179,31 @@ export class WebsiteUtilities<
         onLoaded: () => void = NOOP
 
     @property({type: func})
-        onButtonClick = function(this: WebsiteUtilities, event: Event) {
-            const button = event.target as HTMLElement
-            const content = getText(button).join(' ')
-
-            void this.onTrack({
-                event: 'buttonClick',
-                eventType: 'click',
-                label: content,
-                reference:
-                    button.getAttribute('action') ||
-                    button.getAttribute('target') ||
-                    button.getAttribute('type') ||
-                    content,
-                subject: 'button',
-                value: parseInt(
-                    button.getAttribute(
-                        'website-analytics-value'
-                    ) ||
-                    '1'
-                ),
-                userInteraction: true
-            })
+        onButtonClick = function(
+            this: WebsiteUtilities, _event: Event
+        ): Promise<false | undefined> {
+            return Promise.resolve(undefined)
         }
     @property({type: func})
-        onSectionSwitch = async function(
+        onSectionSwitch = function(
             this: WebsiteUtilities,
-            sectionName: string,
+            _sectionName: string,
             _oldSectionName: string,
             _event?: Event
-        ): Promise<void> {
-            if (!globalContext.window?.location)
-                return
-
-            await this.onTrack({
-                event: 'sectionSwitch',
-                eventType: 'sectionSwitch',
-                label: sectionName,
-                reference:
-                    `${globalContext.window.location.pathname}#${sectionName}`,
-                subject: 'url',
-                userInteraction: false
-            })
+        ): Promise<false | undefined> {
+            return Promise.resolve(undefined)
         }
     @property({type: func})
         onLinkClick = function(
-            this: WebsiteUtilities, event: Event
-        ) {
-            const link = event.target as HTMLElement
-            const content = getText(link).join(' ')
-
-            void this.onTrack({
-                event: 'linkClick',
-                eventType: 'click',
-                label: content,
-                reference:
-                    link.getAttribute('href') ||
-                    link.getAttribute('action') ||
-                    link.getAttribute('target') ||
-                    link.getAttribute('type') ||
-                    content,
-                subject: 'link',
-                value: parseInt(
-                    link.getAttribute(
-                        'website-analytics-value'
-                    ) ||
-                    '1'
-                ),
-                userInteraction: true
-            })
+            this: WebsiteUtilities, _event: Event
+        ): Promise<false | undefined> {
+            return Promise.resolve(undefined)
         }
     @property({type: func})
         onTrack = function(
-            this: WebsiteUtilities, item: TrackingItem
-        ): Promise<void> {
-            if (this.options.tracking)
-                (globalContext as {dataLayer?: Array<TrackingItem>})
-                    .dataLayer?.push(item)
-
-            return Promise.resolve()
+            this: WebsiteUtilities, _item: TrackingItem
+        ): Promise<false | undefined> {
+            return Promise.resolve(undefined)
         }
     // endregion
     currentSectionName = ''
@@ -521,7 +433,7 @@ export class WebsiteUtilities<
             log.debug(trackingItem)
 
             try {
-                await this.onTrack(trackingItem)
+                await this._onTrack(trackingItem)
             } catch (error) {
                 log.warn(
                     `Problem in tracking "${represent(trackingItem)}":`,
@@ -686,6 +598,87 @@ export class WebsiteUtilities<
     // endregion
     // region protected methods
     /// region event
+    async _onButtonClick(event: Event) {
+        if (await this.onButtonClick(event) === false)
+            return
+
+        const button = event.target as HTMLElement
+        const content = getText(button).join(' ')
+
+        void this._onTrack({
+            event: 'buttonClick',
+            eventType: 'click',
+            label: content,
+            reference:
+                button.getAttribute('action') ||
+                button.getAttribute('target') ||
+                button.getAttribute('type') ||
+                content,
+            subject: 'button',
+            value: parseInt(
+                button.getAttribute(
+                    'website-analytics-value'
+                ) ||
+                '1'
+            ),
+            userInteraction: true
+        })
+    }
+    async _onSectionSwitch(
+        sectionName: string, oldSectionName: string, event?: Event
+    ): Promise<void> {
+        if (
+            await this.onSectionSwitch(sectionName, oldSectionName, event) ===
+                false
+        )
+            return
+
+        if (!globalContext.window?.location)
+            return
+
+        await this._onTrack({
+            event: 'sectionSwitch',
+            eventType: 'sectionSwitch',
+            label: sectionName,
+            reference:
+                `${globalContext.window.location.pathname}#${sectionName}`,
+            subject: 'url',
+            userInteraction: false
+        })
+    }
+    async _onLinkClick(event: Event): Promise<void> {
+        if (await this.onLinkClick(event) === false)
+            return
+
+        const link = event.target as HTMLElement
+        const content = getText(link).join(' ')
+
+        void this._onTrack({
+            event: 'linkClick',
+            eventType: 'click',
+            label: content,
+            reference:
+                link.getAttribute('href') ||
+                link.getAttribute('action') ||
+                link.getAttribute('target') ||
+                link.getAttribute('type') ||
+                content,
+            subject: 'link',
+            value: parseInt(
+                link.getAttribute('website-analytics-value') ||
+                '1'
+            ),
+            userInteraction: true
+        })
+    }
+    async _onTrack(item: TrackingItem): Promise<void> {
+        if (await this.onTrack(item) === false)
+            return
+
+        if (this.options.tracking)
+            (globalContext as {dataLayer?: Array<TrackingItem>})
+                .dataLayer?.push(item)
+    }
     /**
      * This method triggers if the viewport moves to the top.
      */
@@ -797,7 +790,7 @@ export class WebsiteUtilities<
             this.currentSectionName = sectionName
 
             try {
-                await this.onSectionSwitch(
+                await this._onSectionSwitch(
                     this.currentSectionName, oldSectionName, event
                 )
             } catch (error) {
@@ -1033,12 +1026,20 @@ export class WebsiteUtilities<
         if (this.options.tracking) {
             for (const domNode of this.hostDomNode.querySelectorAll('a'))
                 this.addSecureEventListener(
-                    domNode, 'click', this.onButtonClick.bind(this)
+                    domNode,
+                    'click',
+                    (event) => {
+                        void this._onLinkClick(event)
+                    }
                 )
 
             for (const domNode of this.hostDomNode.querySelectorAll('button'))
                 this.addSecureEventListener(
-                    domNode, 'click', this.onButtonClick.bind(this)
+                    domNode,
+                    'click',
+                    (event) => {
+                        void this._onButtonClick(event)
+                    }
                 )
         }
     }
