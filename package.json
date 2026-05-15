@@ -73,10 +73,11 @@
     "@typescript-eslint/eslint-plugin": "^8.59.3",
     "@typescript-eslint/parser": "^8.59.3",
     "@webcomponents/webcomponentsjs": "^2.8.0",
+    "bootstrap-icons": "^1.13.1",
     "clientnode": "^4.0.1396",
     "css-loader": "^7.1.4",
     "cssnano": "^8.0.1",
-    "eslint": "^10.3.0",
+    "eslint": "^10.4.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-jsdoc": "^62.9.0",
     "jest": "^30.3.0",
@@ -104,11 +105,15 @@
   },
   "peerDependencies": {
     "@babel/runtime": "*",
+    "bootstrap-icons": "*",
     "clientnode": "*",
     "web-component-wrapper": "*"
   },
   "peerDependenciesMeta": {
     "@babel/runtime": {
+      "optional": true
+    },
+    "bootstrap-icons": {
       "optional": true
     }
   },

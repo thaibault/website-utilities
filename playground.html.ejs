@@ -253,7 +253,27 @@
                 </section>
             </main>
 
-            <footer><a href="#about">about</a></footer>
+            <footer>
+                <a href="#about">about</a>
+                <div>
+                    <%_ for (const name of [
+                        'envelope-at-fill',
+                        'github',
+                        'x-lg',
+                        'linkedin',
+                        'twitter-x',
+                        'facebook',
+                        'globe'
+                    ]) { _%>
+                        <img
+                            src="bootstrap-icons/icons/<%- name -%>.svg"
+                            alt="<%- name -%>"
+                            width="32"
+                            height="32"
+                        />
+                    <%_ } _%>
+                </div>
+            </footer>
 
             <a class="wu-scroll-to-top" href="#top">scroll to top</a>
         </website-utilities>
