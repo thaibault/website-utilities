@@ -54,10 +54,6 @@ endregion
 website-utilities {
     font-family: var(--w-typography-font-family, v.$typography-font-family);
     font-size: 14px;
-
-    lang-replacement {
-        display: none;
-    }
     /* region generic dom nodes */
     /** region headline */
     h1,
@@ -497,6 +493,25 @@ website-utilities {
             display: inline-block;
             padding: 10px 15px;
         }
+        /* region menu highlighter */
+        a::after {
+            content: " ";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            box-sizing: border-box;
+        }
+        /*
+            NOTE: Will be set to when startup animations have been finished.
+
+            a.wu-priority-navigation__link--active::after {
+                view-transition-name: wu-menu-highlight;
+            }
+        */
+        /* endregion */
 
         &.resizing {
             overflow: hidden;
@@ -584,6 +599,14 @@ website-utilities {
             }
         }
     }
+}
+
+::view-transition-old(wu-menu-highlight) {
+    height: 100%;
+}
+
+::view-transition-new(wu-menu-highlight) {
+    height: 100%;
 }
 
 @keyframes blur-text {

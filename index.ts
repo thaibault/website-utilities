@@ -126,6 +126,7 @@ export class WebsiteUtilities<
         ],
 
         sectionNames: {
+            default: '',
             managed: ['home'],
             unmanaged: []
         },
@@ -140,6 +141,9 @@ export class WebsiteUtilities<
             routerOutlet: '.wu-router-outlet',
 
             scrollToTopButtons: '.wu-scroll-to-top',
+
+            activeNavigationItemClassName:
+                'wu-priority-navigation__link--active',
 
             priorityNavigation: '.wu-priority-navigation',
             priorityNavigationOverflow: '.wu-priority-navigation__overflow',
@@ -212,12 +216,16 @@ export class WebsiteUtilities<
     continueAutoScrolling = false
     viewportIsOnTop: boolean | undefined
 
+    observerDeregisters: Array<() => void> = []
+
     static windowLoaded = false
     private static switchSectionLock = new Lock<void>()
     /// region dom nodes
     windowLoadingCoverDomNode: HTMLElement | null = null
 
     topDomNode: HTMLElement | null = null
+
+    priorityNavigationDomNodes: NodeListOf<HTMLElement> | null = null
 
     routerOutletDomNode: HTMLElement | null = null
     sectionDomNodes: {default?: HTMLElement} & Mapping<HTMLElement> = {}
@@ -279,7 +287,9 @@ export class WebsiteUtilities<
                     void this._removeLoadingCover().then(() => {
                         this.enableScrolling()
 
-                        void this._performStartUpEffects()
+                        void this._performStartUpEffects().then(() => {
+                            this.addMenuHighlighterViewTransition()
+                        })
 
                         this.onLoaded()
                     })
@@ -305,10 +315,17 @@ export class WebsiteUtilities<
         this._bindClickTracking()
 
         await this._initializeRouting()
-
         this.initializePriorityNavigation()
 
         await this.resolveRenderingPromiseIfSet(reason, resolveRendering)
+    }
+    /**
+     * Frees some memory.
+     */
+    disconnectedCallback() {
+        super.disconnectedCallback()
+        for (const deregister of this.observerDeregisters)
+            deregister()
     }
     // endregion
     grabDomNodes(): void {
@@ -316,6 +333,10 @@ export class WebsiteUtilities<
             this.hostDomNode.querySelector(this.options.selectors.top)
         this.scrollToTopButtonDomNodes = this.hostDomNode.querySelectorAll(
             this.options.selectors.scrollToTopButtons
+        )
+
+        this.priorityNavigationDomNodes = this.hostDomNode.querySelectorAll(
+            this.options.selectors.priorityNavigation
         )
 
         this.routerOutletDomNode =
@@ -443,16 +464,19 @@ export class WebsiteUtilities<
         }
     }
     initializePriorityNavigation() {
-        const menuDomNodes: NodeListOf<HTMLElement> =
-            this.hostDomNode.querySelectorAll(
-                this.options.selectors.priorityNavigation
-            )
-
-        if (menuDomNodes.length === 0)
+        if (this.priorityNavigationDomNodes?.length === 0)
             return
 
+        for (const domNode of this.priorityNavigationDomNodes || [])
+            for (const item of domNode.querySelectorAll(
+                `[href="#${this.currentSectionName}"]`
+            ))
+                item.classList.add(
+                    this.options.selectors.activeNavigationItemClassName
+                )
+
         const setupOverflowMenu = () => {
-            for (const menuDomNode of menuDomNodes) {
+            for (const menuDomNode of this.priorityNavigationDomNodes || []) {
                 const allMenuItemsDomNode: NodeListOf<HTMLElement> =
                     menuDomNode.querySelectorAll('ul > li')
 
@@ -536,16 +560,20 @@ export class WebsiteUtilities<
         for (const domNode of this.hostDomNode.querySelectorAll(
             this.options.selectors.priorityNavigationOverflowTitle
         ))
-            domNode.addEventListener('click', ()=> {
-                for (const domNode of this.hostDomNode.querySelectorAll(
-                    this.options.selectors.priorityNavigationOverflowList
-                ))
-                    domNode.classList.toggle(
-                        'wu-priority-navigation__overflow__list--show'
-                    )
-            })
+            this.addSecureEventListener(
+                domNode,
+                'click',
+                ()=> {
+                    for (const domNode of this.hostDomNode.querySelectorAll(
+                        this.options.selectors.priorityNavigationOverflowList
+                    ))
+                        domNode.classList.toggle(
+                            'wu-priority-navigation__overflow__list--show'
+                        )
+                }
+            )
 
-        for (const menuDomNode of menuDomNodes) {
+        for (const menuDomNode of this.priorityNavigationDomNodes || []) {
             const update = trailingThrottle(
                 () => {
                     for (const domNode of menuDomNode.querySelectorAll(
@@ -587,13 +615,52 @@ export class WebsiteUtilities<
 
                 update()
             })
+            this.observerDeregisters.push(() => {
+                observer.unobserve(menuDomNode)
+            })
             observer.observe(menuDomNode)
-
-            // Optional: Stop observing
-            // observer.unobserve(targetElement)
         }
 
         setupOverflowMenu()
+    }
+    addMenuHighlighterViewTransition() {
+        if (!globalContext.document)
+            return
+
+        const styleDomNode= document.createElement('style')
+        styleDomNode.type = 'text/css'
+        const styles = `
+            a.wu-priority-navigation__link--active::after {
+                view-transition-name: wu-menu-highlight;
+            }
+        `
+        styleDomNode.appendChild(globalContext.document.createTextNode(styles))
+
+        globalContext.document.getElementsByTagName('head')[0]
+            .appendChild(styleDomNode)
+    }
+    activateNavigationItemHighlighters(sectionName: string) {
+        const className = this.options.selectors.activeNavigationItemClassName
+        for (const domNode of this.priorityNavigationDomNodes || []) {
+            for (const item of domNode.querySelectorAll(`.${className}`))
+                item.classList.remove(className)
+
+            for (const item of domNode.querySelectorAll(
+                `[href="#${sectionName}"]`
+            ))
+                item.classList.add(className)
+        }
+    }
+    triggerNavigationItemHighlighterSwitching(sectionName: string) {
+        if (globalContext.document?.startViewTransition) {
+            globalContext.document.startViewTransition(() => {
+                this.activateNavigationItemHighlighters(sectionName)
+            })
+
+            return
+        }
+
+        this.activateNavigationItemHighlighters(sectionName)
     }
     // endregion
     // region protected methods
@@ -726,6 +793,7 @@ export class WebsiteUtilities<
      * This method triggers if we change the current section.
      * @param sectionName - Contains the new section name.
      * @param event - Optional event that triggered the switch.
+     * @returns Promise resolving when the section switch has been finished.
      */
     async switchSection(sectionName: string, event?: Event): Promise<void> {
         if (
@@ -749,6 +817,8 @@ export class WebsiteUtilities<
                 this.sectionDomNodes.default ?? null
 
             await this.self.switchSectionLock.acquire()
+
+            this.triggerNavigationItemHighlighterSwitching(sectionName)
 
             log.debug(
                 `Run section switch from "${this.currentSectionName}" to`,
@@ -824,6 +894,9 @@ export class WebsiteUtilities<
      * finished.
      */
     _initializeRouting() {
+        if (this.currentSectionName === '')
+            this.currentSectionName = this.options.sectionNames.default
+
         this._bindNavigationEvents()
 
         const sectionNameCandidate =
@@ -850,7 +923,6 @@ export class WebsiteUtilities<
             sectionNameCandidate ?? this.currentSectionName
         )
     }
-
     /**
      * Removes class names from scroll-to-top buttons to stop running
      * transitions.

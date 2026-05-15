@@ -23,6 +23,7 @@ export interface DefaultOptions {
     knownScrollEventNames: Array<KnownEventName>
 
     sectionNames: {
+        default: string
         managed: Array<string>
         unmanaged: Array<string>
     }
@@ -37,6 +38,8 @@ export interface DefaultOptions {
         routerOutlet: string
 
         scrollToTopButtons: string
+
+        activeNavigationItemClassName: string
 
         priorityNavigation: string
         priorityNavigationOverflow: string
