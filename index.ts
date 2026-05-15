@@ -920,7 +920,7 @@ export class WebsiteUtilities<
             domNode.classList.add('wu-section-inactive')
 
         return this.switchSection(
-            sectionNameCandidate ?? this.currentSectionName
+            sectionNameCandidate || this.currentSectionName
         )
     }
     /**
