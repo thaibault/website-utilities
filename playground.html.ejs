@@ -47,35 +47,40 @@
 
                 background-color: black;
                 color: white;
-            }
 
-            website-utilities a {
-                color: darkgrey;
-            }
+                a {
+                    color: darkgrey;
+                }
 
-            website-utilities header, website-utilities footer {
-                height: 80px;
+                header, footer {
+                    height: 80px;
 
-                padding: 20px;
+                    padding: 20px;
 
-                background-color: #238636;
-            }
+                    background-color: #238636;
+                }
 
-            website-utilities .wu-priority-navigation {
-                border: 1px solid white;
-            }
+                .wu-priority-navigation {
+                    border: 1px solid white;
 
-            website-utilities main > section:first-child {
-                height: 8000px;
-            }
+                    a.wu-priority-navigation__link--active::after {
+                        border-bottom: 2px solid white;
+                        color: red;
+                    }
+                }
 
-            website-utilities .content {
-                height: 80px;
+                main > section:first-child {
+                    height: 8000px;
+                }
 
-                margin: 20px;
-                padding: 20px;
+                .content {
+                    height: 80px;
 
-                background-color: rosybrown;
+                    margin: 20px;
+                    padding: 20px;
+
+                    background-color: rosybrown;
+                }
             }
         </style>
         <!--endregion-->
@@ -100,7 +105,18 @@
         </div>
 
         <website-utilities options="{
-            sectionNames: {managed: ['home', 'alternative']},
+            sectionNames: {
+                managed: [
+                    'home',
+                    'about',
+                    'clients',
+                    'contact-us',
+                    'buy-lemons',
+                    'dance-wildly',
+                    'go-to-bed',
+                    'donate-millions'
+                ]
+            },
             additionalPageLoadingTimeInMilliseconds: 200
         }">
             <header>
@@ -130,56 +146,114 @@
             <main class="wu-router-outlet">
                 <section data-website-utilities-section>
                     <div class="content wu-start-up-animation-number-1">
-                        Show first
+                        Show first home
                     </div>
 
                     <div class="content wu-start-up-animation-number-2">
-                        Show second
+                        Show second home
                     </div>
 
                     <div class="content wu-start-up-animation-number-3">
-                        Show third
+                        Show third home
                     </div>
 
                     <div class="content wu-start-up-animation-number-4">
-                        Show fourth
+                        Show fourth home
                     </div>
 
                     <div class="content wu-start-up-animation-number-5">
-                        Show fifth
+                        Show fifth home
                     </div>
 
                     <div class="content wu-start-up-animation-number-6">
-                        Show sixth
+                        Show sixth home
                     </div>
 
                     <div class="content wu-start-up-animation-number-7">
-                        Show seventh
+                        Show seventh home
                     </div>
 
                     <div class="content wu-start-up-animation-number-8">
-                        Show eights
+                        Show eights home
                     </div>
                 </section>
 
-                <section data-website-utilities-section="alternative">
+                <section data-website-utilities-section="about">
                     <div class="content wu-start-up-animation-number-1">
-                        Show first alternative
+                        Show first about
                     </div>
 
                     <div class="content wu-start-up-animation-number-2">
-                        Show second alternative
+                        Show second about
                     </div>
 
                     <div class="content wu-start-up-animation-number-3">
-                        Show third alternative
+                        Show third about
+                    </div>
+                </section>
+
+                <section data-website-utilities-section="clients">
+                    <div class="content wu-start-up-animation-number-1">
+                        Show first clients
+                    </div>
+
+                    <div class="content wu-start-up-animation-number-2">
+                        Show second clients
+                    </div>
+                </section>
+
+                <section data-website-utilities-section="contact-us">
+                    <div class="content wu-start-up-animation-number-1">
+                        Show first contact-us
+                    </div>
+
+                    <div class="content wu-start-up-animation-number-2">
+                        Show second contact-us
+                    </div>
+                </section>
+
+                <section data-website-utilities-section="buy-lemons">
+                    <div class="content wu-start-up-animation-number-1">
+                        Show first buy-lemons
+                    </div>
+
+                    <div class="content wu-start-up-animation-number-2">
+                        Show second buy-lemons
+                    </div>
+                </section>
+
+                <section data-website-utilities-section="dance-wildly">
+                    <div class="content wu-start-up-animation-number-1">
+                        Show first dance-wildly
+                    </div>
+
+                    <div class="content wu-start-up-animation-number-2">
+                        Show second dance-wildly
+                    </div>
+                </section>
+
+                <section data-website-utilities-section="go-to-bed">
+                    <div class="content wu-start-up-animation-number-1">
+                        Show first go-to-bed
+                    </div>
+
+                    <div class="content wu-start-up-animation-number-2">
+                        Show second go-to-bed
+                    </div>
+                </section>
+
+                <section data-website-utilities-section="donate-millions">
+                    <div class="content wu-start-up-animation-number-1">
+                        Show first donate-millions
+                    </div>
+
+                    <div class="content wu-start-up-animation-number-2">
+                        Show second donate-millions
                     </div>
                 </section>
             </main>
 
-            <footer>
-                <a href="#alternative">alternative section</a>
-            </footer>
+            <footer><a href="#about">about</a></footer>
 
             <a class="wu-scroll-to-top" href="#top">scroll to top</a>
         </website-utilities>
