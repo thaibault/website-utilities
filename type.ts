@@ -42,7 +42,9 @@ export interface DefaultOptions {
         activeNavigationItemClassName: string
 
         priorityNavigation: string
-        priorityNavigationOverflow: string
+        priorityNavigationListItemClassName: string
+        priorityNavigationOverflowClassName: string
+        priorityNavigationOverflowVisibleClassName: string
         priorityNavigationOverflowList: string
         priorityNavigationOverflowTitle: string
     }
