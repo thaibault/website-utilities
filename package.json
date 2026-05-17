@@ -74,7 +74,7 @@
     "@typescript-eslint/parser": "^8.59.3",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "bootstrap-icons": "^1.13.1",
-    "clientnode": "^4.0.1396",
+    "clientnode": "^4.0.1397",
     "css-loader": "^7.1.4",
     "cssnano": "^8.0.1",
     "eslint": "^10.4.0",
@@ -99,7 +99,7 @@
     "stylelint-config-standard-scss": "^17.0.0",
     "typescript-eslint": "^8.59.3",
     "web-component-wrapper": "^0.0.591",
-    "web-documentation": "^1.0.12",
+    "web-documentation": "^1.0.14",
     "weboptimizer": "^3.0.22",
     "webpack-dev-server": "^5.2.4"
   },

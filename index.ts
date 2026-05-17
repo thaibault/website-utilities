@@ -146,7 +146,14 @@ export class WebsiteUtilities<
                 'wu-priority-navigation__link--active',
 
             priorityNavigation: '.wu-priority-navigation',
-            priorityNavigationOverflow: '.wu-priority-navigation__overflow',
+
+            priorityNavigationListItemClassName:
+                'wu-priority-navigation__list__item--hide',
+            priorityNavigationOverflowClassName:
+                'wu-priority-navigation__overflow',
+            priorityNavigationOverflowVisibleClassName:
+                'wu-priority-navigation__overflow--inline-block',
+
             priorityNavigationOverflowTitle:
                 '.wu-priority-navigation__overflow__title',
             priorityNavigationOverflowList:
@@ -485,8 +492,7 @@ export class WebsiteUtilities<
                         .filter((domNode) =>
                             !domNode.classList.contains(
                                 this.options.selectors
-                                    .priorityNavigationOverflow
-                                    .substring(1)
+                                    .priorityNavigationOverflowClassName
                             )
                         )
                 // Checking top position of first item (sometimes changes)
@@ -495,30 +501,21 @@ export class WebsiteUtilities<
                         HTMLElement
                     ).offsetTop
 
-                const wrappedElements = []
+                let wrappedElements = []
 
-                /*
-                    Used to snag the previous menu item in addition to ones
-                    that have wrapped
-                */
-                let first = true
-                let index = 0
                 for (const domNode of menuItemDomNodes) {
                     const topPosition: number = domNode.offsetTop
 
-                    if (topPosition !== firstTopPosition) {
+                    if (topPosition !== firstTopPosition)
                         wrappedElements.push(domNode)
-
-                        // Add the previous one too, if first
-                        if (first) {
-                            wrappedElements.push(menuItemDomNodes[index - 1])
-                            first = false
-                        }
-                    }
-
-                    index += 1
                 }
+                if ((menuItemDomNodes.length - wrappedElements.length) < 2)
+                    wrappedElements = menuItemDomNodes.slice()
 
+                const overflowMenu = menuDomNode.querySelector(
+                    '.' +
+                    this.options.selectors.priorityNavigationOverflowClassName
+                )
                 if (wrappedElements.length) {
                     // Clone set before altering
                     const newSet = wrappedElements.map((domNode) =>
@@ -528,7 +525,8 @@ export class WebsiteUtilities<
                     // Hide ones that we're moving
                     for (const domNode of wrappedElements)
                         domNode.classList.add(
-                            'wu-priority-navigation__list__item--hide'
+                            this.options.selectors
+                                .priorityNavigationListItemClassName
                         )
 
                     // Add wrapped elements to dropdown
@@ -539,21 +537,23 @@ export class WebsiteUtilities<
                         for (const domNode of newSet)
                             overflowNavigationList.append(domNode)
 
-                    // Show new menu
-                    const overflowMenu = menuDomNode.querySelector(
-                        this.options.selectors.priorityNavigationOverflow
-                    )
                     if (overflowMenu)
                         overflowMenu
                             .classList
                             .add(
-                                'wu-priority-navigation__overflow' +
-                                '--inline-block'
+                                this.options.selectors
+                                    .priorityNavigationOverflowVisibleClassName
                             )
 
                     // Make overflow visible again so dropdown can be seen.
                     menuDomNode.style.overflow = 'visible'
-                }
+                } else if (overflowMenu)
+                    overflowMenu
+                        .classList
+                        .remove(
+                            this.options.selectors
+                                .priorityNavigationOverflowVisibleClassName
+                        )
             }
         }
 
@@ -583,7 +583,9 @@ export class WebsiteUtilities<
                             domNode.removeChild(domNode.firstChild)
 
                     for (const domNode of menuDomNode.querySelectorAll(
-                        this.options.selectors.priorityNavigationOverflow
+                        '.' +
+                        this.options.selectors
+                            .priorityNavigationOverflowClassName
                     ))
                         domNode.classList.remove(
                             'wu-priority-navigation__overflow' +
@@ -594,8 +596,8 @@ export class WebsiteUtilities<
                         'ul > li'
                     ))
                         if (!domNode.classList.contains(
-                            this.options.selectors.priorityNavigationOverflow
-                                .substring(1)
+                            this.options.selectors
+                                .priorityNavigationOverflowClassName
                         ))
                             domNode.classList.remove(
                                 'wu-priority-navigation__list__item--hide'
