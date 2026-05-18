@@ -22,6 +22,7 @@ import {
     extend,
     fadeIn,
     fadeOut,
+    getParents,
     getText,
     globalContext,
     Lock,
@@ -145,19 +146,23 @@ export class WebsiteUtilities<
             activeNavigationItemClassName:
                 'wu-priority-navigation__link--active',
 
-            priorityNavigation: '.wu-priority-navigation',
+            priorityNavigationClassName: 'wu-priority-navigation',
+            priorityNavigationOverflowOpenClassName:
+                'wu-priority-navigation--overflow-open',
+            priorityNavigationOverflowResizingClassName:
+                'wu-priority-navigation--resizing',
 
             priorityNavigationListItemClassName:
+                'wu-priority-navigation__list__item',
+            priorityNavigationListItemHideClassName:
                 'wu-priority-navigation__list__item--hide',
+
             priorityNavigationOverflowClassName:
                 'wu-priority-navigation__overflow',
-            priorityNavigationOverflowVisibleClassName:
-                'wu-priority-navigation__overflow--inline-block',
-
-            priorityNavigationOverflowTitle:
-                '.wu-priority-navigation__overflow__title',
+            priorityNavigationOverflowShowClassName:
+                'wu-priority-navigation__overflow--show',
             priorityNavigationOverflowList:
-                '.wu-priority-navigation__overflow__list'
+                '.wu-priority-navigation__overflow-list'
         },
 
         tracking: false
@@ -343,7 +348,7 @@ export class WebsiteUtilities<
         )
 
         this.priorityNavigationDomNodes = this.hostDomNode.querySelectorAll(
-            this.options.selectors.priorityNavigation
+            `.${this.options.selectors.priorityNavigationClassName}`
         )
 
         this.routerOutletDomNode =
@@ -526,7 +531,7 @@ export class WebsiteUtilities<
                     for (const domNode of wrappedElements)
                         domNode.classList.add(
                             this.options.selectors
-                                .priorityNavigationListItemClassName
+                                .priorityNavigationListItemHideClassName
                         )
 
                     // Add wrapped elements to dropdown
@@ -542,7 +547,7 @@ export class WebsiteUtilities<
                             .classList
                             .add(
                                 this.options.selectors
-                                    .priorityNavigationOverflowVisibleClassName
+                                    .priorityNavigationOverflowShowClassName
                             )
 
                     // Make overflow visible again so dropdown can be seen.
@@ -552,24 +557,32 @@ export class WebsiteUtilities<
                         .classList
                         .remove(
                             this.options.selectors
-                                .priorityNavigationOverflowVisibleClassName
+                                .priorityNavigationOverflowShowClassName
                         )
             }
         }
 
         for (const domNode of this.hostDomNode.querySelectorAll(
-            this.options.selectors.priorityNavigationOverflowTitle
+            `.${this.options.selectors.priorityNavigationOverflowClassName}`
         ))
             this.addSecureEventListener(
                 domNode,
                 'click',
                 ()=> {
-                    for (const domNode of this.hostDomNode.querySelectorAll(
-                        this.options.selectors.priorityNavigationOverflowList
-                    ))
-                        domNode.classList.toggle(
-                            'wu-priority-navigation__overflow__list--show'
-                        )
+                    let menuDomNode: HTMLElement | null = null
+                    for (const parentDomNode of getParents(domNode))
+                        if (parentDomNode.matches(
+                            '.' +
+                            this.options.selectors.priorityNavigationClassName
+                        )) {
+                            menuDomNode = parentDomNode
+                            break
+                        }
+
+                    menuDomNode?.classList.toggle(
+                        this.options.selectors
+                            .priorityNavigationOverflowOpenClassName
+                    )
                 }
             )
 
@@ -588,8 +601,8 @@ export class WebsiteUtilities<
                             .priorityNavigationOverflowClassName
                     ))
                         domNode.classList.remove(
-                            'wu-priority-navigation__overflow' +
-                            '--show-inline-block'
+                            this.options.selectors
+                                .priorityNavigationOverflowShowClassName
                         )
 
                     for (const domNode of menuDomNode.querySelectorAll(
@@ -600,20 +613,25 @@ export class WebsiteUtilities<
                                 .priorityNavigationOverflowClassName
                         ))
                             domNode.classList.remove(
-                                'wu-priority-navigation__list__item--hide'
+                                this.options.selectors
+                                    .priorityNavigationListItemHideClassName
                             )
 
                     setupOverflowMenu()
 
                     menuDomNode.classList.remove(
-                        'wu-priority-navigation--resizing'
+                        this.options.selectors
+                            .priorityNavigationOverflowResizingClassName
                     )
                 },
                 20
             )
 
             const observer = new ResizeObserver(() => {
-                menuDomNode.classList.add('wu-priority-navigation--resizing')
+                menuDomNode.classList.add(
+                    this.options.selectors
+                        .priorityNavigationOverflowResizingClassName
+                )
 
                 update()
             })
