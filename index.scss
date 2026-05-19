@@ -229,6 +229,33 @@ website-utilities {
             overflow: hidden;
         }
 
+        .wu-priority-navigation__list,
+        .wu-priority-navigation__overflow-list li {
+            position: relative;
+        }
+
+        .wu-priority-navigation__link {
+            display: inline-block;
+            /* region menu highlighter */
+            &::after {
+                content: " ";
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                box-sizing: border-box;
+            }
+            /*
+                NOTE: Will be set to when startup animations have been finished.
+
+                &.wu-priority-navigation__link--active::after {
+                    view-transition-name: wu-menu-highlight;
+                }
+            */
+            /* endregion */
+        }
+
         .wu-priority-navigation__list {
             list-style: none;
 
@@ -240,32 +267,6 @@ website-utilities {
                     display: none;
                 }
             }
-
-            a {
-                text-decoration: none;
-                color: white;
-                display: inline-block;
-                padding: 10px 15px;
-            }
-            /* region menu highlighter */
-            a::after {
-                content: " ";
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                border: none;
-                box-sizing: border-box;
-            }
-            /*
-                NOTE: Will be set to when startup animations have been finished.
-
-                .wu-priority-navigation__list a.wu-priority-navigation__link--active::after {
-                    view-transition-name: wu-menu-highlight;
-                }
-            */
-            /* endregion */
 
             .wu-priority-navigation__list__overflow-indicator {
                 cursor: pointer;

@@ -63,8 +63,20 @@
                 .wu-priority-navigation {
                     background-color: grey;
 
-                    .wu-priority-navigation__list a.wu-priority-navigation__link--active::after {
+                    .wu-priority-navigation__link {
+                        text-decoration: none;
+                        color: white;
+                        padding: 10px 15px;
+                    }
+
+                    .wu-priority-navigation__list
+                    .wu-priority-navigation__link--active::after {
                         border-bottom: 2px solid white;
+                    }
+
+                    .wu-priority-navigation__overflow-list
+                    .wu-priority-navigation__link--active::after {
+                        border-left: 2px solid white;
                     }
                 }
 
@@ -123,14 +135,54 @@
 
                 <nav role="navigation" class="wu-priority-navigation">
                     <ul class="wu-priority-navigation__list">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#clients">Clients</a></li>
-                        <li><a href="#contact-us">Contact Us</a></li>
-                        <li><a href="#buy-lemons">Buy Lemons</a></li>
-                        <li><a href="#dance-wildly">Dance Wildly</a></li>
-                        <li><a href="#go-to-bed">Go To Bed</a></li>
-                        <li><a href="#donate-millions">Donate Millions</a></li>
+                        <li>
+                            <a
+                                class="wu-priority-navigation__link"
+                                href="#home"
+                            >Home</a>
+                        </li>
+                        <li>
+                            <a
+                                class="wu-priority-navigation__link"
+                                href="#about"
+                            >About</a>
+                        </li>
+                        <li>
+                            <a
+                                class="wu-priority-navigation__link"
+                                href="#clients"
+                            >Clients</a>
+                        </li>
+                        <li>
+                            <a
+                                class="wu-priority-navigation__link"
+                                href="#contact-us"
+                            >Contact Us</a>
+                        </li>
+                        <li>
+                            <a
+                                class="wu-priority-navigation__link"
+                                href="#buy-lemons"
+                            >Buy Lemons</a>
+                        </li>
+                        <li>
+                            <a
+                                class="wu-priority-navigation__link"
+                                href="#dance-wildly"
+                            >Dance Wildly</a>
+                        </li>
+                        <li>
+                            <a
+                                class="wu-priority-navigation__link"
+                                href="#go-to-bed"
+                            >Go To Bed</a>
+                        </li>
+                        <li>
+                            <a
+                                class="wu-priority-navigation__link"
+                                href="#donate-millions"
+                            >Donate Millions</a>
+                        </li>
                         <li class="wu-priority-navigation__list__overflow-indicator">
                             <div
                                 class="wu-priority-navigation__list__overflow-indicator__title"

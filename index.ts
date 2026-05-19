@@ -645,8 +645,8 @@ export class WebsiteUtilities<
         const styleDomNode= document.createElement('style')
         styleDomNode.type = 'text/css'
         const styles = `
-            .wu-priority-navigation__list
-            a.wu-priority-navigation__link--active::after {
+            .wu-priority-navigation
+            .wu-priority-navigation__link--active::after {
                 view-transition-name: wu-menu-highlight;
             }
         `
