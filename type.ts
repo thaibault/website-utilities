@@ -19,7 +19,11 @@ import {KnownEventName} from 'web-component-wrapper/type'
 // region exports
 export interface DefaultOptions {
     additionalPageLoadingTimeInMilliseconds: number
+    startUpAnimationElementDelayInMilliseconds: number
+    windowLoadedTimeoutAfterDocLoadedInMSec: number
+
     domain: string
+
     knownScrollEventNames: Array<KnownEventName>
 
     sectionNames: {
@@ -39,12 +43,11 @@ export interface DefaultOptions {
 
         scrollToTopButtons: string
 
-        activeNavigationItemClassName: string
-
-
         priorityNavigationClassName: string
         priorityNavigationOverflowOpenClassName: string
         priorityNavigationOverflowResizingClassName: string
+
+        activeNavigationItemClassName: string
 
         priorityNavigationListItemHideClassName: string
 
@@ -54,11 +57,8 @@ export interface DefaultOptions {
         priorityNavigationOverflowList: string
     }
 
-    startUpAnimationElementDelayInMilliseconds: number
-
+    minimumNumberOfMenuItems: number
     tracking: boolean
-
-    windowLoadedTimeoutAfterDocLoadedInMSec: number
 }
 export type Options = DefaultOptions
 
