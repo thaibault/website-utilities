@@ -41,12 +41,17 @@ export interface DefaultOptions {
 
         activeNavigationItemClassName: string
 
-        priorityNavigation: string
-        priorityNavigationListItemClassName: string
-        priorityNavigationOverflowClassName: string
-        priorityNavigationOverflowVisibleClassName: string
+
+        priorityNavigationClassName: string
+        priorityNavigationOverflowOpenClassName: string
+        priorityNavigationOverflowResizingClassName: string
+
+        priorityNavigationListItemHideClassName: string
+
+        priorityNavigationOverflowIndicatorClassName: string
+        priorityNavigationOverflowIndicatorShowClassName: string
+
         priorityNavigationOverflowList: string
-        priorityNavigationOverflowTitle: string
     }
 
     startUpAnimationElementDelayInMilliseconds: number
