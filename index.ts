@@ -116,6 +116,7 @@ export class WebsiteUtilities<
         windowLoadedTimeoutAfterDocLoadedInMSec: 2000,
 
         domain: 'auto',
+
         knownScrollEventNames: [
             'DOMMouseScroll',
             'keyup',
@@ -143,14 +144,14 @@ export class WebsiteUtilities<
 
             scrollToTopButtons: '.wu-scroll-to-top',
 
-            activeNavigationItemClassName:
-                'wu-priority-navigation__link--active',
-
             priorityNavigationClassName: 'wu-priority-navigation',
             priorityNavigationOverflowOpenClassName:
                 'wu-priority-navigation--overflow-open',
             priorityNavigationOverflowResizingClassName:
                 'wu-priority-navigation--resizing',
+
+            activeNavigationItemClassName:
+                'wu-priority-navigation__link--active',
 
             priorityNavigationListItemHideClassName:
                 'wu-priority-navigation__list__item--hide',
@@ -163,6 +164,7 @@ export class WebsiteUtilities<
                 '.wu-priority-navigation__overflow-list'
         },
 
+        minimumNumberOfMenuItems: 3,
         tracking: false
     }
 
@@ -505,14 +507,16 @@ export class WebsiteUtilities<
                 const firstTopPosition = allMenuItemsDomNode[0].offsetTop
 
                 let wrappedElements = []
-
                 for (const domNode of menuItemDomNodes) {
                     const topPosition: number = domNode.offsetTop
 
                     if (topPosition !== firstTopPosition)
                         wrappedElements.push(domNode)
                 }
-                if ((menuItemDomNodes.length - wrappedElements.length) < 2)
+                if (
+                    (menuItemDomNodes.length - wrappedElements.length) <
+                    this.options.minimumNumberOfMenuItems
+                )
                     wrappedElements = menuItemDomNodes.slice()
 
                 const overflowMenu =
