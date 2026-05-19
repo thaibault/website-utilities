@@ -61,11 +61,10 @@
                 }
 
                 .wu-priority-navigation {
-                    border: 1px solid white;
+                    background-color: grey;
 
-                    a.wu-priority-navigation__link--active::after {
+                    .wu-priority-navigation__list a.wu-priority-navigation__link--active::after {
                         border-bottom: 2px solid white;
-                        color: red;
                     }
                 }
 
@@ -123,7 +122,7 @@
                 <a href="/">Home</a>
 
                 <nav role="navigation" class="wu-priority-navigation">
-                    <ul>
+                    <ul class="wu-priority-navigation__list">
                         <li><a href="#home">Home</a></li>
                         <li><a href="#about">About</a></li>
                         <li><a href="#clients">Clients</a></li>
@@ -132,12 +131,12 @@
                         <li><a href="#dance-wildly">Dance Wildly</a></li>
                         <li><a href="#go-to-bed">Go To Bed</a></li>
                         <li><a href="#donate-millions">Donate Millions</a></li>
-                        <li class="wu-priority-navigation__overflow">
+                        <li class="wu-priority-navigation__list__overflow-indicator">
                             <div
-                                class="wu-priority-navigation__overflow__title"
+                                class="wu-priority-navigation__list__overflow-indicator__title"
                             >
                                 <div
-                                    class="wu-priority-navigation__overflow__title__icon"
+                                    class="wu-priority-navigation__list__overflow-indicator__title__icon"
                                 ></div>
                             </div>
                         </li>

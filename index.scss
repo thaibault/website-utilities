@@ -218,168 +218,184 @@ website-utilities {
     /* endregion */
     /* region priority navigation */
     .wu-priority-navigation {
+        --animation-duration: 0.25s;
+
         position: relative;
 
-        > ul {
-            list-style: none;
-
-            > li {
-                display: inline-block;
-                position: relative;
-
-                &.wu-priority-navigation__overflow {
-                    display: none;
-                }
-            }
-        }
-
-        a {
-            text-decoration: none;
-            color: white;
-            display: inline-block;
-            padding: 10px 15px;
-        }
-        /* region menu highlighter */
-        a::after {
-            content: " ";
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            box-sizing: border-box;
-        }
-        /*
-            NOTE: Will be set to when startup animations have been finished.
-
-            a.wu-priority-navigation__link--active::after {
-                view-transition-name: wu-menu-highlight;
-            }
-        */
-        /* endregion */
+        // NOTE: Important to detect item which where pushed below.
+        overflow: visible;
 
         &.wu-priority-navigation--resizing {
             overflow: hidden;
         }
-    }
 
-    .wu-priority-navigation__overflow {
-        cursor: pointer;
-
-        width: 2rem;
-        height: 2rem;
-        position: absolute !important;
-        padding-top: 1rem;
-
-        .wu-priority-navigation__overflow__title {
-            transition: all 0.25s;
-
-            position: absolute;
-
-            width: 2rem;
-            height: 2rem;
-
-            .wu-priority-navigation__overflow__title__icon {
-                background-color: white;
-                transition: all 0.25s;
-
-                width: 30px;
-                height: 1px;
-
-                &:before,
-                &:after {
-                    transition: all 0.25s;
-                    width: 30px;
-                    height: 1px;
-                    left: 0;
-                    background: white;
-                    position: absolute;
-                    content: '';
-                }
-
-                &:before {
-                    top: -10px;
-                }
-
-                &:after {
-                    top: 10px;
-                }
-            }
-        }
-    }
-
-    .wu-priority-navigation__overflow-list {
-        height: 0;
-        width: max-content;
-
-        opacity: 0;
-
-        list-style: none;
-    }
-
-    .wu-priority-navigation--overflow-open {
-        .wu-priority-navigation__overflow-list {
-            height: 100%;
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .wu-priority-navigation__overflow .wu-priority-navigation__overflow__title__icon {
-            transform: rotate(180deg);
-            background-color: transparent;
-            left: 10px;
-
-            &:before,
-            &:after {
-                top: 0;
-            }
-
-            &:before {
-                transform: rotate(45deg);
-            }
-
-            &:after {
-                transform: rotate(-45deg);
-            }
-        }
-    }
-
-    .wu-priority-navigation__overflow-list {
-        transition: all 0.5s;
-        text-align: center;
-        width: 100%;
-
-        & ul {
+        .wu-priority-navigation__list {
             list-style: none;
-            padding: 0;
-            letter-spacing: 0.4em;
-        }
-        & li:first-child {
-            margin-top: 0;
-        }
-        & li {
-            transition: all 0.2s;
-            margin-top: 20px;
-            padding: 5px 0;
-            color: white;
-        }
-        & a {
-            padding: 8px;
-            cursor: pointer;
-        }
-    }
 
-    .wu-priority-navigation--overflow-open .wu-priority-navigation__overflow-list {
-        width: 100%;
-    }
+            li {
+                display: inline-block;
+                position: relative;
 
-    .wu-priority-navigation__list__item--hide {
-        display: none !important;
-    }
+                &.wu-priority-navigation__list__overflow-indicator {
+                    display: none;
+                }
+            }
 
-    .wu-priority-navigation__overflow--show {
-        display: inline-block !important;
+            a {
+                text-decoration: none;
+                color: white;
+                display: inline-block;
+                padding: 10px 15px;
+            }
+            /* region menu highlighter */
+            a::after {
+                content: " ";
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+                box-sizing: border-box;
+            }
+            /*
+                NOTE: Will be set to when startup animations have been finished.
+
+                .wu-priority-navigation__list a.wu-priority-navigation__link--active::after {
+                    view-transition-name: wu-menu-highlight;
+                }
+            */
+            /* endregion */
+
+            .wu-priority-navigation__list__overflow-indicator {
+                cursor: pointer;
+
+                width: 2rem;
+                height: 2rem;
+                position: absolute !important;
+                padding-top: 1rem;
+
+                .wu-priority-navigation__list__overflow-indicator__title {
+                    transition: all var(--animation-duration);
+
+                    position: absolute;
+
+                    width: 2rem;
+                    height: 2rem;
+
+                    .wu-priority-navigation__list__overflow-indicator__title__icon {
+                        background-color: white;
+
+                        transition: all var(--animation-duration);
+
+                        position: relative;
+                        transform: rotate(0deg);
+
+                        width: 30px;
+                        height: 1px;
+
+                        &::before,
+                        &::after {
+                            position: absolute;
+                            transition: all var(--animation-duration);
+                            content: '';
+
+                            background-color: white;
+
+                            transform: rotate(0deg);
+
+                            width: 30px;
+                            height: 1px;
+                        }
+
+                        &::before {
+                            top: -10px;
+                        }
+
+                        &::after {
+                            top: 10px;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.wu-priority-navigation--overflow-open {
+            .wu-priority-navigation__overflow-list {
+                height: 100%;
+                /*
+                    NOTE: Workaround to enable transition. This value should
+                    represent an upper bound for the maximum overflow menu
+                    height.
+                */
+                max-height: 400px;
+            }
+
+            .wu-priority-navigation__list__overflow-indicator
+            .wu-priority-navigation__list__overflow-indicator__title
+            .wu-priority-navigation__list__overflow-indicator__title__icon {
+                transform: rotate(180deg);
+                background-color: transparent;
+
+                &::before,
+                &::after {
+                    top: 0;
+                }
+
+                &::before {
+                    transform: rotate(45deg);
+                }
+
+                &::after {
+                    transform: rotate(-45deg);
+                }
+            }
+        }
+
+        .wu-priority-navigation__overflow-list {
+            transition: all var(--animation-duration);
+            height: 0;
+            max-height: 0;
+            width: max-content;
+
+            list-style: none;
+            overflow: hidden;
+
+            & ul {
+                list-style: none;
+                padding: 0;
+                letter-spacing: 0.4em;
+            }
+
+            & li:first-child {
+                margin-top: 0;
+            }
+
+            & li {
+                transition: all var(--animation-duration);
+                margin-top: 20px;
+                padding: 5px 0;
+                color: white;
+            }
+
+            & a {
+                padding: 8px;
+                cursor: pointer;
+            }
+        }
+
+        &.wu-priority-navigation--overflow-open
+        .wu-priority-navigation__overflow-list {
+            width: 100%;
+        }
+
+        .wu-priority-navigation__list__item--hide {
+            display: none !important;
+        }
+
+        .wu-priority-navigation__list__overflow-indicator--show {
+            display: inline-block !important;
+        }
     }
     /* endregion */
 }

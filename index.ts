@@ -152,15 +152,13 @@ export class WebsiteUtilities<
             priorityNavigationOverflowResizingClassName:
                 'wu-priority-navigation--resizing',
 
-            priorityNavigationListItemClassName:
-                'wu-priority-navigation__list__item',
             priorityNavigationListItemHideClassName:
                 'wu-priority-navigation__list__item--hide',
+            priorityNavigationOverflowIndicatorClassName:
+                'wu-priority-navigation__list__overflow-indicator',
+            priorityNavigationOverflowIndicatorShowClassName:
+                'wu-priority-navigation__list__overflow-indicator--show',
 
-            priorityNavigationOverflowClassName:
-                'wu-priority-navigation__overflow',
-            priorityNavigationOverflowShowClassName:
-                'wu-priority-navigation__overflow--show',
             priorityNavigationOverflowList:
                 '.wu-priority-navigation__overflow-list'
         },
@@ -476,6 +474,12 @@ export class WebsiteUtilities<
         }
     }
     initializePriorityNavigation() {
+        const {selectors} = this.options
+        const overflowIndicatorClassName =
+            selectors.priorityNavigationOverflowIndicatorClassName
+        const overflowIndicatorShowClassName =
+            selectors.priorityNavigationOverflowIndicatorShowClassName
+
         if (this.priorityNavigationDomNodes?.length === 0)
             return
 
@@ -483,9 +487,7 @@ export class WebsiteUtilities<
             for (const item of domNode.querySelectorAll(
                 `[href="#${this.currentSectionName}"]`
             ))
-                item.classList.add(
-                    this.options.selectors.activeNavigationItemClassName
-                )
+                item.classList.add(selectors.activeNavigationItemClassName)
 
         const setupOverflowMenu = () => {
             for (const menuDomNode of this.priorityNavigationDomNodes || []) {
@@ -496,15 +498,11 @@ export class WebsiteUtilities<
                     Array.from(allMenuItemsDomNode)
                         .filter((domNode) =>
                             !domNode.classList.contains(
-                                this.options.selectors
-                                    .priorityNavigationOverflowClassName
+                                overflowIndicatorClassName
                             )
                         )
                 // Checking top position of first item (sometimes changes)
-                const firstTopPosition =
-                    (menuDomNode.querySelector('ul > li') as
-                        HTMLElement
-                    ).offsetTop
+                const firstTopPosition = allMenuItemsDomNode[0].offsetTop
 
                 let wrappedElements = []
 
@@ -517,10 +515,8 @@ export class WebsiteUtilities<
                 if ((menuItemDomNodes.length - wrappedElements.length) < 2)
                     wrappedElements = menuItemDomNodes.slice()
 
-                const overflowMenu = menuDomNode.querySelector(
-                    '.' +
-                    this.options.selectors.priorityNavigationOverflowClassName
-                )
+                const overflowMenu =
+                    menuDomNode.querySelector(`.${overflowIndicatorClassName}`)
                 if (wrappedElements.length) {
                     // Clone set before altering
                     const newSet = wrappedElements.map((domNode) =>
@@ -530,13 +526,12 @@ export class WebsiteUtilities<
                     // Hide ones that we're moving
                     for (const domNode of wrappedElements)
                         domNode.classList.add(
-                            this.options.selectors
-                                .priorityNavigationListItemHideClassName
+                            selectors.priorityNavigationListItemHideClassName
                         )
 
                     // Add wrapped elements to dropdown
                     const overflowNavigationList = menuDomNode.querySelector(
-                        this.options.selectors.priorityNavigationOverflowList
+                        selectors.priorityNavigationOverflowList
                     )
                     if (overflowNavigationList)
                         for (const domNode of newSet)
@@ -545,25 +540,16 @@ export class WebsiteUtilities<
                     if (overflowMenu)
                         overflowMenu
                             .classList
-                            .add(
-                                this.options.selectors
-                                    .priorityNavigationOverflowShowClassName
-                            )
-
-                    // Make overflow visible again so dropdown can be seen.
-                    menuDomNode.style.overflow = 'visible'
+                            .add(overflowIndicatorShowClassName)
                 } else if (overflowMenu)
                     overflowMenu
                         .classList
-                        .remove(
-                            this.options.selectors
-                                .priorityNavigationOverflowShowClassName
-                        )
+                        .remove(overflowIndicatorShowClassName)
             }
         }
 
         for (const domNode of this.hostDomNode.querySelectorAll(
-            `.${this.options.selectors.priorityNavigationOverflowClassName}`
+            `.${overflowIndicatorClassName}`
         ))
             this.addSecureEventListener(
                 domNode,
@@ -571,17 +557,18 @@ export class WebsiteUtilities<
                 ()=> {
                     let menuDomNode: HTMLElement | null = null
                     for (const parentDomNode of getParents(domNode))
-                        if (parentDomNode.matches(
-                            '.' +
-                            this.options.selectors.priorityNavigationClassName
-                        )) {
-                            menuDomNode = parentDomNode
+                        if (
+                            'matches' in parentDomNode &&
+                            (parentDomNode as HTMLElement).matches(
+                                `.${selectors.priorityNavigationClassName}`
+                            )
+                        ) {
+                            menuDomNode = parentDomNode as HTMLElement
                             break
                         }
 
                     menuDomNode?.classList.toggle(
-                        this.options.selectors
-                            .priorityNavigationOverflowOpenClassName
+                        selectors.priorityNavigationOverflowOpenClassName
                     )
                 }
             )
@@ -589,52 +576,56 @@ export class WebsiteUtilities<
         for (const menuDomNode of this.priorityNavigationDomNodes || []) {
             const update = trailingThrottle(
                 () => {
+                    /*
+                        NOTE: Skip update if overflow menu is currently open
+                        to avoid interrupting CSS transitions (toggling
+                        display:none/inline-block on the indicator kills
+                        running transitions).
+                    */
+                    if (menuDomNode.classList.contains(
+                        selectors.priorityNavigationOverflowOpenClassName
+                    ))
+                        return
+
+                    menuDomNode.classList.add(
+                        selectors.priorityNavigationOverflowResizingClassName
+                    )
+
                     for (const domNode of menuDomNode.querySelectorAll(
-                        this.options.selectors.priorityNavigationOverflowList
+                        selectors.priorityNavigationOverflowList
                     ))
                         while (domNode.firstChild)
                             domNode.removeChild(domNode.firstChild)
 
                     for (const domNode of menuDomNode.querySelectorAll(
-                        '.' +
-                        this.options.selectors
-                            .priorityNavigationOverflowClassName
+                        `.${overflowIndicatorClassName}`
                     ))
                         domNode.classList.remove(
-                            this.options.selectors
-                                .priorityNavigationOverflowShowClassName
+                            overflowIndicatorShowClassName
                         )
 
                     for (const domNode of menuDomNode.querySelectorAll(
                         'ul > li'
                     ))
                         if (!domNode.classList.contains(
-                            this.options.selectors
-                                .priorityNavigationOverflowClassName
+                            selectors
+                                .priorityNavigationOverflowIndicatorClassName
                         ))
                             domNode.classList.remove(
-                                this.options.selectors
+                                selectors
                                     .priorityNavigationListItemHideClassName
                             )
 
                     setupOverflowMenu()
 
                     menuDomNode.classList.remove(
-                        this.options.selectors
-                            .priorityNavigationOverflowResizingClassName
+                        selectors.priorityNavigationOverflowResizingClassName
                     )
                 },
                 20
             )
 
-            const observer = new ResizeObserver(() => {
-                menuDomNode.classList.add(
-                    this.options.selectors
-                        .priorityNavigationOverflowResizingClassName
-                )
-
-                update()
-            })
+            const observer = new ResizeObserver(update)
             this.observerDeregisters.push(() => {
                 observer.unobserve(menuDomNode)
             })
@@ -650,6 +641,7 @@ export class WebsiteUtilities<
         const styleDomNode= document.createElement('style')
         styleDomNode.type = 'text/css'
         const styles = `
+            .wu-priority-navigation__list
             a.wu-priority-navigation__link--active::after {
                 view-transition-name: wu-menu-highlight;
             }
