@@ -22,8 +22,8 @@ import {
     extend,
     fadeIn,
     fadeOut,
-    getParents,
     getText,
+    getParents,
     globalContext,
     Lock,
     Logger,
@@ -554,28 +554,44 @@ export class WebsiteUtilities<
 
         for (const domNode of this.hostDomNode.querySelectorAll(
             `.${overflowIndicatorClassName}`
-        ))
+        )) {
+            const menuDomNode: HTMLElement | null =
+                domNode.closest(`.${selectors.priorityNavigationClassName}`)
+
             this.addSecureEventListener(
                 domNode,
                 'click',
-                ()=> {
-                    let menuDomNode: HTMLElement | null = null
-                    for (const parentDomNode of getParents(domNode))
-                        if (
-                            'matches' in parentDomNode &&
-                            (parentDomNode as HTMLElement).matches(
-                                `.${selectors.priorityNavigationClassName}`
-                            )
-                        ) {
-                            menuDomNode = parentDomNode as HTMLElement
-                            break
-                        }
-
+                () => {
                     menuDomNode?.classList.toggle(
                         selectors.priorityNavigationOverflowOpenClassName
                     )
                 }
             )
+
+            if (!globalContext.document)
+                continue
+            /*
+                Listen for clicks anywhere on the webpage to close overflow
+                menu.
+            */
+            this.addSecureEventListener(
+                globalContext.document,
+                'click',
+                (event) => {
+                    // Check if the click happened outside the menu
+                    if (
+                        event.target &&
+                        !getParents(event.target as Node)
+                            .some((parentDomNode) =>
+                                menuDomNode === parentDomNode
+                            )
+                    )
+                        menuDomNode?.classList.remove(
+                            selectors.priorityNavigationOverflowOpenClassName
+                        )
+                }
+            )
+        }
 
         for (const menuDomNode of this.priorityNavigationDomNodes || []) {
             const update = trailingThrottle(
