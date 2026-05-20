@@ -19,7 +19,7 @@ import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter'
 
 import WebsiteUtilities, {api} from './index'
 // endregion
-describe('root', (): void => {
+describe('WebsiteUtilities', (): void => {
     let root: WebsiteUtilities
 
     beforeAll(async () => {
