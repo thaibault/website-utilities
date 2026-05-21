@@ -1089,11 +1089,12 @@ export class WebsiteUtilities<
         let elementNumber = 1
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         while (true) {
-            const domNodesToAnimate: NodeListOf<HTMLElement> = this.hostDomNode.querySelectorAll(
-                '.' +
-                this.options.selectors.startUpAnimationClassPrefix +
-                String(elementNumber)
-            )
+            const domNodesToAnimate: NodeListOf<HTMLElement> =
+                this.hostDomNode.querySelectorAll(
+                    '.' +
+                    this.options.selectors.startUpAnimationClassPrefix +
+                    String(elementNumber)
+                )
 
             if (domNodesToAnimate.length === 0) {
                 await Promise.all(animationPromises)
@@ -1107,6 +1108,7 @@ export class WebsiteUtilities<
             )
 
             for (const domNode of domNodesToAnimate) {
+                domNode.style.removeProperty('opacity')
                 const handler = fadeIn(domNode)
                 animationPromises.push(handler.then(() => {
                     handler.resetStyles()
