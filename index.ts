@@ -188,6 +188,11 @@ export class WebsiteUtilities<
             NOOP
 
     @property({type: func})
+        onUnfocusCollapsedMenu: (
+            this: WebsiteUtilities, event: Event, clickWasInMenu: boolean
+        ) => boolean = (_event: Event, clickWasInMenu) => !clickWasInMenu
+
+    @property({type: func})
         onSwitchToManualScrollingIndicator: (event: Event) => boolean =
             () => true
 
@@ -523,9 +528,18 @@ export class WebsiteUtilities<
                     menuDomNode.querySelector(`.${overflowIndicatorClassName}`)
                 if (wrappedElements.length) {
                     // Clone set before altering
-                    const newSet = wrappedElements.map((domNode) =>
-                        domNode.cloneNode(true)
-                    )
+                    const newSet = wrappedElements.map((domNode) => {
+                        const copy =
+                            domNode.cloneNode(true) as HTMLElement
+                        /*
+                            NOTE: We remove all inline styles to remove running
+                            transitions and instance-specific styling which
+                            might not be useful in stacked menu.
+                        */
+                        for (const domNode of copy.querySelectorAll('[style]'))
+                            domNode.removeAttribute('style')
+                        return copy
+                    })
 
                     // Hide ones that we're moving
                     for (const domNode of wrappedElements)
@@ -578,17 +592,22 @@ export class WebsiteUtilities<
                 globalContext.document,
                 'click',
                 (event) => {
-                    // Check if the click happened outside the menu
-                    if (
-                        event.target &&
-                        !getParents(event.target as Node)
-                            .some((parentDomNode) =>
-                                menuDomNode === parentDomNode
-                            )
-                    )
-                        menuDomNode?.classList.remove(
-                            selectors.priorityNavigationOverflowOpenClassName
+                    if (menuDomNode?.classList.contains(
+                        selectors.priorityNavigationOverflowOpenClassName
+                    )) {
+                        const clickWasInMenu = Boolean(
+                            event.target &&
+                            !getParents(event.target as Node)
+                                .some((parentDomNode) =>
+                                    menuDomNode === parentDomNode
+                                )
                         )
+                        if (this.onUnfocusCollapsedMenu(event, clickWasInMenu))
+                            menuDomNode.classList.remove(
+                                selectors
+                                    .priorityNavigationOverflowOpenClassName
+                            )
+                    }
                 }
             )
         }
