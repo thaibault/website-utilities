@@ -1089,7 +1089,7 @@ export class WebsiteUtilities<
         let elementNumber = 1
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         while (true) {
-            const domNodesToAnimate = this.hostDomNode.querySelectorAll(
+            const domNodesToAnimate: NodeListOf<HTMLElement> = this.hostDomNode.querySelectorAll(
                 '.' +
                 this.options.selectors.startUpAnimationClassPrefix +
                 String(elementNumber)
@@ -1106,8 +1106,12 @@ export class WebsiteUtilities<
                 this.options.startUpAnimationElementDelayInMilliseconds
             )
 
-            for (const domNode of domNodesToAnimate)
-                animationPromises.push(fadeIn(domNode as HTMLElement))
+            for (const domNode of domNodesToAnimate) {
+                const handler = fadeIn(domNode)
+                animationPromises.push(handler.then(() => {
+                    handler.resetStyles()
+                }))
+            }
 
             elementNumber += 1
         }
