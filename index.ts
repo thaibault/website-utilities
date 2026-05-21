@@ -52,8 +52,6 @@ export const log = new Logger({name: 'website-utilities'})
  * initializer method.
  * @property _defaultOptions.additionalPageLoadingTimeInMilliseconds -
  * Additional time to wait until page will be indicated as loaded.
- * @property _defaultOptions.knownScrollEventNames - Saves all known scroll
- * events in a space-separated string.
  * @property _defaultOptions.selectors - Mapping of dom node descriptions to
  * their corresponding selectors.
  * @property _defaultOptions.selectors.top - Selector to indicate that viewport
@@ -94,10 +92,6 @@ export const log = new Logger({name: 'website-utilities'})
  * moves away from top.
  * @property onViewportMovesToTop - Callback to trigger when viewport arrives
  * at top.
- * @property onSwitchToManualScrollingIndicator - Indicator
- * function to stop currently running scroll animations to let the user get
- * control of current scrolling behavior. Given callback gets an event object.
- * If the function returns "true", current animated scrolls will be stopped.
  * @property onButtonClick - Function to call on button click events.
  * @property onLinkClick - Function to call on link click events.
  * @property onSectionSwitch - Function to call on section switches.
@@ -116,16 +110,6 @@ export class WebsiteUtilities<
         windowLoadedTimeoutAfterDocLoadedInMSec: 2000,
 
         domain: 'auto',
-
-        knownScrollEventNames: [
-            'DOMMouseScroll',
-            'keyup',
-            'mousedown',
-            'mousewheel',
-            'scroll',
-            'touchmove',
-            'wheel'
-        ],
 
         sectionNames: {
             default: '',
@@ -191,10 +175,6 @@ export class WebsiteUtilities<
         onUnfocusResponsiveMenu: (
             this: WebsiteUtilities, event: Event, clickWasInMenu: boolean
         ) => boolean | undefined = NOOP
-
-    @property({type: func})
-        onSwitchToManualScrollingIndicator: (event: Event) => boolean =
-            () => true
 
     @property({type: func})
         onLoaded: () => void = NOOP
@@ -959,26 +939,6 @@ export class WebsiteUtilities<
     _bindScrollEvents(): void {
         if (!globalContext.document)
             return
-
-        for (const node of [
-            globalContext.document.body,
-            globalContext.document.querySelector('html'),
-            globalContext.window
-        ])
-            for (const eventName of this.options.knownScrollEventNames)
-                if (node)
-                    this.addSecureEventListener(
-                        node,
-                        eventName,
-                        (event: Event) => {
-                            /*
-                                NOTE: Stop automatic scrolling if the user
-                                wants to scroll manually.
-                            */
-                            if (this.onSwitchToManualScrollingIndicator(event))
-                                CONTINUE_AUTO_SCROLLING.value = false
-                        }
-                    )
 
         if (globalContext.window)
             this.addSecureEventListener(
