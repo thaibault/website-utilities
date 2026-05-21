@@ -19,12 +19,14 @@
 // region imports
 import {
     camelCaseToDelimited,
+    CONTINUE_AUTO_SCROLLING,
     extend,
     fadeIn,
     fadeOut,
     getText,
     getParents,
     globalContext,
+    interruptableScrollTo,
     Lock,
     Logger,
     Mapping,
@@ -72,8 +74,6 @@ export const log = new Logger({name: 'website-utilities'})
  * @property currentSectionName - Saves current section hash name.
  * @property startUpAnimationIsComplete - Indicates whether startup animations
  * have finished.
- * @property continueAutoScrolling - Indicates whether auto scrolling should
- * continue or not. Gets set to "false" if the user wants to scroll manually.
  * @property viewportIsOnTop - Indicates whether current viewport is on top.
  * @property windowLoaded - Indicates whether the window is already loaded.
  * @property onChangeMediaQueryMode - Callback to trigger if media query mode
@@ -230,7 +230,6 @@ export class WebsiteUtilities<
     currentSectionName = ''
 
     startUpAnimationIsComplete = false
-    continueAutoScrolling = false
     viewportIsOnTop: boolean | undefined
 
     observerDeregisters: Array<() => void> = []
@@ -378,44 +377,6 @@ export class WebsiteUtilities<
                 this.options.selectors.windowLoadingCover
             ) ??
             null
-    }
-    /**
-     * Scrolls to the top of the page smoothly via being interruptible.
-     */
-    interruptableScrollToTop() {
-        const durationInMilliseconds = 500 // Dauer in ms
-        const start = window.pageYOffset
-        const startTime = performance.now()
-
-        this.continueAutoScrolling = true
-
-        // Animation-Funktion
-        const step = (currentTime: DOMHighResTimeStamp) => {
-            if (!this.continueAutoScrolling)
-                return
-
-            const elapsed = currentTime - startTime
-            const progress = Math.min(elapsed / durationInMilliseconds, 1)
-
-            // Easing (optional for soft start / stopp animation)
-            const ease = progress * (2 - progress)
-
-            window.scrollTo(0, start * (1 - ease))
-
-            if (progress < 1)
-                requestAnimationFrame(step)
-            else
-                this.continueAutoScrolling = false
-        }
-
-        requestAnimationFrame(step)
-    }
-    /**
-     * Scrolls to the top of the page smoothly.
-     */
-    scrollToTop() {
-        if (globalContext.document)
-            window.scrollTo({top: 0, behavior: 'smooth'})
     }
     /**
      * This method disables scrolling on the given web view.
@@ -897,7 +858,7 @@ export class WebsiteUtilities<
                     this.currentSectionName
                 )
             )) {
-                this.interruptableScrollToTop()
+                interruptableScrollTo()
 
                 if (oldSectionDomNode) {
                     await fadeOut(oldSectionDomNode)
@@ -1015,7 +976,7 @@ export class WebsiteUtilities<
                                 wants to scroll manually.
                             */
                             if (this.onSwitchToManualScrollingIndicator(event))
-                                this.continueAutoScrolling = false
+                                CONTINUE_AUTO_SCROLLING.value = false
                         }
                     )
 
@@ -1149,7 +1110,7 @@ export class WebsiteUtilities<
                 (event: Event) => {
                     event.preventDefault()
 
-                    this.interruptableScrollToTop()
+                    interruptableScrollTo()
                 }
             )
     }
