@@ -15,7 +15,6 @@
     See https://creativecommons.org/licenses/by/3.0/deed.de
     endregion
 */
-import {KnownEventName} from 'web-component-wrapper/type'
 // region exports
 export interface DefaultOptions {
     additionalPageLoadingTimeInMilliseconds: number
@@ -23,8 +22,6 @@ export interface DefaultOptions {
     windowLoadedTimeoutAfterDocLoadedInMSec: number
 
     domain: string
-
-    knownScrollEventNames: Array<KnownEventName>
 
     sectionNames: {
         default: string

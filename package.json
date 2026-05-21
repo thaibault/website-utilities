@@ -74,7 +74,7 @@
     "@typescript-eslint/parser": "^8.59.4",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "bootstrap-icons": "^1.13.1",
-    "clientnode": "^4.0.1408",
+    "clientnode": "^4.0.1411",
     "css-loader": "^7.1.4",
     "cssnano": "^8.0.1",
     "eslint": "^10.4.0",
