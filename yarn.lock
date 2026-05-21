@@ -7095,9 +7095,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clientnode@npm:^4.0.1408":
-  version: 4.0.1408
-  resolution: "clientnode@npm:4.0.1408"
+"clientnode@npm:^4.0.1411":
+  version: 4.0.1411
+  resolution: "clientnode@npm:4.0.1411"
   peerDependencies:
     "@babel/runtime": "*"
     "@types/prop-types": "*"
@@ -7112,7 +7112,7 @@ __metadata:
       optional: true
     prop-types:
       optional: true
-  checksum: 10c0/68be0d54d715e502f13ba0f6f5be3096f905846dfd5fd611eef3d361e326fb37a7cda7bf7ffc94631cee8ecb11ac60ab43a6b40c56fbc8f6c770cf85fb3b5553
+  checksum: 10c0/fbb3ef444cdae01f82655effc6e2f943de0d5a1a2842819a614731fa1afe269f886b695f2a9d11649f842cb3968bfafcade18504d4200977f187c5f4ebdc8a74
   languageName: node
   linkType: hard
 
@@ -17602,7 +17602,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^8.59.4"
     "@webcomponents/webcomponentsjs": "npm:^2.8.0"
     bootstrap-icons: "npm:^1.13.1"
-    clientnode: "npm:^4.0.1408"
+    clientnode: "npm:^4.0.1411"
     css-loader: "npm:^7.1.4"
     cssnano: "npm:^8.0.1"
     eslint: "npm:^10.4.0"

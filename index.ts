@@ -19,7 +19,6 @@
 // region imports
 import {
     camelCaseToDelimited,
-    CONTINUE_AUTO_SCROLLING,
     extend,
     fadeIn,
     fadeOut,
