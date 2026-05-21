@@ -188,9 +188,9 @@ export class WebsiteUtilities<
             NOOP
 
     @property({type: func})
-        onUnfocusCollapsedMenu: (
+        onUnfocusResponsiveMenu: (
             this: WebsiteUtilities, event: Event, clickWasInMenu: boolean
-        ) => boolean = (_event: Event, clickWasInMenu) => !clickWasInMenu
+        ) => boolean | undefined
 
     @property({type: func})
         onSwitchToManualScrollingIndicator: (event: Event) => boolean =
@@ -597,12 +597,21 @@ export class WebsiteUtilities<
                     )) {
                         const clickWasInMenu = Boolean(
                             event.target &&
-                            !getParents(event.target as Node)
+                            getParents(event.target as Node)
                                 .some((parentDomNode) =>
                                     menuDomNode === parentDomNode
                                 )
                         )
-                        if (this.onUnfocusCollapsedMenu(event, clickWasInMenu))
+                        const result =
+                            this.onUnfocusResponsiveMenu ?
+                                this.onUnfocusResponsiveMenu(
+                                    event, clickWasInMenu
+                                ) :
+                                undefined
+                        if (
+                            result === true ||
+                            !clickWasInMenu && result !== false
+                        )
                             menuDomNode.classList.remove(
                                 selectors
                                     .priorityNavigationOverflowOpenClassName
