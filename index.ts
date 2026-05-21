@@ -190,7 +190,7 @@ export class WebsiteUtilities<
     @property({type: func})
         onUnfocusResponsiveMenu: (
             this: WebsiteUtilities, event: Event, clickWasInMenu: boolean
-        ) => boolean | undefined
+        ) => boolean | undefined = NOOP
 
     @property({type: func})
         onSwitchToManualScrollingIndicator: (event: Event) => boolean =
@@ -603,11 +603,7 @@ export class WebsiteUtilities<
                                 )
                         )
                         const result =
-                            this.onUnfocusResponsiveMenu ?
-                                this.onUnfocusResponsiveMenu(
-                                    event, clickWasInMenu
-                                ) :
-                                undefined
+                            this.onUnfocusResponsiveMenu(event, clickWasInMenu)
                         if (
                             result === true ||
                             !clickWasInMenu && result !== false
