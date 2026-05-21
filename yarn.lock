@@ -7095,9 +7095,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clientnode@npm:^4.0.1407":
-  version: 4.0.1407
-  resolution: "clientnode@npm:4.0.1407"
+"clientnode@npm:^4.0.1408":
+  version: 4.0.1408
+  resolution: "clientnode@npm:4.0.1408"
   peerDependencies:
     "@babel/runtime": "*"
     "@types/prop-types": "*"
@@ -7112,7 +7112,7 @@ __metadata:
       optional: true
     prop-types:
       optional: true
-  checksum: 10c0/9a2193716feeb33da5139e9c144b6e307850c33463e62435cb31c39c1db31746ba2a70b49c61209d3e4b72213819409de35ec388e4fc952a699c4b33a6bd3a8a
+  checksum: 10c0/68be0d54d715e502f13ba0f6f5be3096f905846dfd5fd611eef3d361e326fb37a7cda7bf7ffc94631cee8ecb11ac60ab43a6b40c56fbc8f6c770cf85fb3b5553
   languageName: node
   linkType: hard
 
@@ -12225,6 +12225,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minimatch@npm:^3.1.5":
+  version: 3.1.5
+  resolution: "minimatch@npm:3.1.5"
+  dependencies:
+    brace-expansion: "npm:^1.1.7"
+  checksum: 10c0/2ecbdc0d33f07bddb0315a8b5afbcb761307a8778b48f0b312418ccbced99f104a2d17d8aca7573433c70e8ccd1c56823a441897a45e384ea76ef401a26ace70
+  languageName: node
+  linkType: hard
+
 "minimatch@npm:^9.0.1":
   version: 9.0.3
   resolution: "minimatch@npm:9.0.3"
@@ -12240,15 +12249,6 @@ __metadata:
   dependencies:
     brace-expansion: "npm:^2.0.1"
   checksum: 10c0/de96cf5e35bdf0eab3e2c853522f98ffbe9a36c37797778d2665231ec1f20a9447a7e567cb640901f89e4daaa95ae5d70c65a9e8aa2bb0019b6facbc3c0575ed
-  languageName: node
-  linkType: hard
-
-"minimatch@npm:~3.0.4":
-  version: 3.0.8
-  resolution: "minimatch@npm:3.0.8"
-  dependencies:
-    brace-expansion: "npm:^1.1.7"
-  checksum: 10c0/72b226f452dcfb5075255f53534cb83fc25565b909e79b9be4fad463d735cb1084827f7013ff41d050e77ee6e474408c6073473edd2fb72c2fd630cfb0acc6ad
   languageName: node
   linkType: hard
 
@@ -14156,17 +14156,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-url@npm:^10.1.3":
-  version: 10.1.3
-  resolution: "postcss-url@npm:10.1.3"
+"postcss-url@npm:^10.1.4":
+  version: 10.1.4
+  resolution: "postcss-url@npm:10.1.4"
   dependencies:
     make-dir: "npm:~3.1.0"
     mime: "npm:~2.5.2"
-    minimatch: "npm:~3.0.4"
+    minimatch: "npm:^3.1.5"
     xxhashjs: "npm:~0.2.2"
   peerDependencies:
     postcss: ^8.0.0
-  checksum: 10c0/8ac985e58d544ce986cdbe41ecbe1c179b5ca3f71cf97179d02d019817d4a80aa3758ec5c9cc8343f95583682addf448ba6bcbc2d4f4c01b4fb269e217c4ef24
+  checksum: 10c0/7bb5ac1b6ae6f7d99705408ee1cd1d6dca5b74922f8f1bd53fa076d3306df5f77215b15a3c93dde30569d305ec15df918cffdd2f4d5c120e6c19d78a7021f565
   languageName: node
   linkType: hard
 
@@ -17602,7 +17602,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^8.59.4"
     "@webcomponents/webcomponentsjs": "npm:^2.8.0"
     bootstrap-icons: "npm:^1.13.1"
-    clientnode: "npm:^4.0.1407"
+    clientnode: "npm:^4.0.1408"
     css-loader: "npm:^7.1.4"
     cssnano: "npm:^8.0.1"
     eslint: "npm:^10.4.0"
@@ -17618,7 +17618,7 @@ __metadata:
     postcss-preset-env: "npm:^11.3.0"
     postcss-scss: "npm:^4.0.9"
     postcss-sprites: "npm:^4.2.1"
-    postcss-url: "npm:^10.1.3"
+    postcss-url: "npm:^10.1.4"
     prop-types: "npm:^15.8.1"
     sass: "npm:^1.99.0"
     sass-loader: "npm:^17.0.0"
