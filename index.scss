@@ -48,6 +48,9 @@ endregion
     --w-typography-font-family: #{v.$typography-font-family};
     --w-typography-font-family-headline: #{v.$typography-font-family-headline};
     /** endregion */
+    /** region animation */
+    --w-toggle-mobile-menu-animation-duration: 0.25s;
+    /** endregion */
     /* endregion */
 }
 
@@ -216,8 +219,6 @@ website-utilities {
     /* endregion */
     /* region priority navigation */
     .wu-priority-navigation {
-        --animation-duration: 0.25s;
-
         position: relative;
 
         // NOTE: Important to detect item which where pushed below.
@@ -275,7 +276,7 @@ website-utilities {
                 padding-top: 1rem;
 
                 .wu-priority-navigation__list__overflow-indicator__title {
-                    transition: all var(--animation-duration);
+                    transition: all var(--w-toggle-mobile-menu-animation-duration);
 
                     position: absolute;
 
@@ -285,7 +286,7 @@ website-utilities {
                     .wu-priority-navigation__list__overflow-indicator__title__icon {
                         background-color: white;
 
-                        transition: all var(--animation-duration);
+                        transition: all var(--w-toggle-mobile-menu-animation-duration);
 
                         position: relative;
                         transform: rotate(0deg);
@@ -296,7 +297,7 @@ website-utilities {
                         &::before,
                         &::after {
                             position: absolute;
-                            transition: all var(--animation-duration);
+                            transition: all var(--w-toggle-mobile-menu-animation-duration);
                             content: '';
 
                             background-color: white;
@@ -352,7 +353,7 @@ website-utilities {
         }
 
         .wu-priority-navigation__overflow-list {
-            transition: all var(--animation-duration);
+            transition: all var(--w-toggle-mobile-menu-animation-duration);
             height: 0;
             max-height: 0;
             width: max-content;
@@ -371,7 +372,7 @@ website-utilities {
             }
 
             & li {
-                transition: all var(--animation-duration);
+                transition: all var(--w-toggle-mobile-menu-animation-duration);
                 margin-top: 20px;
                 padding: 5px 0;
                 color: white;
