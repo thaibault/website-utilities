@@ -284,8 +284,6 @@ website-utilities {
                     height: 2rem;
 
                     .wu-priority-navigation__list__overflow-indicator__title__icon {
-                        background-color: white;
-
                         transition: all var(--w-toggle-mobile-menu-animation-duration);
 
                         position: relative;
@@ -299,8 +297,6 @@ website-utilities {
                             position: absolute;
                             transition: all var(--w-toggle-mobile-menu-animation-duration);
                             content: '';
-
-                            background-color: white;
 
                             transform: rotate(0deg);
 
@@ -335,7 +331,7 @@ website-utilities {
             .wu-priority-navigation__list__overflow-indicator__title
             .wu-priority-navigation__list__overflow-indicator__title__icon {
                 transform: rotate(180deg);
-                background-color: transparent;
+                background-color: transparent !important;
 
                 &::before,
                 &::after {
