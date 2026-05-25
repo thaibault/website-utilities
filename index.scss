@@ -316,82 +316,79 @@ website-utilities {
             }
         }
 
-        &.wu-priority-navigation--overflow-open {
+        &.wu-priority-navigation--show-overflow-indicator {
             .wu-priority-navigation__overflow-list {
-                height: 100%;
-                /*
-                    NOTE: Workaround to enable transition. This value should
-                    represent an upper bound for the maximum overflow menu
-                    height.
-                */
-                max-height: 400px;
-            }
-
-            .wu-priority-navigation__list__overflow-indicator
-            .wu-priority-navigation__list__overflow-indicator__title
-            .wu-priority-navigation__list__overflow-indicator__title__icon {
-                transform: rotate(180deg);
-                background-color: transparent !important;
-
-                &::before,
-                &::after {
-                    top: 0;
-                }
-
-                &::before {
-                    transform: rotate(45deg);
-                }
-
-                &::after {
-                    transform: rotate(-45deg);
-                }
-            }
-        }
-
-        .wu-priority-navigation__overflow-list {
-            transition: all var(--w-toggle-mobile-menu-animation-duration);
-            height: 0;
-            max-height: 0;
-            width: max-content;
-
-            list-style: none;
-            overflow: hidden;
-
-            & ul {
-                list-style: none;
-                padding: 0;
-                letter-spacing: 0.4em;
-            }
-
-            & li:first-child {
-                margin-top: 0;
-            }
-
-            & li {
                 transition: all var(--w-toggle-mobile-menu-animation-duration);
-                margin-top: 20px;
-                padding: 5px 0;
-                color: white;
+                height: 0;
+                max-height: 0;
+                width: max-content;
+
+                list-style: none;
+                overflow: hidden;
+
+                & ul {
+                    list-style: none;
+                    padding: 0;
+                    letter-spacing: 0.4em;
+                }
+
+                & li:first-child {
+                    margin-top: 0;
+                }
+
+                & li {
+                    transition: all var(--w-toggle-mobile-menu-animation-duration);
+                    margin-top: 20px;
+                    padding: 5px 0;
+                    color: white;
+                }
+
+                & a {
+                    padding: 8px;
+                    cursor: pointer;
+                }
             }
 
-            & a {
-                padding: 8px;
-                cursor: pointer;
+            .wu-priority-navigation__list__overflow-indicator {
+                display: inline-block !important;
             }
-        }
 
-        &.wu-priority-navigation--overflow-open
-        .wu-priority-navigation__overflow-list {
-            width: 100%;
+            &.wu-priority-navigation--overflow-open {
+                .wu-priority-navigation__overflow-list {
+                    height: 100%;
+                    width: 100%;
+                    /*
+                        NOTE: Workaround to enable transition. This value should
+                        represent an upper bound for the maximum overflow menu
+                        height.
+                    */
+                    max-height: 400px;
+                }
+
+                .wu-priority-navigation__list__overflow-indicator
+                .wu-priority-navigation__list__overflow-indicator__title
+                .wu-priority-navigation__list__overflow-indicator__title__icon {
+                    transform: rotate(180deg);
+                    background-color: transparent !important;
+
+                    &::before,
+                    &::after {
+                        top: 0;
+                    }
+
+                    &::before {
+                        transform: rotate(45deg);
+                    }
+
+                    &::after {
+                        transform: rotate(-45deg);
+                    }
+                }
+            }
         }
 
         .wu-priority-navigation__list__item--hide {
             display: none !important;
-        }
-
-        &.wu-priority-navigation--show-overflow-indicator
-        .wu-priority-navigation__list__overflow-indicator {
-            display: inline-block !important;
         }
     }
     /* endregion */
