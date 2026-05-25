@@ -171,9 +171,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/eslint-parser@npm:^7.28.6":
-  version: 7.28.6
-  resolution: "@babel/eslint-parser@npm:7.28.6"
+"@babel/eslint-parser@npm:^7.29.7":
+  version: 7.29.7
+  resolution: "@babel/eslint-parser@npm:7.29.7"
   dependencies:
     "@nicolo-ribaudo/eslint-scope-5-internals": "npm:5.1.1-v1"
     eslint-visitor-keys: "npm:^2.1.0"
@@ -181,7 +181,7 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.11.0
     eslint: ^7.5.0 || ^8.0.0 || ^9.0.0
-  checksum: 10c0/58a85f67a056ba8389978c4654b690b890a6dcd19aa9655c5d7d9349a0c25f124cabad8a190b6bf7045a063aeee1b8e2ab23cfe4d8fa0e0517716a8b70e758bc
+  checksum: 10c0/c24dcd941b0a149b197a9e9c3297a01d621775ac71cdf2e1134b1097c1691b46ce969355e1be3676d83b88f62c43ed33cf3a499da21ea11a5eb07339ce64ac20
   languageName: node
   linkType: hard
 
@@ -618,6 +618,13 @@ __metadata:
   version: 7.28.6
   resolution: "@babel/helper-plugin-utils@npm:7.28.6"
   checksum: 10c0/3f5f8acc152fdbb69a84b8624145ff4f9b9f6e776cb989f9f968f8606eb7185c5c3cfcf3ba08534e37e1e0e1c118ac67080610333f56baa4f7376c99b5f1143d
+  languageName: node
+  linkType: hard
+
+"@babel/helper-plugin-utils@npm:^7.29.7":
+  version: 7.29.7
+  resolution: "@babel/helper-plugin-utils@npm:7.29.7"
+  checksum: 10c0/380477a06133274a2759f9355929cb60a95e8b8fee624a1ae1fa349e1d1645b89daca456f72833f6d1062bffa12ee4271c5bf0cc5a61c0166cdc24c7591e2408
   languageName: node
   linkType: hard
 
@@ -1702,14 +1709,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-transform-proto-to-assign@npm:^7.27.1":
-  version: 7.27.1
-  resolution: "@babel/plugin-transform-proto-to-assign@npm:7.27.1"
+"@babel/plugin-transform-proto-to-assign@npm:^7.29.7":
+  version: 7.29.7
+  resolution: "@babel/plugin-transform-proto-to-assign@npm:7.29.7"
   dependencies:
-    "@babel/helper-plugin-utils": "npm:^7.27.1"
+    "@babel/helper-plugin-utils": "npm:^7.29.7"
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: 10c0/205bb5054f9754755dc80902491d0b113b09033bbb11e64f6526af5601ef56674837efdd717ee40156ceb062db95f088340764fcb5ab43c23c50653c67c6f388
+  checksum: 10c0/3738192e793e25dd2a86283e17ff39250ff65641454f7e0725e5927b984de1f13dac31daf935af0c19738dbfac26b806dd5dd446c543037534aec74ded736d3f
   languageName: node
   linkType: hard
 
@@ -2001,6 +2008,13 @@ __metadata:
   version: 7.29.2
   resolution: "@babel/runtime@npm:7.29.2"
   checksum: 10c0/30b80a0140d16467792e1bbeb06f655b0dab70407da38dfac7fedae9c859f9ae9d846ef14ad77bd3814c064295fe9b1bc551f1541ea14646ae9f22b71a8bc17a
+  languageName: node
+  linkType: hard
+
+"@babel/runtime@npm:^7.29.7":
+  version: 7.29.7
+  resolution: "@babel/runtime@npm:7.29.7"
+  checksum: 10c0/ca11572f7146b21e0bde6a9ed4bb6a89eafbee5f0944c7eb54d0d8a2dac962c33638a1d611e14faa71dfbb92b4b5f9236232208568a6b7d5c6f3f39ddb91771e
   languageName: node
   linkType: hard
 
@@ -17588,9 +17602,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "website-utilities@workspace:."
   dependencies:
-    "@babel/eslint-parser": "npm:^7.28.6"
-    "@babel/plugin-transform-proto-to-assign": "npm:^7.27.1"
-    "@babel/runtime": "npm:^7.29.2"
+    "@babel/eslint-parser": "npm:^7.29.7"
+    "@babel/plugin-transform-proto-to-assign": "npm:^7.29.7"
+    "@babel/runtime": "npm:^7.29.7"
     "@eslint/js": "npm:^10.0.1"
     "@stylistic/eslint-plugin": "npm:^5.10.0"
     "@types/ejs": "npm:^3.1.5"
