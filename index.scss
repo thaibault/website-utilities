@@ -15,41 +15,42 @@ endregion
 
 :root {
     /* region custom-properties */
-    --w-default-space: #{v.$default-space};
+    --wu-default-space: #{v.$default-space};
+    --wu-overflow-navigation-height-estimation: 400px;
     /** region dimensions */
-    --w-extra-extra-small-width: #{v.$extra-extra-small-width};
-    --w-extra-small-width: #{v.$extra-small-width};
-    --w-small-width: #{v.$small-width};
-    --w-medium-width: #{v.$medium-width};
-    --w-large-width: #{v.$large-width};
+    --wu-extra-extra-small-width: #{v.$extra-extra-small-width};
+    --wu-extra-small-width: #{v.$extra-small-width};
+    --wu-small-width: #{v.$small-width};
+    --wu-medium-width: #{v.$medium-width};
+    --wu-large-width: #{v.$large-width};
     /*** region extra small dimension */
-    @custom-media --w-extra-extra-small
+    @custom-media --wu-extra-extra-small
     (min-width: #{v.$extra-extra-small-width});
-    @custom-media --w-extra-small (min-width: #{v.$extra-small-width});
+    @custom-media --wu-extra-small (min-width: #{v.$extra-small-width});
     /*** endregion */
     /*** region default media query dimensions */
-    @custom-media --w-small (min-width: #{v.$small-width});
-    @custom-media --w-medium (min-width: #{v.$medium-width});
-    @custom-media --w-large (min-width: #{v.$large-width});
+    @custom-media --wu-small (min-width: #{v.$small-width});
+    @custom-media --wu-medium (min-width: #{v.$medium-width});
+    @custom-media --wu-large (min-width: #{v.$large-width});
     /*** endregion */
     /** endregion */
     /** region color */
-    --w-theme-background: #{v.$theme-background};
-    --w-theme-primary: #{v.$theme-primary};
-    --w-theme-on-primary: #{v.$theme-on-primary};
-    --w-theme-secondary: #{v.$theme-secondary};
-    --w-theme-on-secondary: #{v.$theme-on-secondary};
-    --w-theme-error: #{v.$theme-error};
-    --w-theme-on-error: #{v.$theme-on-error};
-    --w-theme-surface: #{v.$theme-surface};
-    --w-theme-on-surface: #{v.$theme-on-surface};
+    --wu-theme-background: #{v.$theme-background};
+    --wu-theme-primary: #{v.$theme-primary};
+    --wu-theme-on-primary: #{v.$theme-on-primary};
+    --wu-theme-secondary: #{v.$theme-secondary};
+    --wu-theme-on-secondary: #{v.$theme-on-secondary};
+    --wu-theme-error: #{v.$theme-error};
+    --wu-theme-on-error: #{v.$theme-on-error};
+    --wu-theme-surface: #{v.$theme-surface};
+    --wu-theme-on-surface: #{v.$theme-on-surface};
     /** endregion */
     /** region font */
-    --w-typography-font-family: #{v.$typography-font-family};
-    --w-typography-font-family-headline: #{v.$typography-font-family-headline};
+    --wu-typography-font-family: #{v.$typography-font-family};
+    --wu-typography-font-family-headline: #{v.$typography-font-family-headline};
     /** endregion */
     /** region animation */
-    --w-toggle-mobile-menu-animation-duration: 0.25s;
+    --wu-toggle-mobile-menu-animation-duration: 0.25s;
     /** endregion */
     /* endregion */
 }
@@ -63,14 +64,14 @@ website-utilities {
     h4,
     h5,
     h6 {
-        font-family: var(--w-typography-font-family, v.$typography-font-family);
+        font-family: var(--wu-typography-font-family, v.$typography-font-family);
         line-height: 1.1;
     }
 
     h1,
     h2 {
         font-family: var(
-                --w-typography-font-family-headline,
+                --wu-typography-font-family-headline,
                 v.$typography-font-family-headline
         );
         font-weight: normal;
@@ -152,7 +153,7 @@ website-utilities {
 
                 .wu-checkbox__wrapper__styled {
                     border-radius: 4px;
-                    border: 2px solid var(--w-theme-primary, v.$theme-primary);
+                    border: 2px solid var(--wu-theme-primary, v.$theme-primary);
                     cursor: pointer;
                     float: right;
                     height: 25px;
@@ -161,7 +162,7 @@ website-utilities {
 
                     .wu-checkbox__wrapper__styled__checked {
                         background: transparent;
-                        border: 3px solid var(--w-theme-on-primary, v.$theme-on-primary);
+                        border: 3px solid var(--wu-theme-on-primary, v.$theme-on-primary);
                         border-top: none;
                         border-right: none;
                         height: 8px;
@@ -182,7 +183,7 @@ website-utilities {
                     }
 
                     &:disabled ~ .wu-checkbox-styled {
-                        background-color: var(--w-theme-surface, v.$theme-surface);
+                        background-color: var(--wu-theme-surface, v.$theme-surface);
                     }
                 }
             }
@@ -200,16 +201,16 @@ website-utilities {
 
         position: fixed;
 
-        right: var(--w-default-space, #{v.$default-space});
+        right: var(--wu-default-space, #{v.$default-space});
     }
 
     .wu-scroll-to-top.wu-scroll-up {
-        bottom: calc(3 * var(--w-default-space, #{v.$default-space}));
+        bottom: calc(3 * var(--wu-default-space, #{v.$default-space}));
         opacity: 0;
     }
 
     .wu-scroll-to-top.wu-scroll-down {
-        bottom: var(--w-default-space, #{v.$default-space});
+        bottom: var(--wu-default-space, #{v.$default-space});
         opacity: 1;
     }
 
@@ -276,7 +277,7 @@ website-utilities {
                 padding-top: 1rem;
 
                 .wu-priority-navigation__list__overflow-indicator__title {
-                    transition: all var(--w-toggle-mobile-menu-animation-duration);
+                    transition: all var(--wu-toggle-mobile-menu-animation-duration);
 
                     position: absolute;
 
@@ -284,7 +285,7 @@ website-utilities {
                     height: 2rem;
 
                     .wu-priority-navigation__list__overflow-indicator__title__icon {
-                        transition: all var(--w-toggle-mobile-menu-animation-duration);
+                        transition: all var(--wu-toggle-mobile-menu-animation-duration);
 
                         position: relative;
                         transform: rotate(0deg);
@@ -295,7 +296,7 @@ website-utilities {
                         &::before,
                         &::after {
                             position: absolute;
-                            transition: all var(--w-toggle-mobile-menu-animation-duration);
+                            transition: all var(--wu-toggle-mobile-menu-animation-duration);
                             content: '';
 
                             transform: rotate(0deg);
@@ -318,7 +319,7 @@ website-utilities {
 
         &.wu-priority-navigation--show-overflow-indicator {
             .wu-priority-navigation__overflow-list {
-                transition: all var(--w-toggle-mobile-menu-animation-duration);
+                transition: all var(--wu-toggle-mobile-menu-animation-duration);
                 height: 0;
                 max-height: 0;
                 width: max-content;
@@ -326,25 +327,22 @@ website-utilities {
                 list-style: none;
                 overflow: hidden;
 
-                & ul {
+                ul {
                     list-style: none;
                     padding: 0;
                     letter-spacing: 0.4em;
                 }
 
-                & li:first-child {
+                li:first-child {
                     margin-top: 0;
                 }
 
-                & li {
-                    transition: all var(--w-toggle-mobile-menu-animation-duration);
-                    margin-top: 20px;
-                    padding: 5px 0;
+                li {
+                    transition: all var(--wu-toggle-mobile-menu-animation-duration);
                     color: white;
                 }
 
-                & a {
-                    padding: 8px;
+                a {
                     cursor: pointer;
                 }
             }
@@ -362,7 +360,7 @@ website-utilities {
                         represent an upper bound for the maximum overflow menu
                         height.
                     */
-                    max-height: 400px;
+                    max-height: var(--wu-overflow-navigation-height-estimation);
                 }
 
                 .wu-priority-navigation__list__overflow-indicator
@@ -395,7 +393,7 @@ website-utilities {
 }
 /* Overlay the whole page till everything is loaded completely. */
 .wu-window-loading-cover {
-    background-color: var(--w-surface-color, v.$theme-surface);
+    background-color: var(--wu-surface-color, v.$theme-surface);
     top: 0;
     left: 0;
     /* always cover full viewport */
@@ -417,7 +415,7 @@ website-utilities {
         span {
             display: inline-block;
             margin: 0 5px;
-            color: var(--w-on-surface-color, v.$theme-on-surface);
+            color: var(--wu-on-surface-color, v.$theme-on-surface);
 
             @for $i from 0 through 40 {
                 &:nth-child(#{$i + 1}) {
