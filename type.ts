@@ -42,6 +42,7 @@ export interface DefaultOptions {
 
         priorityNavigationClassName: string
         priorityNavigationOverflowOpenClassName: string
+        priorityNavigationShowOverflowIndicatorClassName: string
         priorityNavigationOverflowResizingClassName: string
 
         activeNavigationItemClassName: string
@@ -49,7 +50,6 @@ export interface DefaultOptions {
         priorityNavigationListItemHideClassName: string
 
         priorityNavigationOverflowIndicatorClassName: string
-        priorityNavigationOverflowIndicatorShowClassName: string
 
         priorityNavigationOverflowList: string
     }
