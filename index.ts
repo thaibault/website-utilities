@@ -130,6 +130,8 @@ export class WebsiteUtilities<
             priorityNavigationClassName: 'wu-priority-navigation',
             priorityNavigationOverflowOpenClassName:
                 'wu-priority-navigation--overflow-open',
+            priorityNavigationShowOverflowIndicatorClassName:
+                'wu-priority-navigation--show-overflow-indicator',
             priorityNavigationOverflowResizingClassName:
                 'wu-priority-navigation--resizing',
 
@@ -140,8 +142,6 @@ export class WebsiteUtilities<
                 'wu-priority-navigation__list__item--hide',
             priorityNavigationOverflowIndicatorClassName:
                 'wu-priority-navigation__list__overflow-indicator',
-            priorityNavigationOverflowIndicatorShowClassName:
-                'wu-priority-navigation__list__overflow-indicator--show',
 
             priorityNavigationOverflowList:
                 '.wu-priority-navigation__overflow-list'
@@ -424,8 +424,6 @@ export class WebsiteUtilities<
         const {selectors} = this.options
         const overflowIndicatorClassName =
             selectors.priorityNavigationOverflowIndicatorClassName
-        const overflowIndicatorShowClassName =
-            selectors.priorityNavigationOverflowIndicatorShowClassName
 
         if (this.priorityNavigationDomNodes?.length === 0)
             return
@@ -495,14 +493,16 @@ export class WebsiteUtilities<
                         for (const domNode of newSet)
                             overflowNavigationList.append(domNode)
 
-                    if (overflowMenu)
-                        overflowMenu
-                            .classList
-                            .add(overflowIndicatorShowClassName)
+                    if (overflowMenu) {
+                        const className = this.options.selectors
+                            .priorityNavigationShowOverflowIndicatorClassName
+                        menuDomNode.classList.add(className)
+                    }
                 } else if (overflowMenu)
-                    overflowMenu
-                        .classList
-                        .remove(overflowIndicatorShowClassName)
+                    menuDomNode.classList.remove(
+                        this.options.selectors
+                            .priorityNavigationShowOverflowIndicatorClassName
+                    )
             }
         }
 
@@ -581,12 +581,10 @@ export class WebsiteUtilities<
                         while (domNode.firstChild)
                             domNode.removeChild(domNode.firstChild)
 
-                    for (const domNode of menuDomNode.querySelectorAll(
-                        `.${overflowIndicatorClassName}`
-                    ))
-                        domNode.classList.remove(
-                            overflowIndicatorShowClassName
-                        )
+                    menuDomNode.classList.remove(
+                        this.options.selectors
+                            .priorityNavigationShowOverflowIndicatorClassName
+                    )
 
                     for (const domNode of menuDomNode.querySelectorAll(
                         'ul > li'
