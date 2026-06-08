@@ -55,9 +55,8 @@ endregion
     /* endregion */
 }
 
-website-utilities {
-    /* region generic dom nodes */
-    /** region headline */
+.wu {
+    /* region headline */
     h1,
     h2,
     h3,
@@ -81,8 +80,8 @@ website-utilities {
     h2 {
         font-size: 2em;
     }
-    /** endregion */
-    /** region  link */
+    /* endregion */
+    /* region link */
     a,
     a:hover,
     a:focus,
@@ -90,307 +89,306 @@ website-utilities {
         outline: none;
         text-decoration: none;
     }
-    /** endregion */
     /* endregion */
-    /* region generic classes */
-    /* Disables and hides a scrolling and scrollbar. */
-    .wu-action {
-        cursor: pointer;
+}
+/* region generic classes */
+/* Disables and hides a scrolling and scrollbar. */
+.wu-action {
+    cursor: pointer;
+}
+
+.wu-disable-scrolling {
+    height: 100% !important;
+    overflow: hidden !important;
+}
+
+.wu-section-active {
+    display: block;
+}
+
+.wu-section-inactive {
+    display: none;
+}
+/** region form */
+/*** region styled select */
+.wu-select {
+    position: relative;
+
+    &__arrow {
+        position: absolute;
+        top: 3px;
+        right: 15px;
+        pointer-events: none;
+
+        span {
+            vertical-align: bottom;
+            font-size: 10px;
+        }
     }
 
-    .wu-disable-scrolling {
-        height: 100% !important;
-        overflow: hidden !important;
+    select {
+        position: initial !important;
+        padding-left: 7px !important;
+        padding-right: 25px !important;
+        /* hide default down arrow in IE10 */
+        &::-ms-expand {
+            display: none;
+        }
     }
+}
+/*** endregion */
+/*** region styled checkbox */
+.wu-checkbox {
+    margin-top: 2px;
+    padding-top: 3px;
 
-    .wu-section-active {
-        display: block;
-    }
+    label {
+        padding-left: 40px;
 
-   .wu-section-inactive {
-        display: none;
-    }
-    /** region form */
-    /*** region styled select */
-    .wu-select {
-        position: relative;
-
-        &__arrow {
+        .wu-checkbox__wrapper {
+            margin-top: -2px;
+            margin-left: -40px;
             position: absolute;
-            top: 3px;
-            right: 15px;
-            pointer-events: none;
 
-            span {
-                vertical-align: bottom;
-                font-size: 10px;
+            .wu-checkbox__wrapper__styled {
+                border-radius: 4px;
+                border: 2px solid var(--wu-theme-primary, v.$theme-primary);
+                cursor: pointer;
+                float: right;
+                height: 25px;
+                padding: 0;
+                width: 25px;
+
+                .wu-checkbox__wrapper__styled__checked {
+                    background: transparent;
+                    border: 3px solid var(--wu-theme-on-primary, v.$theme-on-primary);
+                    border-top: none;
+                    border-right: none;
+                    height: 8px;
+                    left: 4px;
+                    opacity: 0;
+                    position: absolute;
+                    top: 5px;
+                    transform: rotate(-45deg);
+                    width: 13px;
+                }
+            }
+
+            input[type="checkbox"] {
+                display: none;
+
+                &:checked ~ .wu-checkbox-styled > .wu-checkbox-styled-checked {
+                    opacity: 1;
+                }
+
+                &:disabled ~ .wu-checkbox-styled {
+                    background-color: var(--wu-theme-surface, v.$theme-surface);
+                }
             }
         }
+    }
+}
+/*** endregion */
+/** endregion */
+/* endregion */
+/* region move to top button animation */
+.wu-scroll-to-top {
+    display: block;
 
-        select {
-            position: initial !important;
-            padding-left: 7px !important;
-            padding-right: 25px !important;
-            /* hide default down arrow in IE10 */
-            &::-ms-expand {
+    transition-property: bottom, opacity;
+    transition-duration: .5s;
+
+    position: fixed;
+
+    right: var(--wu-default-space, #{v.$default-space});
+}
+
+.wu-scroll-to-top.wu-scroll-up {
+    bottom: calc(3 * var(--wu-default-space, #{v.$default-space}));
+    opacity: 0;
+}
+
+.wu-scroll-to-top.wu-scroll-down {
+    bottom: var(--wu-default-space, #{v.$default-space});
+    opacity: 1;
+}
+
+.wu-scroll-to-top.wu-top-settled {
+    display: none;
+}
+/* endregion */
+/* region priority navigation */
+.wu-priority-navigation {
+    position: relative;
+
+    // NOTE: Important to detect item which where pushed below.
+    overflow: visible;
+
+    &.wu-priority-navigation--resizing {
+        overflow: hidden;
+    }
+
+    .wu-priority-navigation__list,
+    .wu-priority-navigation__overflow-list li {
+        position: relative;
+    }
+
+    .wu-priority-navigation__link {
+        display: inline-block;
+        /* region menu highlighter */
+        &::after {
+            content: " ";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+        /*
+            NOTE: Will be set to when startup animations have been finished.
+
+            &.wu-priority-navigation__link--active::after {
+                view-transition-name: wu-menu-highlight;
+            }
+        */
+        /* endregion */
+    }
+
+    .wu-priority-navigation__list {
+        list-style: none;
+
+        li {
+            display: inline-block;
+            position: relative;
+
+            &.wu-priority-navigation__list__overflow-indicator {
                 display: none;
             }
         }
-    }
-    /*** endregion */
-    /*** region styled checkbox */
-    .wu-checkbox {
-        margin-top: 2px;
-        padding-top: 3px;
 
-        label {
-            padding-left: 40px;
+        .wu-priority-navigation__list__overflow-indicator {
+            cursor: pointer;
 
-            .wu-checkbox__wrapper {
-                margin-top: -2px;
-                margin-left: -40px;
+            width: 2rem;
+            height: 2rem;
+            position: absolute !important;
+            padding-top: 1rem;
+
+            .wu-priority-navigation__list__overflow-indicator__title {
+                transition: all var(--wu-toggle-mobile-menu-animation-duration);
+
                 position: absolute;
-
-                .wu-checkbox__wrapper__styled {
-                    border-radius: 4px;
-                    border: 2px solid var(--wu-theme-primary, v.$theme-primary);
-                    cursor: pointer;
-                    float: right;
-                    height: 25px;
-                    padding: 0;
-                    width: 25px;
-
-                    .wu-checkbox__wrapper__styled__checked {
-                        background: transparent;
-                        border: 3px solid var(--wu-theme-on-primary, v.$theme-on-primary);
-                        border-top: none;
-                        border-right: none;
-                        height: 8px;
-                        left: 4px;
-                        opacity: 0;
-                        position: absolute;
-                        top: 5px;
-                        transform: rotate(-45deg);
-                        width: 13px;
-                    }
-                }
-
-                input[type="checkbox"] {
-                    display: none;
-
-                    &:checked ~ .wu-checkbox-styled > .wu-checkbox-styled-checked {
-                        opacity: 1;
-                    }
-
-                    &:disabled ~ .wu-checkbox-styled {
-                        background-color: var(--wu-theme-surface, v.$theme-surface);
-                    }
-                }
-            }
-        }
-    }
-    /*** endregion */
-    /** endregion */
-    /* endregion */
-    /* region move to top button animation */
-    .wu-scroll-to-top {
-        display: block;
-
-        transition-property: bottom, opacity;
-        transition-duration: .5s;
-
-        position: fixed;
-
-        right: var(--wu-default-space, #{v.$default-space});
-    }
-
-    .wu-scroll-to-top.wu-scroll-up {
-        bottom: calc(3 * var(--wu-default-space, #{v.$default-space}));
-        opacity: 0;
-    }
-
-    .wu-scroll-to-top.wu-scroll-down {
-        bottom: var(--wu-default-space, #{v.$default-space});
-        opacity: 1;
-    }
-
-    .wu-scroll-to-top.wu-top-settled {
-        display: none;
-    }
-    /* endregion */
-    /* region priority navigation */
-    .wu-priority-navigation {
-        position: relative;
-
-        // NOTE: Important to detect item which where pushed below.
-        overflow: visible;
-
-        &.wu-priority-navigation--resizing {
-            overflow: hidden;
-        }
-
-        .wu-priority-navigation__list,
-        .wu-priority-navigation__overflow-list li {
-            position: relative;
-        }
-
-        .wu-priority-navigation__link {
-            display: inline-block;
-            /* region menu highlighter */
-            &::after {
-                content: " ";
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                box-sizing: border-box;
-            }
-            /*
-                NOTE: Will be set to when startup animations have been finished.
-
-                &.wu-priority-navigation__link--active::after {
-                    view-transition-name: wu-menu-highlight;
-                }
-            */
-            /* endregion */
-        }
-
-        .wu-priority-navigation__list {
-            list-style: none;
-
-            li {
-                display: inline-block;
-                position: relative;
-
-                &.wu-priority-navigation__list__overflow-indicator {
-                    display: none;
-                }
-            }
-
-            .wu-priority-navigation__list__overflow-indicator {
-                cursor: pointer;
 
                 width: 2rem;
                 height: 2rem;
-                position: absolute !important;
-                padding-top: 1rem;
 
-                .wu-priority-navigation__list__overflow-indicator__title {
+                .wu-priority-navigation__list__overflow-indicator__title__icon {
                     transition: all var(--wu-toggle-mobile-menu-animation-duration);
 
-                    position: absolute;
+                    position: relative;
+                    transform: rotate(0deg);
 
-                    width: 2rem;
-                    height: 2rem;
+                    width: 30px;
+                    height: 1px;
 
-                    .wu-priority-navigation__list__overflow-indicator__title__icon {
+                    &::before,
+                    &::after {
+                        position: absolute;
                         transition: all var(--wu-toggle-mobile-menu-animation-duration);
+                        content: '';
 
-                        position: relative;
                         transform: rotate(0deg);
 
                         width: 30px;
                         height: 1px;
-
-                        &::before,
-                        &::after {
-                            position: absolute;
-                            transition: all var(--wu-toggle-mobile-menu-animation-duration);
-                            content: '';
-
-                            transform: rotate(0deg);
-
-                            width: 30px;
-                            height: 1px;
-                        }
-
-                        &::before {
-                            top: -10px;
-                        }
-
-                        &::after {
-                            top: 10px;
-                        }
-                    }
-                }
-            }
-        }
-
-        &.wu-priority-navigation--show-overflow-indicator {
-            .wu-priority-navigation__overflow-list {
-                transition: all var(--wu-toggle-mobile-menu-animation-duration);
-                height: 0;
-                max-height: 0;
-                width: max-content;
-
-                list-style: none;
-                overflow: hidden;
-
-                ul {
-                    list-style: none;
-                    padding: 0;
-                    letter-spacing: 0.4em;
-                }
-
-                li:first-child {
-                    margin-top: 0;
-                }
-
-                li {
-                    transition: all var(--wu-toggle-mobile-menu-animation-duration);
-                    color: white;
-                }
-
-                a {
-                    cursor: pointer;
-                }
-            }
-
-            .wu-priority-navigation__list__overflow-indicator {
-                display: inline-block !important;
-            }
-
-            &.wu-priority-navigation--overflow-open {
-                .wu-priority-navigation__overflow-list {
-                    height: 100%;
-                    width: 100%;
-                    /*
-                        NOTE: Workaround to enable transition. This value should
-                        represent an upper bound for the maximum overflow menu
-                        height.
-                    */
-                    max-height: var(--wu-overflow-navigation-height-estimation);
-                }
-
-                .wu-priority-navigation__list__overflow-indicator
-                .wu-priority-navigation__list__overflow-indicator__title
-                .wu-priority-navigation__list__overflow-indicator__title__icon {
-                    transform: rotate(180deg);
-                    background-color: transparent !important;
-
-                    &::before,
-                    &::after {
-                        top: 0;
                     }
 
                     &::before {
-                        transform: rotate(45deg);
+                        top: -10px;
                     }
 
                     &::after {
-                        transform: rotate(-45deg);
+                        top: 10px;
                     }
                 }
             }
         }
+    }
 
-        .wu-priority-navigation__list__item--hide {
-            display: none !important;
+    &.wu-priority-navigation--show-overflow-indicator {
+        .wu-priority-navigation__overflow-list {
+            transition: all var(--wu-toggle-mobile-menu-animation-duration);
+            height: 0;
+            max-height: 0;
+            width: max-content;
+
+            list-style: none;
+            overflow: hidden;
+
+            ul {
+                list-style: none;
+                padding: 0;
+                letter-spacing: 0.4em;
+            }
+
+            li:first-child {
+                margin-top: 0;
+            }
+
+            li {
+                transition: all var(--wu-toggle-mobile-menu-animation-duration);
+                color: white;
+            }
+
+            a {
+                cursor: pointer;
+            }
+        }
+
+        .wu-priority-navigation__list__overflow-indicator {
+            display: inline-block !important;
+        }
+
+        &.wu-priority-navigation--overflow-open {
+            .wu-priority-navigation__overflow-list {
+                height: 100%;
+                width: 100%;
+                /*
+                    NOTE: Workaround to enable transition. This value should
+                    represent an upper bound for the maximum overflow menu
+                    height.
+                */
+                max-height: var(--wu-overflow-navigation-height-estimation);
+            }
+
+            .wu-priority-navigation__list__overflow-indicator
+            .wu-priority-navigation__list__overflow-indicator__title
+            .wu-priority-navigation__list__overflow-indicator__title__icon {
+                transform: rotate(180deg);
+                background-color: transparent !important;
+
+                &::before,
+                &::after {
+                    top: 0;
+                }
+
+                &::before {
+                    transform: rotate(45deg);
+                }
+
+                &::after {
+                    transform: rotate(-45deg);
+                }
+            }
         }
     }
-    /* endregion */
+
+    .wu-priority-navigation__list__item--hide {
+        display: none !important;
+    }
 }
+/* endregion */
 /* Overlay the whole page till everything is loaded completely. */
 .wu-window-loading-cover {
     background-color: var(--wu-surface-color, v.$theme-surface);
