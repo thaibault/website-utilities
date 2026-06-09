@@ -126,6 +126,9 @@ export class WebsiteUtilities<
             routerOutlet: '.wu-router-outlet',
 
             scrollToTopButtons: '.wu-scroll-to-top',
+            scrollToTopScrollTopSettledStateClassName: 'wu-top-settled',
+            scrollToTopScrollUpStateClassName: 'wu-scroll-up',
+            scrollToTopScrollDownStateClassName: 'wu-scroll-down',
 
             priorityNavigationClassName: 'wu-priority-navigation',
             priorityNavigationOverflowOpenClassName:
@@ -756,7 +759,10 @@ export class WebsiteUtilities<
             }
             const setSettledClass = () => {
                 if (this.viewportIsOnTop)
-                    domNode.classList.add('wu-top-settled')
+                    domNode.classList.add(
+                        this.options.selectors
+                            .scrollToTopScrollTopSettledStateClassName
+                    )
 
                 cancel()
             }
@@ -766,14 +772,20 @@ export class WebsiteUtilities<
             )
             domNode.addEventListener('transitioncancel', cancel, {once: true})
 
-            domNode.classList.add('wu-scroll-up')
+            domNode.classList.add(
+                this.options.selectors.scrollToTopScrollUpStateClassName
+            )
         }
     }
     /**
      * This method triggers if the viewport moves away from the top.
      */
     async _onViewportMovesAwayFromTop() {
-        this._finishScrollToTopButtonTransition('wu-top-settled')
+        for (const domNode of this.scrollToTopButtonDomNodes ?? [])
+            domNode.classList.remove(
+                this.options.selectors
+                    .scrollToTopScrollTopSettledStateClassName
+            )
 
         /*
             NOTE: We need to render the none-setteled state beforehand to make
@@ -784,7 +796,9 @@ export class WebsiteUtilities<
         this._finishScrollToTopButtonTransition()
 
         for (const domNode of this.scrollToTopButtonDomNodes ?? [])
-            domNode.classList.add('wu-scroll-down')
+            domNode.classList.add(
+                this.options.selectors.scrollToTopScrollDownStateClassName
+            )
     }
     /**
      * This method triggers if we change the current section.
@@ -923,14 +937,13 @@ export class WebsiteUtilities<
     /**
      * Removes class names from scroll-to-top buttons to stop running
      * transitions.
-     * @param classNames - Optional class names to remove.
      */
     _finishScrollToTopButtonTransition(
-        classNames: Array<string> | string = ['wu-scroll-down', 'wu-scroll-up']
     ) {
         for (const domNode of this.scrollToTopButtonDomNodes ?? [])
             domNode.classList.remove(
-                ...([] as Array<string>).concat(classNames)
+                this.options.selectors.scrollToTopScrollUpStateClassName,
+                this.options.selectors.scrollToTopScrollDownStateClassName
             )
     }
     /**
@@ -974,7 +987,10 @@ export class WebsiteUtilities<
             this.viewportIsOnTop = true
 
             for (const domNode of this.scrollToTopButtonDomNodes ?? [])
-                domNode.classList.add('wu-top-settled')
+                domNode.classList.add(
+                    this.options.selectors
+                        .scrollToTopScrollTopSettledStateClassName
+                )
 
             this._onViewportMovesToTop()
             this.onViewportMovesToTop()
