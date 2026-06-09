@@ -315,10 +315,13 @@ export class WebsiteUtilities<
         await this.resolveRenderingPromiseIfSet(reason, resolveRendering)
     }
     /**
-     * Frees some memory.
+     * Should free up memory listeners related to deprecated HTML.
+     * @param reason - Description why rendering is necessary.
+     * @param reRenderReason - Description why a re-rendering is necessary.
      */
-    disconnectedCallback() {
-        super.disconnectedCallback()
+    unRender(reason = 'unknown', reRenderReason?: string) {
+        super.unRender(reason, reRenderReason)
+
         for (const deregister of this.observerDeregisters)
             deregister()
     }
