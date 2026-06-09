@@ -39,6 +39,9 @@ export interface DefaultOptions {
         routerOutlet: string
 
         scrollToTopButtons: string
+        scrollToTopScrollTopSettledStateClassName: string
+        scrollToTopScrollUpStateClassName: string
+        scrollToTopScrollDownStateClassName: string
 
         priorityNavigationClassName: string
         priorityNavigationOverflowOpenClassName: string
