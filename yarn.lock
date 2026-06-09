@@ -17261,12 +17261,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-documentation@npm:^1.0.31":
-  version: 1.0.31
-  resolution: "web-documentation@npm:1.0.31"
+"web-documentation@npm:^1.0.32":
+  version: 1.0.32
+  resolution: "web-documentation@npm:1.0.32"
   bin:
     web-documentation: build/deploy.js
-  checksum: 10c0/e2e02ce519b864f719e007358699c2e4137007478198473dca4c5c1fe2a06a65cb832edc0c9573a51a174e8ae67faf9108934b8e9d67c7276beb5ab0c1b5550f
+  checksum: 10c0/c86ebd9ecfa2cd66efcd73c4d758c45988ccf162a98353c9bcce1da1d528f5195ca3132f179acea06891382166adecbc8a88038e3e9e7e7cc00db317d46287be
   languageName: node
   linkType: hard
 
@@ -17627,7 +17627,7 @@ __metadata:
     stylelint-config-standard-scss: "npm:^17.0.0"
     typescript-eslint: "npm:^8.61.0"
     web-component-wrapper: "npm:^0.0.596"
-    web-documentation: "npm:^1.0.31"
+    web-documentation: "npm:^1.0.32"
     weboptimizer: "npm:^3.0.24"
     webpack-dev-server: "npm:^5.2.4"
   peerDependencies:
