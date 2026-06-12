@@ -129,12 +129,11 @@
     "globals@npm:^9.18.0": "patch:globals@npm%3A11.12.0#~/.yarn/patches/globals-npm-11.12.0-1fa7f41a6c.patch"
   },
   "sideEffects": false,
-  "documentationWebsite": {
+  "webDocumentation": {
     "languages": [
       "deDE",
       "enUS"
     ],
-    "name": "website-utilities",
     "tagline": "extend your web app<!--deDE:erweitere deine Webanwendung-->",
     "trackingCode": "UA-40192634-5"
   },
