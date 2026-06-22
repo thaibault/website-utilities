@@ -17,35 +17,35 @@
     endregion
 */
 // region imports
+import {Logger} from 'clientnode'
 import {execSync} from 'child_process'
 import {basename, resolve} from 'path'
 // endregion
+export const PUBLIC_REPOSITORY_NAME = 'thaibault.github.io'
+
+export const log = new Logger({name: 'website-utilities.deploy'})
+
 const run = (command: string, options = {}): string =>
     execSync(command, {encoding: 'utf-8', shell: '/bin/bash', ...options})
 
 if (run('git branch').includes('* main')) {
-    console.info('Build new web page.')
+    log.info('Build new web page.')
     run('yarn build')
 
-    const currentWorkingDirectoryPath: string = run('pwd')
-    const parentWebsitePath: string = resolve(
-        currentWorkingDirectoryPath,
-        '../',
-        `${basename(currentWorkingDirectoryPath)}.github.io`
-    )
+    const parentWebsitePath: string = resolve('../', PUBLIC_REPOSITORY_NAME)
 
     let target = './'
     let workingPath = './'
     if (run('git branch').includes('gh-pages')) {
-        console.info('Checkout distribution branch.')
+        log.info('Checkout distribution branch.')
         run('git checkout gh-pages')
     } else if (parentWebsitePath) {
         target = `${parentWebsitePath}/build/`
         workingPath = parentWebsitePath
     } else
-        console.warn('No website target found.')
+        log.warn('No website target found.')
 
-    console.info('Update page data.')
+    log.info('Update page data.')
     run(`
         rsync \
             './build/' '${target}' \
@@ -59,7 +59,7 @@ if (run('git branch').includes('* main')) {
 
     run(`rm --recursive --force ./build`)
 
-    console.info('Upload compiled webpage')
+    log.info('Upload compiled webpage')
     run('git pull', {cwd: workingPath})
     run('git add --all', {cwd: workingPath})
     run(
@@ -69,9 +69,9 @@ if (run('git branch').includes('* main')) {
     run('git push', {cwd: workingPath})
 
     if (run('git branch').includes('gh-pages'))
-        console.info('Switch back to source directory.')
+        log.info('Switch back to source directory.')
     else {
-        console.info('Switch back to main branch.')
+        log.info('Switch back to main branch.')
         run('git checkout main')
     }
 }
