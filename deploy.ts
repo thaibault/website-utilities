@@ -20,8 +20,10 @@
 import {Logger} from 'clientnode'
 import {execSync} from 'child_process'
 import {basename, resolve} from 'path'
+import {rimraf as removeDirectoryRecursively} from 'rimraf'
 // endregion
-export const PUBLIC_REPOSITORY_NAME = 'thaibault.github.io'
+export const USERNAME = 'thaibault'
+export const PUBLIC_REPOSITORY_NAME = `${USERNAME}.github.io`
 
 export const log = new Logger({name: 'website-utilities.deploy'})
 
@@ -32,23 +34,23 @@ if (run('git branch').includes('* main')) {
     log.info('Build new web page.')
     run('yarn build')
 
-    const parentWebsitePath: string = resolve('../', PUBLIC_REPOSITORY_NAME)
+    const publicWebsitePath: string = resolve('../', PUBLIC_REPOSITORY_NAME)
 
-    let target = './'
-    let workingPath = './'
-    if (run('git branch').includes('gh-pages')) {
-        log.info('Checkout distribution branch.')
-        run('git checkout gh-pages')
-    } else if (parentWebsitePath) {
-        target = `${parentWebsitePath}/build/`
-        workingPath = parentWebsitePath
-    } else
-        log.warn('No website target found.')
+    if (!await isDirectory(publicWebsitePath)) {
+        run(
+            `git clone git@github.com:${USERNAME}/${PUBLIC_REPOSITORY_NAME} ` +
+            publicWebsitePath
+        )
+
 
     log.info('Update page data.')
+    removeDirectoryRecursively({filter: (path) => console.log(path) || Promise.resolve(path ? false : true)})
+
+    /*
     run(`
         rsync \
-            './build/' '${target}' \
+            './build/' \
+            '${publicWebsitePath}' \
             $ILU_RSYNC_DEFAULT_ARGUMENTS \
             --exclude=CNAME \
             --exclude='.*' \
@@ -56,22 +58,16 @@ if (run('git branch').includes('* main')) {
             --exclude=readme.md \
             --exclude=./build
     `)
+    */
 
-    run(`rm --recursive --force ./build`)
+    removeDirectoryRecursively('build')
 
     log.info('Upload compiled webpage')
-    run('git pull', {cwd: workingPath})
-    run('git add --all', {cwd: workingPath})
+    run('git pull', {cwd: publicWebsitePath})
+    run('git add --all', {cwd: publicWebsitePath})
     run(
         `git commit --message 'Automatic page build update.'`,
-        {cwd: workingPath}
+        {cwd: publicWebsitePath}
     )
-    run('git push', {cwd: workingPath})
-
-    if (run('git branch').includes('gh-pages'))
-        log.info('Switch back to source directory.')
-    else {
-        log.info('Switch back to main branch.')
-        run('git checkout main')
-    }
+    run('git push', {cwd: publicWebsitePath})
 }
