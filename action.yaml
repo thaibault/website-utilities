@@ -1,0 +1,29 @@
+name: Deploy website
+
+inputs:
+  debug:
+    description: Sets "NODE_ENV" to "debug".
+    required: false
+    default: false
+
+  # Input not required from the user
+  token:
+    description: The token used to make requests to the GitHub API.
+    required: false
+    default: ${{ github.token }}
+
+runs:
+  using: composite
+
+  steps:
+    - uses: thaibault/install-npm-package-dependencies-action@main
+      with:
+        debug: ${{ inputs.debug }}
+
+    - name: Change Owner of Container Working Directory
+      run: chown root:root .
+      shell: bash
+
+    - name: Trigger deployment script.
+      run: yarn run update:website
+      shell: bash
