@@ -17,61 +17,61 @@
     endregion
 */
 // region imports
+import {copyDirectoryRecursive, isDirectory, Logger} from 'clientnode'
 import {execSync} from 'child_process'
 import {basename, resolve} from 'path'
+import {rimraf as removeDirectoryRecursively} from 'rimraf'
 // endregion
+export const USERNAME = 'thaibault'
+export const PUBLIC_REPOSITORY_NAME = `${USERNAME}.github.io`
+
+export const log =
+    new Logger({name: 'website-utilities.deploy', level: 'info'})
+
 const run = (command: string, options = {}): string =>
     execSync(command, {encoding: 'utf-8', shell: '/bin/bash', ...options})
 
 if (run('git branch').includes('* main')) {
-    console.info('Build new web page.')
-    run('yarn build')
+    log.info('Build new web page.')
+    log.info(run('yarn clear'))
+    log.info(run('yarn build'))
 
-    const currentWorkingDirectoryPath: string = run('pwd')
-    const parentWebsitePath: string = resolve(
-        currentWorkingDirectoryPath,
-        '../',
-        `${basename(currentWorkingDirectoryPath)}.github.io`
+    const publicWebsitePath: string = resolve('../', PUBLIC_REPOSITORY_NAME)
+
+    if (!await isDirectory(publicWebsitePath))
+        log.info(run(
+            `git clone git@github.com:${USERNAME}/${PUBLIC_REPOSITORY_NAME} ` +
+            publicWebsitePath
+        ))
+
+    log.info(run('git pull', {cwd: publicWebsitePath}))
+
+    log.info(`Update page data in "${publicWebsitePath}".`)
+
+    await removeDirectoryRecursively(
+        publicWebsitePath,
+        {filter: (path) =>
+            Promise.resolve(
+                ![
+                    publicWebsitePath,
+                    resolve(publicWebsitePath, '.git'),
+                    resolve(publicWebsitePath, '.github'),
+                    resolve(publicWebsitePath, 'CNAME'),
+                    resolve(publicWebsitePath, 'readme.md')
+                ].some((ignorePath) => path.startsWith(ignorePath))
+            )
+        }
     )
 
-    let target = './'
-    let workingPath = './'
-    if (run('git branch').includes('gh-pages')) {
-        console.info('Checkout distribution branch.')
-        run('git checkout gh-pages')
-    } else if (parentWebsitePath) {
-        target = `${parentWebsitePath}/build/`
-        workingPath = parentWebsitePath
-    } else
-        console.warn('No website target found.')
+    await copyDirectoryRecursive('build', publicWebsitePath, true)
 
-    console.info('Update page data.')
-    run(`
-        rsync \
-            './build/' '${target}' \
-            $ILU_RSYNC_DEFAULT_ARGUMENTS \
-            --exclude=CNAME \
-            --exclude='.*' \
-            --exclude=node_modules \
-            --exclude=readme.md \
-            --exclude=./build
-    `)
+    log.info(run('yarn clear'))
 
-    run(`rm --recursive --force ./build`)
-
-    console.info('Upload compiled webpage')
-    run('git pull', {cwd: workingPath})
-    run('git add --all', {cwd: workingPath})
-    run(
+    log.info('Upload compiled webpage')
+    log.info(run('git add --all', {cwd: publicWebsitePath}))
+    log.info(run(
         `git commit --message 'Automatic page build update.'`,
-        {cwd: workingPath}
-    )
-    run('git push', {cwd: workingPath})
-
-    if (run('git branch').includes('gh-pages'))
-        console.info('Switch back to source directory.')
-    else {
-        console.info('Switch back to main branch.')
-        run('git checkout main')
-    }
+        {cwd: publicWebsitePath}
+    ))
+    log.info(run('git push', {cwd: publicWebsitePath}))
 }
