@@ -43,8 +43,8 @@ runs:
       run: chown root:root .
       shell: bash
 
-    #- name: Trigger deployment script.
-    #  env:
-    #    PUBLIC_REPOSITORY_PATH: ${{ github.workspace }}/public-repository
-    #  run: yarn run update:website
-    #  shell: bash
+    - name: Trigger deployment script.
+      env:
+        PUBLIC_REPOSITORY_PATH: ${{ github.workspace }}/public-repository
+      run: yarn run update:website
+      shell: bash
