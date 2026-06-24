@@ -42,8 +42,6 @@ if (run('git branch').includes('* main')) {
             `Missing public website directory in "${PUBLIC_REPOSITORY_PATH}"`
         )
 
-    log.info(run('git pull', {cwd: PUBLIC_REPOSITORY_PATH}))
-
     log.info(`Update page data in "${PUBLIC_REPOSITORY_PATH}".`)
 
     await removeDirectoryRecursively(
@@ -67,8 +65,6 @@ if (run('git branch').includes('* main')) {
     log.info(run('yarn clear'))
 
     log.info('Upload compiled webpage')
-
-
 
     if (process.env.USER_NAME_GITHUB) {
         log.info(`Set git user name to "${process.env.USER_NAME_GITHUB}".`)
