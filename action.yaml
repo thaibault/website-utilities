@@ -38,5 +38,7 @@ runs:
     - name: Trigger deployment script.
       env:
         PUBLIC_REPOSITORY_PATH: ${{ github.workspace }}/public-repository
+        GITHUB_AUTHOR_NAME: ${{ github.actor }}
+        USER_EMAIL_GITHUB: ${{ github.actor }}@users.noreply.github.com
       run: yarn run update:website
       shell: bash

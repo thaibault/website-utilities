@@ -19,13 +19,12 @@
 // region imports
 import {copyDirectoryRecursive, isFile, Logger} from 'clientnode'
 import {execSync} from 'child_process'
-import {basename, resolve} from 'path'
+import {resolve} from 'path'
 import {rimraf as removeDirectoryRecursively} from 'rimraf'
 // endregion
-export const USERNAME = process.env.GIT_PRIVATE_AUTHOR_NAME
 export const PUBLIC_REPOSITORY_PATH =
     process.env.PUBLIC_REPOSITORY_PATH ||
-    resolve('../', `${USERNAME}.github.io`)
+    resolve('../', `${process.env.GIT_PRIVATE_AUTHOR_NAME || ''}.github.io`)
 
 export const log =
     new Logger({name: 'website-utilities.deploy', level: 'info'})
@@ -68,9 +67,18 @@ if (run('git branch').includes('* main')) {
     log.info(run('yarn clear'))
 
     log.info('Upload compiled webpage')
-    log.info(run('git add --all', {cwd: PUBLIC_REPOSITORY_PATH}))
+
+    if (process.env.USER_NAME_GITHUB)
+        log.info(run(
+            `git config user.name '${process.env.USER_NAME_GITHUB}'`
+        ))
+    if (process.env.USER_EMAIL_GITHUB)
+        log.info(run(
+            `git config user.email '${process.env.USER_EMAIL_GITHUB}'`
+        ))
+
     log.info(run(
-        `git commit --message 'Automatic page build update.'`,
+        `git commit --all --message 'Automatic page build update.'`,
         {cwd: PUBLIC_REPOSITORY_PATH}
     ))
     log.info(run('git push', {cwd: PUBLIC_REPOSITORY_PATH}))
