@@ -31,14 +31,6 @@ runs:
       run: git config --global --add safe.directory "${GITHUB_WORKSPACE}/public-repository"
       shell: bash
 
-    - name: DEBUG2
-      run: cd "${GITHUB_WORKSPACE}/public-repository" && ls -lha
-      shell: bash
-
-    - name: DEBUG3
-      run: ls -lha
-      shell: bash
-
     - name: Change Owner of Container Working Directory
       run: chown root:root .
       shell: bash
@@ -46,5 +38,7 @@ runs:
     - name: Trigger deployment script.
       env:
         PUBLIC_REPOSITORY_PATH: ${{ github.workspace }}/public-repository
+        GITHUB_AUTHOR_NAME: ${{ github.actor }}
+        USER_EMAIL_GITHUB: ${{ github.actor }}@users.noreply.github.com
       run: yarn run update:website
       shell: bash
