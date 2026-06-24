@@ -31,14 +31,6 @@ runs:
       run: git config --global --add safe.directory "${GITHUB_WORKSPACE}/public-repository"
       shell: bash
 
-    - name: DEBUG2
-      run: cd "${GITHUB_WORKSPACE}/public-repository" && ls -lha
-      shell: bash
-
-    - name: DEBUG3
-      run: ls -lha
-      shell: bash
-
     - name: Change Owner of Container Working Directory
       run: chown root:root .
       shell: bash
