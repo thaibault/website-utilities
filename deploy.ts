@@ -58,7 +58,8 @@ if (run('git branch').includes('* main')) {
                     resolve(publicWebsitePath, '.git'),
                     resolve(publicWebsitePath, '.github'),
                     resolve(publicWebsitePath, 'CNAME'),
-                    resolve(publicWebsitePath, 'readme.md')
+                    resolve(publicWebsitePath, 'readme.md'),
+                    resolve(publicWebsitePath, 'public-repository')
                 ].some((ignorePath) => path.startsWith(ignorePath))
             )
         }
