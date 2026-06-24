@@ -26,8 +26,11 @@ runs:
         repository: ${{ inputs.repository }}
         token: ${{ inputs.pat-token }}
 
+    - name: Fix Git Safe Directory
+      run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
     - name: DEBUG0
-      run: echo JAU && pwd && echo ${{ env.GITHUB_WORKSPACE }} && cd ${{ env.GITHUB_WORKSPACE }} && ls -lha
+      run: echo JAU && pwd && echo $GITHUB_WORKSPACE && cd $GITHUB_WORKSPACE && ls -lha
       shell: bash
 
     - name: DEBUG1
