@@ -73,13 +73,15 @@ if (run('git branch').includes('* main')) {
     if (process.env.USER_NAME_GITHUB) {
         log.info(`Set git user name to "${process.env.USER_NAME_GITHUB}".`)
         log.info(run(
-            `git config user.name '${process.env.USER_NAME_GITHUB}'`
+            `git config user.name '${process.env.USER_NAME_GITHUB}'`,
+            {cwd: PUBLIC_REPOSITORY_PATH}
         ))
     }
     if (process.env.USER_EMAIL_GITHUB) {
         log.info(`Set git user email to "${process.env.USER_EMAIL_GITHUB}".`)
         log.info(run(
-            `git config user.email '${process.env.USER_EMAIL_GITHUB}'`
+            `git config user.email '${process.env.USER_EMAIL_GITHUB}'`,
+            {cwd: PUBLIC_REPOSITORY_PATH}
         ))
     }
 
