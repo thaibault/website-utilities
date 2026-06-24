@@ -21,7 +21,7 @@ runs:
         debug: ${{ inputs.debug }}
 
     - name: Check out the public website repository.
-      uses: actions/checkout@master
+      uses: actions/checkout@main
       with:
         repository: ${{ inputs.repository }}
         token: ${{ inputs.pat-token }}
