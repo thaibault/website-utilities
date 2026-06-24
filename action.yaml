@@ -26,18 +26,22 @@ runs:
       with:
         debug: ${{ inputs.debug }}
 
-    - name: Change Owner of Container Working Directory
-      run: chown root:root .
-      shell: bash
-
     - name: Check out the public website repository.
       uses: actions/checkout@master
       with:
         repository: ${{ inputs.repository }}
         token: ${{ inputs.token }}
 
-    - name: Trigger deployment script.
-      env:
-        PUBLIC_REPOSITORY_PATH: ${{ env.GITHUB_WORKSPACE }}
-      run: yarn run update:website
+    - name: DEBUG
+      run: ls -lha
       shell: bash
+
+    - name: Change Owner of Container Working Directory
+      run: chown root:root .
+      shell: bash
+
+    #- name: Trigger deployment script.
+    #  env:
+    #    PUBLIC_REPOSITORY_PATH: ${{ env.GITHUB_WORKSPACE }}
+    #  run: yarn run update:website
+    #  shell: bash
