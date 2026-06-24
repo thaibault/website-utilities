@@ -33,6 +33,10 @@ runs:
         token: ${{ inputs.pat-token }}
         path: ${{ github.workspace }}/public-repository
 
+    - name: Remove ".git" folder to avoid confusion about the current repository.
+      run: rm -rf "${GITHUB_WORKSPACE}/.git"
+      shell: bash
+
     - name: Fix Git Safe Directory
       run: git config --global --add safe.directory "${GITHUB_WORKSPACE}/public-repository"
       shell: bash
