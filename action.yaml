@@ -27,7 +27,7 @@ runs:
         token: ${{ inputs.pat-token }}
 
     - name: DEBUG0
-      run: echo ${{ env.GITHUB_WORKSPACE }} && cd ${{ env.GITHUB_WORKSPACE }} && ls -lha
+      run: echo JAU && echo ${{ env.GITHUB_WORKSPACE }} && cd ${{ env.GITHUB_WORKSPACE }} && ls -lha
       shell: bash
 
     - name: DEBUG1
