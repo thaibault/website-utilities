@@ -32,14 +32,31 @@ export const log =
 const run = (command: string, options = {}): string =>
     execSync(command, {encoding: 'utf-8', shell: '/bin/bash', ...options})
 
-log.info('Build new web page.')
-log.info(run('yarn clear'))
-log.info(run('yarn build'))
-
 if (!await isFile(resolve(PUBLIC_REPOSITORY_PATH, 'CNAME')))
     throw new Error(
         `Missing public website directory in "${PUBLIC_REPOSITORY_PATH}"`
     )
+
+if (process.env.USER_NAME_GITHUB) {
+    log.info(`Set git user name to "${process.env.USER_NAME_GITHUB}".`)
+    log.info(run(
+        `git config user.name '${process.env.USER_NAME_GITHUB}'`,
+        {cwd: PUBLIC_REPOSITORY_PATH}
+    ))
+}
+if (process.env.USER_EMAIL_GITHUB) {
+    log.info(`Set git user email to "${process.env.USER_EMAIL_GITHUB}".`)
+    log.info(run(
+        `git config user.email '${process.env.USER_EMAIL_GITHUB}'`,
+        {cwd: PUBLIC_REPOSITORY_PATH}
+    ))
+}
+log.info('Pull latest public website state.')
+log.info(run('git pull', {cwd: PUBLIC_REPOSITORY_PATH}))
+
+log.info('Build new web page.')
+log.info(run('yarn clear'))
+log.info(run('yarn build'))
 
 log.info(`Update page data in "${PUBLIC_REPOSITORY_PATH}".`)
 
@@ -63,23 +80,7 @@ await copyDirectoryRecursive('build', PUBLIC_REPOSITORY_PATH, true)
 
 log.info(run('yarn clear'))
 
-log.info('Upload compiled webpage')
-
-if (process.env.USER_NAME_GITHUB) {
-    log.info(`Set git user name to "${process.env.USER_NAME_GITHUB}".`)
-    log.info(run(
-        `git config user.name '${process.env.USER_NAME_GITHUB}'`,
-        {cwd: PUBLIC_REPOSITORY_PATH}
-    ))
-}
-if (process.env.USER_EMAIL_GITHUB) {
-    log.info(`Set git user email to "${process.env.USER_EMAIL_GITHUB}".`)
-    log.info(run(
-        `git config user.email '${process.env.USER_EMAIL_GITHUB}'`,
-        {cwd: PUBLIC_REPOSITORY_PATH}
-    ))
-}
-
+log.info('Upload newly build webpage')
 log.info(run(
     `git commit --all --message 'Automatic page build update.'`,
     {cwd: PUBLIC_REPOSITORY_PATH}
