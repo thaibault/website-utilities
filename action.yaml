@@ -5,12 +5,18 @@ inputs:
     description: Sets "NODE_ENV" to "debug".
     required: false
     default: false
+  repository:
+    description: Token to retrieve public repository with.
+    required: true
+  token:
+    description: Token to retrieve public repository with.
+    required: true
 
   # Input not required from the user
-  token:
+  pat-token:
     description: The token used to make requests to the GitHub API.
     required: false
-    default: ${{ github.token }}
+    default: ${{ github.pat-token }}
 
 runs:
   using: composite
@@ -24,6 +30,14 @@ runs:
       run: chown root:root .
       shell: bash
 
+    - name: Check out the public website repository.
+      uses: actions/checkout@master
+      with:
+        repository: ${{ inputs.repository }}
+        token: ${{ inputs.token }}
+
     - name: Trigger deployment script.
+      env:
+        PUBLIC_REPOSITORY_PATH: ${{ env.GITHUB_WORKSPACE }}
       run: yarn run update:website
       shell: bash

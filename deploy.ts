@@ -17,13 +17,13 @@
     endregion
 */
 // region imports
-import {copyDirectoryRecursive, isDirectory, Logger} from 'clientnode'
+import {copyDirectoryRecursive, isFile, Logger} from 'clientnode'
 import {execSync} from 'child_process'
 import {basename, resolve} from 'path'
 import {rimraf as removeDirectoryRecursively} from 'rimraf'
 // endregion
-export const USERNAME = 'thaibault'
-export const PUBLIC_REPOSITORY_NAME = `${USERNAME}.github.io`
+export const USERNAME = process.env.GIT_PRIVATE_AUTHOR_NAME
+export const PUBLIC_REPOSITORY_PATH = process.env.PUBLIC_REPOSITORY_PATH || resolve('../', `${USERNAME}.github.io`)
 
 export const log =
     new Logger({name: 'website-utilities.deploy', level: 'info'})
@@ -38,7 +38,8 @@ if (run('git branch').includes('* main')) {
 
     const publicWebsitePath: string = resolve('../', PUBLIC_REPOSITORY_NAME)
 
-    if (!await isDirectory(publicWebsitePath))
+    if (!await isFile(resolve(publicWebsitePath, 'CNAME')))
+        throw new Error(`Missing web site directory in "${publicWebsitePath}"`)
         log.info(run(
             `git clone git@github.com:${USERNAME}/${PUBLIC_REPOSITORY_NAME} ` +
             publicWebsitePath
