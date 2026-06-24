@@ -41,10 +41,6 @@ runs:
       run: chown root:root .
       shell: bash
 
-    - name: TODO
-      run: echo JAU+${{ inputs.author_name_github }}+${{ inputs.user_email_github }}
-      shell: bash
-
     - name: Trigger deployment script.
       env:
         PUBLIC_REPOSITORY_PATH: ${{ github.workspace }}/public-repository
