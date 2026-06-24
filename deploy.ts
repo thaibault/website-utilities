@@ -68,14 +68,20 @@ if (run('git branch').includes('* main')) {
 
     log.info('Upload compiled webpage')
 
-    if (process.env.USER_NAME_GITHUB)
+
+
+    if (process.env.USER_NAME_GITHUB) {
+        log.info(`Set git user name to "${process.env.USER_NAME_GITHUB}".`)
         log.info(run(
             `git config user.name '${process.env.USER_NAME_GITHUB}'`
         ))
-    if (process.env.USER_EMAIL_GITHUB)
+    }
+    if (process.env.USER_EMAIL_GITHUB) {
+        log.info(`Set git user email to "${process.env.USER_NAME_GITHUB}".`)
         log.info(run(
             `git config user.email '${process.env.USER_EMAIL_GITHUB}'`
         ))
+    }
 
     log.info(run(
         `git commit --all --message 'Automatic page build update.'`,
