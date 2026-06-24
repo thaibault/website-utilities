@@ -6,16 +6,11 @@ inputs:
     required: false
     default: false
   repository:
-    description: Token to retrieve public repository with.
+    description: The public public repository to push new website to.
     required: true
-  token:
-    description: Token to retrieve public repository with.
-    required: true
-
-  # Input not required from the user
   pat-token:
-    description: The token used to make requests to the GitHub API.
-    required: false
+    description: Personal access token to use to clone and push website into target repository.
+    required: true
     default: ${{ github.pat-token }}
 
 runs:
@@ -30,7 +25,7 @@ runs:
       uses: actions/checkout@master
       with:
         repository: ${{ inputs.repository }}
-        token: ${{ inputs.token }}
+        token: ${{ inputs.pat-token }}
 
     - name: DEBUG
       run: ls -lha
