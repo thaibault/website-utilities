@@ -26,7 +26,15 @@ runs:
         repository: ${{ inputs.repository }}
         token: ${{ inputs.pat-token }}
 
-    - name: DEBUG
+    - name: DEBUG1
+      run: pwd
+      shell: bash
+
+    - name: DEBUG2
+      run: cd .. && ls -lha
+      shell: bash
+
+    - name: DEBUG3
       run: ls -lha
       shell: bash
 
