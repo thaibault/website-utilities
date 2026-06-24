@@ -23,7 +23,9 @@ import {basename, resolve} from 'path'
 import {rimraf as removeDirectoryRecursively} from 'rimraf'
 // endregion
 export const USERNAME = process.env.GIT_PRIVATE_AUTHOR_NAME
-export const PUBLIC_REPOSITORY_PATH = process.env.PUBLIC_REPOSITORY_PATH || resolve('../', `${USERNAME}.github.io`)
+export const PUBLIC_REPOSITORY_PATH =
+    process.env.PUBLIC_REPOSITORY_PATH ||
+    resolve('../', `${USERNAME}.github.io`)
 
 export const log =
     new Logger({name: 'website-utilities.deploy', level: 'info'})
@@ -36,44 +38,40 @@ if (run('git branch').includes('* main')) {
     log.info(run('yarn clear'))
     log.info(run('yarn build'))
 
-    const publicWebsitePath: string = resolve('../', PUBLIC_REPOSITORY_NAME)
+    if (!await isFile(resolve(PUBLIC_REPOSITORY_PATH, 'CNAME')))
+        throw new Error(
+            `Missing web site directory in "${PUBLIC_REPOSITORY_PATH}"`
+        )
 
-    if (!await isFile(resolve(publicWebsitePath, 'CNAME')))
-        throw new Error(`Missing web site directory in "${publicWebsitePath}"`)
-        log.info(run(
-            `git clone git@github.com:${USERNAME}/${PUBLIC_REPOSITORY_NAME} ` +
-            publicWebsitePath
-        ))
+    log.info(run('git pull', {cwd: PUBLIC_REPOSITORY_PATH}))
 
-    log.info(run('git pull', {cwd: publicWebsitePath}))
-
-    log.info(`Update page data in "${publicWebsitePath}".`)
+    log.info(`Update page data in "${PUBLIC_REPOSITORY_PATH}".`)
 
     await removeDirectoryRecursively(
-        publicWebsitePath,
+        PUBLIC_REPOSITORY_PATH,
         {filter: (path) =>
             Promise.resolve(
                 ![
-                    publicWebsitePath,
-                    resolve(publicWebsitePath, '.git'),
-                    resolve(publicWebsitePath, '.github'),
-                    resolve(publicWebsitePath, 'CNAME'),
-                    resolve(publicWebsitePath, 'readme.md'),
-                    resolve(publicWebsitePath, 'public-repository')
+                    PUBLIC_REPOSITORY_PATH,
+                    resolve(PUBLIC_REPOSITORY_PATH, '.git'),
+                    resolve(PUBLIC_REPOSITORY_PATH, '.github'),
+                    resolve(PUBLIC_REPOSITORY_PATH, 'CNAME'),
+                    resolve(PUBLIC_REPOSITORY_PATH, 'readme.md'),
+                    resolve(PUBLIC_REPOSITORY_PATH, 'public-repository')
                 ].some((ignorePath) => path.startsWith(ignorePath))
             )
         }
     )
 
-    await copyDirectoryRecursive('build', publicWebsitePath, true)
+    await copyDirectoryRecursive('build', PUBLIC_REPOSITORY_PATH, true)
 
     log.info(run('yarn clear'))
 
     log.info('Upload compiled webpage')
-    log.info(run('git add --all', {cwd: publicWebsitePath}))
+    log.info(run('git add --all', {cwd: PUBLIC_REPOSITORY_PATH}))
     log.info(run(
         `git commit --message 'Automatic page build update.'`,
-        {cwd: publicWebsitePath}
+        {cwd: PUBLIC_REPOSITORY_PATH}
     ))
-    log.info(run('git push', {cwd: publicWebsitePath}))
+    log.info(run('git push', {cwd: PUBLIC_REPOSITORY_PATH}))
 }
