@@ -11,7 +11,7 @@ inputs:
   pat-token:
     description: Personal access token to use to clone and push website into target repository.
     required: true
-  author_name_github:
+  user_name_github:
     description: Github author name to use to clone and push website into target repository.
     required: true
   user_email_github:
@@ -48,7 +48,7 @@ runs:
     - name: Trigger deployment script.
       env:
         PUBLIC_REPOSITORY_PATH: ${{ github.workspace }}/public-repository
-        AUTHOR_NAME_GITHUB: ${{ inputs.author_name_github }}
+        USER_NAME_GITHUB: ${{ inputs.user_name_github }}
         USER_EMAIL_GITHUB: ${{ inputs.user_email_github }}
       run: yarn run update:website
       shell: bash
