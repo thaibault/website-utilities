@@ -1,0 +1,50 @@
+name: Deploy website
+
+inputs:
+  debug:
+    description: Sets "NODE_ENV" to "debug".
+    required: false
+    default: false
+  repository:
+    description: The public public repository to push new website to.
+    required: true
+  pat-token:
+    description: Personal access token to use to clone and push website into target repository.
+    required: true
+
+runs:
+  using: composite
+
+  steps:
+    - uses: thaibault/install-npm-package-dependencies-action@main
+      with:
+        debug: ${{ inputs.debug }}
+
+    - name: Check out the public website repository.
+      uses: actions/checkout@main
+      with:
+        repository: ${{ inputs.repository }}
+        token: ${{ inputs.pat-token }}
+        path: ${{ github.workspace }}/public-repository
+
+    - name: Fix Git Safe Directory
+      run: git config --global --add safe.directory "${GITHUB_WORKSPACE}/public-repository"
+      shell: bash
+
+    - name: DEBUG2
+      run: cd "${GITHUB_WORKSPACE}/public-repository" && ls -lha
+      shell: bash
+
+    - name: DEBUG3
+      run: ls -lha
+      shell: bash
+
+    - name: Change Owner of Container Working Directory
+      run: chown root:root .
+      shell: bash
+
+    - name: Trigger deployment script.
+      env:
+        PUBLIC_REPOSITORY_PATH: ${{ github.workspace }}/public-repository
+      run: yarn run update:website
+      shell: bash
