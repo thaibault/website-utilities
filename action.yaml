@@ -25,21 +25,14 @@ runs:
       with:
         repository: ${{ inputs.repository }}
         token: ${{ inputs.pat-token }}
+        path: ${{ github.workspace }}/..
 
     - name: Fix Git Safe Directory
-      run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
-      shell: bash
-
-    - name: DEBUG0
-      run: echo JAU && pwd && echo $GITHUB_WORKSPACE && cd $GITHUB_WORKSPACE && ls -lha
-      shell: bash
-
-    - name: DEBUG1
-      run: pwd
+      run: git config --global --add safe.directory "${GITHUB_WORKSPACE}/.."
       shell: bash
 
     - name: DEBUG2
-      run: cd .. && ls -lha
+      run: cd "${GITHUB_WORKSPACE}/.." && ls -lha
       shell: bash
 
     - name: DEBUG3
@@ -52,6 +45,6 @@ runs:
 
     #- name: Trigger deployment script.
     #  env:
-    #    PUBLIC_REPOSITORY_PATH: ${{ env.GITHUB_WORKSPACE }}
+    #    PUBLIC_REPOSITORY_PATH: ${{ github.workspace }}/..
     #  run: yarn run update:website
     #  shell: bash
