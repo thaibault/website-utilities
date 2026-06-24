@@ -40,7 +40,7 @@ if (run('git branch').includes('* main')) {
 
     if (!await isFile(resolve(PUBLIC_REPOSITORY_PATH, 'CNAME')))
         throw new Error(
-            `Missing web site directory in "${PUBLIC_REPOSITORY_PATH}"`
+            `Missing public website directory in "${PUBLIC_REPOSITORY_PATH}"`
         )
 
     log.info(run('git pull', {cwd: PUBLIC_REPOSITORY_PATH}))
