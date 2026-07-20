@@ -246,7 +246,7 @@
         "javaScript": {
           "pattern": {
             "#": "This is how we can make our test artefact executable.",
-            "__evaluate__": "`#!/usr/bin/env node\n// -*- coding: utf-8 -*-\n${self.generic.assetPattern.javaScript.pattern}{1}`"
+            "__evaluate__": "`#!/usr/bin/env node\n// -*- coding: utf-8 -*-\n${self.generic.assetPattern.javaScript.pattern ?? ''}{1}`"
           }
         }
       },
