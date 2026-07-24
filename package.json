@@ -32,6 +32,7 @@
     "_variables.scss"
   ],
   "bin": "deploy.js",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/thaibault/website-utilities"
@@ -60,49 +61,49 @@
     "watch": "weboptimizer build --watch"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.29.7",
-    "@babel/plugin-transform-proto-to-assign": "^7.29.7",
-    "@babel/runtime": "^7.29.7",
+    "@babel/eslint-parser": "^8.0.1",
+    "@babel/plugin-transform-proto-to-assign": "^8.0.1",
+    "@babel/runtime": "^8.0.0",
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/ejs": "^3.1.5",
     "@types/html-minifier": "^4.0.6",
     "@types/jsdom": "^28.0.3",
-    "@types/node": "^26.0.0",
+    "@types/node": "^26.1.1",
     "@types/webpack-env": "^1.18.8",
-    "@typescript-eslint/eslint-plugin": "^8.62.0",
-    "@typescript-eslint/parser": "^8.62.0",
+    "@typescript-eslint/eslint-plugin": "^8.65.0",
+    "@typescript-eslint/parser": "^8.65.0",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "bootstrap-icons": "^1.13.1",
-    "clientnode": "^4.0.1427",
+    "clientnode": "^4.0.1469",
     "css-loader": "^7.1.4",
     "cssnano": "^8.0.2",
-    "eslint": "^10.5.0",
+    "eslint": "^10.7.0",
     "eslint-config-google": "^0.14.0",
-    "eslint-plugin-jsdoc": "^63.0.7",
+    "eslint-plugin-jsdoc": "^63.2.2",
     "jest": "^30.4.2",
     "jsdoc": "^4.0.5",
     "mini-css-extract-plugin": "^2.10.2",
-    "postcss": "^8.5.15",
+    "postcss": "^8.5.22",
     "postcss-fontpath": "^1.0.0",
     "postcss-import": "^16.1.1",
     "postcss-loader": "^8.2.1",
-    "postcss-preset-env": "^11.3.1",
+    "postcss-preset-env": "^11.3.2",
     "postcss-scss": "^4.0.9",
     "postcss-sprites": "^4.2.1",
     "postcss-url": "^10.1.4",
     "prop-types": "^15.8.1",
     "rimraf": "^6.1.3",
-    "sass": "^1.101.0",
+    "sass": "^1.101.7",
     "sass-loader": "^17.0.0",
     "style-loader": "^4.0.0",
-    "stylelint": "^17.13.0",
+    "stylelint": "^17.14.1",
     "stylelint-config-standard-scss": "^17.0.0",
-    "typescript-eslint": "^8.62.0",
-    "web-component-wrapper": "^0.0.602",
-    "web-documentation": "^1.0.41",
-    "weboptimizer": "^3.0.28",
-    "webpack-dev-server": "^5.2.5"
+    "typescript-eslint": "^8.65.0",
+    "web-component-wrapper": "^0.0.605",
+    "web-documentation": "^1.0.42",
+    "weboptimizer": "^4.0.36",
+    "webpack-dev-server": "^6.0.0"
   },
   "peerDependencies": {
     "@babel/runtime": "*",
@@ -249,10 +250,6 @@
             "__evaluate__": "`#!/usr/bin/env node\n// -*- coding: utf-8 -*-\n{1}`"
           }
         }
-      },
-      "exportFormat": {
-        "external": "commonjs2",
-        "self": "commonjs2"
       },
       "generic": {
         "isWeb": false
