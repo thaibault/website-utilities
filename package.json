@@ -80,7 +80,7 @@
     "cssnano": "^8.0.2",
     "eslint": "^10.8.0",
     "eslint-config-google": "^0.14.0",
-    "eslint-plugin-jsdoc": "^63.2.2",
+    "eslint-plugin-jsdoc": "^63.3.0",
     "jest": "^30.4.2",
     "jsdoc": "^4.0.5",
     "mini-css-extract-plugin": "^2.10.2",
@@ -100,9 +100,9 @@
     "stylelint": "^17.14.1",
     "stylelint-config-standard-scss": "^17.0.0",
     "typescript-eslint": "^8.65.0",
-    "web-component-wrapper": "^0.0.606",
+    "web-component-wrapper": "^0.0.607",
     "web-documentation": "^1.0.42",
-    "weboptimizer": "^4.0.37",
+    "weboptimizer": "^4.0.39",
     "webpack-dev-server": "^6.0.0"
   },
   "peerDependencies": {
