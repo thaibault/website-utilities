@@ -75,7 +75,7 @@
     "@typescript-eslint/parser": "^8.65.0",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "bootstrap-icons": "^1.13.1",
-    "clientnode": "^4.0.1472",
+    "clientnode": "^4.0.1474",
     "css-loader": "^7.1.4",
     "cssnano": "^8.0.2",
     "eslint": "^10.8.0",
@@ -100,9 +100,9 @@
     "stylelint": "^17.14.1",
     "stylelint-config-standard-scss": "^17.0.0",
     "typescript-eslint": "^8.65.0",
-    "web-component-wrapper": "^0.0.607",
+    "web-component-wrapper": "^0.0.608",
     "web-documentation": "^1.0.43",
-    "weboptimizer": "^4.0.40",
+    "weboptimizer": "^4.0.41",
     "webpack-dev-server": "^6.0.0"
   },
   "peerDependencies": {
@@ -246,7 +246,7 @@
       "assetPattern": {
         "javaScript": {
           "pattern": {
-            "#": "This is how we can make our test artefact executable.",
+            "#": "This is how we can make our artefact executable.",
             "__evaluate__": "`#!/usr/bin/env node\n// -*- coding: utf-8 -*-\n{1}`"
           }
         }
