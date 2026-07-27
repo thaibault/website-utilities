@@ -144,11 +144,6 @@
     "trackingCode": "UA-40192634-5"
   },
   "webOptimizer": {
-    "cascadingStyleSheet": {
-      "options": {
-        "esModule": true
-      }
-    },
     "commandLine": {
       "lint": {
         "__remove__": "__0__",
@@ -189,6 +184,11 @@
       }
     },
     "module": {
+      "cascadingStyleSheet": {
+        "options": {
+          "esModule": true
+        }
+      },
       "enforceDeduplication": true,
       "html": {
         "options": {
