@@ -75,12 +75,12 @@
     "@typescript-eslint/parser": "^8.65.0",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "bootstrap-icons": "^1.13.1",
-    "clientnode": "^4.0.1474",
+    "clientnode": "^4.0.1475",
     "css-loader": "^7.1.4",
     "cssnano": "^8.0.2",
     "eslint": "^10.8.0",
     "eslint-config-google": "^0.14.0",
-    "eslint-plugin-jsdoc": "^63.3.0",
+    "eslint-plugin-jsdoc": "^63.3.1",
     "jest": "^30.4.2",
     "jsdoc": "^4.0.5",
     "mini-css-extract-plugin": "^2.10.2",
@@ -144,6 +144,11 @@
     "trackingCode": "UA-40192634-5"
   },
   "webOptimizer": {
+    "cascadingStyleSheet": {
+      "options": {
+        "esModule": true
+      }
+    },
     "commandLine": {
       "lint": {
         "__remove__": "__0__",
