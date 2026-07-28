@@ -17,6 +17,11 @@
     endregion
 */
 // region imports
+import type {Mapping} from 'clientnode'
+import type {WebComponentAPI} from 'web-component-wrapper/type'
+
+import type {DefaultOptions, Options, TrackingItem} from './type'
+
 import {
     camelCaseToDelimited,
     extend,
@@ -28,7 +33,6 @@ import {
     interruptableScrollTo,
     Lock,
     Logger,
-    Mapping,
     NOOP,
     onDocumentReady,
     preventDefault,
@@ -38,10 +42,7 @@ import {
 } from 'clientnode'
 import {func, object} from 'clientnode/property-types'
 import {property} from 'web-component-wrapper/decorator'
-import {WebComponentAPI} from 'web-component-wrapper/type'
 import {Web} from 'web-component-wrapper/Web'
-
-import {DefaultOptions, Options, TrackingItem} from './type'
 // endregion
 export const log = new Logger({name: 'website-utilities'})
 // region plugins/classes
