@@ -13,10 +13,16 @@
   },
   "license": "CC-BY-3.0",
   "author": {
-    "name": "Torben Sickert",
     "email": "info@torben.website",
+    "name": "Torben Sickert",
     "url": "https://torben.website"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thaibault/website-utilities"
+  },
+  "type": "module",
+  "bin": "deploy.js",
   "files": [
     "deploy.d.ts",
     "deploy.js",
@@ -31,17 +37,12 @@
     "type.d.ts",
     "_variables.scss"
   ],
-  "bin": "deploy.js",
-  "type": "module",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/thaibault/website-utilities"
-  },
+  "sideEffects": false,
   "scripts": {
     "build": "yarn build:types; yarn build:deploy; yarn build:web",
-    "build:deploy": "weboptimizer build '{__reference__: \"target:deploy\"}'",
     "build:bundle": "yarn build:types; yarn build:deploy; yarn build:bundle:web",
     "build:bundle:web": "weboptimizer build '{__reference__: \"target:bundle\"}'",
+    "build:deploy": "weboptimizer build '{__reference__: \"target:deploy\"}'",
     "build:types": "weboptimizer build:types",
     "build:web": "weboptimizer build",
     "check": "yarn check:types; yarn lint",
@@ -123,18 +124,17 @@
       "optional": true
     }
   },
+  "resolutions": {
+    "colors": "1.4.0",
+    "globals@npm:^11.1.0": "patch:globals@npm%3A11.12.0#~/.yarn/patches/globals-npm-11.12.0-1fa7f41a6c.patch",
+    "globals@npm:^14.0.0": "patch:globals@npm%3A11.12.0#~/.yarn/patches/globals-npm-11.12.0-1fa7f41a6c.patch",
+    "globals@npm:^9.18.0": "patch:globals@npm%3A11.12.0#~/.yarn/patches/globals-npm-11.12.0-1fa7f41a6c.patch"
+  },
   "engines": {
     "node": ">=24",
     "npm": ">=11",
     "yarn": ">=4"
   },
-  "resolutions": {
-    "colors": "1.4.0",
-    "globals@npm:^14.0.0": "patch:globals@npm%3A11.12.0#~/.yarn/patches/globals-npm-11.12.0-1fa7f41a6c.patch",
-    "globals@npm:^11.1.0": "patch:globals@npm%3A11.12.0#~/.yarn/patches/globals-npm-11.12.0-1fa7f41a6c.patch",
-    "globals@npm:^9.18.0": "patch:globals@npm%3A11.12.0#~/.yarn/patches/globals-npm-11.12.0-1fa7f41a6c.patch"
-  },
-  "sideEffects": false,
   "webDocumentation": {
     "languages": [
       "deDE",
@@ -146,7 +146,6 @@
   "webOptimizer": {
     "commandLine": {
       "lint": {
-        "__remove__": "__0__",
         "__prepend__": {
           "arguments": [
             {
@@ -159,7 +158,8 @@
           ],
           "command": "stylelint",
           "indicator": "self.needed.cascadingStyleSheet"
-        }
+        },
+        "__remove__": "__0__"
       },
       "test": {
         "environments": [
@@ -242,9 +242,28 @@
       ],
       "rules": {
         "#": "Deactivates default CSS checks for unknown \"@-ruels\".",
-        "at-rule-no-unknown": null,
         "#1": "Activates SCSS checks for \"@use\", \"@forward\" and so on.",
+        "at-rule-no-unknown": null,
         "scss/at-rule-no-unknown": true
+      }
+    },
+    "target:bundle": {
+      "inPlace": {
+        "externalLibrary": {
+          "dynamic": true,
+          "normal": true
+        }
+      },
+      "module": {
+        "preprocessor": {
+          "javaScript": {
+            "options": {
+              "plugins": {
+                "__remove__": "@babel/plugin-transform-runtime"
+              }
+            }
+          }
+        }
       }
     },
     "target:deploy": {
@@ -284,25 +303,6 @@
       "targetTechnology": {
         "boilerplate": "node",
         "payload": "node"
-      }
-    },
-    "target:bundle": {
-      "inPlace": {
-        "externalLibrary": {
-          "dynamic": true,
-          "normal": true
-        }
-      },
-      "module": {
-        "preprocessor": {
-          "javaScript": {
-            "options": {
-              "plugins": {
-                "__remove__": "@babel/plugin-transform-runtime"
-              }
-            }
-          }
-        }
       }
     },
     "webpack": {
