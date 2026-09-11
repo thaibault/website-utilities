@@ -13,10 +13,16 @@
   },
   "license": "CC-BY-3.0",
   "author": {
-    "name": "Torben Sickert",
     "email": "info@torben.website",
+    "name": "Torben Sickert",
     "url": "https://torben.website"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thaibault/website-utilities"
+  },
+  "type": "module",
+  "bin": "deploy.js",
   "files": [
     "deploy.d.ts",
     "deploy.js",
@@ -31,17 +37,12 @@
     "type.d.ts",
     "_variables.scss"
   ],
-  "bin": "deploy.js",
-  "type": "module",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/thaibault/website-utilities"
-  },
+  "sideEffects": false,
   "scripts": {
     "build": "yarn build:types; yarn build:deploy; yarn build:web",
-    "build:deploy": "weboptimizer build '{__reference__: \"target:deploy\"}'",
     "build:bundle": "yarn build:types; yarn build:deploy; yarn build:bundle:web",
     "build:bundle:web": "weboptimizer build '{__reference__: \"target:bundle\"}'",
+    "build:deploy": "weboptimizer build '{__reference__: \"target:deploy\"}'",
     "build:types": "weboptimizer build:types",
     "build:web": "weboptimizer build",
     "check": "yarn check:types; yarn lint",
@@ -61,48 +62,48 @@
     "watch": "weboptimizer build --watch"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^8.0.1",
+    "@babel/eslint-parser": "^8.0.5",
     "@babel/plugin-transform-proto-to-assign": "^8.0.1",
-    "@babel/runtime": "^8.0.0",
+    "@babel/runtime": "^8.0.5",
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/ejs": "^3.1.5",
     "@types/html-minifier": "^4.0.6",
-    "@types/jsdom": "^28.0.3",
-    "@types/node": "^26.1.2",
+    "@types/jsdom": "^30.0.0",
+    "@types/node": "^26.5.1",
     "@types/webpack-env": "^1.18.8",
-    "@typescript-eslint/eslint-plugin": "^8.65.0",
-    "@typescript-eslint/parser": "^8.65.0",
+    "@typescript-eslint/eslint-plugin": "^8.70.0",
+    "@typescript-eslint/parser": "^8.70.0",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "bootstrap-icons": "^1.13.1",
-    "clientnode": "^4.0.1481",
-    "css-loader": "^7.1.4",
-    "cssnano": "^8.0.2",
-    "eslint": "^10.8.0",
+    "clientnode": "^4.0.1516",
+    "css-loader": "^7.1.5",
+    "cssnano": "^9.0.4",
+    "eslint": "^10.10.0",
     "eslint-config-google": "^0.14.0",
-    "eslint-plugin-jsdoc": "^63.3.2",
-    "jest": "^30.4.2",
+    "eslint-plugin-jsdoc": "^64.3.9",
+    "jest": "^30.5.1",
     "jsdoc": "^4.0.5",
     "mini-css-extract-plugin": "^2.10.2",
-    "postcss": "^8.5.25",
+    "postcss": "^8.5.28",
     "postcss-fontpath": "^1.0.0",
-    "postcss-import": "^16.1.1",
+    "postcss-import": "^17.0.0",
     "postcss-loader": "^8.2.1",
-    "postcss-preset-env": "^11.3.2",
+    "postcss-preset-env": "^11.5.2",
     "postcss-scss": "^4.0.9",
     "postcss-sprites": "^4.2.1",
     "postcss-url": "^10.1.4",
     "prop-types": "^15.8.1",
     "rimraf": "^6.1.3",
-    "sass": "^1.102.0",
-    "sass-loader": "^17.0.0",
+    "sass": "^1.104.0",
+    "sass-loader": "^17.0.1",
     "style-loader": "^4.0.0",
-    "stylelint": "^17.14.1",
+    "stylelint": "^17.15.0",
     "stylelint-config-standard-scss": "^17.0.0",
-    "typescript-eslint": "^8.65.0",
-    "web-component-wrapper": "^0.0.610",
-    "web-documentation": "^1.0.44",
-    "weboptimizer": "^4.0.47",
+    "typescript-eslint": "^8.70.0",
+    "web-component-wrapper": "^0.0.612",
+    "web-documentation": "^1.0.52",
+    "weboptimizer": "^4.0.81",
     "webpack-dev-server": "^6.0.0"
   },
   "peerDependencies": {
@@ -123,18 +124,17 @@
       "optional": true
     }
   },
-  "engines": {
-    "node": ">=24",
-    "npm": ">=11",
-    "yarn": ">=4"
-  },
   "resolutions": {
     "colors": "1.4.0",
-    "globals@npm:^14.0.0": "patch:globals@npm%3A11.12.0#~/.yarn/patches/globals-npm-11.12.0-1fa7f41a6c.patch",
     "globals@npm:^11.1.0": "patch:globals@npm%3A11.12.0#~/.yarn/patches/globals-npm-11.12.0-1fa7f41a6c.patch",
+    "globals@npm:^14.0.0": "patch:globals@npm%3A11.12.0#~/.yarn/patches/globals-npm-11.12.0-1fa7f41a6c.patch",
     "globals@npm:^9.18.0": "patch:globals@npm%3A11.12.0#~/.yarn/patches/globals-npm-11.12.0-1fa7f41a6c.patch"
   },
-  "sideEffects": false,
+  "engines": {
+    "node": ">=26",
+    "npm": ">=12",
+    "yarn": ">=4"
+  },
   "webDocumentation": {
     "languages": [
       "deDE",
@@ -146,8 +146,7 @@
   "webOptimizer": {
     "commandLine": {
       "lint": {
-        "__remove__": "__0__",
-        "__prepend__": {
+        "__append__": {
           "arguments": [
             {
               "__evaluate__": "path.resolve(self.path.source.asset.cascadingStyleSheet, '**/*.scss')"
@@ -159,7 +158,8 @@
           ],
           "command": "stylelint",
           "indicator": "self.needed.cascadingStyleSheet"
-        }
+        },
+        "__remove__": "__0__"
       },
       "test": {
         "environments": [
@@ -194,6 +194,7 @@
         "options": {
           "sources": {
             "urlFilter": {
+              "#": "Do not process any referenced resource in HTML.",
               "__evaluate__": "() => false"
             }
           }
@@ -234,17 +235,35 @@
       }
     },
     "stylelint": {
-      "customSyntax": "postcss-scss",
-      "extends": "stylelint-config-standard-scss",
-      "ignoreFiles": "**/node_modules/*",
       "plugins": [
         "stylelint-scss"
       ],
+      "#:annotation-no-unknown": "Avoids issues about unknown \"!default\" annotation in variable assignment statements.",
+      "#:rules:at-rule-descriptor-no-unknown": "Avoid findings about unknown \"font-path\" descriptors in \"@font-face\".",
+      "#:at-rule-no-unknown": "Avoid findings about unknown \"@-rules\" like \"@use\".",
       "rules": {
-        "#": "Deactivates default CSS checks for unknown \"@-ruels\".",
-        "at-rule-no-unknown": null,
-        "#1": "Activates SCSS checks for \"@use\", \"@forward\" and so on.",
-        "scss/at-rule-no-unknown": true
+        "annotation-no-unknown": null,
+        "at-rule-descriptor-no-unknown": null,
+        "at-rule-no-unknown": null
+      }
+    },
+    "target:bundle": {
+      "inPlace": {
+        "externalLibrary": {
+          "dynamic": true,
+          "normal": true
+        }
+      },
+      "module": {
+        "preprocessor": {
+          "javaScript": {
+            "options": {
+              "plugins": {
+                "__remove__": "@babel/plugin-transform-runtime"
+              }
+            }
+          }
+        }
       }
     },
     "target:deploy": {
@@ -286,25 +305,6 @@
         "payload": "node"
       }
     },
-    "target:bundle": {
-      "inPlace": {
-        "externalLibrary": {
-          "dynamic": true,
-          "normal": true
-        }
-      },
-      "module": {
-        "preprocessor": {
-          "javaScript": {
-            "options": {
-              "plugins": {
-                "__remove__": "@babel/plugin-transform-runtime"
-              }
-            }
-          }
-        }
-      }
-    },
     "webpack": {
       "snapshot": {
         "unmanagedPaths": [
@@ -323,5 +323,5 @@
       }
     }
   },
-  "packageManager": "yarn@4.14.1+sha512.64df448055b2d37ba269d7db535a469b8da93f8ef1140c25fd7a83c00a8fbaacb214ca0e02553b92a2c54cef78bb67d0b4817fab02001df0e24fac0faccc3b42"
+  "packageManager": "yarn@4.18.0"
 }
