@@ -238,11 +238,13 @@
       "plugins": [
         "stylelint-scss"
       ],
-      "#:rules:at-rule-no-unknown": "Deactivates default CSS checks for unknown \"@-ruels\".",
-      "#:rules:scss/at-rule-no-unknown": "Activates SCSS checks for \"@use\", \"@forward\" and so on.",
+      "#:annotation-no-unknown": "Avoids issues about unknown \"!default\" annotation in variable assignment statements.",
+      "#:rules:at-rule-descriptor-no-unknown": "Avoid findings about unknown \"font-path\" descriptors in \"@font-face\".",
+      "#:at-rule-no-unknown": "Avoid findings about unknown \"@-rules\" like \"@use\".",
       "rules": {
-        "at-rule-no-unknown": null,
-        "scss/at-rule-no-unknown": true
+        "annotation-no-unknown": null,
+        "at-rule-descriptor-no-unknown": null,
+        "at-rule-no-unknown": null
       }
     },
     "target:bundle": {

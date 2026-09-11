@@ -258,15 +258,6 @@ endregion
     .wu-priority-navigation__list {
         list-style: none;
 
-        li {
-            display: inline-block;
-            position: relative;
-
-            &.wu-priority-navigation__list__overflow-indicator {
-                display: none;
-            }
-        }
-
         .wu-priority-navigation__list__overflow-indicator {
             cursor: pointer;
 
@@ -314,6 +305,15 @@ endregion
                 }
             }
         }
+
+        li {
+            display: inline-block;
+            position: relative;
+
+            &.wu-priority-navigation__list__overflow-indicator {
+                display: none;
+            }
+        }
     }
 
     &.wu-priority-navigation--show-overflow-indicator {
@@ -332,20 +332,20 @@ endregion
                 letter-spacing: 0.4em;
             }
 
-            li:first-child {
-                margin-top: 0;
-            }
-
             li {
                 transition: all var(--wu-toggle-mobile-menu-animation-duration);
                 color: white;
+            }
+
+            li:first-child {
+                margin-top: 0;
             }
 
             a {
                 cursor: pointer;
             }
         }
-
+        /* stylelint-disable-next-line no-descending-specificity */
         .wu-priority-navigation__list__overflow-indicator {
             display: inline-block !important;
         }
