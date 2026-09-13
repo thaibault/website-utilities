@@ -67,16 +67,14 @@ log.info(`Update page data in "${PUBLIC_REPOSITORY_PATH}".`)
 await removeDirectoryRecursively(
     PUBLIC_REPOSITORY_PATH,
     {filter: (path) =>
-        Promise.resolve(
-            ![
-                PUBLIC_REPOSITORY_PATH,
-                resolve(PUBLIC_REPOSITORY_PATH, '.git'),
-                resolve(PUBLIC_REPOSITORY_PATH, '.github'),
-                resolve(PUBLIC_REPOSITORY_PATH, 'CNAME'),
-                resolve(PUBLIC_REPOSITORY_PATH, 'readme.md'),
-                resolve(PUBLIC_REPOSITORY_PATH, 'public-repository')
-            ].some((ignorePath) => path.startsWith(ignorePath))
-        )
+        path !== PUBLIC_REPOSITORY_PATH &&
+        ![
+            resolve(PUBLIC_REPOSITORY_PATH, '.git'),
+            resolve(PUBLIC_REPOSITORY_PATH, '.github'),
+            resolve(PUBLIC_REPOSITORY_PATH, 'CNAME'),
+            resolve(PUBLIC_REPOSITORY_PATH, 'readme.md'),
+            resolve(PUBLIC_REPOSITORY_PATH, 'public-repository')
+        ].some((ignorePath) => path.startsWith(ignorePath))
     }
 )
 
