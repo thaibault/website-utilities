@@ -17,11 +17,15 @@
     endregion
 */
 // region imports
-import {copyDirectoryRecursive, isFile, Logger} from 'clientnode'
+import {
+    copyDirectoryRecursive, importFilesystemAPI, isFile, Logger
+} from 'clientnode'
 import {execSync} from 'child_process'
 import {resolve} from 'path'
 import {rimraf as removeDirectoryRecursively} from 'rimraf'
 // endregion
+await importFilesystemAPI()
+
 export const PUBLIC_REPOSITORY_PATH =
     process.env.PUBLIC_REPOSITORY_PATH ||
     resolve('../', `${process.env.GIT_PRIVATE_AUTHOR_NAME || ''}.github.io`)
