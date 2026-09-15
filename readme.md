@@ -29,17 +29,26 @@ Project status
 [![web documentation](https://img.shields.io/website-up-down-green-red/https/torben.website/website-utilities.svg?label=web-documentation&style=for-the-badge)](https://torben.website/website-utilities)
 
 <!--|deDE:Einsatzmöglichkeiten-->
+<!--|frFR:Utilisier-->
 Use cases
 ---------
 
 <ul>
-    <li>Predefined scroll events<!--deDE:Vordefinierte Scroll-Events--></li>
+    <li>
+        Predefined scroll events
+        <!--deDE:Vordefinierte Scroll-Events-->
+        <!--frFR:Événements de défilement prédéfinis-->
+    </li>
     <li>
         Full window loading cover which disappears when the page has been
         loaded
         <!--deDE:
             Bildschirmfüllende Ladeanzeige, die verschwindet, sobald die Seite
             geladen wurde
+        -->
+        <!--frFR:
+            Couverture de chargement plein écran qui disparaît lorsque la page
+            est chargée
         -->
     </li>
     <li>
@@ -48,11 +57,18 @@ Use cases
             Der Reihe nach ablaufende Start-Animationen für beliebige
             DOM-Knoten
         -->
+        <!--frFR:
+            Animations de démarrage ordonnées pour n'importe quel nœud DOM
+        -->
     </li>
     <li>
         Hash based routing with section switching and corresponding events
         <!--deDE:
             Hash-basiertes Routing mit Sektionswechsel und zugehörigen Events
+        -->
+        <!--frFR:
+            Routage basé sur le hachage avec changement de section et événements
+            associés
         -->
     </li>
     <li>
@@ -60,6 +76,10 @@ Use cases
         <!--deDE:
             Unterbrechbares, animiertes und weiches Scrollen zu internen
             Linkzielen
+        -->
+        <!--frFR:
+            Défilement fluide et animé, interrompable, vers des cibles de liens
+            internes
         -->
     </li>
     <li>
@@ -69,12 +89,20 @@ Use cases
             Konfigurierbarer "Nach-oben-scrollen"-Button mit Zustandsklassen,
             die die Scrollrichtung berücksichtigen
         -->
+        <!--frFR:
+            Bouton de retour en haut configurable avec classes d'état sensibles à
+            la direction du défilement
+        -->
     </li>
     <li>
         Responsive priority navigation with automatically managed overflow menu
         <!--deDE:
             Responsive Prioritäts-Navigation mit automatisch verwaltetem
             Überlauf-Menü
+        -->
+        <!--frFR:
+            Navigation prioritaire réactive avec menu de dépassement géré
+            automatiquement
         -->
     </li>
     <li>
@@ -84,11 +112,19 @@ Use cases
             Hervorhebung des Navigationselements der aktuell sichtbaren Sektion
             inklusive Unterstützung für View-Transitions
         -->
+        <!--frFR:
+            Mise en surbrillance de l'élément de navigation de la section
+            actuellement visible, y compris la prise en charge des transitions de
+            vue
+        -->
     </li>
     <li>
         Programmatically enabling and disabling of page scrolling
         <!--deDE:
             Programmatisches Aktivieren und Deaktivieren des Seiten-Scrollens
+        -->
+        <!--frFR:
+            Activation et désactivation programmatiques du défilement de la page
         -->
     </li>
     <li>
@@ -98,6 +134,10 @@ Use cases
             Callbacks bei Wechsel des Media-Query-Modus (extra klein, klein,
             mittel und groß)
         -->
+        <!--frFR:
+            Rappels lors du changement de mode de requête média (très petit,
+            petit, moyen et grand)
+        -->
     </li>
     <li>
         Optional analytics tracking of link, button and section switch events
@@ -105,6 +145,10 @@ Use cases
         <!--deDE:
             Optionales Analyse-Tracking von Link-, Button- und
             Sektionswechsel-Events über einen generischen Data-Layer
+        -->
+        <!--frFR:
+            Suivi analytique optionnel des événements de liens, boutons et
+            changement de section via une couche de données générique
         -->
     </li>
 </ul>
@@ -114,7 +158,6 @@ Use cases
     <!--wd-table-of-contents-->
 </div>
 
-<!--|deDE:Installation-->
 Installation
 ------------
 
@@ -136,6 +179,7 @@ npm install website-utilities
 ```
 
 <!--|deDE:Verwendung-->
+<!--|frFR:Demande-->
 Usage
 -----
 
