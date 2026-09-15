@@ -135,7 +135,7 @@ zip file here and inject or request via CDN in HTML:
 npm install website-utilities
 ```
 
-<!--deDE:Verwendung-->
+<!--|deDE:Verwendung-->
 Usage
 -----
 
