@@ -4616,12 +4616,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^26.4.0, @types/node@npm:^26.5.1":
+"@types/node@npm:^26.4.0":
   version: 26.5.1
   resolution: "@types/node@npm:26.5.1"
   dependencies:
     undici-types: "npm:~8.9.0"
   checksum: 10c0/40aa7aa4c099c8a08bf39b5bcb15eaf2cc073666c2191b1d9ac8243ce6b68b23ace904a044c521f6d310b70e94514b531be5f4fc184f141a7ce7f0679ebc7bb3
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^26.6.0":
+  version: 26.6.0
+  resolution: "@types/node@npm:26.6.0"
+  dependencies:
+    undici-types: "npm:~8.9.0"
+  checksum: 10c0/147a3ad48c8deab7ba55b323be868b5ff9df950803a7a61662f70a50e703739c98041b68142363a7eef7a1e4b61b5d5c3d802cf2d9982125eecebe768d677bb9
   languageName: node
   linkType: hard
 
@@ -7203,7 +7212,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clientnode@npm:4.0.1517, clientnode@npm:^4.0.1517":
+"clientnode@npm:4.0.1517":
   version: 4.0.1517
   resolution: "clientnode@npm:4.0.1517"
   peerDependencies:
@@ -7218,6 +7227,24 @@ __metadata:
     prop-types:
       optional: true
   checksum: 10c0/c3cacc62b1e34c9dd83b1329a1fdc60d21c2aa37ffe5637d201a1b195fc8bdba56a6af7a70dfb5ec1c421f5b7b4459f3d4b71043407130911056b502b183e5d1
+  languageName: node
+  linkType: hard
+
+"clientnode@npm:^4.0.1518":
+  version: 4.0.1518
+  resolution: "clientnode@npm:4.0.1518"
+  peerDependencies:
+    "@types/prop-types": "*"
+    node-fetch: "*"
+    prop-types: "*"
+  peerDependenciesMeta:
+    "@types/prop-types":
+      optional: true
+    node-fetch:
+      optional: true
+    prop-types:
+      optional: true
+  checksum: 10c0/dd8fc5277dc57c2bd333e3590c01e3db7c02b77a40fe64e5869e758267dc350369dd1195709040edc7e304778394e1ecc250f79a0a89302956a5011f544a94b6
   languageName: node
   linkType: hard
 
@@ -17036,13 +17063,13 @@ __metadata:
     "@types/ejs": "npm:^3.1.5"
     "@types/html-minifier": "npm:^4.0.6"
     "@types/jsdom": "npm:^30.0.0"
-    "@types/node": "npm:^26.5.1"
+    "@types/node": "npm:^26.6.0"
     "@types/webpack-env": "npm:^1.18.8"
     "@typescript-eslint/eslint-plugin": "npm:^8.70.0"
     "@typescript-eslint/parser": "npm:^8.70.0"
     "@webcomponents/webcomponentsjs": "npm:^2.8.0"
     bootstrap-icons: "npm:^1.13.1"
-    clientnode: "npm:^4.0.1517"
+    clientnode: "npm:^4.0.1518"
     css-loader: "npm:^7.1.5"
     cssnano: "npm:^9.0.4"
     eslint: "npm:^10.10.0"
