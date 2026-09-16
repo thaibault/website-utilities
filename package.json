@@ -39,13 +39,13 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "yarn build:types; yarn build:deploy; yarn build:web",
-    "build:bundle": "yarn build:types; yarn build:deploy; yarn build:bundle:web",
+    "build": "yarn build:types && yarn build:deploy && yarn build:web",
+    "build:bundle": "yarn build:types && yarn build:deploy && yarn build:bundle:web",
     "build:bundle:web": "weboptimizer build '{__reference__: \"target:bundle\"}'",
     "build:deploy": "weboptimizer build '{__reference__: \"target:deploy\"}'",
     "build:types": "weboptimizer build:types",
     "build:web": "weboptimizer build",
-    "check": "yarn check:types; yarn lint",
+    "check": "yarn check:types && yarn lint",
     "check:types": "weboptimizer check:types",
     "clear": "weboptimizer clear",
     "deploy": "./deploy.js",
@@ -76,12 +76,12 @@
     "@typescript-eslint/parser": "^8.70.0",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "bootstrap-icons": "^1.13.1",
-    "clientnode": "^4.0.1516",
+    "clientnode": "^4.0.1517",
     "css-loader": "^7.1.5",
     "cssnano": "^9.0.4",
     "eslint": "^10.10.0",
     "eslint-config-google": "^0.14.0",
-    "eslint-plugin-jsdoc": "^64.3.10",
+    "eslint-plugin-jsdoc": "^64.5.0",
     "jest": "^30.5.1",
     "jsdoc": "^4.0.5",
     "mini-css-extract-plugin": "^2.10.2",
@@ -89,7 +89,7 @@
     "postcss-fontpath": "^1.0.0",
     "postcss-import": "^17.0.0",
     "postcss-loader": "^8.2.1",
-    "postcss-preset-env": "^11.5.2",
+    "postcss-preset-env": "^11.5.3",
     "postcss-scss": "^4.0.9",
     "postcss-sprites": "^4.2.1",
     "postcss-url": "^10.1.4",
@@ -101,9 +101,9 @@
     "stylelint": "^17.15.0",
     "stylelint-config-standard-scss": "^17.0.0",
     "typescript-eslint": "^8.70.0",
-    "web-component-wrapper": "^0.0.612",
-    "web-documentation": "^1.0.53",
-    "weboptimizer": "^4.0.83",
+    "web-component-wrapper": "^0.0.614",
+    "web-documentation": "^1.0.60",
+    "weboptimizer": "^4.0.85",
     "webpack-dev-server": "^6.0.0"
   },
   "peerDependencies": {
@@ -138,7 +138,8 @@
   "webDocumentation": {
     "languages": [
       "deDE",
-      "enUS"
+      "enUS",
+      "frFR"
     ],
     "tagline": "extend your web app<!--deDE:erweitere deine Webanwendung-->",
     "trackingCode": "UA-40192634-5"
