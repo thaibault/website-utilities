@@ -8709,9 +8709,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^64.4.0":
-  version: 64.4.0
-  resolution: "eslint-plugin-jsdoc@npm:64.4.0"
+"eslint-plugin-jsdoc@npm:^64.5.0":
+  version: 64.5.0
+  resolution: "eslint-plugin-jsdoc@npm:64.5.0"
   dependencies:
     "@es-joy/jsdoccomment": "npm:~0.97.0"
     "@es-joy/resolve.exports": "npm:1.2.0"
@@ -8730,7 +8730,7 @@ __metadata:
     to-valid-identifier: "npm:^1.0.0"
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
-  checksum: 10c0/2a091d96427f1e57ee7194db5c0bc2d6a5663dd6d2dcc99065abbc9cf1e1dd1b17160a8089b43cf4416b228aba98a1bf9ef28db932812e77ef6435ec3119ec10
+  checksum: 10c0/bb3250ad497eb421d3a589ed48fc0d1cf7b0d7f750057203a7ce32a7d0f231742c6c73017c6293965d12407d58b6e8b2d956adb9f7e9b669b4e235fe086a3e39
   languageName: node
   linkType: hard
 
@@ -16713,12 +16713,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-documentation@npm:^1.0.57":
-  version: 1.0.57
-  resolution: "web-documentation@npm:1.0.57"
+"web-documentation@npm:^1.0.59":
+  version: 1.0.59
+  resolution: "web-documentation@npm:1.0.59"
   bin:
     web-documentation: build/deploy.js
-  checksum: 10c0/06d3f671851f944346fe1452184c1c343bc85966996414972c1e87ba7d1490894f2fc61d103f68fad4dd4351b09bfee3a545a6d4c77583f720eba9d62860847e
+  checksum: 10c0/3e9b80ba2263a8916e50b303540471903823f171726784833835db549d26ba1c96cb1226fb29089afdec0d3b41f75954b4514a12aeea0abeee9135689177b204
   languageName: node
   linkType: hard
 
@@ -16729,9 +16729,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"weboptimizer@npm:^4.0.84":
-  version: 4.0.84
-  resolution: "weboptimizer@npm:4.0.84"
+"weboptimizer@npm:^4.0.85":
+  version: 4.0.85
+  resolution: "weboptimizer@npm:4.0.85"
   dependencies:
     "@babel/core": "npm:^8.0.5"
     "@babel/plugin-proposal-decorators": "npm:^8.0.2"
@@ -16877,7 +16877,7 @@ __metadata:
       optional: true
   bin:
     weboptimizer: index.js
-  checksum: 10c0/2760659b971b431a25496c2bdbe2beb295c3ee898f263ba6d6aaa25ed78f135a4c39ca2a540b37a7f0463456668ff1c51ead01722e34ead4bd24cde2411ee315
+  checksum: 10c0/644e41fd3912139e809a00ef605649ef76ab0f0245f53442a91f0f44139fc809076236458b6d4c805a58c85467ba398d0eea7d5280c7409a11f5e045275dd49a
   languageName: node
   linkType: hard
 
@@ -17047,7 +17047,7 @@ __metadata:
     cssnano: "npm:^9.0.4"
     eslint: "npm:^10.10.0"
     eslint-config-google: "npm:^0.14.0"
-    eslint-plugin-jsdoc: "npm:^64.4.0"
+    eslint-plugin-jsdoc: "npm:^64.5.0"
     jest: "npm:^30.5.1"
     jsdoc: "npm:^4.0.5"
     mini-css-extract-plugin: "npm:^2.10.2"
@@ -17068,8 +17068,8 @@ __metadata:
     stylelint-config-standard-scss: "npm:^17.0.0"
     typescript-eslint: "npm:^8.70.0"
     web-component-wrapper: "npm:^0.0.614"
-    web-documentation: "npm:^1.0.57"
-    weboptimizer: "npm:^4.0.84"
+    web-documentation: "npm:^1.0.59"
+    weboptimizer: "npm:^4.0.85"
     webpack-dev-server: "npm:^6.0.0"
   peerDependencies:
     "@babel/runtime": "*"

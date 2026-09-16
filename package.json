@@ -81,7 +81,7 @@
     "cssnano": "^9.0.4",
     "eslint": "^10.10.0",
     "eslint-config-google": "^0.14.0",
-    "eslint-plugin-jsdoc": "^64.4.0",
+    "eslint-plugin-jsdoc": "^64.5.0",
     "jest": "^30.5.1",
     "jsdoc": "^4.0.5",
     "mini-css-extract-plugin": "^2.10.2",
@@ -102,8 +102,8 @@
     "stylelint-config-standard-scss": "^17.0.0",
     "typescript-eslint": "^8.70.0",
     "web-component-wrapper": "^0.0.614",
-    "web-documentation": "^1.0.57",
-    "weboptimizer": "^4.0.84",
+    "web-documentation": "^1.0.59",
+    "weboptimizer": "^4.0.85",
     "webpack-dev-server": "^6.0.0"
   },
   "peerDependencies": {
