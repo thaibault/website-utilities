@@ -414,13 +414,13 @@ export class WebsiteUtilities<
             )
                 trackingItem.value = 1
 
-            log.debug('Run tracking code: "event" with arguments:')
-            log.debug(trackingItem)
+            void log.debug('Run tracking code: "event" with arguments:')
+            void log.debug(trackingItem)
 
             try {
                 await this._onTrack(trackingItem)
             } catch (error) {
-                log.warn(
+                void log.warn(
                     `Problem in tracking "${represent(trackingItem)}":`,
                     represent(error)
                 )
@@ -832,7 +832,7 @@ export class WebsiteUtilities<
 
             this.triggerNavigationItemHighlighterSwitching(sectionName)
 
-            log.debug(
+            void log.debug(
                 `Run section switch from "${this.currentSectionName}" to`,
                 `"${sectionName}".`
             )
@@ -876,7 +876,7 @@ export class WebsiteUtilities<
                     this.currentSectionName, oldSectionName, event
                 )
             } catch (error) {
-                log.warn(
+                void log.warn(
                     'Problem due to call section switch callback on section',
                     `"${this.currentSectionName}": ${represent(error)}`
                 )
