@@ -42,27 +42,27 @@ if (!await isFile(resolve(PUBLIC_REPOSITORY_PATH, 'CNAME')))
     )
 
 if (process.env.USER_NAME_GITHUB) {
-    log.info(`Set git user name to "${process.env.USER_NAME_GITHUB}".`)
-    log.info(run(
+    void log.info(`Set git user name to "${process.env.USER_NAME_GITHUB}".`)
+    void log.info(run(
         `git config user.name '${process.env.USER_NAME_GITHUB}'`,
         {cwd: PUBLIC_REPOSITORY_PATH}
     ))
 }
 if (process.env.USER_EMAIL_GITHUB) {
-    log.info(`Set git user email to "${process.env.USER_EMAIL_GITHUB}".`)
-    log.info(run(
+    void log.info(`Set git user email to "${process.env.USER_EMAIL_GITHUB}".`)
+    void log.info(run(
         `git config user.email '${process.env.USER_EMAIL_GITHUB}'`,
         {cwd: PUBLIC_REPOSITORY_PATH}
     ))
 }
-log.info('Pull latest public website state.')
-log.info(run('git pull', {cwd: PUBLIC_REPOSITORY_PATH}))
+void log.info('Pull latest public website state.')
+void log.info(run('git pull', {cwd: PUBLIC_REPOSITORY_PATH}))
 
-log.info('Build new web page.')
-log.info(run('yarn clear'))
-log.info(run('yarn build'))
+void log.info('Build new web page.')
+void log.info(run('yarn clear'))
+void log.info(run('yarn build'))
 
-log.info(`Update page data in "${PUBLIC_REPOSITORY_PATH}".`)
+void log.info(`Update page data in "${PUBLIC_REPOSITORY_PATH}".`)
 
 await removeDirectoryRecursively(
     PUBLIC_REPOSITORY_PATH,
@@ -80,11 +80,11 @@ await removeDirectoryRecursively(
 
 await copyDirectoryRecursive('build', PUBLIC_REPOSITORY_PATH, true)
 
-log.info(run('yarn clear'))
+void log.info(run('yarn clear'))
 
-log.info('Upload newly build webpage')
-log.info(run(
+void log.info('Upload newly build webpage')
+void log.info(run(
     `git commit --all --message 'Automatic page build update.'`,
     {cwd: PUBLIC_REPOSITORY_PATH}
 ))
-log.info(run('git push', {cwd: PUBLIC_REPOSITORY_PATH}))
+void log.info(run('git push', {cwd: PUBLIC_REPOSITORY_PATH}))
