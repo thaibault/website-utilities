@@ -21,8 +21,8 @@ import {
     copyDirectoryRecursive, importFilesystemAPI, isFile, Logger
 } from 'clientnode'
 import {execSync} from 'child_process'
+import {readdir, rm as remove} from 'fs/promises'
 import {resolve} from 'path'
-import {rimraf as removeDirectoryRecursively} from 'rimraf'
 // endregion
 await importFilesystemAPI()
 
@@ -64,19 +64,14 @@ void log.info(run('yarn build'))
 
 void log.info(`Update page data in "${PUBLIC_REPOSITORY_PATH}".`)
 
-await removeDirectoryRecursively(
-    PUBLIC_REPOSITORY_PATH,
-    {filter: (path) =>
-        path !== PUBLIC_REPOSITORY_PATH &&
-        ![
-            resolve(PUBLIC_REPOSITORY_PATH, '.git'),
-            resolve(PUBLIC_REPOSITORY_PATH, '.github'),
-            resolve(PUBLIC_REPOSITORY_PATH, 'CNAME'),
-            resolve(PUBLIC_REPOSITORY_PATH, 'readme.md'),
-            resolve(PUBLIC_REPOSITORY_PATH, 'public-repository')
-        ].some((ignorePath) => path.startsWith(ignorePath))
-    }
-)
+for (const name of await readdir(PUBLIC_REPOSITORY_PATH))
+    if (![
+        '.git', '.github', 'CNAME', 'readme.md', 'public-repository'
+    ].includes(name))
+        await remove(
+            resolve(PUBLIC_REPOSITORY_PATH, name),
+            {force: true, recursive: true}
+        )
 
 await copyDirectoryRecursive('build', PUBLIC_REPOSITORY_PATH, true)
 

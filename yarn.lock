@@ -8782,9 +8782,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^65.3.8":
-  version: 65.3.8
-  resolution: "eslint-plugin-jsdoc@npm:65.3.8"
+"eslint-plugin-jsdoc@npm:^65.3.12":
+  version: 65.3.12
+  resolution: "eslint-plugin-jsdoc@npm:65.3.12"
   dependencies:
     "@es-joy/jsdoccomment": "npm:~0.98.0"
     "@es-joy/resolve.exports": "npm:1.2.0"
@@ -8807,7 +8807,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/0d1a71c265faee5b897467d26bca81f6d667de0d67e94a0437c76cac74aa1e9e1421795c9c110f2c5afe8afe51b61aa7ff3297ca4a9d4573775dc7d5d7084c73
+  checksum: 10c0/69aeb8039c6d107b4c4e596818abcc1e43f6270896246b80042419fb87d371d71338287ca402d5a5e9886eebdc59e2e90191d4a4b9f4d7e6e50b4521901fcc8e
   languageName: node
   linkType: hard
 
@@ -16513,12 +16513,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-documentation@npm:^1.0.61":
-  version: 1.0.61
-  resolution: "web-documentation@npm:1.0.61"
+"web-documentation@npm:^1.0.63":
+  version: 1.0.63
+  resolution: "web-documentation@npm:1.0.63"
   bin:
     web-documentation: build/deploy.js
-  checksum: 10c0/061910670f04e036b2cba54db2f680c37b7725feb40bfca1fdd85fd3658a255047b384c091e9389e3c2412e35279276c669370782cbb40d0c348f74e8832b94c
+  checksum: 10c0/7488437786ccc29f00ba5cacc6c3fad49f880fa2e8f8f1a14eb27935947b3e9d05ec97ae041ae7b56b76327900b3b8f1bf3be4bb23740bbb4da1dcb0d8450725
   languageName: node
   linkType: hard
 
@@ -16847,7 +16847,7 @@ __metadata:
     cssnano: "npm:^9.9.0"
     eslint: "npm:^10.13.0"
     eslint-config-google: "npm:^0.14.0"
-    eslint-plugin-jsdoc: "npm:^65.3.8"
+    eslint-plugin-jsdoc: "npm:^65.3.12"
     jest: "npm:^30.5.2"
     jsdoc: "npm:^4.0.5"
     mini-css-extract-plugin: "npm:^2.10.2"
@@ -16860,7 +16860,6 @@ __metadata:
     postcss-sprites: "npm:^4.2.1"
     postcss-url: "npm:^10.1.4"
     prop-types: "npm:^15.8.1"
-    rimraf: "npm:^6.1.3"
     sass: "npm:^1.105.2"
     sass-loader: "npm:^17.0.1"
     style-loader: "npm:^4.0.0"
@@ -16868,21 +16867,18 @@ __metadata:
     stylelint-config-standard-scss: "npm:^17.0.0"
     typescript-eslint: "npm:^8.71.2"
     web-component-wrapper: "npm:^0.0.617"
-    web-documentation: "npm:^1.0.61"
+    web-documentation: "npm:^1.0.63"
     weboptimizer: "npm:^4.0.89"
     webpack-dev-server: "npm:^6.0.0"
   peerDependencies:
     "@babel/runtime": "*"
     bootstrap-icons: "*"
     clientnode: "*"
-    rimraf: "*"
     web-component-wrapper: "*"
   peerDependenciesMeta:
     "@babel/runtime":
       optional: true
     bootstrap-icons:
-      optional: true
-    rimraf:
       optional: true
   bin:
     website-utilities: deploy.js
