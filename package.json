@@ -64,7 +64,6 @@
   "devDependencies": {
     "@babel/eslint-parser": "^8.0.7",
     "@babel/plugin-transform-proto-to-assign": "^8.0.1",
-    "@babel/runtime": "^8.0.7",
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/ejs": "^3.1.5",
@@ -76,12 +75,12 @@
     "@typescript-eslint/parser": "^8.72.0",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "bootstrap-icons": "^1.13.2",
-    "clientnode": "^4.0.1523",
+    "clientnode": "^4.0.1524",
     "css-loader": "^7.1.5",
     "cssnano": "^9.9.0",
     "eslint": "^10.13.0",
     "eslint-config-google": "^0.14.0",
-    "eslint-plugin-jsdoc": "^65.4.0",
+    "eslint-plugin-jsdoc": "^65.4.2",
     "jest": "^30.5.2",
     "jsdoc": "^4.0.5",
     "mini-css-extract-plugin": "^2.10.2",
@@ -100,21 +99,17 @@
     "stylelint": "^17.16.0",
     "stylelint-config-standard-scss": "^17.0.0",
     "typescript-eslint": "^8.72.0",
-    "web-component-wrapper": "^0.0.618",
-    "web-documentation": "^1.0.63",
-    "weboptimizer": "^4.0.90",
+    "web-component-wrapper": "^0.0.619",
+    "web-documentation": "^1.0.64",
+    "weboptimizer": "^4.0.91",
     "webpack-dev-server": "^6.1.0"
   },
   "peerDependencies": {
-    "@babel/runtime": "*",
     "bootstrap-icons": "*",
     "clientnode": "*",
     "web-component-wrapper": "*"
   },
   "peerDependenciesMeta": {
-    "@babel/runtime": {
-      "optional": true
-    },
     "bootstrap-icons": {
       "optional": true
     }
@@ -248,17 +243,6 @@
         "externalLibrary": {
           "dynamic": true,
           "normal": true
-        }
-      },
-      "module": {
-        "preprocessor": {
-          "javaScript": {
-            "options": {
-              "plugins": {
-                "__remove__": "@babel/plugin-transform-runtime"
-              }
-            }
-          }
         }
       }
     },
