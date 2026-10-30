@@ -22,9 +22,7 @@
     "url": "git+https://github.com/thaibault/website-utilities.git"
   },
   "type": "module",
-  "bin": {
-    "website-utilities": "deploy.js"
-  },
+  "bin": "deploy.js",
   "files": [
     "deploy.d.ts",
     "deploy.js",
@@ -103,7 +101,7 @@
     "typescript-eslint": "^8.72.1",
     "web-component-wrapper": "^0.0.619",
     "web-documentation": "^1.0.66",
-    "weboptimizer": "^4.0.92",
+    "weboptimizer": "^4.0.96",
     "webpack-dev-server": "^6.1.0"
   },
   "peerDependencies": {
@@ -146,7 +144,7 @@
             },
             "--config",
             {
-              "__evaluate__": "path.relative(self.path.context, path.resolve(webOptimizerPath, 'stylelintConfigurator.js'))"
+              "__evaluate__": "path.relative(self.path.context, path.resolve(webOptimizerPath, 'dist', 'stylelintConfigurator.js'))"
             }
           ],
           "command": "stylelint",
