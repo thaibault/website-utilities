@@ -278,9 +278,17 @@ export class WebsiteUtilities<
 
         this.disableScrolling()
 
-        if (!this.self.windowLoaded) {
+        /*
+            NOTE: Start up effects run only once per window. Instances
+            rendered afterward have nothing left to wait for.
+        */
+        if (this.self.windowLoaded)
+            this.startUpAnimationIsComplete = true
+        else {
             const onLoaded = () => {
-                if (!this.self.windowLoaded) {
+                if (this.self.windowLoaded)
+                    this.startUpAnimationIsComplete = true
+                else {
                     this.self.windowLoaded = true
 
                     void this._removeLoadingCover().then(() => {
