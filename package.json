@@ -22,9 +22,7 @@
     "url": "git+https://github.com/thaibault/website-utilities.git"
   },
   "type": "module",
-  "bin": {
-    "website-utilities": "deploy.js"
-  },
+  "bin": "deploy.js",
   "files": [
     "deploy.d.ts",
     "deploy.js",
@@ -77,7 +75,7 @@
     "@typescript-eslint/parser": "^8.72.1",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "bootstrap-icons": "^1.13.2",
-    "clientnode": "^4.0.1529",
+    "clientnode": "^4.0.1530",
     "css-loader": "^7.1.5",
     "cssnano": "^9.9.0",
     "eslint": "^10.14.0",
@@ -102,8 +100,8 @@
     "stylelint-config-standard-scss": "^17.0.0",
     "typescript-eslint": "^8.72.1",
     "web-component-wrapper": "^0.0.620",
-    "web-documentation": "^1.0.68",
-    "weboptimizer": "^4.0.99",
+    "web-documentation": "^1.0.69",
+    "weboptimizer": "^4.0.100",
     "webpack-dev-server": "^6.1.0"
   },
   "peerDependencies": {

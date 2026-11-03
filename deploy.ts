@@ -73,7 +73,7 @@ for (const name of await readdir(PUBLIC_REPOSITORY_PATH))
             {force: true, recursive: true}
         )
 
-await copyDirectoryRecursive('build', PUBLIC_REPOSITORY_PATH, true)
+await copyDirectoryRecursive('dist', PUBLIC_REPOSITORY_PATH, true)
 
 void log.info(run('yarn clear'))
 

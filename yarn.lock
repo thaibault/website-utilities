@@ -7564,9 +7564,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clientnode@npm:^4.0.1529":
-  version: 4.0.1529
-  resolution: "clientnode@npm:4.0.1529"
+"clientnode@npm:^4.0.1530":
+  version: 4.0.1530
+  resolution: "clientnode@npm:4.0.1530"
   peerDependencies:
     "@types/prop-types": "*"
     node-fetch: "*"
@@ -7578,7 +7578,7 @@ __metadata:
       optional: true
     prop-types:
       optional: true
-  checksum: 10c0/f644a590e81acd7d10389e97129c138b07ee2ad05893dff3e1fac2996bb74c4454707b7688d2ae772bad52039a7f730a72bf8f5157786459bf82ced892224b5f
+  checksum: 10c0/3aa080f17cdaaa3dac38a0a9d68ef9669efed29d6cb2ee4b310525d3274b676d7f1fafc0ebc880a72d08ee1fa6432269248c3d1dda2c08f8b8ded5dfb01e8bd9
   languageName: node
   linkType: hard
 
@@ -16714,12 +16714,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-documentation@npm:^1.0.68":
-  version: 1.0.68
-  resolution: "web-documentation@npm:1.0.68"
+"web-documentation@npm:^1.0.69":
+  version: 1.0.69
+  resolution: "web-documentation@npm:1.0.69"
   bin:
     web-documentation: build/deploy.js
-  checksum: 10c0/94d4b3caf7a9e983905eff4b9fa86d40a5546a88495c91d9003511a402e1907969bfe8013deb907783a9dbe644179ae0b56a61ff7695846bf75f5ca858c09a86
+  checksum: 10c0/5ab513c0d749a61601fad3c481714aaa75d27dbf6809fe3d327bcfc4d7254a92ea1b43daea60bf3605592d7069cc85d3ac5fe41059d11e6999dcfabddaa6f46c
   languageName: node
   linkType: hard
 
@@ -16730,9 +16730,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"weboptimizer@npm:^4.0.99":
-  version: 4.0.99
-  resolution: "weboptimizer@npm:4.0.99"
+"weboptimizer@npm:^4.0.100":
+  version: 4.0.100
+  resolution: "weboptimizer@npm:4.0.100"
   dependencies:
     "@babel/core": "npm:^8.0.10"
     "@babel/plugin-proposal-decorators": "npm:^8.0.2"
@@ -16877,7 +16877,7 @@ __metadata:
       optional: true
   bin:
     weboptimizer: dist/index.js
-  checksum: 10c0/4c9b79b88188592f9201768de59a6f86bbd86398e74f7954ccb3980df921ed00ccc5114f9c2ec068ddfa660abb16173691c7b225687c3c17e28a28603dbac942
+  checksum: 10c0/ca14987946194ba30f7c502ecd922d643d5bc24c0dea200751d98541305cf0845001a1b96b6fe643b48c34429bb641ccec3897f9b4d4e6772a7b7c2c61d1bf9e
   languageName: node
   linkType: hard
 
@@ -17052,7 +17052,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^8.72.1"
     "@webcomponents/webcomponentsjs": "npm:^2.8.0"
     bootstrap-icons: "npm:^1.13.2"
-    clientnode: "npm:^4.0.1529"
+    clientnode: "npm:^4.0.1530"
     css-loader: "npm:^7.1.5"
     cssnano: "npm:^9.9.0"
     eslint: "npm:^10.14.0"
@@ -17077,8 +17077,8 @@ __metadata:
     stylelint-config-standard-scss: "npm:^17.0.0"
     typescript-eslint: "npm:^8.72.1"
     web-component-wrapper: "npm:^0.0.620"
-    web-documentation: "npm:^1.0.68"
-    weboptimizer: "npm:^4.0.99"
+    web-documentation: "npm:^1.0.69"
+    weboptimizer: "npm:^4.0.100"
     webpack-dev-server: "npm:^6.1.0"
   peerDependencies:
     bootstrap-icons: "*"
