@@ -1,6 +1,6 @@
 {
   "name": "website-utilities",
-  "version": "1.0.479",
+  "version": "1.0.480",
   "description": "extend your web app",
   "keywords": [
     "website",
@@ -22,7 +22,9 @@
     "url": "git+https://github.com/thaibault/website-utilities.git"
   },
   "type": "module",
-  "bin": "deploy.js",
+  "bin": {
+    "website-utilities": "deploy.js"
+  },
   "files": [
     "deploy.d.ts",
     "deploy.js",
