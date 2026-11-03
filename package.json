@@ -59,7 +59,7 @@
     "check": "yarn check:types && yarn lint",
     "check:types": "weboptimizer check:types",
     "clear": "weboptimizer clear",
-    "deploy": "node ./dist/deploy.js",
+    "deploy": "./dist/deploy.js",
     "document": "weboptimizer document",
     "lint": "weboptimizer lint",
     "prepare": "yarn build",
