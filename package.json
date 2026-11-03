@@ -22,22 +22,29 @@
     "url": "git+https://github.com/thaibault/website-utilities.git"
   },
   "type": "module",
-  "bin": {
-    "website-utilities": "deploy.js"
+  "bin": "dist/deploy.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./dist/*": "./dist/*",
+    "./src/*": "./src/*",
+    "./type": {
+      "types": "./dist/type.d.ts"
+    }
+  },
+  "main": "dist/index.js",
+  "typesVersions": {
+    "*": {
+      "type": [
+        "./dist/type.d.ts"
+      ]
+    }
   },
   "files": [
-    "deploy.d.ts",
-    "deploy.js",
-    "fonts.compiled.css",
-    "fonts.scss",
-    "index.compiled.css",
-    "index.d.ts",
-    "index.js",
-    "index.scss",
-    "fonts",
-    "fonts.compiled",
-    "type.d.ts",
-    "_variables.scss"
+    "dist",
+    "src/_variables.scss",
+    "src/fonts",
+    "src/fonts.scss",
+    "src/index.scss"
   ],
   "sideEffects": false,
   "scripts": {
@@ -50,16 +57,16 @@
     "check": "yarn check:types && yarn lint",
     "check:types": "weboptimizer check:types",
     "clear": "weboptimizer clear",
-    "deploy": "./deploy.js",
+    "deploy": "node ./dist/deploy.js",
     "document": "weboptimizer document",
     "lint": "weboptimizer lint",
     "prepare": "yarn build",
     "serve": "weboptimizer serve",
     "start": "yarn serve",
-    "test": "weboptimizer test",
-    "test:browser": "weboptimizer test:browser",
-    "test:coverage": "weboptimizer test:coverage",
-    "test:coverage:report": "weboptimizer test:coverage:report",
+    "test": "yarn clear && weboptimizer test",
+    "test:browser": "yarn clear && weboptimizer test:browser",
+    "test:coverage": "yarn clear && weboptimizer test:coverage",
+    "test:coverage:report": "yarn clear && weboptimizer test:coverage:report",
     "update:documentation": "web-documentation",
     "watch": "weboptimizer build --watch"
   },
@@ -102,8 +109,8 @@
     "stylelint-config-standard-scss": "^17.0.0",
     "typescript-eslint": "^8.72.1",
     "web-component-wrapper": "^0.0.620",
-    "web-documentation": "^1.0.69",
-    "weboptimizer": "^4.0.100",
+    "web-documentation": "^1.0.71",
+    "weboptimizer": "^4.0.102",
     "webpack-dev-server": "^6.1.0"
   },
   "peerDependencies": {
@@ -219,12 +226,14 @@
       "source": {
         "asset": {
           "font": "fonts/"
-        }
+        },
+        "base": "src/"
       },
       "target": {
         "asset": {
           "font": "fonts.compiled/"
-        }
+        },
+        "base": "dist/"
       }
     },
     "stylelint": {
@@ -245,6 +254,11 @@
         "externalLibrary": {
           "dynamic": true,
           "normal": true
+        }
+      },
+      "path": {
+        "target": {
+          "base": "dist/bundle/"
         }
       }
     },
