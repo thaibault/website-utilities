@@ -110,12 +110,20 @@ describe('WebsiteUtilities', (): void => {
             onComplete = resolve
         })
         let loaded = false
+        let onSwitch: (name: string) => void = () => {
+            // Will be replaced.
+        }
 
         const domNode = await create(
             '<div class="wu-window-loading-cover"></div>' +
             '<div class="wu-start-up-animation-number-1">a</div>' +
-            '<div class="other wu-start-up-animation-number-2">b</div>',
+            '<div class="other wu-start-up-animation-number-2">b</div>' +
+            '<div class="wu-router-outlet">' +
+            '<div data-website-utilities-section="home">home</div>' +
+            '<div data-website-utilities-section="about">about</div>' +
+            '</div>',
             {
+                sectionNames: {default: 'home', managed: ['home', 'about']},
                 startUpAnimationElementDelayInMilliseconds: 0,
                 windowLoadedTimeoutAfterDocLoadedInMSec: 0
             },
@@ -123,12 +131,25 @@ describe('WebsiteUtilities', (): void => {
                 onLoaded: () => {
                     loaded = true
                 },
+                onSectionSwitch: (name: string) => {
+                    onSwitch(name)
+
+                    return Promise.resolve(undefined)
+                },
                 onStartUpAnimationComplete: onComplete
             }
         )
 
         expect(document.body.classList.contains('wu-disable-scrolling'))
             .toStrictEqual(true)
+
+        // Hash changes during start up are applied after it has finished.
+        const switched = new Promise<string>((resolve) => {
+            onSwitch = resolve
+        })
+        globalContext.location?.replace('#about')
+        globalContext.window?.dispatchEvent(new Event('hashchange'))
+        expect(domNode.currentSectionName).toStrictEqual('home')
 
         await completed
 
@@ -147,6 +168,9 @@ describe('WebsiteUtilities', (): void => {
         expect(Array.from(document.head.querySelectorAll('style')).some(
             (style) => style.textContent.includes('wu-menu-highlight')
         )).toStrictEqual(true)
+
+        await expect(switched).resolves.toStrictEqual('about')
+        expect(domNode.currentSectionName).toStrictEqual('about')
     })
     test('options attribute update', async (): Promise<void> => {
         const domNode = await create()
@@ -304,6 +328,52 @@ describe('WebsiteUtilities', (): void => {
             ['b', 'a'],
             ['home', 'b']
         ])
+    })
+    test('concurrent section switches', async (): Promise<void> => {
+        const domNode = await create(
+            '<div class="wu-router-outlet">' +
+            '<div data-website-utilities-section="a">a</div>' +
+            '<div data-website-utilities-section="b">b</div>' +
+            '<div data-website-utilities-section="c">c</div>' +
+            '</div>',
+            {sectionNames: {default: 'a', managed: ['a', 'b', 'c']}}
+        )
+
+        // Second switch is requested while the first one is still fading.
+        await Promise.all([
+            domNode.switchSection('b'), domNode.switchSection('c')
+        ])
+
+        expect(domNode.currentSectionName).toStrictEqual('c')
+        expect(Array.from(
+            domNode.querySelectorAll('.wu-section-active'),
+            (section) => section.getAttribute('data-website-utilities-section')
+        )).toStrictEqual(['c'])
+    })
+    test('empty section name resolves to default section', async () => {
+        const domNode = await create(
+            '<div class="wu-router-outlet">' +
+            '<div data-website-utilities-section="home">home</div>' +
+            '<div data-website-utilities-section="about">about</div>' +
+            '</div>' +
+            '<nav class="wu-priority-navigation"><ul>' +
+            '<li><a href="#home">home</a></li>' +
+            '<li><a href="#about">about</a></li>' +
+            '</ul></nav>',
+            {sectionNames: {default: 'home', managed: ['home', 'about']}}
+        )
+        expect(domNode.currentSectionName).toStrictEqual('home')
+
+        await domNode.switchSection('about')
+        await domNode.switchSection('')
+
+        expect(domNode.currentSectionName).toStrictEqual('home')
+        expect(domNode.querySelector(
+            '[data-website-utilities-section="home"]'
+        )?.classList.contains('wu-section-active')).toStrictEqual(true)
+        expect(domNode.querySelector('[href="#home"]')?.classList.contains(
+            'wu-priority-navigation__link--active'
+        )).toStrictEqual(true)
     })
     test('section switching via hash', async (): Promise<void> => {
         globalContext.location?.replace('#about')

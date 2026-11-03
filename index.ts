@@ -286,9 +286,10 @@ export class WebsiteUtilities<
             this.startUpAnimationIsComplete = true
         else {
             const onLoaded = () => {
-                if (this.self.windowLoaded)
+                if (this.self.windowLoaded) {
                     this.startUpAnimationIsComplete = true
-                else {
+                    void this._switchToLocationSection()
+                } else {
                     this.self.windowLoaded = true
 
                     void this._removeLoadingCover().then(() => {
@@ -816,6 +817,10 @@ export class WebsiteUtilities<
      * @returns Promise resolving when the section switch has been finished.
      */
     async switchSection(sectionName: string, event?: Event): Promise<void> {
+        // An empty section name (e.g. "#") refers to the default section.
+        if (sectionName === '')
+            sectionName = this.options.sectionNames.default
+
         if (
             globalContext.window &&
             'location' in globalContext.window &&
@@ -825,6 +830,12 @@ export class WebsiteUtilities<
                 this.options.sectionNames.unmanaged.includes(sectionName)
             )
         ) {
+            await this.self.switchSectionLock.acquire()
+            /*
+                NOTE: Determine affected dom nodes not until the lock has been
+                acquired since a previous switch may have changed the current
+                section in the meantime.
+            */
             const oldSectionDomNode = Object.prototype.hasOwnProperty.call(
                 this.sectionDomNodes, this.currentSectionName
             ) ?
@@ -835,8 +846,6 @@ export class WebsiteUtilities<
             ) ?
                 this.sectionDomNodes[sectionName] :
                 this.sectionDomNodes.default ?? null
-
-            await this.self.switchSectionLock.acquire()
 
             this.triggerNavigationItemHighlighterSwitching(sectionName)
 
@@ -907,6 +916,23 @@ export class WebsiteUtilities<
             'options',
             extend<Options>(true, {}, this.self._defaultOptions, this.options)
         )
+    }
+    /**
+     * Switches to the section referenced by the current location hash if it
+     * differs from the current section. Hash changes are ignored until start
+     * up animations are complete, so this catches up on them.
+     * @returns Promise resolving when a potential section switch has been
+     * finished.
+     */
+    _switchToLocationSection(): Promise<void> {
+        const sectionName =
+            globalContext.location?.hash.substring('#'.length) ||
+            this.options.sectionNames.default
+
+        if (sectionName === this.currentSectionName)
+            return Promise.resolve()
+
+        return this.switchSection(sectionName)
     }
     /**
      * Handle section switches.
@@ -1045,6 +1071,7 @@ export class WebsiteUtilities<
             if (domNodesToAnimate.length === 0) {
                 await Promise.all(animationPromises)
                 this.startUpAnimationIsComplete = true
+                void this._switchToLocationSection()
                 this.onStartUpAnimationComplete()
                 break
             }
