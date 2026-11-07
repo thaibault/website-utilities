@@ -11,6 +11,7 @@ This library written by Torben Sickert stands under a creative commons naming
 3.0 unported license. See https://creativecommons.org/licenses/by/3.0/deed.de
 endregion
 */
+@use "sass:math";
 @use "variables" as v;
 
 :root {
@@ -418,7 +419,7 @@ endregion
             @for $i from 0 through 40 {
                 &:nth-child(#{$i + 1}) {
                     filter: blur(0);
-                    animation: blur-text 1.5s (#{$i / 5}) + s infinite linear alternate;
+                    animation: blur-text 1.5s math.div($i, 5) * 1s infinite linear alternate;
                 }
             }
         }
