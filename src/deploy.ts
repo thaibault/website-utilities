@@ -78,6 +78,8 @@ await copyDirectoryRecursive('dist', PUBLIC_REPOSITORY_PATH, true)
 void log.info(run('yarn clear'))
 
 void log.info('Upload newly build webpage')
+// NOTE: "git commit --all" only stages tracked files, so add new ones first.
+void log.info(run('git add --all', {cwd: PUBLIC_REPOSITORY_PATH}))
 void log.info(run(
     `git commit --all --message 'Automatic page build update.'`,
     {cwd: PUBLIC_REPOSITORY_PATH}
