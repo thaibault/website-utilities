@@ -267,7 +267,7 @@
       "assetPattern": {
         "javaScript": {
           "pattern": {
-            "#": "This is how we can make our artefact executable.",
+            "#": "This is how we can make our artifact executable.",
             "__evaluate__": "`#!/usr/bin/env node\n// -*- coding: utf-8 -*-\n{1}`"
           }
         }
