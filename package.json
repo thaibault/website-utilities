@@ -22,9 +22,7 @@
     "url": "git+https://github.com/thaibault/website-utilities.git"
   },
   "type": "module",
-  "bin": {
-    "website-utilities": "dist/deploy.js"
-  },
+  "bin": "dist/deploy.js",
   "exports": {
     ".": "./dist/index.js",
     "./dist/*": "./dist/*",
@@ -112,7 +110,7 @@
     "typescript-eslint": "^8.72.1",
     "web-component-wrapper": "^0.0.620",
     "web-documentation": "^1.0.74",
-    "weboptimizer": "^4.0.107",
+    "weboptimizer": "^4.0.108",
     "webpack-dev-server": "^6.1.0"
   },
   "peerDependencies": {
