@@ -136,8 +136,8 @@
   },
   "webDocumentation": {
     "languages": [
-      "deDE",
       "enUS",
+      "deDE",
       "frFR"
     ],
     "tagline": "extend your web app<!--deDE:erweitere deine Webanwendung-->"
