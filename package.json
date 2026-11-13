@@ -112,7 +112,7 @@
     "typescript-eslint": "^8.72.1",
     "web-component-wrapper": "^0.0.620",
     "web-documentation": "^1.0.74",
-    "weboptimizer": "^4.0.109",
+    "weboptimizer": "^4.0.115",
     "webpack-dev-server": "^6.1.0"
   },
   "peerDependencies": {
