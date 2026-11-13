@@ -34,8 +34,6 @@ export interface DefaultOptions {
 
         startUpAnimationClassPrefix: string
 
-        top: string
-
         routerOutlet: string
 
         scrollToTopButtons: string

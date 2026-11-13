@@ -80,6 +80,42 @@ import 'website-utilities/dist/index.css'
 api.register()
 ```
 
+Without a package manager load the bundle, which contains all dependencies,
+together with its styles. With npm it is available as
+"website-utilities/bundle":
+<!--deDE:
+    Ohne Paketmanager laden Sie das Bundle, das alle Abhängigkeiten enthält,
+    zusammen mit seinen Styles. Mit npm ist es als
+    "website-utilities/bundle" verfügbar:
+-->
+<!--frFR:
+    Sans gestionnaire de paquets, chargez le bundle, qui contient toutes les
+    dépendances, avec ses styles. Avec npm, il est disponible sous
+    "website-utilities/bundle":
+-->
+
+```HTML
+<link
+    href="https://unpkg.com/website-utilities@latest/dist/bundle/fonts.css"
+    rel="stylesheet"
+/>
+<link
+    href="https://unpkg.com/website-utilities@latest/dist/bundle/index.css"
+    rel="stylesheet"
+/>
+<script type="module">
+    import {
+        api
+    } from 'https://unpkg.com/website-utilities@latest/dist/bundle/index.js'
+
+    api.register()
+</script>
+```
+
+Then wrap your page:
+<!--deDE:Umschließen Sie dann Ihre Seite:-->
+<!--frFR:Englobez ensuite votre page:-->
+
 ```HTML
 <div class="wu-window-loading-cover">Loading…</div>
 

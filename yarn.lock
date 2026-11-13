@@ -17100,13 +17100,9 @@ __metadata:
     weboptimizer: "npm:^4.0.115"
     webpack-dev-server: "npm:^6.1.0"
   peerDependencies:
-    bootstrap-icons: "*"
     clientnode: "*"
     core-js: "*"
     web-component-wrapper: "*"
-  peerDependenciesMeta:
-    bootstrap-icons:
-      optional: true
   bin:
     website-utilities: dist/deploy.js
   languageName: unknown

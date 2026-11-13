@@ -182,7 +182,8 @@ describe('WebsiteUtilities', (): void => {
         await timeout(50)
 
         expect(domNode.options.domain).toStrictEqual('example.com')
-        expect(domNode.options.selectors.top).toStrictEqual('.wu-header')
+        expect(domNode.options.selectors.scrollToTopButtons)
+            .toStrictEqual('.wu-scroll-to-top')
     })
     test('scrolling state', async (): Promise<void> => {
         const movements: Array<string> = []

@@ -25,8 +25,16 @@
   "bin": "dist/deploy.js",
   "exports": {
     ".": "./dist/index.js",
+    "./bundle": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/bundle/index.js"
+    },
     "./dist/*": "./dist/*",
-    "./src/*": "./src/*",
+    "./src/*.scss": "./src/*.scss",
+    "./src/fonts": "./src/fonts.scss",
+    "./src/fonts/*": "./src/fonts/*",
+    "./src/index": "./src/index.scss",
+    "./src/variables": "./src/_variables.scss",
     "./type": {
       "types": "./dist/type.d.ts"
     }
@@ -41,6 +49,7 @@
   },
   "files": [
     "dist",
+    "!dist/test.d.ts",
     "src/_variables.scss",
     "src/fonts",
     "src/fonts.scss",
@@ -48,9 +57,8 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "yarn build:types && yarn build:deploy && yarn build:web",
-    "build:bundle": "yarn build:types && yarn build:deploy && yarn build:bundle:web",
-    "build:bundle:web": "weboptimizer build '{__reference__: \"target:bundle\"}'",
+    "build": "yarn build:types && yarn build:deploy && yarn build:web && yarn build:bundle",
+    "build:bundle": "weboptimizer build '{__reference__: \"target:bundle\"}'",
     "build:deploy": "weboptimizer build '{__reference__: \"target:deploy\"}'",
     "build:types": "weboptimizer build:types",
     "build:web": "weboptimizer build",
@@ -116,15 +124,9 @@
     "webpack-dev-server": "^6.1.0"
   },
   "peerDependencies": {
-    "bootstrap-icons": "*",
     "clientnode": "*",
     "core-js": "*",
     "web-component-wrapper": "*"
-  },
-  "peerDependenciesMeta": {
-    "bootstrap-icons": {
-      "optional": true
-    }
   },
   "resolutions": {
     "colors": "1.4.0",
