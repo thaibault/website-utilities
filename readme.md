@@ -388,6 +388,32 @@ and has to contain a "CNAME" file.
     "USER_EMAIL_GITHUB" définissent l'auteur du commit.
 -->
 
+The same is available as GitHub action. It installs the dependencies,
+checks out the target repository and runs "yarn update:website", so the
+website's "package.json" needs this script calling "website-utilities":
+<!--deDE:
+    Dasselbe gibt es als GitHub Action. Sie installiert die Abhängigkeiten,
+    checkt das Ziel-Repository aus und führt "yarn update:website" aus, die
+    "package.json" der Webseite braucht also dieses Skript, das
+    "website-utilities" aufruft:
+-->
+<!--frFR:
+    La même chose existe sous forme d'action GitHub. Elle installe les
+    dépendances, récupère le dépôt cible et exécute "yarn update:website",
+    le "package.json" du site doit donc contenir ce script appelant
+    "website-utilities":
+-->
+
+```YAML
+steps:
+  - uses: thaibault/website-utilities@main
+    with:
+      pat-token: ${{ secrets.PAT_TOKEN_GITHUB }}
+      repository: ${{ github.repository_owner }}/${{ github.repository_owner }}.github.io
+      user_email_github: ${{ secrets.USER_EMAIL_GITHUB }}
+      user_name_github: ${{ github.repository_owner }}
+```
+
 <!--|deDE:Entwicklung-->
 <!--|frFR:Développement-->
 Development
