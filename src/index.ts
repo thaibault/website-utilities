@@ -54,8 +54,6 @@ export const log = new Logger({name: 'website-utilities'})
  * Additional time to wait until page will be indicated as loaded.
  * @property _defaultOptions.selectors - Mapping of dom node descriptions to
  * their corresponding selectors.
- * @property _defaultOptions.selectors.top - Selector to indicate that viewport
- * is currently on top.
  * @property _defaultOptions.selectors.scrollToTopButtons - Selectors for
  * starting an animated scroll to top.
  * @property _defaultOptions.selectors.startUpAnimationClassPrefix - Class name
@@ -74,20 +72,8 @@ export const log = new Logger({name: 'website-utilities'})
  * have finished.
  * @property viewportIsOnTop - Indicates whether current viewport is on top.
  * @property windowLoaded - Indicates whether the window is already loaded.
- * @property onChangeMediaQueryMode - Callback to trigger if media query mode
- * changes.
- * @property onChangeToExtraSmallMode - Callback to trigger if media query mode
- * changes to extra small mode.
- * @property onChangeToLargeMode - Callback to trigger if media query mode
- * changes to large mode.
- * @property onChangeToMediumMode - Callback to trigger if media query mode
- * changes to medium mode.
- * @property onChangeToSmallMode - Callback to trigger if media query mode
- * changes to small mode.
  * @property onStartUpAnimationComplete - Callback to trigger if all startup
  * animations have finished.
- * @property onSwitchSection - Callback to trigger if the current section
- * switches.
  * @property onViewportMovesAwayFromTop - Callback to trigger when viewport
  * moves away from top.
  * @property onViewportMovesToTop - Callback to trigger when viewport arrives
@@ -121,8 +107,6 @@ export class WebsiteUtilities<
             windowLoadingCover: '.wu-window-loading-cover',
 
             startUpAnimationClassPrefix: 'wu-start-up-animation-number-',
-
-            top: '.wu-header',
 
             routerOutlet: '.wu-router-outlet',
 
@@ -162,9 +146,6 @@ export class WebsiteUtilities<
 
     @property({type: func})
         onStartUpAnimationComplete: (this: WebsiteUtilities) => void = NOOP
-
-    @property({type: func})
-        onSwitchSection: (this: WebsiteUtilities, event?: Event) => void = NOOP
 
     @property({type: func})
         onViewportMovesAwayFromTop: (
@@ -221,8 +202,6 @@ export class WebsiteUtilities<
     private static switchSectionLock = new Lock<void>()
     /// region dom nodes
     windowLoadingCoverDomNode: HTMLElement | null = null
-
-    topDomNode: HTMLElement | null = null
 
     priorityNavigationDomNodes: NodeListOf<HTMLElement> | null = null
 
@@ -340,8 +319,6 @@ export class WebsiteUtilities<
     }
     // endregion
     grabDomNodes(): void {
-        this.topDomNode =
-            this.hostDomNode.querySelector(this.options.selectors.top)
         this.scrollToTopButtonDomNodes = this.hostDomNode.querySelectorAll(
             this.options.selectors.scrollToTopButtons
         )
