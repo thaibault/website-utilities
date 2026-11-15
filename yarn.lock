@@ -16801,9 +16801,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"weboptimizer@npm:^4.0.118":
-  version: 4.0.118
-  resolution: "weboptimizer@npm:4.0.118"
+"weboptimizer@npm:^4.0.119":
+  version: 4.0.119
+  resolution: "weboptimizer@npm:4.0.119"
   dependencies:
     "@babel/plugin-proposal-decorators": "npm:^8.0.2"
     "@babel/plugin-transform-class-properties": "npm:^8.0.1"
@@ -16836,7 +16836,6 @@ __metadata:
     "@eslint/js": "*"
     "@stylistic/eslint-plugin": "*"
     "@types/ejs": "*"
-    "@types/imagemin": "*"
     "@types/node": "*"
     "@types/webpack-env": "*"
     "@typescript-eslint/parser": "*"
@@ -16849,12 +16848,12 @@ __metadata:
     favicons-webpack-plugin: "*"
     globals: "*"
     identity-obj-proxy: "*"
-    image-minimizer-webpack-plugin: "*"
     imagemin: "*"
     jest: "*"
     jest-canvas-mock: "*"
     jsdoc: "*"
     mini-css-extract-plugin: "*"
+    minimizer-webpack-plugin: ^5.12.0
     postcss: "*"
     postcss-fontpath: "*"
     postcss-import: "*"
@@ -16867,7 +16866,6 @@ __metadata:
     stylelint: "*"
     stylelint-config-standard: "*"
     stylelint-config-standard-scss: "*"
-    terser-webpack-plugin: "*"
     typescript-eslint: "*"
     typescript-plugin-css-modules: "*"
     webpack-dev-server: "*"
@@ -16880,8 +16878,6 @@ __metadata:
     "@stylistic/eslint-plugin":
       optional: true
     "@types/ejs":
-      optional: true
-    "@types/imagemin":
       optional: true
     "@types/node":
       optional: true
@@ -16905,8 +16901,6 @@ __metadata:
       optional: true
     identity-obj-proxy:
       optional: true
-    image-minimizer-webpack-plugin:
-      optional: true
     imagemin:
       optional: true
     jest:
@@ -16916,6 +16910,8 @@ __metadata:
     jsdoc:
       optional: true
     mini-css-extract-plugin:
+      optional: true
+    minimizer-webpack-plugin:
       optional: true
     postcss-fontpath:
       optional: true
@@ -16939,8 +16935,6 @@ __metadata:
       optional: true
     stylelint-config-standard-scss:
       optional: true
-    terser-webpack-plugin:
-      optional: true
     typescript-eslint:
       optional: true
     typescript-plugin-css-modules:
@@ -16951,7 +16945,7 @@ __metadata:
       optional: true
   bin:
     weboptimizer: dist/index.js
-  checksum: 10c0/0c8a7fd277f9e8bf0996550cc7f0f165ab5550c9cd61b61b0243e677efcee2b7d11e36215862465a8c86b64f021f92b604e62ed2402bcfeefe99e5238f4f2f12
+  checksum: 10c0/28634dd066a2fb66ab458914354f9b206f7b7c483d1770b32fcaee20bf91928fbb2a89c4aa028b9641910cfa272ac0d59dc5504c690d7da91d6431b6ce5ae448
   languageName: node
   linkType: hard
 
@@ -17154,7 +17148,7 @@ __metadata:
     typescript-eslint: "npm:^8.72.2"
     web-component-wrapper: "npm:^0.0.624"
     web-documentation: "npm:^1.0.74"
-    weboptimizer: "npm:^4.0.118"
+    weboptimizer: "npm:^4.0.119"
     webpack-dev-server: "npm:^6.1.0"
   peerDependencies:
     clientnode: "*"
