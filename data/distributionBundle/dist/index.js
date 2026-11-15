@@ -1,0 +1,239 @@
+if(typeof window==='undefined'||window===null)var window=(typeof globalThis==='undefined'||globalThis===null)?{}:globalThis;import "core-js/modules/es.iterator.for-each.js";
+import "core-js/modules/es.iterator.reduce.js";
+import "core-js/modules/es.array.push.js";
+import "core-js/modules/es.iterator.constructor.js";
+import "core-js/modules/es.iterator.filter.js";
+import "core-js/modules/es.iterator.map.js";
+import "core-js/modules/es.iterator.some.js";
+import { Lock as __WEBPACK_EXTERNAL_MODULE_clientnode_Lock__, Logger as __WEBPACK_EXTERNAL_MODULE_clientnode_Logger__, NOOP as __WEBPACK_EXTERNAL_MODULE_clientnode_NOOP__, camelCaseToDelimited as __WEBPACK_EXTERNAL_MODULE_clientnode_camelCaseToDelimited__, extend as __WEBPACK_EXTERNAL_MODULE_clientnode_extend__, fadeIn as __WEBPACK_EXTERNAL_MODULE_clientnode_fadeIn__, fadeOut as __WEBPACK_EXTERNAL_MODULE_clientnode_fadeOut__, getParents as __WEBPACK_EXTERNAL_MODULE_clientnode_getParents__, getText as __WEBPACK_EXTERNAL_MODULE_clientnode_getText__, globalContext as __WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__, interruptableScrollTo as __WEBPACK_EXTERNAL_MODULE_clientnode_interruptableScrollTo__, onDocumentReady as __WEBPACK_EXTERNAL_MODULE_clientnode_onDocumentReady__, preventDefault as __WEBPACK_EXTERNAL_MODULE_clientnode_preventDefault__, represent as __WEBPACK_EXTERNAL_MODULE_clientnode_represent__, timeout as __WEBPACK_EXTERNAL_MODULE_clientnode_timeout__, trailingThrottle as __WEBPACK_EXTERNAL_MODULE_clientnode_trailingThrottle__ } from "clientnode";
+import { func as __WEBPACK_EXTERNAL_MODULE_clientnode_property_types_4789ebe2_func__, object as __WEBPACK_EXTERNAL_MODULE_clientnode_property_types_4789ebe2_object__ } from "clientnode/property-types";
+import { property as __WEBPACK_EXTERNAL_MODULE_web_component_wrapper_decorator_a680de5c_property__ } from "web-component-wrapper/decorator";
+import { Web as __WEBPACK_EXTERNAL_MODULE_web_component_wrapper_Web_aacc6608_Web__ } from "web-component-wrapper/Web";
+/******/ // The require scope
+/******/ const __webpack_require__ = {};
+/******/ 
+/************************************************************************/
+/******/ /* webpack/runtime/define property getters */
+/******/ // define getter/value functions for harmony exports
+/******/ __webpack_require__.d = (exports, definition) => {
+/******/ 	for(var key in definition) {
+/******/ 		if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 			Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 		}
+/******/ 	}
+/******/ };
+/******/ 
+/******/ /* webpack/runtime/hasOwnProperty shorthand */
+/******/ __webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop));
+/******/ 
+/************************************************************************/
+// extracted by mini-css-extract-plugin
+
+
+;// external "core-js/modules/es.iterator.for-each.js"
+
+;// external "core-js/modules/es.iterator.reduce.js"
+
+;// external "core-js/modules/es.array.push.js"
+
+;// external "core-js/modules/es.iterator.constructor.js"
+
+;// external "core-js/modules/es.iterator.filter.js"
+
+;// external "core-js/modules/es.iterator.map.js"
+
+;// external "core-js/modules/es.iterator.some.js"
+
+;// external "clientnode"
+
+;// external "clientnode/property-types"
+
+;// external "web-component-wrapper/decorator"
+
+;// external "web-component-wrapper/Web"
+
+;// ./src/index.ts
+// #!/usr/bin/env babel-node
+// -*- coding: utf-8 -*-
+/** @module website-utilities *//* !
+    region header
+    [Project page](https://tsickert.com/website-utilities)
+
+    Copyright Torben Sickert (info["~at~"]tsickert.com) 16.12.2012
+
+    License
+    -------
+
+    This library written by Torben Sickert stands under a creative commons
+    naming 4.0 international license.
+    See https://creativecommons.org/licenses/by/4.0/deed.de
+    endregion
+*/// region imports
+var _dec,_dec2,_dec3,_dec4,_dec5,_dec6,_dec7,_dec8,_dec9,_dec0,_class,_descriptor,_descriptor2,_descriptor3,_descriptor4,_descriptor5,_descriptor6,_descriptor7,_descriptor8,_descriptor9,_descriptor0,_WebsiteUtilities;function _initializerDefineProperty(e,i,r,l){r&&Object.defineProperty(e,i,{enumerable:r.enumerable,configurable:r.configurable,writable:r.writable,value:r.initializer?r.initializer.call(l):void 0})}function _defineProperty(r,t,o){return(t=_toPropertyKey(t))in r?Object.defineProperty(r,t,{value:o,enumerable:!0,configurable:!0,writable:!0}):r[t]=o,r}function _toPropertyKey(r){var o=_toPrimitive(r,"string");return"symbol"==typeof o?o:o+""}function _toPrimitive(t,e){if("object"!=typeof t||!t)return t;var r;if("undefined"!=typeof Symbol&&void 0!==(r=t[Symbol.toPrimitive])){var i=r.call(t,e||"default");if("object"!=typeof i)return i;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===e?String:Number)(t)}function _applyDecoratedDescriptor(i,e,r,n,l){var a={};return Object.keys(n).forEach(function(i){a[i]=n[i]}),a.enumerable=!!a.enumerable,a.configurable=!!a.configurable,("value"in a||a.initializer)&&(a.writable=!0),a=r.slice().reverse().reduce(function(r,n){return n(i,e,r)||r},a),l&&void 0!==a.initializer&&(a.value=a.initializer?a.initializer.call(l):void 0,a.initializer=void 0),void 0===a.initializer?(Object.defineProperty(i,e,a),null):a}function _initializerWarningHelper(r,e){throw Error("Decorating class property failed. Please ensure that transform-class-properties is enabled and runs after the decorators transform.")};// endregion
+const log=new __WEBPACK_EXTERNAL_MODULE_clientnode_Logger__({name:"website-utilities"});// region plugins/classes
+/**
+ * This plugin holds common methods to extend a whole website.
+ * @property _defaultOptions - Options extended by the options given to the
+ * initializer method.
+ * @property _defaultOptions.additionalPageLoadingTimeInMilliseconds -
+ * Additional time to wait until page will be indicated as loaded.
+ * @property _defaultOptions.selectors - Mapping of dom node descriptions to
+ * their corresponding selectors.
+ * @property _defaultOptions.selectors.scrollToTopButtons - Selectors for
+ * starting an animated scroll to top.
+ * @property _defaultOptions.selectors.startUpAnimationClassPrefix - Class name
+ * selector prefix for all dom nodes to appear during startup animations.
+ * @property _defaultOptions.selectors.windowLoadingCover - Selector to the full
+ * window loading cover dom node.
+ * @property _defaultOptions.startUpAnimationElementDelayInMilliseconds - Delay
+ * between two startup animated dom nodes in order.
+ * @property _defaultOptions.tracking - Indicates whether tracking should be
+ * used or not.
+ * @property _defaultOptions.windowLoadedTimeoutAfterDocLoadedInMSec - Duration
+ * after loading cover should be removed.
+ * @property options - Finally configured given options.
+ * @property currentSectionName - Saves current section hash name.
+ * @property startUpAnimationIsComplete - Indicates whether startup animations
+ * have finished.
+ * @property viewportIsOnTop - Indicates whether current viewport is on top.
+ * @property windowLoaded - Indicates whether the window is already loaded.
+ * @property onStartUpAnimationComplete - Callback to trigger if all startup
+ * animations have finished.
+ * @property onViewportMovesAwayFromTop - Callback to trigger when viewport
+ * moves away from top.
+ * @property onViewportMovesToTop - Callback to trigger when viewport arrives
+ * at top.
+ * @property onButtonClick - Function to call on button click events.
+ * @property onLinkClick - Function to call on link click events.
+ * @property onSectionSwitch - Function to call on section switches.
+ * @property onTrack - Tracker call itself.
+ */let WebsiteUtilities=(_dec=__WEBPACK_EXTERNAL_MODULE_web_component_wrapper_decorator_a680de5c_property__({type:__WEBPACK_EXTERNAL_MODULE_clientnode_property_types_4789ebe2_object__}),_dec2=__WEBPACK_EXTERNAL_MODULE_web_component_wrapper_decorator_a680de5c_property__({type:__WEBPACK_EXTERNAL_MODULE_clientnode_property_types_4789ebe2_func__}),_dec3=__WEBPACK_EXTERNAL_MODULE_web_component_wrapper_decorator_a680de5c_property__({type:__WEBPACK_EXTERNAL_MODULE_clientnode_property_types_4789ebe2_func__}),_dec4=__WEBPACK_EXTERNAL_MODULE_web_component_wrapper_decorator_a680de5c_property__({type:__WEBPACK_EXTERNAL_MODULE_clientnode_property_types_4789ebe2_func__}),_dec5=__WEBPACK_EXTERNAL_MODULE_web_component_wrapper_decorator_a680de5c_property__({type:__WEBPACK_EXTERNAL_MODULE_clientnode_property_types_4789ebe2_func__}),_dec6=__WEBPACK_EXTERNAL_MODULE_web_component_wrapper_decorator_a680de5c_property__({type:__WEBPACK_EXTERNAL_MODULE_clientnode_property_types_4789ebe2_func__}),_dec7=__WEBPACK_EXTERNAL_MODULE_web_component_wrapper_decorator_a680de5c_property__({type:__WEBPACK_EXTERNAL_MODULE_clientnode_property_types_4789ebe2_func__}),_dec8=__WEBPACK_EXTERNAL_MODULE_web_component_wrapper_decorator_a680de5c_property__({type:__WEBPACK_EXTERNAL_MODULE_clientnode_property_types_4789ebe2_func__}),_dec9=__WEBPACK_EXTERNAL_MODULE_web_component_wrapper_decorator_a680de5c_property__({type:__WEBPACK_EXTERNAL_MODULE_clientnode_property_types_4789ebe2_func__}),_dec0=__WEBPACK_EXTERNAL_MODULE_web_component_wrapper_decorator_a680de5c_property__({type:__WEBPACK_EXTERNAL_MODULE_clientnode_property_types_4789ebe2_func__}),_class=(_WebsiteUtilities=class WebsiteUtilities extends __WEBPACK_EXTERNAL_MODULE_web_component_wrapper_Web_aacc6608_Web__{/// endregion
+// region public
+/// region live-cycle
+/**
+     * Defines dynamic getter and setter interface and resolves the
+     * configuration object. Initializes the map implementation.
+     */constructor(){super();/*
+            Babel's property declaration transformation overwrites defined
+            properties at the end of an implicit constructor. So we have to
+            redefine them as long as we want to declare expected component
+            interface properties to enable static type checks.
+        */_defineProperty(this,"self",WebsiteUtilities);// region api properties
+_initializerDefineProperty(this,"options",_descriptor,this);_initializerDefineProperty(this,"onStartUpAnimationComplete",_descriptor2,this);_initializerDefineProperty(this,"onViewportMovesAwayFromTop",_descriptor3,this);_initializerDefineProperty(this,"onViewportMovesToTop",_descriptor4,this);_initializerDefineProperty(this,"onUnfocusResponsiveMenu",_descriptor5,this);_initializerDefineProperty(this,"onLoaded",_descriptor6,this);_initializerDefineProperty(this,"onButtonClick",_descriptor7,this);_initializerDefineProperty(this,"onSectionSwitch",_descriptor8,this);_initializerDefineProperty(this,"onLinkClick",_descriptor9,this);_initializerDefineProperty(this,"onTrack",_descriptor0,this);// endregion
+_defineProperty(this,"currentSectionName","");_defineProperty(this,"startUpAnimationIsComplete",false);_defineProperty(this,"viewportIsOnTop",void 0);_defineProperty(this,"observerDeregisters",[]);/// region dom nodes
+_defineProperty(this,"windowLoadingCoverDomNode",null);_defineProperty(this,"priorityNavigationDomNodes",null);_defineProperty(this,"routerOutletDomNode",null);_defineProperty(this,"sectionDomNodes",{});_defineProperty(this,"scrollToTopButtonDomNodes",null);this.defineGetterAndSetterInterface()}/**
+     * Triggered when ever a given attribute has changed and triggers to update
+     * configured dom content.
+     * @param name - Attribute name which was updates.
+     * @param newValue - New updated value.
+     * @returns Promise resolving when attribute has been updated.
+     */async onUpdateAttribute(name,newValue){await super.onUpdateAttribute(name,newValue);if(name==="options")this._extendOptions()}/**
+     * Updates controlled dom elements.
+     * @param reason - Why an update has been triggered.
+     * @param resolveRendering - Indicates whether rendering should be resolved
+     * finally. Should be set to "false" via super calls in inherited render
+     * methods which do further dom manipulations afterward and resolve the
+     * rendering process by their own.
+     * @returns A promise resolving when rendering has finished. A promise may
+     * be needed for classes inheriting from this class.
+     */async render(reason="unknown",resolveRendering=true){await super.render(reason,false);if(Object.keys(this.options).length===0)this._extendOptions();this.disableScrolling();/*
+            NOTE: Start up effects run only once per window. Instances
+            rendered afterward have nothing left to wait for.
+        */if(this.self.windowLoaded)this.startUpAnimationIsComplete=true;else{const onLoaded=()=>{if(this.self.windowLoaded){this.startUpAnimationIsComplete=true;void this._switchToLocationSection()}else{this.self.windowLoaded=true;void this._removeLoadingCover().then(()=>{this.enableScrolling();void this._performStartUpEffects().then(()=>{this.addMenuHighlighterViewTransition()});this.onLoaded()})}};void __WEBPACK_EXTERNAL_MODULE_clientnode_onDocumentReady__(()=>{void __WEBPACK_EXTERNAL_MODULE_clientnode_timeout__(onLoaded,this.options.windowLoadedTimeoutAfterDocLoadedInMSec)});if(__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.window)this.addSecureEventListener(__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.window,"load",onLoaded)}await this.waitForNestedComponentRendering();this.grabDomNodes();this._bindScrollEvents();this._bindClickTracking();await this._initializeRouting();this.initializePriorityNavigation();await this.resolveRenderingPromiseIfSet(reason,resolveRendering)}/**
+     * Should free up memory listeners related to deprecated HTML.
+     * @param reason - Description why rendering is necessary.
+     * @param reRenderReason - Description why a re-rendering is necessary.
+     */unRender(reason="unknown",reRenderReason){super.unRender(reason,reRenderReason);for(const deregister of this.observerDeregisters)deregister()}// endregion
+grabDomNodes(){this.scrollToTopButtonDomNodes=this.hostDomNode.querySelectorAll(this.options.selectors.scrollToTopButtons);this.priorityNavigationDomNodes=this.hostDomNode.querySelectorAll(`.${this.options.selectors.priorityNavigationClassName}`);this.routerOutletDomNode=this.hostDomNode.querySelector(this.options.selectors.routerOutlet);for(const domNode of this.routerOutletDomNode?.children??[]){const name=domNode.getAttribute("data-website-utilities-section");if(name==="")this.sectionDomNodes.default=domNode;else if(name&&this.options.sectionNames.managed.includes(name))this.sectionDomNodes[name]=domNode}this.windowLoadingCoverDomNode=this.hostDomNode.querySelector(this.options.selectors.windowLoadingCover)??this.hostDomNode.parentElement?.querySelector(this.options.selectors.windowLoadingCover)??__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.document?.body.querySelector(this.options.selectors.windowLoadingCover)??null}/**
+     * This method disables scrolling on the given web view.
+     */disableScrolling(){if(!this.hostDomNode.parentElement)return;this.hostDomNode.parentElement.classList.add("wu-disable-scrolling");this.addSecureEventListener(this.hostDomNode.parentElement,"touchmove",__WEBPACK_EXTERNAL_MODULE_clientnode_preventDefault__)}/**
+     * This method disables scrolling on the given web view.
+     */enableScrolling(){if(!this.hostDomNode.parentElement)return;this.hostDomNode.parentElement.classList.remove("wu-disable-scrolling");this.hostDomNode.parentElement.classList.remove("touchmove");this.hostDomNode.parentElement.removeEventListener("touchmove",__WEBPACK_EXTERNAL_MODULE_clientnode_preventDefault__)}/**
+     * Triggers an analytics event. All given arguments are forwarded to
+     * configured analytics event code to define to their environment
+     * variables.
+     * @param properties - Event tracking information.
+     */async track(properties){if(__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.window?.location&&this.options.tracking){const trackingItem={context:`${__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.window.location.pathname}#`+this.currentSectionName,...properties};if(typeof trackingItem.value!=="number"||isNaN(trackingItem.value))trackingItem.value=1;void log.debug("Run tracking code: \"event\" with arguments:");void log.debug(trackingItem);try{await this._onTrack(trackingItem)}catch(error){void log.warn(`Problem in tracking "${__WEBPACK_EXTERNAL_MODULE_clientnode_represent__(trackingItem)}":`,__WEBPACK_EXTERNAL_MODULE_clientnode_represent__(error))}}}initializePriorityNavigation(){const{selectors}=this.options;const overflowIndicatorClassName=selectors.priorityNavigationOverflowIndicatorClassName;if(this.priorityNavigationDomNodes?.length===0)return;for(const domNode of this.priorityNavigationDomNodes||[])for(const item of domNode.querySelectorAll(`[href="#${this.currentSectionName}"]`))item.classList.add(selectors.activeNavigationItemClassName);const setupOverflowMenu=()=>{for(const menuDomNode of this.priorityNavigationDomNodes||[]){const allMenuItemsDomNode=menuDomNode.querySelectorAll("ul > li");const menuItemDomNodes=Array.from(allMenuItemsDomNode).filter(domNode=>!domNode.classList.contains(overflowIndicatorClassName));// Checking top position of first item (sometimes changes)
+const firstTopPosition=allMenuItemsDomNode[0].offsetTop;let wrappedElements=[];for(const domNode of menuItemDomNodes){const topPosition=domNode.offsetTop;if(topPosition!==firstTopPosition)wrappedElements.push(domNode)}if(menuItemDomNodes.length-wrappedElements.length<this.options.minimumNumberOfMenuItems)wrappedElements=menuItemDomNodes.slice();const overflowMenu=menuDomNode.querySelector(`.${overflowIndicatorClassName}`);if(wrappedElements.length){// Clone set before altering
+const newSet=wrappedElements.map(domNode=>{const copy=domNode.cloneNode(true);/*
+                            NOTE: We remove all inline styles to remove running
+                            transitions and instance-specific styling which
+                            might not be useful in stacked menu.
+                        */for(const domNode of copy.querySelectorAll("[style]"))domNode.removeAttribute("style");return copy});// Hide ones that we're moving
+for(const domNode of wrappedElements)domNode.classList.add(selectors.priorityNavigationListItemHideClassName);// Add wrapped elements to dropdown
+const overflowNavigationList=menuDomNode.querySelector(selectors.priorityNavigationOverflowList);if(overflowNavigationList)for(const domNode of newSet)overflowNavigationList.append(domNode);if(overflowMenu){const className=this.options.selectors.priorityNavigationShowOverflowIndicatorClassName;menuDomNode.classList.add(className)}}else if(overflowMenu)menuDomNode.classList.remove(this.options.selectors.priorityNavigationShowOverflowIndicatorClassName)}};for(const domNode of this.hostDomNode.querySelectorAll(`.${overflowIndicatorClassName}`)){const menuDomNode=domNode.closest(`.${selectors.priorityNavigationClassName}`);this.addSecureEventListener(domNode,"click",()=>{menuDomNode?.classList.toggle(selectors.priorityNavigationOverflowOpenClassName)});if(!__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.document)continue;/*
+                Listen for clicks anywhere on the webpage to close overflow
+                menu.
+            */this.addSecureEventListener(__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.document,"click",event=>{if(menuDomNode?.classList.contains(selectors.priorityNavigationOverflowOpenClassName)){const clickWasInMenu=Boolean(event.target&&__WEBPACK_EXTERNAL_MODULE_clientnode_getParents__(event.target).some(parentDomNode=>menuDomNode===parentDomNode));const result=this.onUnfocusResponsiveMenu(event,clickWasInMenu);if(result===true||!clickWasInMenu&&result!==false)menuDomNode.classList.remove(selectors.priorityNavigationOverflowOpenClassName)}})}for(const menuDomNode of this.priorityNavigationDomNodes||[]){const update=__WEBPACK_EXTERNAL_MODULE_clientnode_trailingThrottle__(()=>{/*
+                        NOTE: Skip update if overflow menu is currently open
+                        to avoid interrupting CSS transitions (toggling
+                        display:none/inline-block on the indicator kills
+                        running transitions).
+                    */if(menuDomNode.classList.contains(selectors.priorityNavigationOverflowOpenClassName))return;menuDomNode.classList.add(selectors.priorityNavigationOverflowResizingClassName);for(const domNode of menuDomNode.querySelectorAll(selectors.priorityNavigationOverflowList))while(domNode.firstChild)domNode.removeChild(domNode.firstChild);menuDomNode.classList.remove(this.options.selectors.priorityNavigationShowOverflowIndicatorClassName);for(const domNode of menuDomNode.querySelectorAll("ul > li"))if(!domNode.classList.contains(selectors.priorityNavigationOverflowIndicatorClassName))domNode.classList.remove(selectors.priorityNavigationListItemHideClassName);setupOverflowMenu();menuDomNode.classList.remove(selectors.priorityNavigationOverflowResizingClassName)},20);const observer=new ResizeObserver(update);this.observerDeregisters.push(()=>{observer.unobserve(menuDomNode)});observer.observe(menuDomNode)}setupOverflowMenu()}addMenuHighlighterViewTransition(){if(!__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.document)return;const styleDomNode=document.createElement("style");styleDomNode.type="text/css";const styles=`
+            .wu-priority-navigation
+            .wu-priority-navigation__link--active::after {
+                view-transition-name: wu-menu-highlight;
+            }
+        `;styleDomNode.appendChild(__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.document.createTextNode(styles));__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.document.getElementsByTagName("head")[0].appendChild(styleDomNode)}activateNavigationItemHighlighters(sectionName){const className=this.options.selectors.activeNavigationItemClassName;for(const domNode of this.priorityNavigationDomNodes||[]){for(const item of domNode.querySelectorAll(`.${className}`))item.classList.remove(className);for(const item of domNode.querySelectorAll(`[href="#${sectionName}"]`))item.classList.add(className)}}triggerNavigationItemHighlighterSwitching(sectionName){if(__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.document?.startViewTransition){__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.document.startViewTransition(()=>{this.activateNavigationItemHighlighters(sectionName)});return}this.activateNavigationItemHighlighters(sectionName)}// endregion
+// region protected methods
+/// region event
+async _onButtonClick(event){if((await this.onButtonClick(event))===false)return;const button=event.target;const content=__WEBPACK_EXTERNAL_MODULE_clientnode_getText__(button).join(" ");void this._onTrack({event:"buttonClick",eventType:"click",label:content,reference:button.getAttribute("action")||button.getAttribute("target")||button.getAttribute("type")||content,subject:"button",value:parseInt(button.getAttribute("website-analytics-value")||"1"),userInteraction:true})}async _onSectionSwitch(sectionName,oldSectionName,event){if((await this.onSectionSwitch(sectionName,oldSectionName,event))===false)return;if(!__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.window?.location)return;await this._onTrack({event:"sectionSwitch",eventType:"sectionSwitch",label:sectionName,reference:`${__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.window.location.pathname}#${sectionName}`,subject:"url",userInteraction:false})}async _onLinkClick(event){if((await this.onLinkClick(event))===false)return;const link=event.target;const content=__WEBPACK_EXTERNAL_MODULE_clientnode_getText__(link).join(" ");void this._onTrack({event:"linkClick",eventType:"click",label:content,reference:link.getAttribute("href")||link.getAttribute("action")||link.getAttribute("target")||link.getAttribute("type")||content,subject:"link",value:parseInt(link.getAttribute("website-analytics-value")||"1"),userInteraction:true})}async _onTrack(item){if((await this.onTrack(item))===false)return;if(this.options.tracking)__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.dataLayer?.push(item)}/**
+     * This method triggers if the viewport moves to the top.
+     */_onViewportMovesToTop(){this._finishScrollToTopButtonTransition();for(const domNode of this.scrollToTopButtonDomNodes??[]){const cancel=()=>{domNode.removeEventListener("transitionend",setSettledClass);domNode.removeEventListener("transitioncancel",cancel)};const setSettledClass=()=>{if(this.viewportIsOnTop)domNode.classList.add(this.options.selectors.scrollToTopScrollTopSettledStateClassName);cancel()};domNode.addEventListener("transitionend",setSettledClass,{once:true});domNode.addEventListener("transitioncancel",cancel,{once:true});domNode.classList.add(this.options.selectors.scrollToTopScrollUpStateClassName)}}/**
+     * This method triggers if the viewport moves away from the top.
+     */async _onViewportMovesAwayFromTop(){for(const domNode of this.scrollToTopButtonDomNodes??[])domNode.classList.remove(this.options.selectors.scrollToTopScrollTopSettledStateClassName);/*
+            NOTE: We need to render the none-setteled state beforehand to make
+            sure browser will perform the transition.
+        */await __WEBPACK_EXTERNAL_MODULE_clientnode_timeout__();this._finishScrollToTopButtonTransition();for(const domNode of this.scrollToTopButtonDomNodes??[])domNode.classList.add(this.options.selectors.scrollToTopScrollDownStateClassName)}/**
+     * This method triggers if we change the current section.
+     * @param sectionName - Contains the new section name.
+     * @param event - Optional event that triggered the switch.
+     * @returns Promise resolving when the section switch has been finished.
+     */async switchSection(sectionName,event){// An empty section name (e.g. "#") refers to the default section.
+if(sectionName==="")sectionName=this.options.sectionNames.default;if(__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.window&&"location" in __WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.window&&(sectionName===""||this.options.sectionNames.managed.includes(sectionName)||this.options.sectionNames.unmanaged.includes(sectionName))){await this.self.switchSectionLock.acquire();/*
+                NOTE: Determine affected dom nodes not until the lock has been
+                acquired since a previous switch may have changed the current
+                section in the meantime.
+            */const oldSectionDomNode=Object.prototype.hasOwnProperty.call(this.sectionDomNodes,this.currentSectionName)?this.sectionDomNodes[this.currentSectionName]:this.sectionDomNodes.default??null;const newSectionDomNode=Object.prototype.hasOwnProperty.call(this.sectionDomNodes,sectionName)?this.sectionDomNodes[sectionName]:this.sectionDomNodes.default??null;this.triggerNavigationItemHighlighterSwitching(sectionName);void log.debug(`Run section switch from "${this.currentSectionName}" to`,`"${sectionName}".`);if(this.currentSectionName===sectionName){if(oldSectionDomNode){oldSectionDomNode.classList.remove("wu-section-active");oldSectionDomNode.classList.add("wu-section-inactive")}if(newSectionDomNode){newSectionDomNode.classList.remove("wu-section-inactive");newSectionDomNode.classList.add("wu-section-active")}}else if(!(this.options.sectionNames.unmanaged.includes(sectionName)&&this.options.sectionNames.unmanaged.includes(this.currentSectionName))){__WEBPACK_EXTERNAL_MODULE_clientnode_interruptableScrollTo__();if(oldSectionDomNode){await __WEBPACK_EXTERNAL_MODULE_clientnode_fadeOut__(oldSectionDomNode);oldSectionDomNode.classList.remove("wu-section-active");oldSectionDomNode.classList.add("wu-section-inactive")}if(newSectionDomNode){newSectionDomNode.classList.remove("wu-section-inactive");newSectionDomNode.classList.add("wu-section-active");await __WEBPACK_EXTERNAL_MODULE_clientnode_fadeIn__(newSectionDomNode)}}const oldSectionName=this.currentSectionName;this.currentSectionName=sectionName;try{await this._onSectionSwitch(this.currentSectionName,oldSectionName,event)}catch(error){void log.warn("Problem due to call section switch callback on section",`"${this.currentSectionName}": ${__WEBPACK_EXTERNAL_MODULE_clientnode_represent__(error)}`)}await this.self.switchSectionLock.release()}}// endregion
+/// region helper
+/**
+     * Extends given options by default options.
+     */_extendOptions(){/*
+            NOTE: Using the internal setter avoids triggering an additional
+            rendering.
+        */this.setPropertyValue("options",__WEBPACK_EXTERNAL_MODULE_clientnode_extend__(true,{},this.self._defaultOptions,this.options))}/**
+     * Switches to the section referenced by the current location hash if it
+     * differs from the current section. Hash changes are ignored until start
+     * up animations are complete, so this catches up on them.
+     * @returns Promise resolving when a potential section switch has been
+     * finished.
+     */_switchToLocationSection(){const sectionName=__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.location?.hash.substring("#".length)||this.options.sectionNames.default;if(sectionName===this.currentSectionName)return Promise.resolve();return this.switchSection(sectionName)}/**
+     * Handle section switches.
+     * @returns Promise resolving when routing initialization has been
+     * finished.
+     */_initializeRouting(){if(this.currentSectionName==="")this.currentSectionName=this.options.sectionNames.default;this._bindNavigationEvents();const sectionNameCandidate=__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.location?.hash&&__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.location.hash.substring("#".length);if(sectionNameCandidate&&(this.options.sectionNames.managed.includes(sectionNameCandidate)||this.options.sectionNames.unmanaged.includes(sectionNameCandidate)))this.currentSectionName=sectionNameCandidate;for(const domNode of Object.values(this.sectionDomNodes))domNode.classList.add("wu-section-inactive");return this.switchSection(sectionNameCandidate||this.currentSectionName)}/**
+     * Removes class names from scroll-to-top buttons to stop running
+     * transitions.
+     */_finishScrollToTopButtonTransition(){for(const domNode of this.scrollToTopButtonDomNodes??[])domNode.classList.remove(this.options.selectors.scrollToTopScrollUpStateClassName,this.options.selectors.scrollToTopScrollDownStateClassName)}/**
+     * This method triggers if the view port arrives at special areas.
+     */_bindScrollEvents(){if(!__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.document)return;if(__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.window)this.addSecureEventListener(__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.window,"scroll",event=>{if(__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.window?.scrollY){if(this.viewportIsOnTop){this.viewportIsOnTop=false;void this._onViewportMovesAwayFromTop().then(this.onViewportMovesAwayFromTop.bind(this,event))}}else if(!this.viewportIsOnTop){this.viewportIsOnTop=true;this._onViewportMovesToTop();this.onViewportMovesToTop(event)}});if(__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.window?.scrollY){this.viewportIsOnTop=false;void this._onViewportMovesAwayFromTop().then(()=>{this.onViewportMovesAwayFromTop()})}else{this.viewportIsOnTop=true;for(const domNode of this.scrollToTopButtonDomNodes??[])domNode.classList.add(this.options.selectors.scrollToTopScrollTopSettledStateClassName);this._onViewportMovesToTop();this.onViewportMovesToTop()}}/**
+     * This method triggers after the window is loaded.
+     * @returns Promise resolving to nothing when loading cover has been
+     * removed.
+     */async _removeLoadingCover(){await __WEBPACK_EXTERNAL_MODULE_clientnode_timeout__(this.options.additionalPageLoadingTimeInMilliseconds);// Hide startup animation dom nodes to show them step by step.
+for(const domNode of this.hostDomNode.querySelectorAll("[class^=\""+`${this.options.selectors.startUpAnimationClassPrefix}"], `+"[class*=\" "+`${this.options.selectors.startUpAnimationClassPrefix}"]`))domNode.style.opacity="0";if(this.windowLoadingCoverDomNode)await __WEBPACK_EXTERNAL_MODULE_clientnode_fadeOut__(this.windowLoadingCoverDomNode)}/**
+     * This method handles the given startup effect step.
+     * @returns Promise resolving to nothing when startup effects have been
+     * finished.
+     */async _performStartUpEffects(){const animationPromises=[];let elementNumber=1;// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+while(true){const domNodesToAnimate=this.hostDomNode.querySelectorAll("."+this.options.selectors.startUpAnimationClassPrefix+String(elementNumber));if(domNodesToAnimate.length===0){await Promise.all(animationPromises);this.startUpAnimationIsComplete=true;void this._switchToLocationSection();this.onStartUpAnimationComplete();break}await __WEBPACK_EXTERNAL_MODULE_clientnode_timeout__(this.options.startUpAnimationElementDelayInMilliseconds);for(const domNode of domNodesToAnimate){domNode.style.removeProperty("opacity");const handler=__WEBPACK_EXTERNAL_MODULE_clientnode_fadeIn__(domNode);animationPromises.push(handler.then(()=>{handler.resetStyles()}))}elementNumber+=1}}/**
+     * This method adds triggers to switch the section.
+     */_bindNavigationEvents(){if(__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.window)this.addSecureEventListener(__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.window,"hashchange",event=>{if(this.startUpAnimationIsComplete){const newSectionNameCandidate=location.hash.substring("#".length);void this.switchSection(newSectionNameCandidate,event)}});this._bindScrollToTopButton()}/**
+     * Adds trigger to scroll top buttons.
+     */_bindScrollToTopButton(){for(const domNode of this.scrollToTopButtonDomNodes||[])this.addSecureEventListener(domNode,"click",event=>{event.preventDefault();__WEBPACK_EXTERNAL_MODULE_clientnode_interruptableScrollTo__()})}/**
+     * Executes the page tracking code.
+     */_bindClickTracking(){if(this.options.tracking){for(const domNode of this.hostDomNode.querySelectorAll("a"))this.addSecureEventListener(domNode,"click",event=>{void this._onLinkClick(event)});for(const domNode of this.hostDomNode.querySelectorAll("button"))this.addSecureEventListener(domNode,"click",event=>{void this._onButtonClick(event)})}}/// endregion
+// endregion
+},_defineProperty(_WebsiteUtilities,"_name","WebsiteUtilities"),_defineProperty(_WebsiteUtilities,"_defaultOptions",{additionalPageLoadingTimeInMilliseconds:0,startUpAnimationElementDelayInMilliseconds:100,windowLoadedTimeoutAfterDocLoadedInMSec:2000,domain:"auto",sectionNames:{default:"",managed:["home"],unmanaged:[]},selectors:{windowLoadingCover:".wu-window-loading-cover",startUpAnimationClassPrefix:"wu-start-up-animation-number-",routerOutlet:".wu-router-outlet",scrollToTopButtons:".wu-scroll-to-top",scrollToTopScrollTopSettledStateClassName:"wu-top-settled",scrollToTopScrollUpStateClassName:"wu-scroll-up",scrollToTopScrollDownStateClassName:"wu-scroll-down",priorityNavigationClassName:"wu-priority-navigation",priorityNavigationOverflowOpenClassName:"wu-priority-navigation--overflow-open",priorityNavigationShowOverflowIndicatorClassName:"wu-priority-navigation--show-overflow-indicator",priorityNavigationOverflowResizingClassName:"wu-priority-navigation--resizing",activeNavigationItemClassName:"wu-priority-navigation__link--active",priorityNavigationListItemHideClassName:"wu-priority-navigation__list__item--hide",priorityNavigationOverflowIndicatorClassName:"wu-priority-navigation__list__overflow-indicator",priorityNavigationOverflowList:".wu-priority-navigation__overflow-list"},minimumNumberOfMenuItems:3,tracking:false}),_defineProperty(_WebsiteUtilities,"windowLoaded",false),_defineProperty(_WebsiteUtilities,"switchSectionLock",new __WEBPACK_EXTERNAL_MODULE_clientnode_Lock__),_WebsiteUtilities),_descriptor=_applyDecoratedDescriptor(_class.prototype,"options",[_dec],{configurable:true,enumerable:true,writable:true,initializer:function(){return{}}}),_descriptor2=_applyDecoratedDescriptor(_class.prototype,"onStartUpAnimationComplete",[_dec2],{configurable:true,enumerable:true,writable:true,initializer:function(){return __WEBPACK_EXTERNAL_MODULE_clientnode_NOOP__}}),_descriptor3=_applyDecoratedDescriptor(_class.prototype,"onViewportMovesAwayFromTop",[_dec3],{configurable:true,enumerable:true,writable:true,initializer:function(){return __WEBPACK_EXTERNAL_MODULE_clientnode_NOOP__}}),_descriptor4=_applyDecoratedDescriptor(_class.prototype,"onViewportMovesToTop",[_dec4],{configurable:true,enumerable:true,writable:true,initializer:function(){return __WEBPACK_EXTERNAL_MODULE_clientnode_NOOP__}}),_descriptor5=_applyDecoratedDescriptor(_class.prototype,"onUnfocusResponsiveMenu",[_dec5],{configurable:true,enumerable:true,writable:true,initializer:function(){return __WEBPACK_EXTERNAL_MODULE_clientnode_NOOP__}}),_descriptor6=_applyDecoratedDescriptor(_class.prototype,"onLoaded",[_dec6],{configurable:true,enumerable:true,writable:true,initializer:function(){return __WEBPACK_EXTERNAL_MODULE_clientnode_NOOP__}}),_descriptor7=_applyDecoratedDescriptor(_class.prototype,"onButtonClick",[_dec7],{configurable:true,enumerable:true,writable:true,initializer:function(){return function(_event){return Promise.resolve(undefined)}}}),_descriptor8=_applyDecoratedDescriptor(_class.prototype,"onSectionSwitch",[_dec8],{configurable:true,enumerable:true,writable:true,initializer:function(){return function(_sectionName,_oldSectionName,_event){return Promise.resolve(undefined)}}}),_descriptor9=_applyDecoratedDescriptor(_class.prototype,"onLinkClick",[_dec9],{configurable:true,enumerable:true,writable:true,initializer:function(){return function(_event){return Promise.resolve(undefined)}}}),_descriptor0=_applyDecoratedDescriptor(_class.prototype,"onTrack",[_dec0],{configurable:true,enumerable:true,writable:true,initializer:function(){return function(_item){return Promise.resolve(undefined)}}}),_class);// endregion
+const api={component:WebsiteUtilities,register:(tagName=__WEBPACK_EXTERNAL_MODULE_clientnode_camelCaseToDelimited__(WebsiteUtilities._name))=>{customElements.define(tagName,WebsiteUtilities)}};/* harmony default export */ const src = (WebsiteUtilities);if(__WEBPACK_EXTERNAL_MODULE_clientnode_globalContext__.AUTO_DEFINE_WEBSITE_UTILITIES)api.register();
+export { WebsiteUtilities, api, src as default, log };
