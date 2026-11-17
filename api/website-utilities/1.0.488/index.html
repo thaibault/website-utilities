@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3>website-utilities 1.0.488</h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><!-- !/usr/bin/env markdown
+-*- coding: utf-8 -*-
+region header
+Copyright Torben Sickert (info["~at~"]tsickert.com) 16.12.2012
+
+License
+-------
+
+This library written by Torben Sickert stands under a creative commons naming
+4.0 international license.
+See https://creativecommons.org/licenses/by/4.0/deed.de
+endregion -->
+<!--|deDE:Projektstatus-->
+<!--|frFR:Statut du projet-->
+<h2>Project Status</h2>
+<p><a href="https://www.npmjs.com/package/website-utilities"><img src="https://img.shields.io/npm/v/website-utilities?color=%23d55e5d&amp;label=npm%20package%20version&amp;logoColor=%23d55e5d&amp;style=for-the-badge" alt="npm"></a>
+<a href="https://www.npmjs.com/package/website-utilities"><img src="https://img.shields.io/npm/dy/website-utilities.svg?style=for-the-badge" alt="npm downloads"></a></p>
+<p><a href="https://github.com/thaibault/website-utilities/actions/workflows/build.yaml"><img src="https://img.shields.io/github/actions/workflow/status/thaibault/website-utilities/build.yaml?style=for-the-badge" alt="build"></a>
+<a href="https://github.com/thaibault/website-utilities/actions/workflows/build-package-and-push.yaml"><img src="https://img.shields.io/github/actions/workflow/status/thaibault/website-utilities/build-package-and-push.yaml?label=build%20push%20package&amp;style=for-the-badge" alt="build push package"></a></p>
+<p><a href="https://github.com/thaibault/website-utilities/actions/workflows/check-types.yaml"><img src="https://img.shields.io/github/actions/workflow/status/thaibault/website-utilities/check-types.yaml?label=check%20types&amp;style=for-the-badge" alt="check types"></a>
+<a href="https://github.com/thaibault/website-utilities/actions/workflows/lint.yaml"><img src="https://img.shields.io/github/actions/workflow/status/thaibault/website-utilities/lint.yaml?label=lint&amp;style=for-the-badge" alt="lint"></a>
+<a href="https://github.com/thaibault/website-utilities/actions/workflows/test-coverage-report.yaml"><img src="https://img.shields.io/github/actions/workflow/status/thaibault/website-utilities/test-coverage-report.yaml?label=test&amp;style=for-the-badge" alt="test"></a></p>
+<p><a href="https://coveralls.io/github/thaibault/website-utilities"><img src="https://img.shields.io/coverallsCoverage/github/thaibault/website-utilities?label=code%20coverage&amp;style=for-the-badge" alt="code coverage"></a></p>
+<p><a href="https://github.com/thaibault/website-utilities/actions/workflows/deploy-web-documentation.yaml"><img src="https://img.shields.io/github/actions/workflow/status/thaibault/website-utilities/deploy-web-documentation.yaml?label=deploy%20web%20documentation&amp;style=for-the-badge" alt="deploy web documentation"></a>
+<a href="https://tsickert.com/website-utilities"><img src="https://img.shields.io/website-up-down-green-red/https/tsickert.com/website-utilities.svg?label=web-documentation&amp;style=for-the-badge" alt="web documentation"></a></p>
+<!--|deDE:Einsatzmöglichkeiten-->
+<!--|frFR:Cas d'utilisation-->
+<h2>Use case</h2>
+<p>Building blocks for single page websites as a web component: wrap your page
+into &quot;website-utilities&quot; and get a loading cover, start-up animations, hash
+based navigation between sections, a scroll to top button, a navigation which
+moves overflowing items into a menu and optional tracking. Base styles with
+theme variables and the Open Sans fonts are included.</p>
+<!--deDE:
+    Bausteine für Single-Page-Webseiten als Web Component: Umschließen Sie
+    Ihre Seite mit "website-utilities" und erhalten Sie eine Ladeanzeige,
+    Start-Animationen, hashbasierte Navigation zwischen Sektionen, einen
+    "Nach oben"-Button, eine Navigation, die überzählige Einträge in ein Menü
+    verschiebt, und optionales Tracking. Basis-Styles mit Theme-Variablen und
+    die Schriften Open Sans sind enthalten.
+-->
+<!--frFR:
+    Des briques pour sites web d'une seule page sous forme de web component:
+    englobez votre page dans "website-utilities" et obtenez un écran de
+    chargement, des animations de démarrage, une navigation par hash entre
+    sections, un bouton de retour en haut, une navigation qui déplace les
+    éléments en trop dans un menu et un suivi optionnel. Des styles de base
+    avec variables de thème et les polices Open Sans sont inclus.
+-->
+<div class="wd-table-of-contents">
+    <h2 id="content">Content<!--deDE:Inhalt--><!--frFR:Contenu--></h2>
+    <!--wd-table-of-contents-->
+</div>
+<!--|deDE:Schnellstart-->
+<!--|frFR:Démarrage rapide-->
+<h2>Quick start</h2>
+<pre class="prettyprint source lang-bash"><code>npm install website-utilities clientnode core-js web-component-wrapper
+</code></pre>
+<pre class="prettyprint source lang-JavaScript"><code>import {api} from 'website-utilities'
+import 'website-utilities/dist/fonts.css'
+import 'website-utilities/dist/index.css'
+
+api.register()
+</code></pre>
+<p>Without a package manager load the bundle, which contains all dependencies,
+together with its styles. With npm it is available as
+&quot;website-utilities/bundle&quot;:</p>
+<!--deDE:
+    Ohne Paketmanager laden Sie das Bundle, das alle Abhängigkeiten enthält,
+    zusammen mit seinen Styles. Mit npm ist es als
+    "website-utilities/bundle" verfügbar:
+-->
+<!--frFR:
+    Sans gestionnaire de paquets, chargez le bundle, qui contient toutes les
+    dépendances, avec ses styles. Avec npm, il est disponible sous
+    "website-utilities/bundle":
+-->
+<pre class="prettyprint source lang-HTML"><code>&lt;link
+    href=&quot;https://unpkg.com/website-utilities@latest/dist/bundle/fonts.css&quot;
+    rel=&quot;stylesheet&quot;
+/>
+&lt;link
+    href=&quot;https://unpkg.com/website-utilities@latest/dist/bundle/index.css&quot;
+    rel=&quot;stylesheet&quot;
+/>
+&lt;script type=&quot;module&quot;>
+    import {
+        api
+    } from 'https://unpkg.com/website-utilities@latest/dist/bundle/index.js'
+
+    api.register()
+&lt;/script>
+</code></pre>
+<p>Then wrap your page:</p>
+<!--deDE:Umschließen Sie dann Ihre Seite:-->
+<!--frFR:Englobez ensuite votre page:-->
+<pre class="prettyprint source lang-HTML"><code>&lt;div class=&quot;wu-window-loading-cover&quot;>Loading…&lt;/div>
+
+&lt;website-utilities
+    class=&quot;wu&quot;
+    options=&quot;{sectionNames: {managed: ['about']}}&quot;
+>
+    &lt;header>
+        &lt;a href=&quot;#&quot;>Home&lt;/a>
+        &lt;a href=&quot;#about&quot;>About&lt;/a>
+    &lt;/header>
+
+    &lt;main class=&quot;wu-router-outlet&quot;>
+        &lt;section data-website-utilities-section>
+            &lt;h1 class=&quot;wu-start-up-animation-number-1&quot;>Welcome&lt;/h1>
+            &lt;p class=&quot;wu-start-up-animation-number-2&quot;>Nice to see you.&lt;/p>
+        &lt;/section>
+        &lt;section data-website-utilities-section=&quot;about&quot;>About us&lt;/section>
+    &lt;/main>
+
+    &lt;a class=&quot;wu-scroll-to-top&quot; href=&quot;#top&quot;>Top&lt;/a>
+&lt;/website-utilities>
+</code></pre>
+<!--|deDE:Sektionen-->
+<!--|frFR:Sections-->
+<h2>Sections</h2>
+<p>The children of &quot;.wu-router-outlet&quot; are sections. The one with an empty
+&quot;data-website-utilities-section&quot; attribute is the default, the others are
+named. Names listed in &quot;sectionNames.managed&quot; are shown when the location
+hash matches, e.g. &quot;#about&quot;, the active one gets the class
+&quot;wu-section-active&quot; and all others &quot;wu-section-inactive&quot; (hidden by the
+included styles). Switches fade the sections and scroll back to top.</p>
+<!--deDE:
+    Die Kinder von ".wu-router-outlet" sind Sektionen. Die mit leerem
+    Attribut "data-website-utilities-section" ist die Standardsektion, die
+    anderen sind benannt. In "sectionNames.managed" aufgeführte Namen werden
+    angezeigt, wenn der Hash der Adresse passt, z. B. "#about", die aktive
+    erhält die Klasse "wu-section-active" und alle anderen
+    "wu-section-inactive" (durch die enthaltenen Styles ausgeblendet). Beim
+    Wechsel werden die Sektionen überblendet und es wird nach oben gescrollt.
+-->
+<!--frFR:
+    Les enfants de ".wu-router-outlet" sont des sections. Celle dont
+    l'attribut "data-website-utilities-section" est vide est la section par
+    défaut, les autres sont nommées. Les noms listés dans
+    "sectionNames.managed" s'affichent lorsque le hash de l'adresse
+    correspond, par exemple "#about", la section active reçoit la classe
+    "wu-section-active" et toutes les autres "wu-section-inactive" (masquées
+    par les styles inclus). Les changements effectuent un fondu des sections
+    et remontent en haut de la page.
+-->
+<p>Names in &quot;sectionNames.unmanaged&quot; are known hashes without own section, e.g.
+anchors inside a page. Switching between them neither fades nor scrolls.
+Navigation links to the current section get the class
+&quot;wu-priority-navigation__link--active&quot;.</p>
+<!--deDE:
+    Namen in "sectionNames.unmanaged" sind bekannte Hashes ohne eigene
+    Sektion, z. B. Anker innerhalb einer Seite. Ein Wechsel zwischen ihnen
+    blendet weder über noch scrollt er. Navigationslinks zur aktuellen
+    Sektion erhalten die Klasse "wu-priority-navigation__link--active".
+-->
+<!--frFR:
+    Les noms dans "sectionNames.unmanaged" sont des hashs connus sans section
+    propre, par exemple des ancres dans une page. Passer de l'un à l'autre ne
+    provoque ni fondu ni défilement. Les liens de navigation vers la section
+    courante reçoivent la classe "wu-priority-navigation__link--active".
+-->
+<!--|deDE:Laden und Start-Animationen-->
+<!--|frFR:Chargement et animations de démarrage-->
+<h2>Loading and start-up animations</h2>
+<p>&quot;.wu-window-loading-cover&quot; covers the page until it has been loaded and then
+fades out. Afterwards elements with the classes
+&quot;wu-start-up-animation-number-1&quot;, &quot;wu-start-up-animation-number-2&quot; and so on
+fade in one after another. Scrolling is disabled until the cover is gone.</p>
+<!--deDE:
+    ".wu-window-loading-cover" verdeckt die Seite, bis sie geladen ist, und
+    wird dann ausgeblendet. Danach werden Elemente mit den Klassen
+    "wu-start-up-animation-number-1", "wu-start-up-animation-number-2" usw.
+    nacheinander eingeblendet. Scrollen ist deaktiviert, bis die Ladeanzeige
+    verschwunden ist.
+-->
+<!--frFR:
+    ".wu-window-loading-cover" couvre la page jusqu'à son chargement puis
+    disparaît en fondu. Ensuite, les éléments portant les classes
+    "wu-start-up-animation-number-1", "wu-start-up-animation-number-2" et
+    ainsi de suite apparaissent l'un après l'autre. Le défilement est
+    désactivé jusqu'à la disparition de l'écran de chargement.
+-->
+<!--|deDE:Navigation-->
+<!--|frFR:Navigation-->
+<h2>Navigation</h2>
+<ul>
+<li>&quot;.wu-scroll-to-top&quot;: Scrolls smoothly to the top on click. It gets the
+class &quot;wu-scroll-down&quot; when the page leaves the top, &quot;wu-scroll-up&quot; when
+it returns and &quot;wu-top-settled&quot; once it is back at the top.<!--deDE:".wu-scroll-to-top": Scrollt beim Klick sanft nach oben. Es erhält die Klasse "wu-scroll-down", wenn die Seite den oberen Rand verlässt, "wu-scroll-up", wenn sie zurückkehrt, und "wu-top-settled", sobald sie wieder oben ist.--><!--frFR:".wu-scroll-to-top": Remonte en douceur en haut lors d'un clic. Il reçoit la classe "wu-scroll-down" lorsque la page quitte le haut, "wu-scroll-up" lorsqu'elle y revient et "wu-top-settled" une fois revenue en haut.--></li>
+<li>&quot;.wu-priority-navigation&quot;: A navigation which moves items that do not fit
+into an overflow menu. It contains a &quot;.wu-priority-navigation__list&quot; of
+links with the class &quot;wu-priority-navigation__link&quot;, ending with an item
+&quot;.wu-priority-navigation__list__overflow-indicator&quot;, followed by an empty
+&quot;.wu-priority-navigation__overflow-list&quot;.<!--deDE:".wu-priority-navigation": Eine Navigation, die Einträge, die nicht passen, in ein Überlaufmenü verschiebt. Sie enthält eine ".wu-priority-navigation__list" mit Links der Klasse "wu-priority-navigation__link", abgeschlossen von einem Eintrag ".wu-priority-navigation__list__overflow-indicator", gefolgt von einer leeren ".wu-priority-navigation__overflow-list".--><!--frFR:".wu-priority-navigation": Une navigation qui déplace les éléments qui ne tiennent pas dans un menu de débordement. Elle contient une ".wu-priority-navigation__list" de liens de classe "wu-priority-navigation__link", terminée par un élément ".wu-priority-navigation__list__overflow-indicator", suivie d'une ".wu-priority-navigation__overflow-list" vide.--></li>
+</ul>
+<pre class="prettyprint source lang-HTML"><code>&lt;nav class=&quot;wu-priority-navigation&quot;>
+    &lt;ul class=&quot;wu-priority-navigation__list&quot;>
+        &lt;li>&lt;a class=&quot;wu-priority-navigation__link&quot; href=&quot;#&quot;>Home&lt;/a>&lt;/li>
+        &lt;li>
+            &lt;a class=&quot;wu-priority-navigation__link&quot; href=&quot;#about&quot;>About&lt;/a>
+        &lt;/li>
+        &lt;li class=&quot;wu-priority-navigation__list__overflow-indicator&quot;>
+            &lt;div
+                class=&quot;wu-priority-navigation__list__overflow-indicator__title&quot;
+            >
+                &lt;div
+                    class=&quot;wu-priority-navigation__list__overflow-indicator__title__icon&quot;
+                >&lt;/div>
+            &lt;/div>
+        &lt;/li>
+    &lt;/ul>
+    &lt;ul class=&quot;wu-priority-navigation__overflow-list&quot;>&lt;/ul>
+&lt;/nav>
+</code></pre>
+<!--|deDE:Konfiguration-->
+<!--|frFR:Configuration-->
+<h2>Configuration</h2>
+<p>Pass options as JavaScript object in the &quot;options&quot; attribute:</p>
+<!--deDE:Übergeben Sie Optionen als JavaScript-Objekt im Attribut "options":-->
+<!--frFR:
+    Passez les options sous forme d'objet JavaScript dans l'attribut
+    "options":
+-->
+<ul>
+<li>&quot;sectionNames&quot;: &quot;default&quot;, &quot;managed&quot; and &quot;unmanaged&quot; section names.<!--deDE:"sectionNames": Die Sektionsnamen "default", "managed" und "unmanaged".--><!--frFR:"sectionNames": Les noms de section "default", "managed" et "unmanaged".--></li>
+<li>&quot;additionalPageLoadingTimeInMilliseconds&quot;: Keeps the loading cover longer.<!--deDE:"additionalPageLoadingTimeInMilliseconds": Hält die Ladeanzeige länger.--><!--frFR:"additionalPageLoadingTimeInMilliseconds": Garde l'écran de chargement plus longtemps.--></li>
+<li>&quot;startUpAnimationElementDelayInMilliseconds&quot;: Delay between start-up
+animation steps, 100 by default.<!--deDE:"startUpAnimationElementDelayInMilliseconds": Verzögerung zwischen den Schritten der Start-Animation, standardmäßig 100.--><!--frFR:"startUpAnimationElementDelayInMilliseconds": Délai entre les étapes de l'animation de démarrage, 100 par défaut.--></li>
+<li>&quot;windowLoadedTimeoutAfterDocLoadedInMSec&quot;: Removes the cover at the latest
+this long after the document is ready, 2000 by default.<!--deDE:"windowLoadedTimeoutAfterDocLoadedInMSec": Entfernt die Ladeanzeige spätestens so lange, nachdem das Dokument bereit ist, standardmäßig 2000.--><!--frFR:"windowLoadedTimeoutAfterDocLoadedInMSec": Retire l'écran de chargement au plus tard ce délai après que le document est prêt, 2000 par défaut.--></li>
+<li>&quot;minimumNumberOfMenuItems&quot;: Items always kept in the priority navigation,
+3 by default.<!--deDE:"minimumNumberOfMenuItems": Einträge, die immer in der Prioritätsnavigation bleiben, standardmäßig 3.--><!--frFR:"minimumNumberOfMenuItems": Éléments toujours conservés dans la navigation prioritaire, 3 par défaut.--></li>
+<li>&quot;selectors&quot;: Alternative selectors and class names for all elements
+above.<!--deDE:"selectors": Alternative Selektoren und Klassennamen für alle obigen Elemente.--><!--frFR:"selectors": Sélecteurs et noms de classe alternatifs pour tous les éléments ci-dessus.--></li>
+<li>&quot;tracking&quot;: Enables tracking, see below.<!--deDE:"tracking": Aktiviert das Tracking, siehe unten.--><!--frFR:"tracking": Active le suivi, voir ci-dessous.--></li>
+</ul>
+<!--|deDE:Callbacks-->
+<!--|frFR:Callbacks-->
+<h3>Callbacks</h3>
+<p>Set them as properties or as attributes like
+&quot;on-section-switch&quot;, where &quot;parameters&quot; holds the arguments:</p>
+<!--deDE:
+    Setzen Sie sie als Eigenschaften oder als Attribute wie
+    "on-section-switch", wobei "parameters" die Argumente enthält:
+-->
+<!--frFR:
+    Définissez-les comme propriétés ou comme attributs comme
+    "on-section-switch", où "parameters" contient les arguments:
+-->
+<ul>
+<li>&quot;onSectionSwitch(sectionName, oldSectionName, event)&quot;: After a section
+switch.<!--deDE:"onSectionSwitch(sectionName, oldSectionName, event)": Nach einem Sektionswechsel.--><!--frFR:"onSectionSwitch(sectionName, oldSectionName, event)": Après un changement de section.--></li>
+<li>&quot;onLoaded&quot; and &quot;onStartUpAnimationComplete&quot;: When the cover is gone and
+when all start-up animations have finished.<!--deDE:"onLoaded" und "onStartUpAnimationComplete": Wenn die Ladeanzeige verschwunden ist und wenn alle Start-Animationen beendet sind.--><!--frFR:"onLoaded" et "onStartUpAnimationComplete": Lorsque l'écran de chargement a disparu et lorsque toutes les animations de démarrage sont terminées.--></li>
+<li>&quot;onViewportMovesAwayFromTop&quot; and &quot;onViewportMovesToTop&quot;: When the page is
+scrolled away from or back to the very top.<!--deDE:"onViewportMovesAwayFromTop" und "onViewportMovesToTop": Wenn die Seite vom oberen Rand weg- oder zu ihm zurückgescrollt wird.--><!--frFR:"onViewportMovesAwayFromTop" et "onViewportMovesToTop": Lorsque la page défile hors du haut ou y revient.--></li>
+<li>&quot;onLinkClick&quot;, &quot;onButtonClick&quot; and &quot;onTrack&quot;: With tracking enabled.<!--deDE:"onLinkClick", "onButtonClick" und "onTrack": Bei aktiviertem Tracking.--><!--frFR:"onLinkClick", "onButtonClick" et "onTrack": Avec le suivi activé.--></li>
+</ul>
+<pre class="prettyprint source lang-HTML"><code>&lt;website-utilities
+    on-section-switch=&quot;document.title = parameters[0] || 'Home'&quot;
+>
+    ...
+&lt;/website-utilities>
+</code></pre>
+<!--|deDE:Tracking-->
+<!--|frFR:Suivi-->
+<h3>Tracking</h3>
+<p>With &quot;tracking&quot;: true, link and button clicks inside the component and
+section switches are pushed as items with &quot;event&quot;, &quot;label&quot;, &quot;reference&quot; and
+&quot;subject&quot; to &quot;window.dataLayer&quot;, e.g. for Google Tag Manager. Returning false
+from &quot;onSectionSwitch&quot;, &quot;onLinkClick&quot;, &quot;onButtonClick&quot; or &quot;onTrack&quot; skips the
+corresponding item. &quot;track(item)&quot; adds own ones.</p>
+<!--deDE:
+    Mit "tracking": true werden Link- und Button-Klicks innerhalb der
+    Komponente sowie Sektionswechsel als Einträge mit "event", "label",
+    "reference" und "subject" nach "window.dataLayer" geschrieben, z. B. für
+    den Google Tag Manager. Gibt "onSectionSwitch", "onLinkClick",
+    "onButtonClick" oder "onTrack" false zurück, entfällt der jeweilige
+    Eintrag. "track(item)" fügt eigene hinzu.
+-->
+<!--frFR:
+    Avec "tracking": true, les clics sur les liens et boutons dans le
+    composant ainsi que les changements de section sont ajoutés comme
+    éléments avec "event", "label", "reference" et "subject" à
+    "window.dataLayer", par exemple pour Google Tag Manager. Retourner false
+    depuis "onSectionSwitch", "onLinkClick", "onButtonClick" ou "onTrack"
+    omet l'élément correspondant. "track(item)" en ajoute d'autres.
+-->
+<!--|deDE:Styles-->
+<!--|frFR:Styles-->
+<h2>Styles</h2>
+<p>&quot;dist/index.css&quot; contains the styles for all elements above and the theme as
+CSS custom properties like &quot;--wu-theme-primary&quot;, &quot;dist/fonts.css&quot; the Open
+Sans fonts. With Sass you can configure the theme variables:</p>
+<!--deDE:
+    "dist/index.css" enthält die Styles für alle obigen Elemente und das
+    Theme als CSS Custom Properties wie "--wu-theme-primary",
+    "dist/fonts.css" die Schriften Open Sans. Mit Sass können Sie die
+    Theme-Variablen konfigurieren:
+-->
+<!--frFR:
+    "dist/index.css" contient les styles de tous les éléments ci-dessus et le
+    thème sous forme de propriétés CSS personnalisées comme
+    "--wu-theme-primary", "dist/fonts.css" les polices Open Sans. Avec Sass,
+    vous pouvez configurer les variables du thème:
+-->
+<pre class="prettyprint source lang-SCSS"><code>@use &quot;website-utilities/src/variables&quot; with ($theme-primary: #d55e5d);
+@use &quot;website-utilities/src/index&quot;;
+</code></pre>
+<!--|deDE:Veröffentlichen-->
+<!--|frFR:Publication-->
+<h2>Deployment</h2>
+<p>The command &quot;website-utilities&quot; publishes a built website to a GitHub Pages
+repository: it pulls the repository, runs &quot;yarn clear&quot; and &quot;yarn build&quot;,
+replaces the repository's content (except &quot;.git&quot;, &quot;.github&quot;, &quot;CNAME&quot; and
+&quot;readme.md&quot;) with &quot;dist&quot; and commits and pushes the result. The repository
+is expected next to the project as
+&quot;&lt;GIT_PRIVATE_AUTHOR_NAME&gt;.github.io&quot; or at &quot;PUBLIC_REPOSITORY_PATH&quot;
+and has to contain a &quot;CNAME&quot; file.
+&quot;USER_NAME_GITHUB&quot; and &quot;USER_EMAIL_GITHUB&quot; set the commit author.</p>
+<!--deDE:
+    Der Befehl "website-utilities" veröffentlicht eine gebaute Webseite in
+    ein GitHub-Pages-Repository: Er holt den neuesten Stand des Repositorys,
+    führt "yarn clear" und "yarn build" aus, ersetzt den Inhalt des
+    Repositorys (außer ".git", ".github", "CNAME" und "readme.md") durch
+    "dist" und committet und pusht das Ergebnis. Das Repository wird neben
+    dem Projekt als "&lt;GIT_PRIVATE_AUTHOR_NAME&gt;.github.io" oder unter
+    "PUBLIC_REPOSITORY_PATH" erwartet und muss eine Datei "CNAME" enthalten.
+    "USER_NAME_GITHUB" und "USER_EMAIL_GITHUB" setzen den Commit-Autor.
+-->
+<!--frFR:
+    La commande "website-utilities" publie un site web construit dans un
+    dépôt GitHub Pages: elle récupère le dépôt, exécute "yarn clear" et
+    "yarn build", remplace le contenu du dépôt (sauf ".git", ".github",
+    "CNAME" et "readme.md") par "dist", puis commite et pousse le résultat.
+    Le dépôt est attendu à côté du projet sous
+    "&lt;GIT_PRIVATE_AUTHOR_NAME&gt;.github.io" ou à "PUBLIC_REPOSITORY_PATH"
+    et doit contenir un fichier "CNAME". "USER_NAME_GITHUB" et
+    "USER_EMAIL_GITHUB" définissent l'auteur du commit.
+-->
+<p>The same is available as GitHub action. It installs the dependencies,
+checks out the target repository and runs &quot;yarn update:website&quot;, so the
+website's &quot;package.json&quot; needs this script calling &quot;website-utilities&quot;:</p>
+<!--deDE:
+    Dasselbe gibt es als GitHub Action. Sie installiert die Abhängigkeiten,
+    checkt das Ziel-Repository aus und führt "yarn update:website" aus, die
+    "package.json" der Webseite braucht also dieses Skript, das
+    "website-utilities" aufruft:
+-->
+<!--frFR:
+    La même chose existe sous forme d'action GitHub. Elle installe les
+    dépendances, récupère le dépôt cible et exécute "yarn update:website",
+    le "package.json" du site doit donc contenir ce script appelant
+    "website-utilities":
+-->
+<pre class="prettyprint source lang-YAML"><code>steps:
+  - uses: thaibault/website-utilities@main
+    with:
+      pat-token: ${{ secrets.PAT_TOKEN_GITHUB }}
+      repository: ${{ github.repository_owner }}/${{ github.repository_owner }}.github.io
+      user_email_github: ${{ secrets.USER_EMAIL_GITHUB }}
+      user_name_github: ${{ github.repository_owner }}
+</code></pre>
+<!--|deDE:Entwicklung-->
+<!--|frFR:Développement-->
+<h2>Development</h2>
+<pre class="prettyprint source lang-bash"><code>yarn install
+yarn start
+yarn test
+</code></pre>
+<p>&quot;yarn start&quot; serves a playground with all features.</p>
+<!--deDE:"yarn start" stellt eine Spielwiese mit allen Funktionen bereit.-->
+<!--frFR:
+    "yarn start" sert un terrain de jeu avec toutes les fonctionnalités.
+--></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Nov 17 2026 11:51:45 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
