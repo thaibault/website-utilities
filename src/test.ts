@@ -39,8 +39,12 @@ describe('WebsiteUtilities', (): void => {
         options: RecursivePartial<Options> = {},
         properties: Partial<WebsiteUtilities> = {}
     ): Promise<WebsiteUtilities> => {
-        const domNode = document.createElement('website-utilities') as
-            WebsiteUtilities
+        const element = document.createElement('website-utilities')
+        if (!(element instanceof WebsiteUtilities))
+            throw new Error(
+                '"website-utilities" is not registered as "WebsiteUtilities".'
+            )
+        const domNode = element as WebsiteUtilities
         domNode.setAttribute('options', JSON.stringify(options))
         Object.assign(domNode, properties)
         domNode.innerHTML = content
